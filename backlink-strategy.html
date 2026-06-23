@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HappySprout 外链建设策略 | Backlink Strategy</title>
+<style>
+  :root {
+    --orange: #FF8C42;
+    --purple: #7C3AED;
+    --green: #2E7D32;
+    --blue: #4A90D9;
+    --bg: #faf8f5;
+    --card: #ffffff;
+    --text: #333;
+    --text-light: #666;
+    --radius: 12px;
+    --shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; padding: 20px; }
+  .container { max-width: 960px; margin: 0 auto; }
+  h1 { font-size: 28px; color: var(--purple); margin-bottom: 8px; }
+  h2 { font-size: 20px; color: var(--orange); margin: 32px 0 12px; padding-bottom: 8px; border-bottom: 3px solid #f0e8d8; }
+  h3 { font-size: 16px; color: var(--green); margin: 20px 0 8px; }
+  h4 { font-size: 14px; color: var(--blue); margin: 16px 0 6px; }
+  p { margin-bottom: 12px; color: var(--text-light); }
+  .card { background: var(--card); border-radius: var(--radius); padding: 24px; margin-bottom: 16px; box-shadow: var(--shadow); }
+  .card.orange { border-left: 4px solid var(--orange); }
+  .card.purple { border-left: 4px solid var(--purple); }
+  .card.green { border-left: 4px solid var(--green); }
+  .card.blue { border-left: 4px solid var(--blue); }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+  th { background: #f0e8d8; padding: 10px 12px; text-align: left; font-weight: 700; }
+  td { padding: 10px 12px; border-bottom: 1px solid #f0e8d8; vertical-align: top; }
+  tr:hover td { background: #fcf6ff; }
+  .tag { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .tag-high { background: #e8f5e9; color: #2E7D32; }
+  .tag-med { background: #fff3e0; color: #E65100; }
+  .tag-low { background: #e3f2fd; color: #1565C0; }
+  .btn { display: inline-block; padding: 8px 20px; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 13px; cursor: pointer; border: none; }
+  .btn-orange { background: var(--orange); color: white; }
+  .btn-purple { background: var(--purple); color: white; }
+  .checklist { list-style: none; padding: 0; }
+  .checklist li { padding: 6px 0 6px 28px; position: relative; font-size: 14px; }
+  .checklist li::before { content: '☐'; position: absolute; left: 0; color: #ccc; font-size: 16px; }
+  .checklist li.done::before { content: '✅'; }
+  pre { background: #1a1a2e; color: #e0e0e0; padding: 16px; border-radius: 8px; overflow-x: auto; font-size: 13px; margin: 12px 0; }
+  .copy-btn { float: right; background: #333; color: white; border: none; padding: 4px 12px; border-radius: 4px; cursor: pointer; font-size: 11px; margin-top: -4px; }
+  .highlight { background: #FFF9C4; padding: 2px 6px; border-radius: 3px; }
+  ul, ol { margin-left: 20px; margin-bottom: 12px; }
+  li { margin-bottom: 4px; }
+  @media print { body { background: white; } .card { box-shadow: none; border: 1px solid #eee; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>🔗 HappySprout 外链建设策略</h1>
+<p style="font-size:14px;color:var(--text-light)">Target: <strong>kidslearninghub.online</strong> | Last updated: 2026-06-23 | Phase: Launch</p>
+
+<!-- ─── OVERVIEW ─── -->
+<div class="card purple">
+  <h3 style="margin-top:0">📊 策略概览</h3>
+  <p>本策略覆盖 <strong>5 大渠道、20+ 具体行动项</strong>，目标在 3 个月内建立 30-50 个高质量外链。分三个阶段执行：基础建设（Week 1-2）→ 主动获取（Week 3-6）→ 内容扩散（Week 7-12）。</p>
+  <table>
+    <tr><th>渠道</th><th>优先级</th><th>预期外链数</th><th>难度</th><th>时间线</th></tr>
+    <tr><td>1. 教育网站外链</td><td><span class="tag tag-high">HIGH</span></td><td>10-15</td><td>中</td><td>Week 3-8</td></tr>
+    <tr><td>2. 资源目录提交</td><td><span class="tag tag-high">HIGH</span></td><td>15-20</td><td>低</td><td>Week 1-2</td></tr>
+    <tr><td>3. 客座博客</td><td><span class="tag tag-med">MED</span></td><td>3-5</td><td>高</td><td>Week 4-12</td></tr>
+    <tr><td>4. 社交媒体</td><td><span class="tag tag-med">MED</span></td><td>10+</td><td>低</td><td>Ongoing</td></tr>
+    <tr><td>5. 本地 SEO</td><td><span class="tag tag-low">LOW</span></td><td>3-5</td><td>低</td><td>Week 2-3</td></tr>
+  </table>
+</div>
+
+<!-- ═══════════ 1. EDUCATION SITES ═══════════ -->
+<h2>1️⃣ 教育类网站外链 Outreach</h2>
+
+<div class="card orange">
+  <h3 style="margin-top:0">🎯 目标网站列表</h3>
+  <table>
+    <tr><th>网站</th><th>类型</th><th>DA</th><th>联系方式</th><th>策略</th></tr>
+    <tr>
+      <td><strong>Mommypoppins.com</strong></td>
+      <td>家长资源博客</td>
+      <td>70+</td>
+      <td>Contact form / email</td>
+      <td>已有 "29 Educational Websites for Kids" 列表，请求加入</td>
+    </tr>
+    <tr>
+      <td><strong>TeachBesideMe.com</strong></td>
+      <td>Homeschool 博客</td>
+      <td>50+</td>
+      <td>Email pitch</td>
+      <td>已有 "Mega List of Free Educational Websites"，提交加入</td>
+    </tr>
+    <tr>
+      <td><strong>mkewithkids.com</strong></td>
+      <td>亲子资源站</td>
+      <td>45+</td>
+      <td>Contact page</td>
+      <td>"50 Best Free Educational Websites" 列表，请求加入</td>
+    </tr>
+    <tr>
+      <td><strong>OER Commons</strong></td>
+      <td>开放教育资源库</td>
+      <td>80+</td>
+      <td>oercommons.org</td>
+      <td>提交课程资源作为 Open Educational Resource</td>
+    </tr>
+    <tr>
+      <td><strong>CommonSense Education</strong></td>
+      <td>教育评审网站</td>
+      <td>85+</td>
+      <td>Submission form</td>
+      <td>提交网站进行教育类评审</td>
+    </tr>
+    <tr>
+      <td><strong>Homeschool.com</strong></td>
+      <td>Homeschool 门户</td>
+      <td>65+</td>
+      <td>Email / form</td>
+      <td>提交免费资源列表</td>
+    </tr>
+    <tr>
+      <td><strong>TheHomeschoolMom.com</strong></td>
+      <td>Homeschool 资源</td>
+      <td>55+</td>
+      <td>Submit form</td>
+      <td>免费课程资源推荐</td>
+    </tr>
+    <tr>
+      <td><strong>KidsActivitiesBlog.com</strong></td>
+      <td>儿童活动博客</td>
+      <td>60+</td>
+      <td>Email</td>
+      <td>提供独家免费教育资源内容</td>
+    </tr>
+  </table>
+</div>
+
+<div class="card orange">
+  <h3 style="margin-top:0">✉️ Outreach Email 模板（英文）</h3>
+  <pre>Subject: Free Kids Learning Resource for [Site Name]'s Directory
+
+Hi [Name],
+
+I came across your excellent list of free educational websites for kids on [Site Name] — it's a fantastic resource for parents!
+
+I'd love to suggest adding <strong>HappySprout</strong> (kidslearninghub.online) to your list.
+
+HappySprout offers:
+• 100+ free interactive courses covering ABCs, phonics, math, and science
+• Age-specific learning paths for 3-12 year olds
+• Bilingual content (English & Chinese) — great for multilingual families
+• Screen time management tools for parents
+• No ads, no sign-up required — completely free
+
+I think your readers would find it valuable, especially parents looking for structured but fun learning content.
+
+Happy to provide any additional info or a custom description.
+
+Best,
+[Your Name]
+HappySprout Founder</pre>
+
+  <h4>中文 Outreach 模板（马来西亚家长社群）</h4>
+  <pre>主题：推荐一个免费儿童学习网站给 [群名/网站名]
+
+大家好/你好，
+
+我是 HappySprout 的创办人。我们做了一个完全免费的儿童学习网站，想推荐给各位家长：
+
+kidslearninghub.online
+
+网站包含：
+• 100+ 互动课程：英语字母、自然拼读、数学、科学
+• 按年龄分级：3-5岁 / 6-8岁 / 9-12岁
+• 中英双语内容，适合马来西亚孩子
+• 家长可设置每日学习时长限制
+• 完全免费，无需注册
+
+我们的课程参考了国际教育标准（Jolly Phonics、CPA数学教学法），希望能帮助更多孩子快乐学习。
+
+如有兴趣了解更多，欢迎随时联系我！
+
+谢谢！
+[Your Name]</pre>
+</div>
+
+<!-- ═══════════ 2. RESOURCE DIRECTORIES ═══════════ -->
+<h2>2️⃣ 资源目录提交</h2>
+
+<div class="card green">
+  <h3 style="margin-top:0">📋 马来西亚 & 亚洲平台</h3>
+  <table>
+    <tr><th>平台</th><th>URL</th><th>类型</th><th>操作</th><th>优先级</th></tr>
+    <tr>
+      <td><strong>GogoKids Malaysia</strong></td>
+      <td>gogokids.my</td>
+      <td>马来西亚最大儿童学习平台</td>
+      <td>注册商家/提交课程列表</td>
+      <td><span class="tag tag-high">HIGH</span></td>
+    </tr>
+    <tr>
+      <td><strong>KitaParents</strong></td>
+      <td>kitaparents.com</td>
+      <td>新马来西亚家长社区</td>
+      <td>注册并分享资源</td>
+      <td><span class="tag tag-high">HIGH</span></td>
+    </tr>
+    <tr>
+      <td><strong>TheAsianParent MY</strong></td>
+      <td>my.theasianparent.com</td>
+      <td>亚洲家长社区</td>
+      <td>参与讨论/发布文章</td>
+      <td><span class="tag tag-high">HIGH</span></td>
+    </tr>
+    <tr>
+      <td><strong>IBU Family</strong></td>
+      <td>ibufamily.org</td>
+      <td>KL 外籍/本地家庭社区</td>
+      <td>加入社区并分享资源</td>
+      <td><span class="tag tag-med">MED</span></td>
+    </tr>
+    <tr>
+      <td><strong>Little Steps Asia</strong></td>
+      <td>littlestepsasia.com</td>
+      <td>亚洲亲子资源指南</td>
+      <td>提交网站到资源列表</td>
+      <td><span class="tag tag-med">MED</span></td>
+    </tr>
+    <tr>
+      <td><strong>Mamahood Malaysia</strong></td>
+      <td>mamahood.com.my</td>
+      <td>马来西亚妈妈社群</td>
+      <td>注册/分享内容</td>
+      <td><span class="tag tag-med">MED</span></td>
+    </tr>
+  </table>
+
+  <h3 style="margin-top:24px">🌍 国际通用目录</h3>
+  <table>
+    <tr><th>平台</th><th>URL</th><th>DA</th><th>操作</th></tr>
+    <tr><td><strong>AlternativeTo</strong></td><td>alternativeto.net</td><td>75+</td><td>提交为 "ABCmouse alternative" 等</td></tr>
+    <tr><td><strong>Product Hunt</strong></td><td>producthunt.com</td><td>85+</td><td>Launch 作为教育工具</td></tr>
+    <tr><td><strong>Indie Hackers</strong></td><td>indiehackers.com</td><td>70+</td><td>分享构建过程和 SEO 经验</td></tr>
+    <tr><td><strong>SaaS Genius</strong></td><td>saasgenius.com</td><td>40+</td><td>提交为免费教育 SaaS</td></tr>
+    <tr><td><strong>Crunchbase</strong></td><td>crunchbase.com</td><td>85+</td><td>创建公司档案</td></tr>
+    <tr><td><strong>HotFrog</strong></td><td>hotfrog.com.my</td><td>50+</td><td>马来西亚本地企业目录</td></tr>
+    <tr><td><strong>YellowPages MY</strong></td><td>yellowpages.com.my</td><td>55+</td><td>提交教育服务类目</td></tr>
+  </table>
+</div>
+
+<div class="card green">
+  <h3 style="margin-top:0">📌 Pinterest 策略</h3>
+  <p>Pinterest 是教育内容的重要流量来源。创建以下 <strong>10 个 Board</strong>，每个 Board 至少 15 个 Pin，所有 Pin 链接回网站。</p>
+  <table>
+    <tr><th>Board 名称</th><th>描述</th><th>目标关键词</th></tr>
+    <tr><td>Free Kids Learning Activities</td><td>免费儿童学习活动和练习册</td><td>free kids worksheets, learning activities</td></tr>
+    <tr><td>ABC & Phonics for Kids</td><td>字母和自然拼读学习资源</td><td>phonics activities, ABC learning</td></tr>
+    <tr><td>Math for Preschoolers</td><td>学龄前数学启蒙游戏</td><td>preschool math, counting activities</td></tr>
+    <tr><td>Science Experiments for Kids</td><td>儿童科学实验和探索</td><td>kids science experiments, STEM</td></tr>
+    <tr><td>Homeschooling Resources</td><td>Homeschool 家庭教育资源</td><td>homeschool curriculum, homeschool ideas</td></tr>
+    <tr><td>Malaysia Parenting Tips</td><td>马来西亚家长育儿贴士</td><td>Malaysia parenting, 马来西亚育儿</td></tr>
+    <tr><td>Bilingual Kids Education</td><td>双语儿童教育资源（中英）</td><td>bilingual education, 双语教育</td></tr>
+    <tr><td>Kids Screen Time Tips</td><td>儿童屏幕时间管理</td><td>screen time management, kids safety</td></tr>
+    <tr><td>Early Childhood Development</td><td>早期儿童发展里程碑</td><td>child development, early learning</td></tr>
+    <tr><td>Fun Learning Games</td><td>趣味学习游戏合集</td><td>educational games, learning through play</td></tr>
+  </table>
+
+  <h4>Pin 描述模板</h4>
+  <pre>🎓 FREE [Topic] for Kids Ages [X-Y]!
+
+[Benefit-focused description in 2-3 sentences]
+
+✅ 100% free, no sign-up
+✅ Bilingual (EN & 中文)
+✅ Screen-time controls for parents
+
+👉 kidslearninghub.online
+
+#[hashtag1] #[hashtag2] #[hashtag3] #[hashtag4] #[hashtag5]</pre>
+</div>
+
+<!-- ═══════════ 3. GUEST POSTS ═══════════ -->
+<h2>3️⃣ 客座博客</h2>
+
+<div class="card blue">
+  <h3 style="margin-top:0">📝 Guest Post #1（英文）</h3>
+  <h4>Title: "How to Choose Online Learning Resources for Your 3-6 Year Old: A Research-Based Guide"</h4>
+  <pre>As parents, we're bombarded with "educational" apps and websites — but how do you separate the effective from the entertaining?
+
+Research in early childhood education points to three key criteria:
+
+<strong>1. Multisensory Input</strong>
+The best learning happens when children engage multiple senses simultaneously. Look for resources that combine visual (videos), auditory (songs), verbal (repeat-after-me), and kinesthetic (interactive games) elements. Studies show multisensory learning has 3-4x better retention than single-mode learning.
+
+<strong>2. Spaced Repetition, Not Endless Drills</strong>
+The Ebbinghaus Forgetting Curve tells us we forget 50% of new information within one hour. Smart learning platforms (like HappySprout) build in review prompts at optimal intervals — 1 day, 3 days, and 7 days after initial learning — rather than asking kids to repeat the same exercise 20 times in a row.
+
+<strong>3. Scaffolded Difficulty</strong>
+Good educational content starts simple and gradually increases complexity. If your child goes from "A is for Apple" to reading full sentences in the same session, the difficulty curve is too steep. Look for platforms that break learning into small, achievable steps.
+
+<strong>Red Flags to Watch For:</strong>
+• Excessive gamification that distracts from learning
+• Auto-play videos with no interactive element
+• No parental controls or time limits
+• Content that doesn't adapt to your child's level
+
+The right online resource should feel like a patient teacher, not a babysitter.
+
+<em>— Guest post by [Author], founder of HappySprout (kidslearninghub.online), a free bilingual learning platform for children ages 3-12.</em></pre>
+
+  <h3 style="margin-top:24px">📝 Guest Post #2（中文）</h3>
+  <h4>Title: "马来西亚家长必看：如何为孩子选择正确的在线学习资源"</h4>
+  <pre>在马来西亚，我们面临一个独特的挑战：孩子需要同时掌握华语、英语和马来语。这让选择在线学习资源变得更加复杂。
+
+经过一年多的研究和实践，我总结了三个选择标准：
+
+<strong>1. 内容是否遵循科学的学习方法？</strong>
+好的教育平台会采用经过验证的教学法。比如：
+• 英语启蒙：采用 Jolly Phonics 自然拼读体系
+• 数学启蒙：采用 CPA（具体→图形→抽象）教学法
+• 多感官学习：同时调动视觉、听觉和触觉
+
+<strong>2. 是否支持双语或多语言学习？</strong>
+对马来西亚孩子来说，能切换中英文的学习平台特别有价值。孩子可以先用自己的强势语言理解概念，再过渡到第二语言。
+
+<strong>3. 家长能否参与管理？</strong>
+一个负责任的平台应该提供家长控制功能——设定每日学习时长、查看学习进度、管理可访问的内容。这不是"控制"孩子，而是帮助他们建立健康的学习习惯。
+
+<strong>马来西亚家长最常问的问题：</strong>
+Q: 3岁孩子每天应该学多久？
+A: 每天15-20分钟，重点是养成习惯而非知识量。
+
+Q: 孩子不愿意学习怎么办？
+A: 尝试把学习变成游戏，或者从孩子感兴趣的主题入手（恐龙、公主、汽车等）。
+
+Q: 如何判断一个学习网站是否适合孩子？
+A: 先自己试用15分钟，观察内容是否适合孩子的年龄、是否有互动环节、界面是否安全无广告。
+
+<em>——本文作者创办了 HappySprout (kidslearninghub.online)，一个面向 3-12 岁儿童的免费双语学习平台。</em></pre>
+</div>
+
+<!-- ═══════════ 4. SOCIAL MEDIA ═══════════ -->
+<h2>4️⃣ 社交媒体信号</h2>
+
+<div class="card orange">
+  <h3 style="margin-top:0">📱 小红书内容策略</h3>
+  <p>小红书是马来西亚华人家长的重要信息获取渠道。2025年教育内容呈现"量减质增"趋势，深度内容更受推荐。</p>
+
+  <h4>内容日历（每周 3 篇）</h4>
+  <table>
+    <tr><th>周几</th><th>内容类型</th><th>标题示例</th><th>标签</th></tr>
+    <tr>
+      <td>周一</td>
+      <td>教育资源推荐</td>
+      <td>"推荐5个马来西亚孩子免费学英语的网站|第1个真的绝了"</td>
+      <td>#儿童英语 #免费学英语 #马来西亚教育</td>
+    </tr>
+    <tr>
+      <td>周三</td>
+      <td>育儿干货</td>
+      <td>"3岁孩子应该学什么？别焦虑，看完这张表就懂了"</td>
+      <td>#育儿干货 #3岁早教 #儿童发展里程碑</td>
+    </tr>
+    <tr>
+      <td>周五</td>
+      <td>产品介绍</td>
+      <td>"做了半年终于上线！免费儿童学习网站 HappySprout"</td>
+      <td>#独立开发者 #儿童教育 #免费资源</td>
+    </tr>
+  </table>
+
+  <h4>小红书爆款标题公式</h4>
+  <ul>
+    <li>数字+痛点："3个信号说明你的孩子需要英语启蒙了"</li>
+    <li>对比+结果："用了3个月免费网站，娃的英语比补习班同学还好"</li>
+    <li>疑问+解答："为什么有的孩子学什么都快？答案在'多感官学习法'"</li>
+    <li>清单+实用："马来西亚妈妈私藏的10个免费学习网站"</li>
+  </ul>
+
+  <h3 style="margin-top:24px">👥 Facebook 家长群策略</h3>
+  <table>
+    <tr><th>群组名称</th><th>类型</th><th>策略</th></tr>
+    <tr><td>Malaysia Homeschooling Network</td><td>Homeschool 群</td><td>分享免费课程资源，参与讨论</td></tr>
+    <tr><td>Malaysia Parents & Kids Activities</td><td>活动推荐群</td><td>推荐在线学习活动</td></tr>
+    <tr><td>KL Expat Parents</td><td>外籍家长群</td><td>分享双语教育资源</td></tr>
+    <tr><td>Malaysia Moms Group</td><td>妈妈群（最大）</td><td>发布实用育儿+学习贴士</td></tr>
+    <tr><td>English Learning for Kids Malaysia</td><td>英语学习群</td><td>分享免费英语学习资源</td></tr>
+  </table>
+
+  <h4>Facebook 帖子模板</h4>
+  <pre>🇲🇾 Dear Malaysian parents!
+
+I built a completely FREE learning website for kids ages 3-12 🎓
+
+✅ 100+ interactive courses (ABCs, Phonics, Math, Science)
+✅ Age-based learning paths
+✅ Bilingual (English & 中文)
+✅ Screen time controls for parents
+✅ No ads, no sign-up needed
+
+Try it here → kidslearninghub.online
+
+Would love to hear your feedback! What features would you want for your kids? 💬</pre>
+</div>
+
+<!-- ═══════════ 5. LOCAL SEO ═══════════ -->
+<h2>5️⃣ 本地 SEO</h2>
+
+<div class="card blue">
+  <h3 style="margin-top:0">📍 Google Business Profile</h3>
+  <p>虽然是纯在线网站，但可以通过 <strong>Service Area Business</strong> 模式创建 GBP，覆盖马来西亚各大城市。</p>
+
+  <h4>GBP 资料内容</h4>
+  <table>
+    <tr><th>字段</th><th>内容</th></tr>
+    <tr><td>Business Name</td><td>HappySprout Kids Learning</td></tr>
+    <tr><td>Category</td><td>Educational Consultant / Learning Center</td></tr>
+    <tr><td>Service Area</td><td>Kuala Lumpur, Selangor, Penang, Johor Bahru, Malaysia (nationwide - online)</td></tr>
+    <tr><td>Website</td><td>https://kidslearninghub.online</td></tr>
+    <tr><td>Phone</td><td>[Your business phone]</td></tr>
+    <tr><td>Description</td><td>Free online learning platform for children ages 3-12. 100+ interactive courses in English & Chinese. ABCs, phonics, math, science & more. Bilingual education for Malaysian families.</td></tr>
+    <tr><td>Services</td><td>Online Kids Courses, English Phonics, Math Learning, Science for Kids, Bilingual Education Resources</td></tr>
+    <tr><td>Hours</td><td>Open 24 hours (online platform)</td></tr>
+  </table>
+
+  <h4>GBP 优化 Checklist</h4>
+  <ul class="checklist">
+    <li>创建 GBP Profile（google.com/business）</li>
+    <li>上传 Logo 和封面图（1024x1024 和 1200x900）</li>
+    <li>添加 10+ 张截图（课程页面、年龄专区、家长面板）</li>
+    <li>发布首条 GBP Post（介绍网站三大特色）</li>
+    <li>每周发布 1 条 Post（新功能/学习贴士/用户反馈）</li>
+    <li>开启 Messaging 功能</li>
+    <li>添加 FAQ（从网站 FAQ 页面摘取）</li>
+    <li>收集 5 条初始 Review（请朋友/早期用户）</li>
+  </ul>
+
+  <h3 style="margin-top:24px">🏪 马来西亚本地目录</h3>
+  <table>
+    <tr><th>目录</th><th>URL</th><th>操作</th></tr>
+    <tr><td>Yellow Pages Malaysia</td><td>yellowpages.com.my</td><td>注册教育服务类目</td></tr>
+    <tr><td>HotFrog Malaysia</td><td>hotfrog.com.my</td><td>创建免费商业档案</td></tr>
+    <tr><td>Expat.com Malaysia</td><td>expat.com</td><td>在 KL 版块分享资源</td></tr>
+    <tr><td>Yelp Malaysia</td><td>yelp.com.my</td><td>创建商业页面</td></tr>
+    <tr><td>EasyUni Malaysia</td><td>easyuni.my</td><td>教育相关平台，提交课程</td></tr>
+    <tr><td>My Weekend Plan</td><td>myweekendplan.com.my</td><td>亲子活动平台</td></tr>
+  </table>
+</div>
+
+<!-- ═══════════ EXECUTION PLAN ═══════════ -->
+<h2>📅 执行时间线</h2>
+
+<div class="card purple">
+  <h3 style="margin-top:0">Phase 1: Foundation（Week 1-2）</h3>
+  <ul class="checklist">
+    <li>完成所有资源目录提交（15+ 个平台）</li>
+    <li>创建 GBP Profile 并完善资料</li>
+    <li>创建 Pinterest 商业账号 + 10 个 Board</li>
+    <li>创建 Facebook Page + Instagram 账号</li>
+    <li>创建小红书账号并发布前 3 篇内容</li>
+    <li>在网站添加 "Resources" 页面作为链接目标</li>
+  </ul>
+
+  <h3 style="margin-top:20px">Phase 2: Active Outreach（Week 3-6）</h3>
+  <ul class="checklist">
+    <li>发送 10+ Outreach Email 给教育博客</li>
+    <li>联系 3-5 个马来西亚家长社群管理员</li>
+    <li>发布 Guest Post #1 至少 1 个教育博客</li>
+    <li>每周 Pinterest 发布 10 Pins</li>
+    <li>小红书保持每周 3 篇发布频率</li>
+    <li>在 Facebook 家长群每周分享 2 次</li>
+    <li>GBP 每周发布 1 条 Post</li>
+  </ul>
+
+  <h3 style="margin-top:20px">Phase 3: Content Distribution（Week 7-12）</h3>
+  <ul class="checklist">
+    <li>Guest Post #2 发布在中文教育博客</li>
+    <li>Indie Hackers / Product Hunt 发布</li>
+    <li>创建视频内容（YouTube 教育频道）</li>
+    <li>参与 Quora / Reddit 教育话题讨论（r/homeschool, r/Parenting）</li>
+    <li>分析外链数据，优化 Outreach 策略</li>
+    <li>考虑 Press Release 分发（PRNewswire 或本地媒体）</li>
+  </ul>
+</div>
+
+<!-- ═══════════ TOOLS ═══════════ -->
+<h2>🛠 推荐工具</h2>
+
+<div class="card">
+  <table>
+    <tr><th>用途</th><th>工具</th><th>费用</th></tr>
+    <tr><td>外链监控</td><td>Google Search Console + Ahrefs Webmaster (free)</td><td>免费</td></tr>
+    <tr><td>关键词研究</td><td>Google Keyword Planner + Ubersuggest</td><td>免费</td></tr>
+    <tr><td>Pinterest 管理</td><td>Tailwind (scheduling) + Canva (design)</td><td>免费/付费</td></tr>
+    <tr><td>社交媒体管理</td><td>Buffer / Later (scheduling)</td><td>免费版</td></tr>
+    <tr><td>Email Outreach</td><td>Hunter.io (找邮箱) + GMass (批量发送)</td><td>免费/付费</td></tr>
+    <tr><td>GBP 管理</td><td>Google Business Profile Manager</td><td>免费</td></tr>
+    <tr><td>内容创作</td><td>Canva + ChatGPT/Claude</td><td>免费</td></tr>
+  </table>
+</div>
+
+<!-- ═══════════ METRICS ═══════════ -->
+<h2>📊 追踪指标</h2>
+
+<div class="card green">
+  <table>
+    <tr><th>指标</th><th>当前值</th><th>3月目标</th><th>追踪工具</th></tr>
+    <tr><td>Referring Domains</td><td>0</td><td>30+</td><td>Ahrefs Webmaster</td></tr>
+    <tr><td>Domain Rating (DR)</td><td>0</td><td>15+</td><td>Ahrefs</td></tr>
+    <tr><td>Organic Keywords</td><td>0</td><td>50+</td><td>Google Search Console</td></tr>
+    <tr><td>Brand Searches</td><td>0</td><td>100+/month</td><td>GSC Performance Report</td></tr>
+    <tr><td>Pinterest Impressions</td><td>0</td><td>10,000+/month</td><td>Pinterest Analytics</td></tr>
+    <tr><td>小红书粉丝</td><td>0</td><td>500+</td><td>小红书后台</td></tr>
+    <tr><td>GBP Views</td><td>0</td><td>200+/month</td><td>GBP Insights</td></tr>
+    <tr><td>Referral Traffic</td><td>0</td><td>500+/month</td><td>Google Analytics</td></tr>
+  </table>
+</div>
+
+<p style="text-align:center;margin-top:32px;color:var(--text-light);font-size:13px">
+  HappySprout Backlink Strategy v1.0 · kidslearninghub.online · Generated 2026-06-23
+</p>
+
+</div>
+
+<script>
+// Copy button functionality
+document.querySelectorAll('pre').forEach(function(block) {
+  var btn = document.createElement('button');
+  btn.className = 'copy-btn';
+  btn.textContent = 'Copy';
+  btn.onclick = function() {
+    navigator.clipboard.writeText(block.textContent.trim());
+    btn.textContent = 'Copied!';
+    setTimeout(function() { btn.textContent = 'Copy'; }, 2000);
+  };
+  block.style.position = 'relative';
+  block.insertBefore(btn, block.firstChild);
+});
+</script>
+</body>
+</html>

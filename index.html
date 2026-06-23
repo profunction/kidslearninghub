@@ -31,7 +31,9 @@
   "description": "HappySprout 提供 100+ 免费儿童教育游戏、可打印练习册和创意学习活动，专为 3-12 岁孩子设计。",
   "email": "hello@kidslearninghub.online",
   "sameAs": [
-    "https://kidslearninghub.online/"
+    "https://kidslearninghub.online/",
+    "https://kidslearninghub.online/#resources",
+    "https://kidslearninghub.online/#faq"
   ]
 }
 </script>
@@ -2397,6 +2399,7 @@ const I18N = {
     footerTerms: '使用条款',
     footerAboutPage: '了解更多',
     footerFAQ: '常见问题',
+    footerResources: '免费资源',
     // FAQ page
     faqTitle: '常见问题解答',
     faqSub: '关于 HappySprout 儿童学习平台的常见问题',
@@ -2716,6 +2719,7 @@ const I18N = {
     footerTerms: 'Terms of Use',
     footerAboutPage: 'Learn More',
     footerFAQ: 'FAQ',
+    footerResources: 'Free Resources',
     // FAQ page
     faqTitle: 'Frequently Asked Questions',
     faqSub: 'Common questions about the HappySprout kids learning platform',
@@ -3650,7 +3654,7 @@ function navigateTo(page, params = {}) {
     document.querySelectorAll('.nav-item').forEach(el => {
       el.classList.toggle('active', el.dataset.page === 'parent');
     });
-  } else if (['watch', 'course', 'search', 'favorites', 'channel', 'about', 'feedback', 'feedbackThanks', 'blog', 'blogPost', 'faq'].includes(page)) {
+  } else if (['watch', 'course', 'search', 'favorites', 'channel', 'about', 'feedback', 'feedbackThanks', 'blog', 'blogPost', 'faq', 'resources'].includes(page)) {
     document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
   }
 
@@ -3680,6 +3684,7 @@ function navigateTo(page, params = {}) {
     case 'blog': renderBlogIndex(main); break;
     case 'blogPost': renderBlogPost(main, params.postId); break;
     case 'faq': renderFAQ(main); break;
+    case 'resources': renderResources(main); break;
     case 'ageHub': renderAgeHub(main, params.age); break;
     case 'subjectHub': renderSubjectHub(main, params.subject); break;
     default: renderHome(main);
@@ -4355,6 +4360,7 @@ function renderHome(container) {
               <a class="footer-link" href="#ageHub" data-page="ageHub">👶 ${t('footerAgeGroups')}</a>
               <a class="footer-link" href="#blog" data-page="blog">✍️ ${t('footerBlog')}</a>
               <a class="footer-link" href="#faq" data-page="faq">❓ ${t('footerFAQ')}</a>
+              <a class="footer-link" href="#resources" data-page="resources">📚 ${t('footerResources')}</a>
               <a class="footer-link" href="#search" data-page="search">🔍 ${t('footerSearch')}</a>
             </div>
             <!-- Subjects + Support -->
@@ -6045,6 +6051,131 @@ function renderFAQ(container) {
     '<div style="text-align:center;margin-top:24px;padding:20px;background:linear-gradient(135deg,#FFF3E0,#FFECB3);border-radius:16px">' +
       '<p style="font-size:14px;color:#8B6914;margin-bottom:10px">' + (lang === 'zh' ? '没有找到答案？给我们反馈吧！' : 'Didn\'t find your answer? Send us feedback!') + '</p>' +
       '<button onclick="navigateTo(\'feedback\')" style="padding:10px 28px;border:none;background:var(--orange);color:white;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer">' + (lang === 'zh' ? '💬 提交反馈' : '💬 Send Feedback') + '</button>' +
+    '</div>' +
+  '</div>';
+}
+
+// ─── RESOURCES HUB (linkable asset for backlink building) ──────
+function renderResources(container) {
+  var lang = APP.lang === 'en' ? 'en' : 'zh';
+  var isZh = lang === 'zh';
+
+  container.innerHTML = '<div class="page active" style="padding-bottom:40px">' +
+    '<div style="background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:32px 20px;text-align:center;border-radius:16px;margin-bottom:24px">' +
+      '<h1 style="font-size:26px;margin-bottom:8px">' + (isZh ? '📚 免费学习资源中心' : '📚 Free Learning Resources Hub') + '</h1>' +
+      '<p style="font-size:15px;opacity:0.9;max-width:600px;margin:0 auto">' + (isZh ? '为家长和教育者精选的儿童学习资源、发展里程碑、教育方法论参考。所有资源均可免费使用和分享。' : 'Curated learning resources, developmental milestones, and educational methodology references for parents and educators. All free to use and share.') + '</p>' +
+    '</div>' +
+
+    // Section 1: Learning Milestones
+    '<div style="background:white;border-radius:16px;padding:24px;margin-bottom:16px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">' +
+      '<h2 style="font-size:20px;color:#2E7D32;margin-bottom:16px">📊 ' + (isZh ? '儿童学习发展里程碑' : 'Child Learning Milestones') + '</h2>' +
+      '<p style="color:#666;font-size:14px;margin-bottom:16px">' + (isZh ? '基于国际教育标准 (Common Core, UK National Curriculum, 中国3-6岁儿童学习与发展指南) 的年龄学习参考。' : 'Age-based learning benchmarks aligned with international standards (Common Core, UK National Curriculum, EYFS).') + '</p>' +
+      '<div style="overflow-x:auto">' +
+      '<table style="width:100%;border-collapse:collapse;font-size:13px">' +
+        '<tr style="background:#f0e8d8"><th style="padding:10px;text-align:left">' + (isZh ? '年龄段' : 'Age') + '</th><th style="padding:10px;text-align:left">' + (isZh ? '英语/语文' : 'Language') + '</th><th style="padding:10px;text-align:left">' + (isZh ? '数学' : 'Math') + '</th><th style="padding:10px;text-align:left">' + (isZh ? '科学/认知' : 'Science') + '</th><th style="padding:10px;text-align:left">' + (isZh ? '社交/情感' : 'Social') + '</th></tr>' +
+        '<tr><td style="padding:10px;border-bottom:1px solid #f0e8d8;font-weight:700">3-4岁</td><td style="padding:10px;border-bottom:1px solid #f0e8d8">' + (isZh ? '识别字母、唱儿歌、简单跟读' : 'Recognize letters, sing songs, repeat words') + '</td><td style="padding:10px;border-bottom:1px solid #f0e8d8">' + (isZh ? '数1-10、认识形状颜色' : 'Count 1-10, identify shapes & colors') + '</td><td style="padding:10px;border-bottom:1px solid #f0e8d8">' + (isZh ? '探索感官、观察动植物' : 'Sensory exploration, observe nature') + '</td><td style="padding:10px;border-bottom:1px solid #f0e8d8">' + (isZh ? '轮流玩耍、表达情绪' : 'Take turns, express feelings') + '</td></tr>' +
+        '<tr><td style="padding:10px;border-bottom:1px solid #f0e8d8;font-weight:700">5-6岁</td><td style="padding:10px;border-bottom:1px solid #f0e8d8">' + (isZh ? '字母发音、CVC单词、简单句子' : 'Letter sounds, CVC words, simple sentences') + '</td><td style="padding:10px;border-bottom:1px solid #f0e8d8">' + (isZh ? '数1-100、简单加减、模式识别' : 'Count to 100, basic +/- patterns') + '</td><td style="padding:10px;border-bottom:1px solid #f0e8d8">' + (isZh ? '天气、季节、分类排序' : 'Weather, seasons, sort & classify') + '</td><td style="padding:10px;border-bottom:1px solid #f0e8d8">' + (isZh ? '遵守规则、合作游戏' : 'Follow rules, cooperative play') + '</td></tr>' +
+        '<tr><td style="padding:10px;border-bottom:1px solid #f0e8d8;font-weight:700">7-8岁</td><td style="padding:10px;border-bottom:1px solid #f0e8d8">' + (isZh ? '自然拼读、独立阅读、简单写作' : 'Phonics, independent reading, write sentences') + '</td><td style="padding:10px;border-bottom:1px solid #f0e8d8">' + (isZh ? '两位数加减、时间/货币、乘法基础' : '2-digit +/-/×/, time & money') + '</td><td style="padding:10px;border-bottom:1px solid #f0e8d8">' + (isZh ? '生命科学、物质性质、简单实验' : 'Life science, matter, basic experiments') + '</td><td style="padding:10px;border-bottom:1px solid #f0e8d8">' + (isZh ? '团队协作、解决问题' : 'Teamwork, problem-solving') + '</td></tr>' +
+        '<tr><td style="padding:10px;border-bottom:1px solid #f0e8d8;font-weight:700">9-12岁</td><td style="padding:10px;border-bottom:1px solid #f0e8d8">' + (isZh ? '流畅阅读、段落写作、阅读理解' : 'Fluent reading, paragraphs, comprehension') + '</td><td style="padding:10px;border-bottom:1px solid #f0e8d8">' + (isZh ? '分数小数、几何、数据图表' : 'Fractions, decimals, geometry, data') + '</td><td style="padding:10px;border-bottom:1px solid #f0e8d8">' + (isZh ? '地球科学、工程设计、批判思维' : 'Earth science, engineering, critical thinking') + '</td><td style="padding:10px;border-bottom:1px solid #f0e8d8">' + (isZh ? '独立研究、领导力、自我反思' : 'Independent research, leadership, reflection') + '</td></tr>' +
+      '</table></div>' +
+    '</div>' +
+
+    // Section 2: Free Tools
+    '<div style="background:white;border-radius:16px;padding:24px;margin-bottom:16px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">' +
+      '<h2 style="font-size:20px;color:#FF8C42;margin-bottom:16px">🛠 ' + (isZh ? '免费教育工具推荐' : 'Free Educational Tools') + '</h2>' +
+      '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px">' +
+        '<div style="border:2px solid #f0e8d8;border-radius:12px;padding:16px">' +
+          '<h3 style="font-size:15px;color:#7C3AED;margin-bottom:6px">⭐ ' + (isZh ? 'HappySprout 综合学习平台' : 'HappySprout Learning Platform') + '</h3>' +
+          '<p style="font-size:13px;color:#666;margin-bottom:8px">' + (isZh ? '100+ 互动课程，中英双语，3-12岁全覆盖，家长可控时长，完全免费。' : '100+ interactive courses, bilingual, ages 3-12, screen time controls, 100% free.') + '</p>' +
+          '<a href="https://kidslearninghub.online" style="color:var(--orange);font-weight:700;font-size:13px">kidslearninghub.online →</a>' +
+        '</div>' +
+        '<div style="border:2px solid #f0e8d8;border-radius:12px;padding:16px">' +
+          '<h3 style="font-size:15px;color:#4A90D9;margin-bottom:6px">Khan Academy Kids</h3>' +
+          '<p style="font-size:13px;color:#666;margin-bottom:8px">' + (isZh ? '国际知名免费教育 App，适合 2-8 岁儿童。数学、阅读、社交情感学习。' : 'World-renowned free educational app for ages 2-8. Math, reading, social-emotional learning.') + '</p>' +
+          '<span style="font-size:13px;color:#999">learn.khanacademy.org</span>' +
+        '</div>' +
+        '<div style="border:2px solid #f0e8d8;border-radius:12px;padding:16px">' +
+          '<h3 style="font-size:15px;color:#E74C3C;margin-bottom:6px">Starfall</h3>' +
+          '<p style="font-size:13px;color:#666;margin-bottom:8px">' + (isZh ? '英语自然拼读启蒙神器，适合 PreK-3 年级。部分免费。' : 'Excellent phonics resource for PreK-Grade 3. Partially free.') + '</p>' +
+          '<span style="font-size:13px;color:#999">starfall.com</span>' +
+        '</div>' +
+        '<div style="border:2px solid #f0e8d8;border-radius:12px;padding:16px">' +
+          '<h3 style="font-size:15px;color:#2E7D32;margin-bottom:6px">National Geographic Kids</h3>' +
+          '<p style="font-size:13px;color:#666;margin-bottom:8px">' + (isZh ? '免费科学和自然知识，适合好奇宝宝探索世界。' : 'Free science and nature content for curious young minds.') + '</p>' +
+          '<span style="font-size:13px;color:#999">kids.nationalgeographic.com</span>' +
+        '</div>' +
+        '<div style="border:2px solid #f0e8d8;border-radius:12px;padding:16px">' +
+          '<h3 style="font-size:15px;color:#FF6B6B;margin-bottom:6px">Storyline Online</h3>' +
+          '<p style="font-size:13px;color:#666;margin-bottom:8px">' + (isZh ? '明星朗读经典绘本，培养阅读兴趣。全免费。' : 'Celebrities reading children\'s books aloud. Completely free.') + '</p>' +
+          '<span style="font-size:13px;color:#999">storylineonline.net</span>' +
+        '</div>' +
+        '<div style="border:2px solid #f0e8d8;border-radius:12px;padding:16px">' +
+          '<h3 style="font-size:15px;color:#C77DFF;margin-bottom:6px">PBS Kids</h3>' +
+          '<p style="font-size:13px;color:#666;margin-bottom:8px">' + (isZh ? '美国公共电视出品的儿童学习游戏和视频。全免费。' : 'Educational games and videos from PBS. Completely free.') + '</p>' +
+          '<span style="font-size:13px;color:#999">pbskids.org</span>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+
+    // Section 3: Educational Methodology
+    '<div style="background:white;border-radius:16px;padding:24px;margin-bottom:16px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">' +
+      '<h2 style="font-size:20px;color:#7C3AED;margin-bottom:16px">🔬 ' + (isZh ? '教育方法论参考' : 'Educational Methodology Reference') + '</h2>' +
+      '<p style="color:#666;font-size:14px;margin-bottom:16px">' + (isZh ? '以下是 HappySprout 课程设计所基于的教育研究和方法论。这些内容可供教育工作者和家长参考引用。' : 'Educational research and methodologies that underpin HappySprout\'s curriculum design. Open for educators and parents to reference and cite.') + '</p>' +
+
+      '<div style="display:flex;flex-direction:column;gap:12px">' +
+        '<details style="border:1px solid #f0e8d8;border-radius:10px;padding:16px">' +
+          '<summary style="font-weight:700;font-size:15px;cursor:pointer;color:#FF8C42">' + (isZh ? '多感官学习法 (Multisensory Learning)' : 'Multisensory Learning') + '</summary>' +
+          '<div style="margin-top:12px;font-size:13px;color:#555;line-height:1.8">' +
+            '<p><strong>' + (isZh ? '核心原则：' : 'Core Principle:') + '</strong> ' + (isZh ? '孩子通过视觉（看）、听觉（听）、语言（说）、运动（做）四种感官通道同时学习时，大脑多个区域被同时激活，记忆效果显著优于单一感官学习。' : 'When children learn through visual, auditory, verbal, and kinesthetic channels simultaneously, multiple brain regions are activated, producing significantly better retention than single-sensory learning.') + '</p>' +
+            '<p><strong>' + (isZh ? '研究支持：' : 'Research:') + '</strong> ' + (isZh ? '多感官学习可将信息记忆留存率提升 3-4 倍（Shams & Seitz, 2008）。这与 Montessori 教育和 Orton-Gillingham 识字教学法的核心理念一致。' : 'Multisensory learning improves information retention by 3-4x (Shams & Seitz, 2008). Aligns with Montessori education and Orton-Gillingham literacy approach.') + '</p>' +
+          '</div>' +
+        '</details>' +
+
+        '<details style="border:1px solid #f0e8d8;border-radius:10px;padding:16px">' +
+          '<summary style="font-weight:700;font-size:15px;cursor:pointer;color:#4A90D9">' + (isZh ? '间隔重复 (Spaced Repetition)' : 'Spaced Repetition') + '</summary>' +
+          '<div style="margin-top:12px;font-size:13px;color:#555;line-height:1.8">' +
+            '<p><strong>' + (isZh ? '核心原则：' : 'Core Principle:') + '</strong> ' + (isZh ? '基于艾宾浩斯遗忘曲线（Ebbinghaus, 1885），在接近遗忘的关键时间点（1天后、3天后、7天后）进行复习，可大幅提升长期记忆。' : 'Based on the Ebbinghaus Forgetting Curve (1885), reviewing content at optimal intervals (1 day, 3 days, 7 days) dramatically improves long-term retention.') + '</p>' +
+            '<p><strong>' + (isZh ? '研究支持：' : 'Research:') + '</strong> ' + (isZh ? '间隔重复可将长期记忆留存率从 20% 提升至 90% 以上（Cepeda et al., 2006）。现代间隔重复系统（如 Anki）已广泛用于语言学习和医学教育。' : 'Spaced repetition can boost long-term retention from 20% to 90%+ (Cepeda et al., 2006). Modern SRS systems (e.g., Anki) are widely used in language learning and medical education.') + '</p>' +
+          '</div>' +
+        '</details>' +
+
+        '<details style="border:1px solid #f0e8d8;border-radius:10px;padding:16px">' +
+          '<summary style="font-weight:700;font-size:15px;cursor:pointer;color:#C77DFF">' + (isZh ? 'CPA 数学教学法' : 'CPA Math Approach') + '</summary>' +
+          '<div style="margin-top:12px;font-size:13px;color:#555;line-height:1.8">' +
+            '<p><strong>' + (isZh ? '核心原则：' : 'Core Principle:') + '</strong> ' + (isZh ? 'Concrete（实物操作）→ Pictorial（图形表示）→ Abstract（抽象符号）。这是新加坡数学教学法的核心，被全球 60+ 国家采用。' : 'Concrete (physical objects) → Pictorial (visual representations) → Abstract (symbols). Core of Singapore Math, adopted by 60+ countries worldwide.') + '</p>' +
+            '<p><strong>' + (isZh ? '研究支持：' : 'Research:') + '</strong> ' + (isZh ? 'CPA 方法源自 Jerome Bruner 的表征理论（1966）。PISA 测试中，新加坡学生数学成绩长期位居世界前列，与 CPA 教学法的系统实施密切相关。' : 'The CPA approach originates from Jerome Bruner\'s theory of representation (1966). Singapore students consistently rank top in PISA math assessments, closely tied to systematic CPA implementation.') + '</p>' +
+          '</div>' +
+        '</details>' +
+
+        '<details style="border:1px solid #f0e8d8;border-radius:10px;padding:16px">' +
+          '<summary style="font-weight:700;font-size:15px;cursor:pointer;color:#2E7D32">' + (isZh ? 'Jolly Phonics 自然拼读体系' : 'Jolly Phonics System') + '</summary>' +
+          '<div style="margin-top:12px;font-size:13px;color:#555;line-height:1.8">' +
+            '<p><strong>' + (isZh ? '核心原则：' : 'Core Principle:') + '</strong> ' + (isZh ? '以合成拼读法 (Synthetic Phonics) 为基础，按照 s-a-t-p-i-n 顺序而非 ABC 顺序教授字母发音，让孩子快速掌握"见词能读"的能力。' : 'Based on Synthetic Phonics, teaching letter sounds in s-a-t-p-i-n order (not ABC order) so children quickly master blending and decoding.') + '</p>' +
+            '<p><strong>' + (isZh ? '研究支持：' : 'Research:') + '</strong> ' + (isZh ? '英国 Rose Review (2006) 和 US National Reading Panel (2000) 均确认 Systematic Synthetic Phonics 是最有效的早期阅读教学法。' : 'UK Rose Review (2006) and US National Reading Panel (2000) both confirm Systematic Synthetic Phonics as the most effective early reading instruction method.') + '</p>' +
+          '</div>' +
+        '</details>' +
+
+        '<details style="border:1px solid #f0e8d8;border-radius:10px;padding:16px">' +
+          '<summary style="font-weight:700;font-size:15px;cursor:pointer;color:#FF6B6B">' + (isZh ? 'Piaget 认知发展理论' : 'Piaget\'s Cognitive Development') + '</summary>' +
+          '<div style="margin-top:12px;font-size:13px;color:#555;line-height:1.8">' +
+            '<p><strong>' + (isZh ? '核心原则：' : 'Core Principle:') + '</strong> ' + (isZh ? '儿童认知发展经历四个阶段：感知运动（0-2岁）→ 前运算（2-7岁）→ 具体运算（7-11岁）→ 形式运算（11岁+）。不同阶段的孩子需要不同的教学方式。' : 'Children progress through four stages: Sensorimotor (0-2) → Preoperational (2-7) → Concrete Operational (7-11) → Formal Operational (11+). Each stage requires different teaching approaches.') + '</p>' +
+            '<p><strong>' + (isZh ? '研究支持：' : 'Research:') + '</strong> ' + (isZh ? 'Piaget 理论虽已 70+ 年历史，但核心框架仍在全球教育体系中被广泛应用。后续研究（如 Vygotsky 的"最近发展区"）进一步丰富了这一理论。' : 'While Piaget\'s theory is 70+ years old, its core framework remains widely applied in global education systems. Later research (e.g., Vygotsky\'s Zone of Proximal Development) has further enriched the framework.') + '</p>' +
+          '</div>' +
+        '</details>' +
+      '</div>' +
+    '</div>' +
+
+    // Section 4: For Educators
+    '<div style="background:linear-gradient(135deg,#FFF3E0,#FFECB3);border-radius:16px;padding:24px;margin-bottom:16px">' +
+      '<h2 style="font-size:20px;color:#8B6914;margin-bottom:12px">🤝 ' + (isZh ? '教育者专区' : 'For Educators') + '</h2>' +
+      '<p style="color:#666;font-size:14px;margin-bottom:12px">' + (isZh ? 'HappySprout 欢迎教育工作者和内容创作者合作。你可以：' : 'HappySprout welcomes collaboration with educators and content creators. You can:') + '</p>' +
+      '<ul style="font-size:13px;color:#555;line-height:2;margin-left:20px">' +
+        '<li>' + (isZh ? '<strong>引用我们的资源</strong> — 在你的博客、课程或社交媒体中自由引用 HappySprout 的内容和方法论。只需附上链接 kidslearninghub.online。' : '<strong>Cite our resources</strong> — Freely reference HappySprout content and methodology in your blog, curriculum, or social media. Just include a link to kidslearninghub.online.') + '</li>' +
+        '<li>' + (isZh ? '<strong>Guest Post</strong> — 欢迎教育博客作者和教育者在我们的平台上发表客座文章。联系我们讨论合作机会。' : '<strong>Guest Posts</strong> — Education bloggers and teachers are welcome to publish guest articles on our platform. Contact us to discuss.') + '</li>' +
+        '<li>' + (isZh ? '<strong>链接交换</strong> — 与其他优质教育网站建立友情链接，共同服务家长和学生。' : '<strong>Link Exchange</strong> — Establish reciprocal links with other quality education sites to serve parents and students.') + '</li>' +
+        '<li>' + (isZh ? '<strong>资源推荐</strong> — 推荐你认为优质的免费儿童教育资源，我们会审核后加入资源列表。' : '<strong>Resource Recommendations</strong> — Suggest quality free kids\' education resources for inclusion in our curated list.') + '</li>' +
+      '</ul>' +
+      '<a href="#feedback" data-page="feedback" style="display:inline-block;margin-top:12px;padding:12px 28px;background:#FF8C42;color:white;border-radius:50px;text-decoration:none;font-weight:700;font-size:14px">' + (isZh ? '💬 联系我们' : '💬 Contact Us') + '</a>' +
     '</div>' +
   '</div>';
 }
