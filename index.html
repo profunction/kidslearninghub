@@ -908,8 +908,6 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px s
   .category-grid { grid-template-columns: repeat(3, 1fr); }
   .banner-wrap { height: 140px; }
   .banner-slide { font-size: 18px; padding: 16px 20px; }
-  .pattern-grid { grid-template-columns: repeat(3, 65px); grid-template-rows: repeat(3, 65px); }
-  .pattern-dot { width: 65px; height: 65px; }
   .stat-row { flex-wrap: wrap; }
   .top-bar { padding: 10px 14px; }
   .top-nav { padding: 6px 14px; }
@@ -3696,8 +3694,35 @@ function navigateTo(page, params = {}) {
     main.innerHTML += renderRelatedSection(page, params);
   }
 
+  // Sync URL hash with current page
+  try {
+    var hashStr = '#' + page;
+    if (Object.keys(params).length > 0) {
+      var qs = Object.keys(params).map(function(k) { return k + '=' + encodeURIComponent(params[k]); }).join('&');
+      hashStr += '?' + qs;
+    }
+    if (window.location.hash !== hashStr) {
+      history.replaceState(null, '', hashStr);
+    }
+  } catch(_) {}
+
   window.scrollTo(0, 0);
 }
+
+// Also handle browser back/forward navigation
+window.addEventListener('hashchange', function() {
+  var hash = window.location.hash.replace('#', '');
+  var page = hash.split('?')[0] || 'home';
+  var params = {};
+  var qs = hash.split('?')[1];
+  if (qs) {
+    qs.split('&').forEach(function(pair) {
+      var kv = pair.split('=');
+      if (kv.length === 2) params[kv[0]] = decodeURIComponent(kv[1]);
+    });
+  }
+  navigateTo(page, params);
+});
 
 // ─── EVENT DELEGATION: Intercept hash-link clicks ──────────────
 // Converts <a href="#page" data-page="..."> clicks into SPA navigation
@@ -6337,21 +6362,42 @@ function renderSubjectHub(container, subject) {
   '</div>';
 }
 function init() {
-  // Ensure store has all default fields
-  const defaults = getStore();
-  const s = { ...defaults, ...JSON.parse(localStorage.getItem('kids_edu_store') || '{}') };
-  // Merge missing defaults
-  if (!s.playlists) s.playlists = { "默认": [] };
-  if (!s.parentSettings) s.parentSettings = { sessionLimit: 20, dailyLimit: 60, blockStart: "21:00", blockEnd: "07:00", blockEnabled: false, hiddenVideos: [] };
-  if (!s.parentSettings.hiddenVideos) s.parentSettings.hiddenVideos = [];
-  if (!s.soundEnabled && s.soundEnabled !== false) s.soundEnabled = true;
-  if (!s.streakDates) s.streakDates = [];
-  if (!s.progress) s.progress = {};
-  saveStore(s);
+  try {
+    // Ensure store has all default fields
+    const defaults = getStore();
+    const s = { ...defaults, ...JSON.parse(localStorage.getItem('kids_edu_store') || '{}') };
+    // Merge missing defaults
+    if (!s.playlists) s.playlists = { "默认": [] };
+    if (!s.parentSettings) s.parentSettings = { sessionLimit: 20, dailyLimit: 60, blockStart: "21:00", blockEnd: "07:00", blockEnabled: false, hiddenVideos: [] };
+    if (!s.parentSettings.hiddenVideos) s.parentSettings.hiddenVideos = [];
+    if (!s.soundEnabled && s.soundEnabled !== false) s.soundEnabled = true;
+    if (!s.streakDates) s.streakDates = [];
+    if (!s.progress) s.progress = {};
+    saveStore(s);
 
-  // Initial render
-  updateNavLabels();
-  navigateTo('home');
+    // Handle initial hash-based navigation (restore page on reload)
+    var hash = window.location.hash.replace('#', '');
+    var initialPage = 'home';
+    var initialParams = {};
+    if (hash) {
+      var parts = hash.split('?');
+      initialPage = parts[0];
+      if (parts[1]) {
+        parts[1].split('&').forEach(function(pair) {
+          var kv = pair.split('=');
+          if (kv.length === 2) initialParams[kv[0]] = decodeURIComponent(kv[1]);
+        });
+      }
+    }
+
+    // Initial render
+    updateNavLabels();
+    navigateTo(initialPage, initialParams);
+  } catch(e) {
+    console.error('HappySprout init error:', e);
+    var main = document.getElementById('main-content');
+    if (main) main.innerHTML = '<div class="page active" style="text-align:center;padding:40px"><p>Loading error. Please refresh the page.</p></div>';
+  }
 }
 
 // ─── START ─────────────────────────────────────────────────────
