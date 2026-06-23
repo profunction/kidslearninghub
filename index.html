@@ -2,9 +2,17 @@
 <html lang="zh-CN" id="app-root">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="description" content="HappySprout 提供 100+ 免费儿童教育游戏、可打印练习册和创意学习活动，专为 3-12 岁孩子设计，让学习充满乐趣。立即开始探索！">
 <title>儿童学习乐园 | HappySprout - 免费幼儿教育游戏与练习册</title>
+
+<!-- Performance: preconnect to YouTube CDN -->
+<link rel="preconnect" href="https://img.youtube.com">
+<link rel="preconnect" href="https://i.ytimg.com">
+<link rel="preconnect" href="https://www.youtube.com">
+<!-- Performance: DNS prefetch -->
+<link rel="dns-prefetch" href="https://img.youtube.com">
+<link rel="dns-prefetch" href="https://i.ytimg.com">
 
 <!-- Structured Data: Organization -->
 <script type="application/ld+json">
@@ -66,7 +74,7 @@
   --bg: #FFF8F0;
   --bg-card: #FFFFFF;
   --text: #2D3436;
-  --text-light: #636E72;
+  --text-light: #4A5257;
   --shadow: 0 4px 20px rgba(0,0,0,0.08);
   --radius-lg: 24px;
   --radius-md: 16px;
@@ -83,6 +91,7 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", sans-serif;
+  font-size: 16px;
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
@@ -90,6 +99,10 @@ body {
   overflow-x: hidden;
   -webkit-tap-highlight-color: transparent;
 }
+
+/* Accessibility: focus-visible ring for keyboard navigation */
+:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; border-radius: 4px; }
+button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
 
 /* ============================================
    TOP BAR
@@ -112,13 +125,60 @@ body {
 .top-bar .logo-img { height: 36px; width: auto; border-radius: 8px; }
 .top-bar-actions { display: flex; gap: 8px; align-items: center; }
 .top-btn {
-  width: 42px; height: 42px; border-radius: 50%;
+  width: 44px; height: 44px; min-width: 44px; min-height: 44px; border-radius: 50%;
   border: 2px solid #f0e8d8; background: white;
   font-size: 20px; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   transition: all 0.2s;
 }
+.top-btn:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+.top-btn:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
 .top-btn:active { transform: scale(0.9); background: #f8f0e0; }
+
+/* ============================================
+   TOP NAVIGATION BAR (horizontal links)
+   ============================================ */
+.top-nav {
+  position: sticky; top: 68px; z-index: 99;
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(12px);
+  display: flex; gap: 4px; padding: 8px 20px;
+  border-bottom: 1px solid #f0e8d8;
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.top-nav::-webkit-scrollbar { display: none; }
+.top-nav-item {
+  flex-shrink: 0; padding: 8px 16px; min-height: 40px;
+  border-radius: 20px; border: none; background: transparent;
+  font-size: 14px; font-weight: 600; color: var(--text-light);
+  cursor: pointer; transition: all 0.2s; white-space: nowrap;
+}
+.top-nav-item:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+.top-nav-item.active { background: var(--orange); color: #fff; }
+.top-nav-item:active { transform: scale(0.95); }
+
+/* ============================================
+   BREADCRUMB
+   ============================================ */
+.breadcrumb {
+  padding: 8px 20px; font-size: 13px; color: var(--text-light);
+  display: flex; gap: 4px; flex-wrap: wrap; align-items: center;
+}
+.breadcrumb-item + .breadcrumb-item::before { content: "›"; margin: 0 4px; color: #ccc; }
+.breadcrumb-item a { color: var(--text-light); text-decoration: none; }
+.breadcrumb-item a:hover { color: var(--orange); text-decoration: underline; }
+.breadcrumb-item:last-child { color: var(--orange); font-weight: 600; }
+
+/* Hide breadcrumb on home page */
+.breadcrumb.home-hidden { display: none; }
+
+/* Responsive logo text */
+.logo-text-short { display: none; }
+@media (max-width: 500px) {
+  .logo-text-full { display: none; }
+  .logo-text-short { display: inline; }
+}
 
 /* ============================================
    BOTTOM NAV
@@ -133,11 +193,12 @@ body {
 }
 .nav-item {
   display: flex; flex-direction: column; align-items: center; gap: 2px;
-  padding: 6px 12px; border-radius: 16px;
+  padding: 8px 12px; border-radius: 16px; min-width: 48px; min-height: 48px;
   cursor: pointer; transition: all 0.2s;
-  font-size: 11px; color: var(--text-light); font-weight: 600;
+  font-size: 12px; color: var(--text-light); font-weight: 600;
   background: none; border: none;
 }
+.nav-item:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
 .nav-item .nav-icon { font-size: 26px; }
 .nav-item.active { color: var(--orange); transform: scale(1.08); }
 .nav-item:active { transform: scale(0.92); }
@@ -175,6 +236,7 @@ body {
   color: var(--text-light);
 }
 .age-pill.active { border-color: var(--orange); background: #FFF3E8; color: var(--orange); }
+.age-pill:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
 .age-pill:active { transform: scale(0.95); }
 .age-pill .age-emoji { font-size: 22px; margin-right: 4px; }
 
@@ -817,11 +879,26 @@ body {
   .pattern-grid { grid-template-columns: repeat(3, 65px); grid-template-rows: repeat(3, 65px); }
   .pattern-dot { width: 65px; height: 65px; }
   .stat-row { flex-wrap: wrap; }
+  .top-bar { padding: 10px 14px; }
+  .top-nav { padding: 6px 14px; }
+  .breadcrumb { padding: 6px 14px; }
+  .page { padding: 12px 14px; }
+  .section-title { font-size: 18px; margin: 14px 0 10px; }
+}
+
+@media (max-width: 400px) {
+  .video-grid { grid-template-columns: 1fr; }
+  .top-nav-item { padding: 6px 12px; font-size: 13px; }
+  .age-pill { padding: 10px 18px; font-size: 14px; }
+  .section-title { font-size: 17px; }
 }
 
 @media (min-width: 768px) {
   .page { max-width: 900px; margin: 0 auto; }
   .category-grid { grid-template-columns: repeat(5, 1fr); }
+  .video-grid { grid-template-columns: repeat(4, 1fr); }
+  .top-nav-item { font-size: 15px; padding: 10px 22px; }
+  .bottom-nav { max-width: 600px; left: 50%; transform: translateX(-50%); border-radius: 20px 20px 0 0; }
 }
 
 /* ============================================
@@ -846,46 +923,65 @@ body {
 <!-- ============================================================
      TOP BAR
      ============================================================ -->
-<header class="top-bar">
+<header class="top-bar" role="banner">
   <div class="logo">
-    <img class="logo-img" src="logo.png" alt="HappySprout Kids Learning - 儿童学习乐园 Logo">
-    <span>HappySprout Kids Learning – Fun Educational Activities for Children</span>
+    <picture>
+      <source srcset="logo.webp" type="image/webp">
+      <img class="logo-img" src="logo.png" alt="HappySprout Kids Learning - 儿童学习乐园 Logo" width="36" height="36">
+    </picture>
+    <span class="logo-text-full">HappySprout Kids Learning – Fun Educational Activities for Children</span>
+    <span class="logo-text-short">Kids Learning Hub</span>
   </div>
   <div class="top-bar-actions">
-    <button class="top-btn" id="lang-toggle" onclick="toggleLang()" title="Switch Language">🌐</button>
-    <button class="top-btn" onclick="navigateTo('search')" title="搜索">🔍</button>
-    <button class="top-btn" onclick="navigateTo('favorites')" title="收藏夹">❤️</button>
+    <button class="top-btn" id="lang-toggle" onclick="toggleLang()" title="Switch Language" aria-label="Switch Language">🌐</button>
+    <button class="top-btn" onclick="navigateTo('search')" title="搜索" aria-label="Search">🔍</button>
+    <button class="top-btn" onclick="navigateTo('favorites')" title="收藏夹" aria-label="Favorites">❤️</button>
   </div>
 </header>
+
+<!-- Top Navigation Bar -->
+<nav class="top-nav" id="top-nav" role="navigation" aria-label="Main navigation">
+  <button class="top-nav-item active" onclick="navigateTo('home')" aria-current="page">首页</button>
+  <button class="top-nav-item" onclick="navigateTo('courses')">课程</button>
+  <button class="top-nav-item" onclick="navigateTo('practice')">练习册</button>
+  <button class="top-nav-item" id="top-nav-age" onclick="navigateTo('ageHub')">按年龄</button>
+  <button class="top-nav-item" onclick="navigateTo('blog')">博客</button>
+  <button class="top-nav-item" onclick="navigateTo('about')">关于我们</button>
+</nav>
+
+<!-- Breadcrumb -->
+<nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb">
+  <span class="breadcrumb-item"><a href="javascript:void(0)" onclick="navigateTo('home')">首页</a></span>
+</nav>
 
 <!-- ============================================================
      MAIN CONTENT AREA - All pages rendered here
      ============================================================ -->
-<main id="main-content"></main>
+<main id="main-content" role="main" aria-label="Main content"></main>
 
 <!-- ============================================================
      BOTTOM NAVIGATION
      ============================================================ -->
-<nav class="bottom-nav" id="bottom-nav">
-  <button class="nav-item active" data-page="home" onclick="navigateTo('home')">
+<nav class="bottom-nav" id="bottom-nav" role="navigation" aria-label="Bottom navigation">
+  <button class="nav-item active" data-page="home" onclick="navigateTo('home')" aria-label="首页 - Home">
     <span class="nav-icon">🏠</span> <span class="nav-label">首页</span>
   </button>
-  <button class="nav-item" data-page="courses" onclick="navigateTo('courses')">
+  <button class="nav-item" data-page="courses" onclick="navigateTo('courses')" aria-label="课程 - Courses">
     <span class="nav-icon">📖</span> <span class="nav-label">课程</span>
   </button>
-  <button class="nav-item" data-page="practice" onclick="navigateTo('practice')">
+  <button class="nav-item" data-page="practice" onclick="navigateTo('practice')" aria-label="练习 - Practice">
     <span class="nav-icon">🎮</span> <span class="nav-label">练习</span>
   </button>
-  <button class="nav-item" data-page="me" onclick="navigateTo('me')">
+  <button class="nav-item" data-page="me" onclick="navigateTo('me')" aria-label="成就 - Achievements">
     <span class="nav-icon">⭐</span> <span class="nav-label">成就</span>
   </button>
-  <button class="nav-item" data-page="parent" onclick="navigateTo('parent')">
+  <button class="nav-item" data-page="parent" onclick="navigateTo('parent')" aria-label="设置 - Settings">
     <span class="nav-icon">🔒</span> <span class="nav-label">设置</span>
   </button>
 </nav>
 
-<!-- Parent panel quick lock button (also accessible from bottom nav) -->
-<button class="parent-lock" onclick="openParentLock()" title="家长面板">🔒</button>
+<!-- Parent panel quick lock button -->
+<button class="parent-lock" onclick="openParentLock()" title="家长面板" aria-label="家长面板 - Parent Panel">🔒</button>
 
 <!-- ============================================================
      JAVASCRIPT APPLICATION
@@ -2308,6 +2404,30 @@ function toggleLang() {
   // Re-render current page
   navigateTo(APP.currentPage);
   updateNavLabels();
+  updateTopNavLabels();
+  updateBreadcrumb(APP.currentPage, {});
+}
+
+function updateTopNavLabels() {
+  var isZh = APP.lang === 'zh';
+  var items = document.querySelectorAll('.top-nav-item');
+  var labels = isZh
+    ? ['首页','课程','练习册','按年龄','博客','关于我们']
+    : ['Home','Courses','Worksheets','By Age','Blog','About'];
+  items.forEach(function(item, i) {
+    if (labels[i]) item.textContent = labels[i];
+  });
+  // Update lang toggle button
+  var langBtn = document.getElementById('lang-toggle');
+  if (langBtn) {
+    langBtn.setAttribute('aria-label', isZh ? 'Switch to English' : '切换到中文');
+    langBtn.setAttribute('title', isZh ? 'Switch to English' : '切换到中文');
+  }
+  // Update search/fav buttons
+  var searchBtn = document.querySelector('.top-btn[onclick*="search"]');
+  if (searchBtn) { searchBtn.setAttribute('aria-label', isZh ? '搜索' : 'Search'); searchBtn.setAttribute('title', isZh ? '搜索' : 'Search'); }
+  var favBtn = document.querySelector('.top-btn[onclick*="favorites"]');
+  if (favBtn) { favBtn.setAttribute('aria-label', isZh ? '收藏夹' : 'Favorites'); favBtn.setAttribute('title', isZh ? '收藏夹' : 'Favorites'); }
 }
 
 function updateNavLabels() {
@@ -2657,6 +2777,54 @@ function getBreadcrumb(page, lang) {
   };
 }
 
+// ─── TOP NAV & BREADCRUMB UI UPDATE ────────────────────────────
+function updateTopNav(page) {
+  var topNavItems = document.querySelectorAll('.top-nav-item');
+  var pageMap = {
+    'home': 0, 'courses': 1, 'course': 1, 'practice': 2,
+    'ageHub': 3, 'blog': 4, 'blogPost': 4, 'about': 5
+  };
+  var activeIdx = pageMap[page];
+  topNavItems.forEach(function(item, i) {
+    item.classList.toggle('active', i === activeIdx);
+    if (i === activeIdx) {
+      item.setAttribute('aria-current', 'page');
+    } else {
+      item.removeAttribute('aria-current');
+    }
+  });
+}
+
+function updateBreadcrumb(page, params) {
+  var bc = document.getElementById('breadcrumb');
+  if (!bc) return;
+  var isZh = document.documentElement.lang === 'zh-CN';
+
+  var labels = {
+    home:     isZh ? '首页' : 'Home',
+    courses:  isZh ? '课程' : 'Courses',
+    course:   isZh ? '课程详情' : 'Course',
+    practice: isZh ? '练习册' : 'Worksheets',
+    blog:     isZh ? '博客' : 'Blog',
+    blogPost: isZh ? '文章' : 'Article',
+    about:    isZh ? '关于我们' : 'About',
+    feedback: isZh ? '反馈' : 'Feedback',
+    ageHub:   isZh ? '按年龄' : 'By Age',
+    search:   isZh ? '搜索' : 'Search',
+    me:       isZh ? '个人中心' : 'Profile',
+    parent:   isZh ? '家长设置' : 'Settings'
+  };
+
+  var html = '<span class="breadcrumb-item"><a href="javascript:void(0)" onclick="navigateTo(\'home\')">' + labels.home + '</a></span>';
+
+  if (page !== 'home' && labels[page]) {
+    html += '<span class="breadcrumb-item">' + labels[page] + '</span>';
+  }
+
+  bc.innerHTML = html;
+  bc.classList.toggle('home-hidden', page === 'home');
+}
+
 // ─── COURSE SCHEMA ─────────────────────────────────────────────
 function getCourseSchema(courseId, lang) {
   var detail = COURSE_DETAIL[courseId];
@@ -2876,6 +3044,12 @@ function navigateTo(page, params = {}) {
   } else if (['watch', 'course', 'search', 'favorites', 'channel', 'about', 'feedback', 'feedbackThanks', 'blog', 'blogPost'].includes(page)) {
     document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
   }
+
+  // Update top navigation bar active state
+  updateTopNav(page);
+
+  // Update breadcrumb
+  updateBreadcrumb(page, params);
 
   const main = document.getElementById('main-content');
   main.innerHTML = '';
