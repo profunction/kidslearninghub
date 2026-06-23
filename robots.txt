@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /assets/
+Disallow: /private/
+
+Sitemap: https://kidslearninghub.online/sitemap.xml

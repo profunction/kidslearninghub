@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta name="description" content="Discover fun and engaging educational activities for kids at HappySprout. Printable worksheets, learning games, and creative ideas to help children grow with joy.">
-<title>HappySprout Kids Learning – Fun Educational Activities for Children</title>
+<meta name="description" content="HappySprout 提供 100+ 免费儿童教育游戏、可打印练习册和创意学习活动，专为 3-12 岁孩子设计，让学习充满乐趣。立即开始探索！">
+<title>儿童学习乐园 | HappySprout - 免费幼儿教育游戏与练习册</title>
 <style>
 /* ================================================================
    HappySprout Kids Learning – Fun Educational Activities for Children - CSS Design System
@@ -809,7 +809,7 @@ body {
      ============================================================ -->
 <header class="top-bar">
   <div class="logo">
-    <img class="logo-img" src="logo.png" alt="Study Corner Learning Center">
+    <img class="logo-img" src="logo.png" alt="HappySprout Kids Learning - 儿童学习乐园 Logo">
     <span>HappySprout Kids Learning – Fun Educational Activities for Children</span>
   </div>
   <div class="top-bar-actions">
@@ -1668,6 +1668,8 @@ const I18N = {
     notSet: '未设置',
     // PIN setup
     welcomeTitle: '欢迎来到 HappySprout Kids Learning – Fun Educational Activities for Children！',
+    homeHeading: '儿童学习乐园 - 免费幼儿教育游戏与练习册',
+    coursesHeading: '儿童在线课程 - 3-12岁趣味学习资源',
     welcomeSub: '家长您好，请先设置您的图案密码',
     welcomeHint: '这个密码将用于管理孩子的学习时长和内容',
     startSetup: '开始设置密码',
@@ -1988,6 +1990,8 @@ const I18N = {
     notSet: 'Not set',
     // PIN setup
     welcomeTitle: 'Welcome to HappySprout Kids Learning – Fun Educational Activities for Children!',
+    homeHeading: 'HappySprout - Free Educational Games & Worksheets for Kids',
+    coursesHeading: 'Online Courses for Kids - Fun Learning for Ages 3-12',
     welcomeSub: 'Hello parent, please set up your pattern PIN',
     welcomeHint: 'This PIN will be used to manage learning time and content',
     startSetup: 'Set Up PIN',
@@ -2374,10 +2378,69 @@ function updateStreak() {
 }
 
 // ─── ROUTING ──────────────────────────────────────────────────
+// ─── SEO: Dynamic title/meta per page ──────────────────────────
+const SEO_TITLES = {
+  zh: {
+    home: '儿童学习乐园 | HappySprout - 免费幼儿教育游戏与练习册',
+    courses: '儿童在线课程 | HappySprout - 3-12岁趣味学习资源',
+    course: '儿童在线课程 | HappySprout - 3-12岁趣味学习资源',
+    practice: '儿童练习册下载 | HappySprout - 免费打印学习材料',
+    watch: '儿童学习视频 | HappySprout',
+    me: '我的学习中心 | HappySprout Kids Learning',
+    parent: '家长设置 | HappySprout Kids Learning',
+    search: '搜索学习内容 | HappySprout Kids Learning',
+    favorites: '我的收藏 | HappySprout Kids Learning',
+    channel: '儿童学习频道 | HappySprout',
+    about: '关于我们 | HappySprout Kids Learning',
+    feedback: '意见反馈 | HappySprout Kids Learning',
+    feedbackThanks: '感谢反馈 | HappySprout Kids Learning'
+  },
+  en: {
+    home: 'HappySprout Kids Learning - Free Educational Games & Worksheets',
+    courses: 'Kids Online Courses | HappySprout - Fun Learning for Ages 3-12',
+    course: 'Kids Online Courses | HappySprout - Fun Learning for Ages 3-12',
+    practice: 'Kids Worksheets Download | HappySprout - Free Printable Materials',
+    watch: 'Kids Learning Videos | HappySprout',
+    me: 'My Learning Center | HappySprout Kids Learning',
+    parent: 'Parent Settings | HappySprout Kids Learning',
+    search: 'Search Activities | HappySprout Kids Learning',
+    favorites: 'My Favorites | HappySprout Kids Learning',
+    channel: 'Kids Learning Channel | HappySprout',
+    about: 'About Us | HappySprout Kids Learning',
+    feedback: 'Feedback | HappySprout Kids Learning',
+    feedbackThanks: 'Thank You | HappySprout Kids Learning'
+  }
+};
+
+const SEO_DESCRIPTIONS = {
+  zh: {
+    home: 'HappySprout 提供 100+ 免费儿童教育游戏、可打印练习册和创意学习活动，专为 3-12 岁孩子设计，让学习充满乐趣。立即开始探索！',
+    courses: '浏览 HappySprout 精选儿童在线课程，涵盖英语启蒙、数学思维、科学探索等主题，适合 3-12 岁儿童的自适应学习路径。',
+    practice: '免费下载儿童练习册和可打印学习材料。HappySprout 提供字母描红、数字练习、迷宫游戏等寓教于乐的习题。'
+  },
+  en: {
+    home: 'HappySprout offers 100+ free educational games, printable worksheets & creative activities for kids ages 3-12. Make learning fun — start exploring today!',
+    courses: 'Explore HappySprout curated online courses for kids — English, math, science & more. Adaptive learning paths for ages 3-12.',
+    practice: 'Download free kids worksheets & printable learning materials. Alphabet tracing, number practice, mazes & more fun exercises from HappySprout.'
+  }
+};
+
+function updateSEO(page, params) {
+  var lang = document.documentElement.lang === 'en' ? 'en' : 'zh';
+  var title = (SEO_TITLES[lang] || SEO_TITLES.zh)[page] || SEO_TITLES.zh.home;
+  var desc = (SEO_DESCRIPTIONS[lang] || SEO_DESCRIPTIONS.zh)[page] || (SEO_DESCRIPTIONS[lang] || SEO_DESCRIPTIONS.zh).home;
+  document.title = title;
+  var meta = document.querySelector('meta[name="description"]');
+  if (meta) meta.setAttribute('content', desc);
+}
+
 function navigateTo(page, params = {}) {
   APP.currentPage = page;
   APP.ageFilter = params.ageFilter !== undefined ? params.ageFilter : APP.ageFilter;
   APP.categoryFilter = params.categoryFilter !== undefined ? params.categoryFilter : APP.categoryFilter;
+
+  // Update SEO title and meta description
+  updateSEO(page, params);
 
   // Update bottom nav
   document.querySelectorAll('.nav-item').forEach(el => {
@@ -2441,6 +2504,7 @@ function renderHome(container) {
 
   container.innerHTML = `
     <div class="page active">
+      <h1 style="font-size:22px;font-weight:800;color:var(--orange);margin-bottom:12px">${t('homeHeading')}</h1>
       <!-- Age filter pills -->
       <div class="age-filters">
         <button class="age-pill ${age === null ? 'active' : ''}" onclick="navigateTo('home',{ageFilter:null})">
@@ -2718,7 +2782,7 @@ function renderWatch(container, videoId) {
 
       <!-- Video info -->
       <div style="background:white;padding:16px;border-radius:var(--radius-lg);box-shadow:var(--shadow)">
-        <h2 style="font-size:18px;margin-bottom:6px">${video.title}</h2>
+        <h1 style="font-size:18px;margin-bottom:6px">${video.title}</h1>
         <p style="color:var(--text-light);font-size:13px;margin-bottom:4px">📺 ${video.channel} · ⏱ ${video.duration}</p>
         <p style="color:var(--text-light);font-size:13px">🏷 ${video.category} · 👶 ${video.ages[0]}-${video.ages[1]}岁</p>
       </div>
@@ -3052,7 +3116,7 @@ function renderCoursesList(container) {
   const s = getStore();
   container.innerHTML = `
     <div class="page active">
-      <div class="section-title"><span class="icon">📖</span> ${t('themedCourses')}</div>
+      <h1 style="font-size:22px;font-weight:800;color:var(--orange);margin-bottom:12px">${t('coursesHeading')}</h1>
       <p style="color:var(--text-light);margin-bottom:16px">${t('courseUnlockHint')}</p>
       ${COURSE_DB.map(c => {
         const completedCount = c.videoIds.filter(vid => s.completed.includes(vid)).length;
@@ -3166,7 +3230,7 @@ function renderCourse(container, courseId) {
 
       <div class="course-header" style="background:linear-gradient(135deg,${course.color},${course.color}dd)">
         <span style="font-size:40px">${course.icon}</span>
-        <h2>${t(courseNameKey)}</h2>
+        <h1 style="font-size:20px;margin:8px 0">${t(courseNameKey)}</h1>
         <div class="course-progress-text">
           ${t('learnedCount')} ${completedCount}/${course.videoIds.length} ${t('lessonsCompletedPct')} ${pct}%
         </div>
