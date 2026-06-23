@@ -1,0 +1,42 @@
+# HappySprout Kids Learning
+
+> HappySprout is a bilingual (Chinese/English) educational video platform for children aged 3-12. We curate 59+ high-quality YouTube videos across 6 subjects: English ABC, Math & Logic, Science, Art & Crafts, Music & Rhythm, and Story Mode. Features include practice exercises, parental controls, progress tracking, and a reward system.
+
+## Key Pages
+
+- [Homepage](https://kidslearninghub.online/): Main entry with video browsing, category filters, age filters, featured dance hits, and story recommendations
+- [All Courses](https://kidslearninghub.online/#courses): Structured courses with learning objectives, how-to guides, and educational value sections
+- [Practice Exercises](https://kidslearninghub.online/#practice): Interactive listening, matching, speaking, and memory games per course
+- [Browse by Age](https://kidslearninghub.online/#ageHub): Age-based content clusters: 3-5岁, 6-8岁, 9-12岁 with filtered videos and parenting tips
+- [Subject Hubs](https://kidslearninghub.online/#subjectHub): Subject-based content clusters for math, English, science, art
+
+## Site Features
+
+- **Video Search**: Navigate to search page for video lookup
+- **Favorites**: Bookmark and manage favorite videos
+- **Parental Controls**: PIN-protected settings for session limits, daily limits, and content filtering
+- **Progress Tracking**: Stars and completion tracking for each video
+- **Drawing Board**: In-video drawing overlay for creative learning
+- **Blog**: Parent education articles on teaching math, focus skills, early literacy, screen time management, and creative learning
+- **About & Feedback**: Mission, story, and feedback submission
+
+## Content
+
+- 59 curated YouTube videos across 6 categories
+- 15+ YouTube channels including Super Simple Songs, CoComelon, StorylineOnline, Numberblocks, Art for Kids Hub, SciShow Kids
+- Bilingual interface (Chinese / English toggle)
+- PWA-capable with offline access
+
+## Technical Notes
+
+- Single-page application (SPA) with hash-based routing
+- Hosted on GitHub Pages at kidslearninghub.online
+- Videos embed from YouTube with nocookie domain
+- Structured data: Organization, WebSite, Course, FAQPage, BreadcrumbList, Article, CollectionPage (JSON-LD)
+- WCAG 2.1 AA accessible with ARIA landmarks, keyboard navigation, focus indicators
+
+## Optional
+
+- [robots.txt](https://kidslearninghub.online/robots.txt): Crawler access rules
+- [sitemap.xml](https://kidslearninghub.online/sitemap.xml): Search engine sitemap
+- [GitHub Repository](https://github.com/profunction/kidslearninghub): Source code

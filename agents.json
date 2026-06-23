@@ -1,0 +1,27 @@
+{
+  "agents": [
+    {
+      "name": "HappySprout Kids Learning",
+      "description": "Bilingual educational video platform for children aged 3-12",
+      "url": "https://kidslearninghub.online/",
+      "protocols": {
+        "webmcp": {
+          "manifest": "https://kidslearninghub.online/.well-known/mcp"
+        },
+        "openapi": {
+          "spec": null
+        }
+      },
+      "capabilities": [
+        "content_discovery",
+        "video_search",
+        "course_browsing",
+        "practice_exercises",
+        "age_filtering",
+        "category_filtering"
+      ],
+      "languages": ["zh", "en"]
+    }
+  ],
+  "$schema": "https://kidslearninghub.online/agents.schema.json"
+}

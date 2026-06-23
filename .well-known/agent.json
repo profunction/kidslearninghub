@@ -1,0 +1,38 @@
+{
+  "name": "HappySprout Kids Learning",
+  "description": "Bilingual educational video platform for children aged 3-12. Browse curated videos, structured courses, and practice exercises.",
+  "url": "https://kidslearninghub.online/",
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false
+  },
+  "skills": [
+    {
+      "name": "video_search",
+      "description": "Search educational videos by keyword, age group, or category"
+    },
+    {
+      "name": "course_browsing",
+      "description": "Browse structured learning courses with objectives and guided practice"
+    },
+    {
+      "name": "content_filtering",
+      "description": "Filter content by child age: 3-5, 6-8, or 9-12 years"
+    },
+    {
+      "name": "category_exploration",
+      "description": "Explore content by subject: English, Math, Science, Art, Music, Stories"
+    },
+    {
+      "name": "feedback_submission",
+      "description": "Accept and process user feedback and suggestions"
+    }
+  ],
+  "defaultInputModes": ["text"],
+  "defaultOutputModes": ["text"],
+  "preferredLanguages": ["zh", "en"],
+  "protocols": {
+    "webmcp": "https://kidslearninghub.online/.well-known/mcp.json",
+    "mcp": "https://kidslearninghub.online/.well-known/server-card.json"
+  }
+}

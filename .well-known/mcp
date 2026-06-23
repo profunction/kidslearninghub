@@ -1,0 +1,11 @@
+{
+  "mcp_version": "2025-11-25",
+  "endpoints": [
+    {
+      "url": "https://kidslearninghub.online/",
+      "transport": "streamable-http",
+      "capabilities": ["tools", "resources"],
+      "description": "HappySprout Kids Learning website — static HTML SPA with content browsing, search, and educational tools"
+    }
+  ]
+}

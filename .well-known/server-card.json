@@ -1,0 +1,63 @@
+{
+  "$schema": "https://modelcontextprotocol.io/schemas/server-card/v1.0",
+  "version": "1.0",
+  "protocolVersion": "2025-06-18",
+  "serverInfo": {
+    "name": "HappySprout Kids Learning",
+    "version": "1.0.0",
+    "description": "Bilingual educational video platform for children aged 3-12. Browse 59+ curated videos across 6 subjects, structured courses, practice exercises, and parental controls.",
+    "homepage": "https://kidslearninghub.online/"
+  },
+  "transport": {
+    "type": "streamable-http",
+    "url": "https://kidslearninghub.online/"
+  },
+  "capabilities": {
+    "tools": true,
+    "resources": true,
+    "prompts": false
+  },
+  "tools": [
+    {
+      "name": "search_videos",
+      "description": "Search the HappySprout video library by keyword. Returns matching educational videos with titles, channels, age groups, and categories."
+    },
+    {
+      "name": "browse_by_age",
+      "description": "Filter all content by child age group: 3-5 years, 6-8 years, or 9-12 years."
+    },
+    {
+      "name": "browse_by_category",
+      "description": "Browse videos by subject category: English ABC, Math, Science, Art, Music, or Stories."
+    },
+    {
+      "name": "view_course",
+      "description": "View a structured course with learning objectives, video timeline, and guided practice exercises."
+    },
+    {
+      "name": "submit_feedback",
+      "description": "Submit feedback, bug reports, feature requests, or content suggestions."
+    },
+    {
+      "name": "get_course_list",
+      "description": "List all available structured courses with their names, descriptions, and target age groups."
+    }
+  ],
+  "resources": [
+    {
+      "uri": "https://kidslearninghub.online/llms.txt",
+      "name": "llms.txt",
+      "description": "LLM-friendly site overview with key pages and content structure"
+    },
+    {
+      "uri": "https://kidslearninghub.online/robots.txt",
+      "name": "robots.txt",
+      "description": "Crawler access rules for search engines and AI bots"
+    },
+    {
+      "uri": "https://kidslearninghub.online/sitemap.xml",
+      "name": "sitemap.xml",
+      "description": "Search engine sitemap"
+    }
+  ]
+}

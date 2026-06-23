@@ -6,6 +6,11 @@
 <meta name="description" content="HappySprout 提供 100+ 免费儿童教育游戏、可打印练习册和创意学习活动，专为 3-12 岁孩子设计，让学习充满乐趣。立即开始探索！">
 <title>儿童学习乐园 | HappySprout - 免费幼儿教育游戏与练习册</title>
 
+<!-- Security headers for AI agent trust -->
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
 <!-- Performance: preconnect to YouTube CDN -->
 <link rel="preconnect" href="https://img.youtube.com">
 <link rel="preconnect" href="https://i.ytimg.com">
@@ -51,6 +56,15 @@
   }
 }
 </script>
+
+<!-- WebMCP Declarative API: Expose site tools to AI agents -->
+<meta name="webmcp:tool" data-tool="search_videos" data-tool-category="discovery" data-tool-description="Search the HappySprout video library by keyword. Returns matching educational videos with titles, channels, ages, and categories.">
+<meta name="webmcp:tool" data-tool="browse_by_age" data-tool-category="filter" data-tool-description="Filter all content by child age group: 3-5 years, 6-8 years, or 9-12 years.">
+<meta name="webmcp:tool" data-tool="browse_by_category" data-tool-category="filter" data-tool-description="Browse videos by subject: English ABC, Math, Science, Art, Music, or Stories.">
+<meta name="webmcp:tool" data-tool="view_course" data-tool-category="education" data-tool-description="View a structured course with learning objectives, video timeline, and guided practice exercises.">
+<meta name="webmcp:tool" data-tool="submit_feedback" data-tool-category="interaction" data-tool-description="Submit feedback, bug reports, feature requests, or content suggestions about HappySprout.">
+<meta name="webmcp:manifest" content="https://kidslearninghub.online/.well-known/mcp">
+<meta name="webmcp:version" content="1.0">
 
 <style>
 /* ================================================================
@@ -763,6 +777,36 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px s
 .toggle-switch input:checked + .toggle-slider:before { transform: translateX(22px); }
 .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #eee; }
 .toggle-row label { font-weight: 600; font-size: 14px; }
+
+/* Screen reader only utility */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* WebMCP tool-form-active visual feedback */
+.tool-form-active,
+:root :tool-form-active {
+  outline: 3px solid var(--orange);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(255, 140, 66, 0.2);
+  transition: outline 0.2s, box-shadow 0.2s;
+}
+.tool-submit-active,
+:root :tool-submit-active {
+  background: var(--orange) !important;
+  color: #fff !important;
+  transform: scale(1.05);
+}
+:root:has(:tool-form-active) .page {
+  /* indicate agent is active */
+  opacity: 1;
+}
 
 .parent-tab-bar {
   display: flex; gap: 4px; margin: 16px 0; overflow-x: auto;
@@ -4881,27 +4925,27 @@ function renderFeedback(container) {
         <p style="color:var(--text-light);font-size:13px">${t('feedbackSub')}</p>
       </div>
 
-      <form id="feedback-form" onsubmit="submitFeedback(event)" style="background:white;border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow)">
+      <form id="feedback-form" onsubmit="submitFeedback(event)" style="background:white;border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow)" autocomplete="on" toolname="submit_feedback" tooldescription="Submit feedback, bug reports, feature requests, or content suggestions about HappySprout Kids Learning">
         <!-- Type -->
-        <label style="font-weight:700;font-size:14px;display:block;margin-bottom:10px">${t('feedbackType')}</label>
-        <div id="fb-type-group" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px">
+        <label style="font-weight:700;font-size:14px;display:block;margin-bottom:10px" for="fb-type-group">${t('feedbackType')}</label>
+        <div id="fb-type-group" role="radiogroup" aria-label="${t('feedbackType')}" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px">
           ${['Bug','Feature','Content','Other'].map(t => `
           <label style="display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:20px;border:2px solid #E0E0E0;font-size:13px;cursor:pointer;transition:all 0.2s" class="fb-type-label" data-type="${t}">
-            <input type="radio" name="fbType" value="${t}" style="display:none">
+            <input type="radio" name="fbType" value="${t}" style="display:none" autocomplete="off" toolparamtitle="Feedback Type" toolparamdescription="Type of feedback: Bug Report, Feature Request, Content Suggestion, or Other">
             <span>${t('feedback' + t)}</span>
           </label>
           `).join('')}
         </div>
 
         <!-- Message -->
-        <label style="font-weight:700;font-size:14px;display:block;margin-bottom:8px">${t('feedbackMessage')}</label>
-        <textarea id="fb-message" rows="5" placeholder="${t('feedbackMessagePlaceholder')}" required
-          style="width:100%;padding:12px;border-radius:12px;border:2px solid #E0E0E0;font-size:14px;resize:vertical;box-sizing:border-box;font-family:inherit"></textarea>
+        <label for="fb-message" style="font-weight:700;font-size:14px;display:block;margin-bottom:8px">${t('feedbackMessage')}</label>
+        <textarea id="fb-message" name="message" rows="5" placeholder="${t('feedbackMessagePlaceholder')}" required autocomplete="off"
+          style="width:100%;padding:12px;border-radius:12px;border:2px solid #E0E0E0;font-size:14px;resize:vertical;box-sizing:border-box;font-family:inherit" toolparamtitle="Feedback Message" toolparamdescription="Detailed description of your feedback, bug report, or suggestion"></textarea>
 
         <!-- Email -->
-        <label style="font-weight:700;font-size:14px;display:block;margin-top:18px;margin-bottom:8px">${t('feedbackEmail')}</label>
-        <input id="fb-email" type="email" placeholder="${t('feedbackEmailPlaceholder')}"
-          style="width:100%;padding:12px;border-radius:12px;border:2px solid #E0E0E0;font-size:14px;box-sizing:border-box">
+        <label for="fb-email" style="font-weight:700;font-size:14px;display:block;margin-top:18px;margin-bottom:8px">${t('feedbackEmail')}</label>
+        <input id="fb-email" name="email" type="email" placeholder="${t('feedbackEmailPlaceholder')}" autocomplete="email"
+          style="width:100%;padding:12px;border-radius:12px;border:2px solid #E0E0E0;font-size:14px;box-sizing:border-box" toolparamtitle="Your Email" toolparamdescription="Optional email address for follow-up responses">
 
         <!-- Submit -->
         <button type="submit" id="fb-submit-btn"
@@ -5053,10 +5097,11 @@ function renderSearch(container) {
       <button style="padding:8px 16px;border:none;background:#f0e8d8;border-radius:20px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:12px" onclick="navigateTo('home')">← ${t('back')}</button>
       <div class="section-title"><span class="icon">🔍</span> ${t('searchVideos')}</div>
 
-      <div class="search-bar">
-        <input class="search-input" id="search-input" type="text" placeholder="${t('searchPlaceholder')}" value="${query}" oninput="performSearch(this.value)">
-        <button class="voice-btn" id="voice-search-btn" onclick="startVoiceSearch()" title="${t('voiceSearch')}">🎤</button>
-      </div>
+      <form class="search-bar" role="search" aria-label="${t('search')}" onsubmit="event.preventDefault();performSearch(document.getElementById('search-input').value)" autocomplete="off" toolname="search_videos" tooldescription="Search the HappySprout video library by keyword">
+        <label for="search-input" class="sr-only">${t('searchPlaceholder')}</label>
+        <input class="search-input" id="search-input" name="q" type="search" placeholder="${t('searchPlaceholder')}" value="${query}" oninput="performSearch(this.value)" autocomplete="off" aria-label="${t('searchPlaceholder')}" toolparamtitle="Search Query" toolparamdescription="Keyword to search videos by title, channel, or category">
+        <button class="voice-btn" id="voice-search-btn" type="button" onclick="startVoiceSearch()" title="${t('voiceSearch')}" aria-label="${t('voiceSearch')}">🎤</button>
+      </form>
 
       ${query ? '<p style="color:var(--text-light);margin:8px 0">' + t('foundResults', {n: results.length}) + '</p>' : ''}
 
@@ -5483,33 +5528,33 @@ function renderParent(container) {
         <!-- Time settings -->
         <div id="tab-time">
           <div class="setting-row">
-            <label>${t('sessionLength')}</label>
+            <label for="session-limit">${t('sessionLength')}</label>
             <div>
-              <input type="number" id="session-limit" value="${ps.sessionLimit}" min="5" max="120"> ${t('minutes')}
+              <input type="number" id="session-limit" name="sessionLimit" value="${ps.sessionLimit}" min="5" max="120" autocomplete="off"> ${t('minutes')}
               <button style="margin-left:8px;padding:6px 14px;border-radius:20px;border:none;background:var(--orange);color:white;font-weight:700;cursor:pointer;font-size:12px" onclick="saveTimeSettings()">${APP.lang === 'zh' ? '保存' : 'Save'}</button>
             </div>
           </div>
           <div class="setting-row">
-            <label>${t('dailyLength')}</label>
+            <label for="daily-limit">${t('dailyLength')}</label>
             <div>
-              <input type="number" id="daily-limit" value="${ps.dailyLimit}" min="10" max="300"> ${t('minutes')}
+              <input type="number" id="daily-limit" name="dailyLimit" value="${ps.dailyLimit}" min="10" max="300" autocomplete="off"> ${t('minutes')}
             </div>
           </div>
           <div class="toggle-row">
-            <label>${t('blockToggle')}</label>
-            <label class="toggle-switch">
-              <input type="checkbox" id="block-enabled" ${ps.blockEnabled ? 'checked' : ''} onchange="toggleBlockTimeInputs()">
+            <label for="block-enabled">${t('blockToggle')}</label>
+            <label class="toggle-switch" aria-label="${t('blockToggle')}">
+              <input type="checkbox" id="block-enabled" name="blockEnabled" ${ps.blockEnabled ? 'checked' : ''} onchange="toggleBlockTimeInputs()">
               <span class="toggle-slider"></span>
             </label>
           </div>
           <div id="block-time-fields" style="display:${ps.blockEnabled ? 'block' : 'none'}">
             <div class="setting-row">
-              <label>${t('blockedStart')}</label>
-              <input type="time" id="block-start" value="${ps.blockStart}">
+              <label for="block-start">${t('blockedStart')}</label>
+              <input type="time" id="block-start" name="blockStart" value="${ps.blockStart}" autocomplete="off">
             </div>
             <div class="setting-row">
-              <label>${t('blockedEnd')}</label>
-              <input type="time" id="block-end" value="${ps.blockEnd}">
+              <label for="block-end">${t('blockedEnd')}</label>
+              <input type="time" id="block-end" name="blockEnd" value="${ps.blockEnd}" autocomplete="off">
             </div>
             <p style="font-size:12px;color:var(--text-light);padding:8px">💡 ${t('blockedHint')}</p>
           </div>
