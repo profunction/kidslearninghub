@@ -1432,7 +1432,99 @@ const COURSE_DB = [
   }
 ];
 
-// ─── PRACTICE EXERCISE DATA ───────────────────────────────────
+// ─── COURSE DETAIL CONTENT (SEO keyword-rich educational descriptions) ──
+const COURSE_DETAIL = {
+  'abc-fun': {
+    age: '3-6岁',
+    difficulty: '入门级 (Beginner)',
+    zh: {
+      intro: 'ABC 字母快乐学是 HappySprout 为 3-6 岁幼儿精心设计的英语启蒙入门课程。本课程通过 6 节循序渐进的视频课，带领孩子从零开始认识 26 个英文字母，掌握字母发音和基础拼读技巧。课程结合 Super Simple Songs 和 CoComelon 等国际顶级儿童教育频道的高质量视频，配合朗朗上口的字母歌谣和生动有趣的动画，让孩子在唱歌跳舞中自然习得英语字母。',
+      objectives: [
+        '培养幼儿对英文字母的兴趣和好奇心',
+        '掌握 26 个英文字母的正确发音',
+        '学会区分大写字母和小写字母',
+        '通过歌曲和游戏记忆字母顺序',
+        '为后续自然拼读学习打下坚实基础'
+      ],
+      howTo: '建议家长每天陪伴孩子学习 1 节课（约 15-20 分钟）。先观看视频，然后和孩子一起唱字母歌，用手指在空中或纸上画字母。重复观看同一视频 3-5 次效果最佳。完成全部 6 节课后，可进入"自然拼读入门"课程继续深入学习。',
+      value: '研究表明，3-6 岁是儿童语言学习的黄金期。通过音乐、动画和互动练习相结合的方式学习字母，能显著提升孩子的语音意识和字母识别能力。HappySprout 的字母课程遵循"看-听-说-写"四步学习法，符合儿童认知发展规律，让英语启蒙变得科学高效又充满乐趣。',
+      tags: '英文字母, 英语启蒙, 幼儿英语, ABC学习, 字母歌, 学字母, 3岁英语, 幼儿园英语'
+    },
+    en: {
+      intro: 'ABC Fun Learning is a carefully designed English beginner course for children aged 3-6. Through 6 progressive video lessons, this course guides young learners from zero to mastering all 26 English letters, including letter sounds and basic phonics. Featuring high-quality content from world-class children\'s educational channels like Super Simple Songs and CoComelon, children learn letters naturally through catchy songs and engaging animations.',
+      objectives: [
+        'Spark curiosity and interest in English letters',
+        'Master correct pronunciation of all 26 English letters',
+        'Distinguish between uppercase and lowercase letters',
+        'Memorize letter sequence through songs and games',
+        'Build a solid foundation for phonics learning'
+      ],
+      howTo: 'We recommend parents spend 15-20 minutes daily with their child on one lesson. Watch the video together, then sing the alphabet song and practice writing letters in the air or on paper. Repeating each video 3-5 times yields the best results. After completing all 6 lessons, progress to the "Phonics Basics" course for deeper learning.',
+      value: 'Research shows ages 3-6 are the golden period for language acquisition. Combining music, animation, and interactive exercises significantly enhances phonological awareness and letter recognition. HappySprout\'s ABC course follows a "Watch - Listen - Speak - Write" four-step methodology aligned with cognitive development science, making English learning both effective and joyful.',
+      tags: 'English letters, ABC learning, phonics, early literacy, preschool English, kindergarten reading, alphabet songs'
+    }
+  },
+  'numbers-1-10': {
+    age: '3-6岁',
+    difficulty: '入门级 (Beginner)',
+    zh: {
+      intro: '数字王国大冒险是 HappySprout 专为 3-6 岁幼儿打造的数学启蒙课程。通过 3 节精心编排的视频课和配套互动练习，让孩子在游戏化的情境中认识数字 1-10，掌握数数、数量对应和简单加法。课程选用 Numberblocks 等国际获奖数学启蒙节目的精彩内容，配合 HappySprout 独家设计的互动练习，让孩子像玩游戏一样爱上数学。',
+      objectives: [
+        '认识和书写数字 1 到 10',
+        '理解数与量的对应关系',
+        '掌握 10 以内的数数技能（正数和倒数）',
+        '初步了解加法的概念',
+        '培养数学思维和逻辑能力'
+      ],
+      howTo: '每天安排 15-20 分钟学习时间。先和视频中的角色一起数数，然后利用身边的物品（积木、水果、玩具等）进行实物数数练习。学完每个视频后，进入"互动练习"页面完成配套的数数游戏和配对练习，巩固所学内容。',
+      value: '数学启蒙的关键不是死记硬背，而是建立"数感"——对数量关系的直觉理解。HappySprout 的数字课程采用 CPA（具体-图形-抽象）教学法，从实物操作过渡到视觉图形，最终建立抽象数字概念。这种方式特别适合 3-6 岁幼儿的思维发展特点，让数学学习变得自然而有趣。',
+      tags: '幼儿数学, 数字学习, 数学启蒙, 数数, 1到10, 儿童数学, 学前教育, 幼儿园数学'
+    },
+    en: {
+      intro: 'Number Kingdom Adventure is HappySprout\'s math beginner course designed for children aged 3-6. Through 3 carefully curated video lessons and companion interactive exercises, children discover numbers 1-10, develop counting skills, understand quantity relationships, and explore simple addition — all in a game-like environment. Featuring award-winning content from Numberblocks and HappySprout-exclusive interactive practice.',
+      objectives: [
+        'Recognize and write numbers 1 through 10',
+        'Understand the relationship between numbers and quantities',
+        'Master counting within 10 (forward and backward)',
+        'Grasp the basic concept of addition',
+        'Develop mathematical thinking and logic skills'
+      ],
+      howTo: 'Dedicate 15-20 minutes daily. Count along with the video characters first, then practice counting with real objects (blocks, fruits, toys). After each video, head to the "Practice" section for matching games and counting exercises to reinforce learning.',
+      value: 'The key to early math is building "number sense" — intuitive understanding of quantity relationships. HappySprout\'s numbers course uses the CPA (Concrete-Pictorial-Abstract) approach, moving from physical objects to visual representations and finally to abstract number concepts. This method aligns perfectly with cognitive development in ages 3-6.',
+      tags: 'early math, counting, numbers 1-10, preschool math, kindergarten math, number sense, addition basics'
+    }
+  },
+  'phonics-basics': {
+    age: '4-7岁',
+    difficulty: '初级 (Elementary)',
+    zh: {
+      intro: '自然拼读入门是 HappySprout 为 4-7 岁儿童设计的英语拼读启蒙课程。自然拼读（Phonics）是英语母语国家儿童学习阅读的标准方法——通过建立字母与发音之间的直接联系，让孩子做到"见词能读、听音能写"。本课程从基础的字母发音开始，逐步引导孩子掌握拼读规律，为自主阅读打下关键基础。',
+      objectives: [
+        '掌握英语 26 个字母的基本发音（Letter Sounds）',
+        '理解字母与发音的对应关系',
+        '学会 CVC（辅音-元音-辅音）单词的拼读',
+        '培养自主朗读简单英语单词的能力',
+        '建立英语阅读信心，为分级阅读做准备'
+      ],
+      howTo: '本课程建议在完成"ABC 字母快乐学"后学习。每天 15-20 分钟，先看视频学习拼读规则，然后和孩子一起用字母卡片或白板练习拼读。重点不在于速度，而是确保孩子理解每个字母的发音原理。可以配合 HappySprout 的"跟读录音"互动练习，让孩子听到自己的发音并进行对比。',
+      value: '自然拼读是英语阅读的基石。全球大量教育研究证明，系统学习自然拼读的孩子，其阅读能力显著优于仅靠整体记忆单词的孩子。HappySprout 的自然拼读课程结合国际公认的 Jolly Phonics 和 Letters and Sounds 教学体系，为中国孩子量身打造符合第二语言学习规律的拼读方案，让孩子少走弯路。',
+      tags: '自然拼读, Phonics, 英语拼读, 儿童英语阅读, 英语启蒙, 拼读法, 学英语, 幼儿英语'
+    },
+    en: {
+      intro: 'Phonics Basics is HappySprout\'s systematic phonics course for children aged 4-7. Phonics — the proven method used in English-speaking countries — teaches children to connect letters with their sounds, enabling them to decode words independently. This course starts with fundamental letter sounds and progressively builds blending and segmenting skills essential for reading fluency.',
+      objectives: [
+        'Master the basic sounds of all 26 English letters',
+        'Understand letter-sound correspondence',
+        'Learn to blend and read CVC (consonant-vowel-consonant) words',
+        'Build the ability to sound out simple English words independently',
+        'Develop reading confidence for leveled readers'
+      ],
+      howTo: 'This course is best taken after completing "ABC Fun Learning." Spend 15-20 minutes daily — watch the phonics video, then practice blending with letter cards or a whiteboard. Focus on understanding rather than speed. Use HappySprout\'s "Repeat & Record" interactive exercise to let children hear and compare their own pronunciation.',
+      value: 'Phonics is the foundation of English reading. Extensive global research confirms that children who learn systematic phonics significantly outperform those who rely on whole-word memorization. HappySprout\'s phonics course integrates internationally recognized frameworks (Jolly Phonics, Letters and Sounds) adapted for second-language learners, providing an optimized path to English literacy.',
+      tags: 'phonics, letter sounds, CVC words, early reading, English literacy, blending, segmenting, decoding'
+    }
+  }
+};
 const PRACTICE_DATA = [
   {
     type: "listen",
@@ -2393,7 +2485,9 @@ const SEO_TITLES = {
     channel: '儿童学习频道 | HappySprout',
     about: '关于我们 | HappySprout Kids Learning',
     feedback: '意见反馈 | HappySprout Kids Learning',
-    feedbackThanks: '感谢反馈 | HappySprout Kids Learning'
+    feedbackThanks: '感谢反馈 | HappySprout Kids Learning',
+    blog: '家长教育指南 | HappySprout - 科学育儿方法与学习技巧',
+    blogPost: '育儿文章 | HappySprout 家长教育博客'
   },
   en: {
     home: 'HappySprout Kids Learning - Free Educational Games & Worksheets',
@@ -2408,7 +2502,9 @@ const SEO_TITLES = {
     channel: 'Kids Learning Channel | HappySprout',
     about: 'About Us | HappySprout Kids Learning',
     feedback: 'Feedback | HappySprout Kids Learning',
-    feedbackThanks: 'Thank You | HappySprout Kids Learning'
+    feedbackThanks: 'Thank You | HappySprout Kids Learning',
+    blog: 'Parent Education Guides | HappySprout - Science-Based Parenting Tips',
+    blogPost: 'Parenting Articles | HappySprout Blog'
   }
 };
 
@@ -2452,7 +2548,7 @@ function navigateTo(page, params = {}) {
     document.querySelectorAll('.nav-item').forEach(el => {
       el.classList.toggle('active', el.dataset.page === 'parent');
     });
-  } else if (['watch', 'course', 'search', 'favorites', 'channel', 'about', 'feedback', 'feedbackThanks'].includes(page)) {
+  } else if (['watch', 'course', 'search', 'favorites', 'channel', 'about', 'feedback', 'feedbackThanks', 'blog', 'blogPost'].includes(page)) {
     document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
   }
 
@@ -2473,6 +2569,10 @@ function navigateTo(page, params = {}) {
     case 'about': renderAbout(main); break;
     case 'feedback': renderFeedback(main); break;
     case 'feedbackThanks': renderFeedbackThanks(main); break;
+    case 'blog': renderBlogIndex(main); break;
+    case 'blogPost': renderBlogPost(main, params.postId); break;
+    case 'ageHub': renderAgeHub(main, params.age); break;
+    case 'subjectHub': renderSubjectHub(main, params.subject); break;
     default: renderHome(main);
   }
 
@@ -2518,6 +2618,9 @@ function renderHome(container) {
         </button>
         <button class="age-pill ${age === 12 ? 'active' : ''}" onclick="navigateTo('home',{ageFilter:12})">
           <span class="age-emoji">🧑</span> ${t('age9_12')}
+        </button>
+        <button class="age-pill" style="background:#f0e8d8;color:#8B6914;font-size:11px" onclick="navigateTo('ageHub',{age:'3-5'})">
+          📚 ${t('learnMore')}
         </button>
       </div>
 
@@ -3265,8 +3368,59 @@ function renderCourse(container, courseId) {
           </div>`;
         }).join('')}
       </div>
+      ${buildCourseDetail(courseId)}
     </div>
   `;
+}
+
+// Build keyword-rich educational content for course detail pages
+function buildCourseDetail(courseId) {
+  var detail = COURSE_DETAIL[courseId];
+  if (!detail) return '';
+  var lang = APP.lang === 'en' ? 'en' : 'zh';
+  var d = detail[lang];
+  var course = COURSE_DB.find(function(c) { return c.id === courseId; });
+  var levelText = lang === 'zh' ? '学习目标' : 'Learning Objectives';
+  var howText = lang === 'zh' ? '学习方法' : 'How to Learn';
+  var valueText = lang === 'zh' ? '教育价值' : 'Educational Value';
+  var ageText = lang === 'zh' ? '适合年龄段' : 'Age Range';
+  var diffText = lang === 'zh' ? '难度等级' : 'Difficulty';
+  var tagsText = lang === 'zh' ? '相关关键词' : 'Related Tags';
+  var tryPracticeText = lang === 'zh' ? '去练习巩固 →' : 'Practice Now →';
+
+  return '<div class="course-detail-content" style="padding:16px;margin-top:12px">' +
+    '<div style="background:#fef9f0;border-radius:16px;padding:20px;margin-bottom:16px;border-left:4px solid ' + (course ? course.color : '#FF8C42') + '">' +
+      '<h2 style="font-size:16px;margin-bottom:10px;color:#4A4A4A">📖 ' + (lang === 'zh' ? '课程简介' : 'Course Overview') + '</h2>' +
+      '<p style="font-size:14px;line-height:1.8;color:#555;margin-bottom:16px">' + d.intro + '</p>' +
+      '<div style="display:flex;gap:12px;flex-wrap:wrap;font-size:12px">' +
+        '<span style="background:#e8f0fe;color:#1967D2;padding:4px 12px;border-radius:20px">' + ageText + ': ' + detail.age + '</span>' +
+        '<span style="background:#e8f0fe;color:#1967D2;padding:4px 12px;border-radius:20px">' + diffText + ': ' + detail.difficulty + '</span>' +
+      '</div>' +
+    '</div>' +
+    '<div style="margin-bottom:16px">' +
+      '<h2 style="font-size:16px;margin-bottom:10px;color:#4A4A4A">🎯 ' + levelText + '</h2>' +
+      '<ul style="list-style:none;padding:0;margin:0">' +
+        d.objectives.map(function(obj) {
+          return '<li style="padding:8px 0;border-bottom:1px solid #f0e8d8;font-size:14px;color:#555;display:flex;align-items:center;gap:8px"><span style="color:' + (course ? course.color : '#4A90D9') + ';font-weight:700">✓</span> ' + obj + '</li>';
+        }).join('') +
+      '</ul>' +
+    '</div>' +
+    '<div style="background:#fcf6ff;border-radius:16px;padding:20px;margin-bottom:16px">' +
+      '<h2 style="font-size:16px;margin-bottom:10px;color:#4A4A4A">💡 ' + howText + '</h2>' +
+      '<p style="font-size:14px;line-height:1.8;color:#555">' + d.howTo + '</p>' +
+    '</div>' +
+    '<div style="background:#f0fdf4;border-radius:16px;padding:20px;margin-bottom:16px">' +
+      '<h2 style="font-size:16px;margin-bottom:10px;color:#4A4A4A">🌟 ' + valueText + '</h2>' +
+      '<p style="font-size:14px;line-height:1.8;color:#555">' + d.value + '</p>' +
+    '</div>' +
+    '<div style="margin-bottom:16px">' +
+      '<span style="font-size:12px;color:#999;margin-right:8px">' + tagsText + ':</span>' +
+      d.tags.split(', ').map(function(tag) {
+        return '<span style="display:inline-block;background:#f0e8d8;color:#8B6914;padding:3px 10px;border-radius:12px;font-size:11px;margin:2px">' + tag + '</span>';
+      }).join(' ') +
+    '</div>' +
+    '<button onclick="navigateTo(\'practice\')" style="width:100%;padding:14px;border:none;background:linear-gradient(135deg,' + (course ? course.color : '#FF8C42') + ',' + (course ? course.color : '#FF8C42') + 'dd);color:white;border-radius:50px;font-size:15px;font-weight:700;cursor:pointer">🎮 ' + tryPracticeText + '</button>' +
+  '</div>';
 }
 
 // ─── RENDER: PRACTICE ─────────────────────────────────────────
@@ -3673,6 +3827,9 @@ function renderMe(container) {
         </button>
         <button style="padding:10px 20px;border-radius:50px;border:2px solid #E0E0E0;background:white;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px" onclick="navigateTo('feedback')">
           💬 ${t('feedback')}
+        </button>
+        <button style="padding:10px 20px;border-radius:50px;border:2px solid #E0E0E0;background:white;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px" onclick="navigateTo('blog')">
+          ✍️ ${APP.lang === 'en' ? 'Parent Blog' : '家长博客'}
         </button>
       </div>
     </div>
@@ -4520,7 +4677,280 @@ function toggleSound() {
   playClick();
 }
 
-// ─── INIT ──────────────────────────────────────────────────────
+// ─── BLOG DATABASE ──────────────────────────────────────────────
+const BLOG_POSTS = [
+  {
+    id: 'teach-math-home',
+    icon: '🧮',
+    color: '#C77DFF',
+    date: '2026-06-20',
+    zh: {
+      title: '如何在家教孩子学数学：5个简单高效的启蒙方法',
+      summary: '数学启蒙不必去补习班！本文分享5个在家就能操作的幼儿数学游戏和练习方法，适合3-6岁孩子，让孩子在生活中学数学。',
+      content: '<p>很多家长觉得教孩子数学很难，其实数学无处不在。最好的数学启蒙，就藏在日常生活中。以下是5个经过验证的高效方法：</p><h3>1. 数数游戏（日常物品）</h3><p>吃饭时数豆子、下楼时数台阶、逛超市时数水果。让孩子用手指点数，建立数与量的对应关系。<strong>关键：</strong>不要急于写数字，先确保孩子真正理解"3个苹果"和"数字3"的关系。</p><h3>2. 排序与分类</h3><p>把袜子按颜色分类、把玩具从大到小排列、把水果按种类分组。这些看似简单的活动，其实是在培养孩子的逻辑思维能力。</p><h3>3. 形状探索</h3><p>指着窗户说"这是长方形"、指着钟表说"这是圆形"。在家附近的街上寻找不同形状的物体，用积木搭建各种结构。空间感和几何直觉从小培养。</p><h3>4. 数学绘本阅读</h3><p>选择以数字、计数为主题的绘本，如《好饿的毛毛虫》《十只熊一个家》。阅读时和孩子一起数画中的物品。</p><h3>5. 使用 HappySprout 数字课程</h3><p>我们的<strong>数字王国大冒险</strong>课程专为3-6岁孩子设计。结合 Numberblocks 视频和互动练习，让孩子在游戏中掌握数数、加法和数感。每天15分钟，坚持2周就能看到明显进步。</p><p style="margin-top:16px;color:#8B6914;background:#fef9f0;padding:12px;border-radius:8px;font-size:14px">💡 <strong>温馨提示：</strong>每个孩子的发展节奏不同。不要和"别人家的孩子"比较，关注孩子自己的进步最重要。</p>'
+    },
+    en: {
+      title: 'How to Teach Kids Math at Home: 5 Easy & Effective Methods',
+      summary: 'No tutoring center needed! Here are 5 hands-on math activities you can do at home with your 3-6 year old. Turn everyday moments into math learning opportunities.',
+      content: '<p>Math is everywhere in daily life. The best early math education happens naturally. Here are 5 proven methods:</p><h3>1. Counting Games</h3><p>Count beans at meals, stairs on the way down, fruits at the grocery store. Have children point and count objects to build number-quantity connections.</p><h3>2. Sorting & Classifying</h3><p>Sort socks by color, arrange toys by size, group fruits by type. These simple activities develop logical thinking skills.</p><h3>3. Shape Exploration</h3><p>Point to windows ("rectangle!"), clocks ("circle!"). Find shapes around the neighborhood. Build structures with blocks.</p><h3>4. Math Picture Books</h3><p>Read counting books like "The Very Hungry Caterpillar." Count items in illustrations together.</p><h3>5. Use HappySprout Number Course</h3><p>Our <strong>Number Kingdom Adventure</strong> course combines Numberblocks videos with interactive practice. Just 15 minutes daily for 2 weeks — you will see progress!</p>'
+    }
+  },
+  {
+    id: 'focus-skills',
+    icon: '🎯',
+    color: '#FF8C42',
+    date: '2026-06-18',
+    zh: {
+      title: '幼儿专注力培养的5个方法：让孩子坐得住、学得进',
+      summary: '孩子坐不住？注意力不集中？本文分享5个科学的专注力培养方法，帮助3-8岁孩子提升注意力和学习效率。',
+      content: '<p>很多学龄前孩子的家长都有一个共同的烦恼：孩子坐不住。其实，3-6岁孩子的平均专注时间只有8-15分钟，这完全正常。关键在于如何科学地培养这项能力。</p><h3>1. 打造"无干扰"学习环境</h3><p>学习时关掉电视、收起iPad、清理桌上的玩具。一个干净、安静的环境是专注的前提。</p><h3>2. 分段学习法</h3><p>把任务切成小块。比如：先看5分钟视频 → 休息2分钟 → 再做5分钟练习。HappySprout 的课程视频恰好是短时长的设计，非常适合分段学习。</p><h3>3. 使用计时器</h3><p>给孩子看一个可视化计时器（沙漏或倒计时app）。告诉孩子："在铃响之前，我们专心完成这一关"。目标明确更容易专注。</p><h3>4. 正面奖励机制</h3><p>完成学习任务后给予积极反馈。可以是口头的"你真棒"、一个拥抱，或是收集 HappySprout 的学习星星。避免用零食作为奖励——会适得其反。</p><h3>5. 跟随孩子的兴趣</h3><p>如果孩子喜欢恐龙，就用恐龙来教数数；如果喜欢小汽车，就用汽车来学颜色。HappySprout 提供多种主题的视频内容，让孩子选择自己感兴趣的课程。</p>'
+    },
+    en: {
+      title: '5 Ways to Build Your Child\'s Focus and Attention Span',
+      summary: 'Can\'t get your child to sit still? Learn 5 science-backed methods to improve focus and learning efficiency for kids aged 3-8.',
+      content: '<p>It\'s completely normal for 3-6 year olds to have an attention span of only 8-15 minutes. The key is building this skill systematically.</p><h3>1. Distraction-Free Environment</h3><p>Turn off TV, put away tablets, clear the desk. A clean, quiet space is the foundation of focus.</p><h3>2. Chunk Learning</h3><p>Break tasks into small pieces: 5 min video → 2 min break → 5 min practice. HappySprout videos are designed in short formats perfect for this approach.</p><h3>3. Visual Timer</h3><p>Use an hourglass or countdown timer. Tell your child: "Let\'s finish this session before the timer rings." Clear goals make focus easier.</p><h3>4. Positive Reinforcement</h3><p>Give verbal praise or a hug after completing tasks — not snacks, which can backfire. HappySprout star rewards work great.</p><h3>5. Follow Interests</h3><p>If they love dinosaurs, use dinos for counting. HappySprout offers diverse themes — let children choose what excites them.</p>'
+    }
+  },
+  {
+    id: 'early-literacy',
+    icon: '📚',
+    color: '#FF6B9D',
+    date: '2026-06-15',
+    zh: {
+      title: '幼儿英语启蒙完全指南：何时开始？怎么教？用什么资源？',
+      summary: '3岁学英语会不会太早？应该从字母开始还是从听说开始？本文系统解答幼儿英语启蒙的常见疑问。',
+      content: '<p>这是家长最常问的问题。答案很明确：<strong>3-6岁是语言学习黄金期，不是太早，是刚刚好。</strong></p><h3>什么时候开始？</h3><p>研究显示，3岁开始接触第二语言是最佳时机。这个年龄段的孩子大脑对语音的辨别能力最强，能够自然习得地道的发音。越早接触，越有机会达到母语水平的发音。</p><h3>从字母还是听说开始？</h3><p>正确顺序：<strong>听 → 说 → 读 → 写</strong>。不要急着让孩子认字母、背单词。先大量听儿歌、看动画，培养语感。HappySprout 的 ABC 字母快乐学课程就是从儿歌和动画入手，符合语言习得的自然规律。</p><h3>用什么资源？</h3><p>推荐资源搭配：<br>① Super Simple Songs（儿歌启蒙）<br>② CoComelon（日常场景英语）<br>③ Numberblocks（数学+英语）<br>④ HappySprout 互动练习（跟读纠正发音）</p><h3>每天学多久？</h3><p>3-6岁每天15-20分钟即可。关键是<strong>坚持每天</strong>，而不是一次学很久。快乐的学习体验比知识量更重要。</p>'
+    },
+    en: {
+      title: 'Complete Guide to Early English Learning: When to Start & How to Teach',
+      summary: 'Is 3 years old too early for English? Should you start with letters or listening? A systematic guide to early English education.',
+      content: '<p><strong>Ages 3-6 is the golden window for language learning — not too early, just right.</strong></p><h3>When to Start?</h3><p>Research shows age 3 is ideal for second language exposure. Children\'s brains at this age have peak phonetic discrimination ability, enabling native-like pronunciation naturally.</p><h3>Letters or Listening First?</h3><p>The correct sequence: <strong>Listen → Speak → Read → Write</strong>. Don\'t rush into letter recognition. Start with songs and animations. HappySprout\'s ABC Fun Learning follows this natural acquisition order.</p><h3>Resources</h3><p>Recommended mix: Super Simple Songs, CoComelon, Numberblocks, plus HappySprout interactive practice for pronunciation feedback.</p><h3>How Long?</h3><p>15-20 minutes daily for ages 3-6. Consistency matters far more than session length. A joyful learning experience outweighs knowledge quantity.</p>'
+    }
+  },
+  {
+    id: 'screen-time',
+    icon: '⏰',
+    color: '#4A90D9',
+    date: '2026-06-12',
+    zh: {
+      title: '儿童屏幕时间管理：如何让孩子健康使用学习App？',
+      summary: '担心孩子看屏幕太多？本文分享科学的屏幕时间管理方法，以及如何将"屏幕时间"转化为"学习时间"。',
+      content: '<p>在电子产品无处不在的时代，彻底禁止屏幕既不现实也不科学。关键是<strong>高质量</strong>而非<strong>零数量</strong>。</p><h3>WHO 建议标准</h3><p>世界卫生组织建议：2-4岁每天屏幕时间不超过1小时；5岁以上应设定持续坐姿屏幕时间限制。所有屏幕时间都应该是被动和主动的结合。</p><h3>被动 vs 主动屏幕时间</h3><p>被动：看动画、刷短视频（大脑处于被动接收状态）<br>主动：互动学习、跟读练习、手指画（大脑积极参与）<br><strong>目标：最大化主动时间，最小化被动时间。</strong></p><h3>HappySprout 的时间管理工具</h3><p>HappySprout 内置了家长控制面板，你可以：<br>• 设置每日学习时段（如：下午4:00-5:00）<br>• 限制每天学习时长<br>• 查看孩子的学习进度报告<br>这些功能帮助你把屏幕时间变成有目的的学习时间。</p><h3>3个实用建议</h3><p>1. <strong>20-20-20法则：</strong>每学习20分钟，看远处20秒<br>2. <strong>先学习后娱乐：</strong>完成学习任务再给娱乐时间<br>3. <strong>家长陪伴：</strong>和孩子一起看视频、一起做练习，效果翻倍</p>'
+    },
+    en: {
+      title: 'Healthy Screen Time for Kids: Managing Learning Apps Effectively',
+      summary: 'Worried about too much screen time? Learn science-based screen management methods to turn screen time into quality learning time.',
+      content: '<p>Banning screens entirely is neither practical nor scientific. The key is <strong>quality over quantity</strong>.</p><h3>WHO Guidelines</h3><p>WHO recommends: under 1 hour/day for ages 2-4; set sedentary screen limits for ages 5+. All screen time should balance passive and active engagement.</p><h3>Passive vs Active</h3><p>Passive: passive video watching. Active: interactive learning, speaking practice. <strong>Goal: maximize active, minimize passive.</strong></p><h3>HappySprout Parent Controls</h3><p>Set daily learning windows, limit session duration, and track learning progress — turning screen time into purposeful learning time.</p><h3>3 Tips</h3><p>1. <strong>20-20-20 rule:</strong> Every 20 min, look 20 feet away for 20 seconds.<br>2. <strong>Learn first, play later.</strong><br>3. <strong>Learn together</strong> with your child for 2x results.</p>'
+    }
+  },
+  {
+    id: 'creative-learning',
+    icon: '🎨',
+    color: '#6ECB63',
+    date: '2026-06-08',
+    zh: {
+      title: '创意学习：5个激发孩子学习兴趣的动手活动',
+      summary: '想让孩子主动学习？试试把知识融入创意活动中！这5个简单动手项目让学习变得像游戏一样有趣。',
+      content: '<p>孩子天生充满好奇心和创造力。与其强迫他们坐在桌前学习，不如把知识融入创意活动中。以下5个活动涵盖语言、数学、科学和艺术四大领域。</p><h3>1. 字母橡皮泥（语言）</h3><p>用橡皮泥捏出字母形状，边玩边念。从孩子名字的首字母开始，逐步扩展到A-Z。配合 HappySprout 的字母视频，视听触觉三重输入效果最佳。</p><h3>2. 厨房数学（数学）</h3><p>做饼干时让孩子数面粉杯数、切披萨时讲分数概念。生活即教育，厨房是最好的数学教室。参考 HappySprout 数字王国课程中的实物数数练习。</p><h3>3. 植物观察日记（科学）</h3><p>种一颗绿豆，每天画下它的变化。这是最基础的科学思维训练——观察、记录、比较。配合 HappySprout 的科学探索视频了解更多自然知识。</p><h3>4. 音乐节奏游戏（艺术）</h3><p>用空瓶子和豆子做沙锤，跟着节奏打拍子。音乐训练能显著提升语言能力和数学思维。HappySprout 的音乐律动频道是绝佳的节奏启蒙资源。</p><h3>5. 故事剧场（语言+表演）</h3><p>读完绘本后，和孩子一起把故事演出来。这能加深理解、锻炼表达，也是最棒的亲子时光。HappySprout 的故事模式提供丰富的绘本视频素材。</p>'
+    },
+    en: {
+      title: 'Creative Learning: 5 Hands-On Activities to Spark Your Child\'s Curiosity',
+      summary: 'Want your child to love learning? Blend knowledge into creative activities! These 5 hands-on projects make learning feel like play.',
+      content: '<p>Children are naturally curious and creative. Instead of forcing desk-based learning, embed knowledge into creative play. Here are 5 activities covering language, math, science, and art.</p><h3>1. Play-Doh Letters (Language)</h3><p>Shape letters with play-doh while saying them aloud. Start with your child\'s name initials, then A-Z. Combine with HappySprout alphabet videos for audio-visual-tactile learning.</p><h3>2. Kitchen Math</h3><p>Count flour cups when baking, discuss fractions when cutting pizza. Life IS education. Reference HappySprout\'s Number Kingdom course for object-counting exercises.</p><h3>3. Plant Observation Journal (Science)</h3><p>Plant a bean seed and draw its changes daily. This builds core scientific thinking: observe, record, compare. Pair with HappySprout science videos for more nature knowledge.</p><h3>4. Music Rhythm Games (Art)</h3><p>Make shakers from bottles and beans. Music training significantly improves both language and math skills. HappySprout\'s music channel is perfect rhythm inspiration.</p><h3>5. Story Theater (Language + Drama)</h3><p>After reading a picture book, act it out together. This deepens comprehension and builds expression skills — also the best bonding time. HappySprout story mode provides rich video resources.</p>'
+    }
+  }
+];
+
+// ─── RENDER: BLOG INDEX ────────────────────────────────────────
+function renderBlogIndex(container) {
+  var lang = APP.lang === 'en' ? 'en' : 'zh';
+  var title = lang === 'zh' ? '家长教育指南' : 'Parent Education Guides';
+  var subtitle = lang === 'zh' ? '科学育儿方法、学习技巧和亲子活动灵感' : 'Science-based parenting tips, learning strategies & activity ideas';
+  var readMore = lang === 'zh' ? '阅读全文 →' : 'Read More →';
+  var introText = lang === 'zh'
+    ? '欢迎来到 HappySprout 家长教育博客！这里汇集了幼儿教育专家和资深家长的经验分享，涵盖数学启蒙、英语学习、专注力培养、屏幕时间管理等热门话题。每一篇文章都基于科学研究和实践验证，帮助您在育儿路上少走弯路、多些从容。'
+    : 'Welcome to the HappySprout Parent Blog! Here you\'ll find expert insights and real-parent wisdom on early math, English learning, attention building, screen time management, and more. Every article is grounded in research and real-world experience.';
+
+  var cards = BLOG_POSTS.map(function(p) {
+    var d = p[lang];
+    return '<div style="background:white;border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.06);cursor:pointer;transition:transform 0.2s" onclick="navigateTo(\'blog\',{postId:\'' + p.id + '\'})" onmouseover="this.style.transform=\'translateY(-2px)\'" onmouseout="this.style.transform=\'translateY(0)\'">' +
+      '<div style="height:8px;background:' + p.color + '"></div>' +
+      '<div style="padding:16px">' +
+        '<div style="font-size:32px;margin-bottom:8px">' + p.icon + '</div>' +
+        '<h3 style="font-size:15px;color:#333;margin-bottom:8px;line-height:1.4">' + d.title + '</h3>' +
+        '<p style="font-size:13px;color:#888;line-height:1.6;margin-bottom:12px">' + d.summary + '</p>' +
+        '<span style="font-size:12px;color:#999">📅 ' + p.date + ' · <span style="color:' + p.color + ';font-weight:600">' + readMore + '</span></span>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  container.innerHTML = '<div class="page active">' +
+    '<button style="padding:8px 16px;border:none;background:#f0e8d8;border-radius:20px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:12px" onclick="navigateTo(\'home\')">← ' + (lang === 'zh' ? '返回首页' : 'Back to Home') + '</button>' +
+    '<div style="background:linear-gradient(135deg,#FF8C42,#C77DFF);border-radius:16px;padding:24px;margin-bottom:20px;color:white">' +
+      '<h1 style="font-size:22px;margin-bottom:8px">' + title + '</h1>' +
+      '<p style="font-size:14px;opacity:0.9">' + subtitle + '</p>' +
+    '</div>' +
+    '<p style="font-size:14px;line-height:1.8;color:#555;margin-bottom:20px">' + introText + '</p>' +
+    '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px">' + cards + '</div>' +
+  '</div>';
+}
+
+// ─── RENDER: BLOG POST ─────────────────────────────────────────
+function renderBlogPost(container, postId) {
+  var lang = APP.lang === 'en' ? 'en' : 'zh';
+  var post = BLOG_POSTS.find(function(p) { return p.id === postId; });
+  if (!post) { navigateTo('blog'); return; }
+
+  var d = post[lang];
+  container.innerHTML = '<div class="page active">' +
+    '<button style="padding:8px 16px;border:none;background:#f0e8d8;border-radius:20px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:12px" onclick="navigateTo(\'blog\')">← ' + (lang === 'zh' ? '返回博客列表' : 'Back to Blog') + '</button>' +
+    '<article style="max-width:680px;margin:0 auto">' +
+      '<div style="background:linear-gradient(135deg,' + post.color + ',' + post.color + 'dd);border-radius:16px;padding:24px;margin-bottom:20px;color:white">' +
+        '<h1 style="font-size:20px;line-height:1.4">' + d.title + '</h1>' +
+        '<div style="font-size:12px;opacity:0.8;margin-top:8px">' + post.icon + ' ' + post.date + '</div>' +
+      '</div>' +
+      '<div style="font-size:15px;line-height:2;color:#444">' + d.content + '</div>' +
+      '<div style="margin-top:32px;padding:20px;background:#fef9f0;border-radius:16px;text-align:center">' +
+        '<p style="font-size:14px;color:#8B6914;margin-bottom:12px">' + (lang === 'zh' ? '开始使用 HappySprout 免费学习吧！' : 'Start learning with HappySprout for free!') + '</p>' +
+        '<button onclick="navigateTo(\'home\')" style="padding:12px 32px;border:none;background:linear-gradient(135deg,' + post.color + ',' + post.color + 'dd);color:white;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer">' + (lang === 'zh' ? '🎮 开始学习' : '🎮 Start Learning') + '</button>' +
+      '</div>' +
+    '</article>' +
+  '</div>';
+}
+
+// ─── CONTENT CLUSTER: AGE HUBS ─────────────────────────────────
+const AGE_HUBS = {
+  '3-5': {
+    color: '#6ECB63',
+    icon: '🌱',
+    zh: {
+      title: '3-5岁幼儿学习专区',
+      subtitle: '启蒙阶段 · 培养学习兴趣与基础认知能力',
+      intro: '3-5岁是孩子认知发展的关键期。在这个阶段，孩子像海绵一样吸收周围的信息。HappySprout 为幼儿精心挑选了最适合启蒙阶段的视频课程，涵盖英语字母、数字认知、儿歌律动和简单科学探索。所有内容均来自 Super Simple Songs、CoComelon、Numberblocks 等国际顶级儿童教育品牌，确保孩子在安全、有趣的环境中快乐学习。',
+      tips: ['每天学习15-20分钟，重在养成好习惯', '学习时家长陪伴效果最佳', '同一内容重复3-5次能加深印象', '结合实物游戏巩固学习效果']
+    },
+    en: {
+      title: 'Learning Hub for Ages 3-5',
+      subtitle: 'Early Discovery · Building Curiosity & Basic Skills',
+      intro: 'Ages 3-5 are the critical window for cognitive development. Children absorb information like sponges. HappySprout curates the best beginner content — English letters, number recognition, nursery rhymes, and simple science — from top brands like Super Simple Songs, CoComelon, and Numberblocks.',
+      tips: ['15-20 min daily — focus on habit building', 'Parent accompaniment doubles effectiveness', 'Repeat content 3-5 times for deeper learning', 'Pair with hands-on activities for best results']
+    }
+  },
+  '6-8': {
+    color: '#FF8C42',
+    icon: '🌿',
+    zh: {
+      title: '6-8岁儿童学习专区',
+      subtitle: '成长阶段 · 系统学习与技能提升',
+      intro: '6-8岁的孩子已经具备了一定的学习基础，进入了系统化学习的关键阶段。HappySprout 为这个年龄段的孩子提供了自然拼读、基础数学运算、趣味科学实验和创意艺术课程。课程内容难度适中，循序渐进，配合互动练习帮助孩子巩固所学知识，建立学习自信。',
+      tips: ['每次学习25-30分钟，中间休息5分钟', '鼓励孩子做学习笔记或口头复述', '用 HappySprout 练习页面检测学习效果', '设立小目标，完成后给予积极反馈']
+    },
+    en: {
+      title: 'Learning Hub for Ages 6-8',
+      subtitle: 'Growing & Building · Systematic Learning & Skill Development',
+      intro: 'Children aged 6-8 are ready for more structured learning. HappySprout provides phonics, basic math operations, fun science experiments, and creative art courses. Content progresses gradually with companion interactive exercises to reinforce knowledge and build confidence.',
+      tips: ['25-30 min sessions with 5 min breaks', 'Encourage note-taking or verbal summaries', 'Use HappySprout practice pages to check progress', 'Set small goals and celebrate achievements']
+    }
+  },
+  '9-12': {
+    color: '#C77DFF',
+    icon: '🌳',
+    zh: {
+      title: '9-12岁少儿学习专区',
+      subtitle: '进阶阶段 · 深度学习与思维拓展',
+      intro: '9-12岁的孩子进入了深度学习期，思维从具体走向抽象。HappySprout 精选了更适合大孩子的学习资源，包括高级自然拼读、分数和小数、地球科学和设计思维课程。通过主题式学习和项目制探索，帮助孩子建立系统化的知识框架，培养批判性思维和独立学习能力。',
+      tips: ['每次学习30-40分钟，培养自主学习习惯', '引导孩子做学习计划和进度跟踪', '鼓励孩子提出问题并自己寻找答案', '多学科交叉学习，促进知识融会贯通']
+    },
+    en: {
+      title: 'Learning Hub for Ages 9-12',
+      subtitle: 'Advanced · Deep Learning & Critical Thinking',
+      intro: 'Children aged 9-12 enter a phase of deeper, more abstract learning. HappySprout curates resources for advanced phonics, fractions and decimals, earth science, and design thinking. Thematic and project-based exploration builds systematic knowledge frameworks and independent learning skills.',
+      tips: ['30-40 min sessions — build self-directed habits', 'Guide children to plan and track their own learning', 'Encourage asking questions and finding answers', 'Cross-disciplinary learning for integrated knowledge']
+    }
+  }
+};
+
+function renderAgeHub(container, ageRange) {
+  var hub = AGE_HUBS[ageRange];
+  if (!hub) { navigateTo('home'); return; }
+  var lang = APP.lang === 'en' ? 'en' : 'zh';
+  var d = hub[lang];
+  var minAge = parseInt(ageRange.split('-')[0]);
+  var maxAge = parseInt(ageRange.split('-')[1]);
+  var videos = VIDEO_DB.filter(function(v) {
+    return v.ages.some(function(a) { return a >= minAge && a <= maxAge; });
+  });
+  var tipText = lang === 'zh' ? '学习建议' : 'Learning Tips';
+  var toCourseText = lang === 'zh' ? '查看相关课程 →' : 'View Related Courses →';
+
+  var videoCards = videos.slice(0, 12).map(function(v) {
+    return '<div class="video-card" onclick="navigateTo(\'watch\',{videoId:\'' + v.id + '\'})">' +
+      '<div class="video-thumb"><img src="' + getYouTubeThumb(v.id) + '" alt="' + v.title + '" onerror="this.style.display=\'none\'"><div class="play-btn">▶</div><div class="video-duration">' + v.duration + '</div></div>' +
+      '<div class="video-info"><h3>' + v.title + '</h3><div class="channel">' + v.channel + '</div><span class="age-badge">' + v.ages[0] + '-' + v.ages[v.ages.length-1] + '岁</span></div>' +
+    '</div>';
+  }).join('');
+
+  container.innerHTML = '<div class="page active">' +
+    '<button style="padding:8px 16px;border:none;background:#f0e8d8;border-radius:20px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:12px" onclick="navigateTo(\'home\')">← ' + (lang === 'zh' ? '返回首页' : 'Back to Home') + '</button>' +
+    '<div style="background:linear-gradient(135deg,' + hub.color + ',' + hub.color + 'dd);border-radius:16px;padding:24px;margin-bottom:20px;color:white">' +
+      '<h1 style="font-size:22px;margin-bottom:8px">' + hub.icon + ' ' + d.title + '</h1>' +
+      '<p style="font-size:14px;opacity:0.9">' + d.subtitle + '</p>' +
+    '</div>' +
+    '<p style="font-size:14px;line-height:1.8;color:#555;margin-bottom:16px">' + d.intro + '</p>' +
+    '<div style="background:#fef9f0;border-radius:12px;padding:16px;margin-bottom:20px">' +
+      '<h2 style="font-size:15px;margin-bottom:10px;color:#8B6914">💡 ' + tipText + '</h2>' +
+      '<ul style="margin:0;padding-left:20px">' + d.tips.map(function(t) { return '<li style="padding:4px 0;font-size:13px;color:#555">' + t + '</li>'; }).join('') + '</ul>' +
+    '</div>' +
+    '<button onclick="navigateTo(\'courses\')" style="padding:10px 24px;border:2px solid ' + hub.color + ';background:white;border-radius:50px;font-size:14px;font-weight:600;cursor:pointer;color:' + hub.color + ';margin-bottom:16px">' + toCourseText + '</button>' +
+    '<h2 style="font-size:16px;margin-bottom:12px;color:#4A4A4A">' + (lang === 'zh' ? '推荐视频 (' + videos.length + '个)' : 'Recommended Videos (' + videos.length + ')') + '</h2>' +
+    '<div class="video-grid">' + videoCards + '</div>' +
+    (videos.length === 0 ? '<p style="text-align:center;color:#999;padding:30px">' + (lang === 'zh' ? '更多内容即将推出！' : 'More content coming soon!') + '</p>' : '') +
+  '</div>';
+}
+
+function renderSubjectHub(container, subject) {
+  var subjectMap = {
+    math: { color: '#C77DFF', icon: '🔢', zh_title: '儿童数学学习资源', zh_subtitle: '数数、运算、逻辑思维训练', en_title: 'Kids Math Learning Resources', en_subtitle: 'Counting, Operations & Logic', zh_intro: '数学是一切科学的基础。HappySprout 为孩子提供了从数数到简单运算的完整学习路径，精选 Numberblocks 等国际获奖数学启蒙节目，配合互动练习和可打印练习册，让孩子建立坚实的数学基础和对数字的直觉理解。', en_intro: 'Math is the foundation of all sciences. HappySprout provides a complete path from counting to simple operations, featuring award-winning content from Numberblocks with interactive practice and printable worksheets.', cat: ['数学思维'], zh_tags: '儿童数学, 数数, 数学启蒙, 幼儿园数学, 小学数学', en_tags: 'kids math, counting, math for children, preschool math, elementary math' },
+    english: { color: '#FF8C42', icon: '🔤', zh_title: '儿童英语学习资源', zh_subtitle: '字母、拼读、阅读启蒙', en_title: 'Kids English Learning Resources', en_subtitle: 'Letters, Phonics & Early Reading', zh_intro: 'HappySprout 为孩子打造了从字母认知到自然拼读的完整英语启蒙体系。课程内容来自 Super Simple Songs、CoComelon 等国际顶级教育品牌，通过儿歌、动画和互动练习，让孩子在轻松愉快的氛围中自然习得英语。', en_intro: 'HappySprout builds a complete English learning system from letter recognition to phonics. Content from top brands like Super Simple Songs and CoComelon, with songs, animations, and interactive exercises for natural language acquisition.', cat: ['英语启蒙'], zh_tags: '儿童英语, 英语启蒙, 幼儿英语, 字母学习, 自然拼读', en_tags: 'kids English, early literacy, phonics, alphabet, ESL for kids' },
+    science: { color: '#4A90D9', icon: '🔬', zh_title: '儿童科学探索资源', zh_subtitle: '自然、实验、观察与发现', en_title: 'Kids Science Exploration', en_subtitle: 'Nature, Experiments & Discovery', zh_intro: '孩子天生就是小小的科学家！HappySprout 精选了 SciShow Kids 等专业儿童科普频道的精彩内容，涵盖动物世界、海洋奥秘、天气现象和趣味实验。通过生动的视频和互动练习，点燃孩子对科学的好奇心和探索欲。', en_intro: 'Every child is a born scientist! HappySprout curates content from SciShow Kids and other professional channels covering animals, oceans, weather, and fun experiments. Spark curiosity and discovery through engaging videos and interactive practice.', cat: ['科学探索'], zh_tags: '儿童科学, 科学探索, 自然科普, 动物世界, STEM教育', en_tags: 'kids science, STEM, nature, experiments, science for children' },
+    art: { color: '#FF6B9D', icon: '🎨', zh_title: '儿童艺术创意资源', zh_subtitle: '绘画、手工、音乐与表演', en_title: 'Kids Art & Creativity', en_subtitle: 'Drawing, Crafts, Music & Drama', zh_intro: '艺术是孩子表达自我、释放创造力的最佳方式。HappySprout 邀请了 Art for Kids Hub 等专业儿童艺术教育频道，提供从简笔画到手工制作的系统教学。配合音乐律动和故事表演内容，全面培养孩子的艺术素养和审美能力。', en_intro: 'Art is the best way for children to express themselves and unleash creativity. HappySprout features Art for Kids Hub and other channels with drawing, crafting, music, and drama — developing artistic literacy and aesthetic sensitivity.', cat: ['艺术手工', '音乐律动'], zh_tags: '儿童艺术, 简笔画, 手工制作, 儿童音乐, 创意教育', en_tags: 'kids art, drawing for kids, crafts, children music, creative education' }
+  };
+
+  var info = subjectMap[subject];
+  if (!info) { navigateTo('home'); return; }
+  var lang = APP.lang === 'en' ? 'en' : 'zh';
+  var isEn = lang === 'en';
+  var title = isEn ? info.en_title : info.zh_title;
+  var subtitle = isEn ? info.en_subtitle : info.zh_subtitle;
+  var intro = isEn ? info.en_intro : info.zh_intro;
+  var tags = (isEn ? info.en_tags : info.zh_tags).split(', ');
+
+  var videos = VIDEO_DB.filter(function(v) {
+    return info.cat.some(function(c) { return v.category === c; });
+  });
+
+  var videoCards = videos.slice(0, 12).map(function(v) {
+    return '<div class="video-card" onclick="navigateTo(\'watch\',{videoId:\'' + v.id + '\'})">' +
+      '<div class="video-thumb"><img src="' + getYouTubeThumb(v.id) + '" alt="' + v.title + '" onerror="this.style.display=\'none\'"><div class="play-btn">▶</div><div class="video-duration">' + v.duration + '</div></div>' +
+      '<div class="video-info"><h3>' + v.title + '</h3><div class="channel">' + v.channel + '</div><span class="age-badge">' + v.ages[0] + '-' + v.ages[v.ages.length-1] + '岁</span></div>' +
+    '</div>';
+  }).join('');
+
+  container.innerHTML = '<div class="page active">' +
+    '<button style="padding:8px 16px;border:none;background:#f0e8d8;border-radius:20px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:12px" onclick="navigateTo(\'home\')">← ' + (isEn ? 'Back to Home' : '返回首页') + '</button>' +
+    '<div style="background:linear-gradient(135deg,' + info.color + ',' + info.color + 'dd);border-radius:16px;padding:24px;margin-bottom:20px;color:white">' +
+      '<h1 style="font-size:22px;margin-bottom:8px">' + info.icon + ' ' + title + '</h1>' +
+      '<p style="font-size:14px;opacity:0.9">' + subtitle + '</p>' +
+    '</div>' +
+    '<p style="font-size:14px;line-height:1.8;color:#555;margin-bottom:16px">' + intro + '</p>' +
+    '<div style="margin-bottom:16px">' +
+      '<span style="font-size:12px;color:#999;margin-right:8px">' + (isEn ? 'Topics:' : '热门标签：') + '</span>' +
+      tags.map(function(t) { return '<span style="display:inline-block;background:#f0e8d8;color:#8B6914;padding:3px 10px;border-radius:12px;font-size:11px;margin:2px">' + t + '</span>'; }).join(' ') +
+    '</div>' +
+    '<h2 style="font-size:16px;margin-bottom:12px;color:#4A4A4A">' + (isEn ? 'Videos (' + videos.length + ')' : '学习视频 (' + videos.length + '个)') + '</h2>' +
+    '<div class="video-grid">' + videoCards + '</div>' +
+  '</div>';
+}
 function init() {
   // Ensure store has all default fields
   const defaults = getStore();
