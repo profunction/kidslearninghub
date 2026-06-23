@@ -1688,6 +1688,9 @@ const I18N = {
     drawYourPattern: '请画出您的图形密码',
     confirm: '确认',
     wrongPIN: '密码错误，请重试！',
+    forgotPIN: '忘记密码？重新设置',
+    resetPINConfirm: '确定要清除当前密码吗？清除后需要重新设置图案密码。',
+    resetPINBtn: '重新设置',
     changePINTitle: '修改密码',
     verifyCurrent: '验证当前密码',
     setNewPIN: '设置新密码',
@@ -2005,6 +2008,9 @@ const I18N = {
     drawYourPattern: 'Draw your pattern',
     confirm: 'Confirm',
     wrongPIN: 'Wrong pattern, try again!',
+    forgotPIN: 'Forgot PIN? Reset',
+    resetPINConfirm: 'Sure you want to clear your PIN? You\'ll need to set it up again.',
+    resetPINBtn: 'Reset',
     changePINTitle: 'Change PIN',
     verifyCurrent: 'Verify Current Pattern',
     setNewPIN: 'Set New Pattern',
@@ -3961,6 +3967,7 @@ function showPinSetupGrid(step) {
         ${t('selected')}：<span id="setup-pin-display"></span>
       </div>
       <button style="padding:10px 28px;border-radius:50px;border:3px solid var(--orange);background:white;font-size:15px;font-weight:700;cursor:pointer" onclick="submitPinSetupStep()">${step === 1 ? t('nextStep') : t('confirmCreate')}</button>
+      <button style="padding:10px 20px;border-radius:50px;border:none;background:#f0e8d8;font-size:14px;font-weight:600;cursor:pointer;margin-left:8px" onclick="resetPinSetup()">🔄 ${t('resetPINBtn')}</button>
       <p id="setup-pin-error" style="margin-top:12px;font-size:12px;color:#e74c3c;display:none"></p>
     </div>
   `;
@@ -3974,6 +3981,20 @@ function setupPinDotClick(idx) {
   dots.forEach(d => { if (d.dataset.idx == idx) d.classList.add('selected'); });
   updateSetupPinDisplay();
   playClick();
+}
+
+function resetPinSetup() {
+  APP.pinSetupInput = [];
+  document.querySelectorAll('#setup-pattern-grid .pattern-dot').forEach(d => d.classList.remove('selected'));
+  updateSetupPinDisplay();
+  const err = document.getElementById('setup-pin-error');
+  if (err) err.style.display = 'none';
+  // If on step 2, go back to step 1
+  if (APP.pinSetupStep === 2) {
+    document.getElementById('pin-setup-grid')?.remove();
+    APP.pinSetupFirst = null;
+    showPinSetupGrid(1);
+  }
 }
 
 function updateSetupPinDisplay() {
@@ -4067,6 +4088,9 @@ function openParentLock() {
       </div>
       <button style="padding:10px 28px;border-radius:50px;border:3px solid var(--orange);background:white;font-size:15px;font-weight:700;cursor:pointer" onclick="checkPattern()">${t('confirm')}</button>
       <button style="padding:10px 28px;border-radius:50px;border:none;background:#f0e8d8;font-size:15px;font-weight:700;cursor:pointer;margin-left:8px" onclick="document.querySelector('.modal-overlay').remove()">${t('cancel')}</button>
+      <div style="margin-top:20px;padding-top:16px;border-top:1px solid #f0e8d8">
+        <button style="padding:8px 24px;border-radius:50px;border:2px dashed #e74c3c;background:white;color:#e74c3c;font-size:13px;font-weight:600;cursor:pointer" onclick="resetParentPin()">🔄 ${t('forgotPIN')}</button>
+      </div>
     </div>
   `;
   document.body.appendChild(overlay);
@@ -4082,6 +4106,16 @@ function patternDotClick(idx) {
   dots.forEach(d => { if (d.dataset.idx == idx) d.classList.add('selected'); });
   updatePatternDisplay();
   playClick();
+}
+
+function resetParentPin() {
+  if (!confirm(t('resetPINConfirm'))) return;
+  APP.correctPattern = null;
+  const s = getStore();
+  delete s.parentPattern;
+  saveStore(s);
+  document.querySelector('.modal-overlay')?.remove();
+  showFirstTimePinSetup();
 }
 
 function updatePatternDisplay() {
