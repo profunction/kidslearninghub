@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="description" content="HappySprout 提供 100+ 免费儿童教育游戏、可打印练习册和创意学习活动，专为 3-12 岁孩子设计，让学习充满乐趣。立即开始探索！">
-<title>儿童学习乐园 | HappySprout - 免费幼儿教育游戏与练习册</title>
+<meta name="description" content="HappySprout 提供100+免费儿童教育视频、互动练习册和创意学习活动，专为3-12岁孩子设计，涵盖英语启蒙、数学思维、科学探索，让学习充满乐趣。">
+<title>儿童学习乐园 | HappySprout - 免费幼儿教育视频与互动练习册</title>
 
 <!-- Security headers for AI agent trust -->
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
@@ -754,23 +754,6 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px s
 /* ============================================
    PARENT PANEL
    ============================================ */
-.parent-lock {
-  position: fixed; bottom: 20px; right: 20px; z-index: 50;
-  width: 44px; height: 44px; border-radius: 50%; background: rgba(0,0,0,0.1);
-  border: none; font-size: 20px; cursor: pointer; display: flex;
-  align-items: center; justify-content: center;
-}
-
-.pattern-grid {
-  display: grid; grid-template-columns: repeat(3, 80px); grid-template-rows: repeat(3, 80px);
-  gap: 10px; justify-content: center; margin: 24px auto;
-}
-.pattern-dot {
-  width: 80px; height: 80px; border-radius: 50%; background: #f0e8d8;
-  border: 3px solid #ddd; cursor: pointer; transition: all 0.2s;
-}
-.pattern-dot.selected { background: var(--orange); border-color: var(--orange); transform: scale(1.1); }
-
 /* Toggle switch */
 .toggle-switch { position: relative; display: inline-block; width: 48px; height: 26px; }
 .toggle-switch input { opacity: 0; width: 0; height: 0; }
@@ -1336,8 +1319,6 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px s
   <a href="#feedback">反馈</a>
 </nav>
 
-<!-- Parent panel quick lock button -->
-<button class="parent-lock" onclick="openParentLock()" title="家长面板" aria-label="家长面板 - Parent Panel">🔒</button>
 
 <!-- ============================================================
      JAVASCRIPT APPLICATION
@@ -1939,7 +1920,15 @@ const COURSE_DETAIL = {
       ],
       howTo: '建议家长每天陪伴孩子学习 1 节课（约 15-20 分钟）。先观看视频，然后和孩子一起唱字母歌，用手指在空中或纸上画字母。重复观看同一视频 3-5 次效果最佳。完成全部 6 节课后，可进入"自然拼读入门"课程继续深入学习。',
       value: '研究表明，3-6 岁是儿童语言学习的黄金期。通过音乐、动画和互动练习相结合的方式学习字母，能显著提升孩子的语音意识和字母识别能力。HappySprout 的字母课程遵循"看-听-说-写"四步学习法，符合儿童认知发展规律，让英语启蒙变得科学高效又充满乐趣。',
-      tags: '英文字母, 英语启蒙, 幼儿英语, ABC学习, 字母歌, 学字母, 3岁英语, 幼儿园英语'
+      tags: '英文字母, 英语启蒙, 幼儿英语, ABC学习, 字母歌, 学字母, 3岁英语, 幼儿园英语',
+      lessons: [
+        { title: '第1课：字母 A B C D', desc: '跟着 Super Simple Songs 的经典字母歌，认识字母 A、B、C、D 的形状和发音。孩子们通过可爱的动画角色学习每个字母对应的单词：A is for Apple（苹果）、B is for Ball（球）、C is for Cat（猫）、D is for Dog（狗）。歌曲旋律简单重复，适合幼儿跟唱模仿。', keywords: 'A, B, C, D, Apple, Ball, Cat, Dog' },
+        { title: '第2课：字母 E F G H', desc: '继续字母之旅！通过 CoComelon 的趣味动画学习 E、F、G、H。E is for Elephant（大象）、F is for Fish（鱼）、G is for Gorilla（大猩猩）、H is for Hat（帽子）。每个字母都配有生动的动物或物品动画，帮助孩子建立"字母-发音-含义"的三重连接。', keywords: 'E, F, G, H, Elephant, Fish, Gorilla, Hat' },
+        { title: '第3课：字母 I J K L', desc: '学习字母 I、J、K、L。I is for Igloo（冰屋）、J is for Juice（果汁）、K is for Kangaroo（袋鼠）、L is for Lion（狮子）。课程加入了"找字母"互动环节，让孩子在画面中寻找隐藏的字母，锻炼观察力和字母识别能力。', keywords: 'I, J, K, L, Igloo, Juice, Kangaroo, Lion' },
+        { title: '第4课：字母 M N O P', desc: '认识字母 M、N、O、P。M is for Monkey（猴子）、N is for Nose（鼻子）、O is for Octopus（章鱼）、P is for Penguin（企鹅）。本课引入大小写字母的对比，让孩子开始理解大写字母（用于句首和专有名词）和小写字母（日常使用）的区别。', keywords: 'M, N, O, P, Monkey, Nose, Octopus, Penguin' },
+        { title: '第5课：字母 Q R S T', desc: '学习字母 Q、R、S、T。Q is for Queen（女王）、R is for Rainbow（彩虹）、S is for Sun（太阳）、T is for Turtle（乌龟）。课程通过"字母跳舞"环节让孩子用身体模仿字母形状——站着伸开双臂是 T，蜷缩起来是 S，将学习变成全身运动。', keywords: 'Q, R, S, T, Queen, Rainbow, Sun, Turtle' },
+        { title: '第6课：字母 U V W X Y Z', desc: '完成字母表的最后一部分！学习 U、V、W、X、Y、Z。U is for Umbrella（雨伞）、V is for Violin（小提琴）、W is for Whale（鲸鱼）、X is for Xylophone（木琴）、Y is for Yo-yo（溜溜球）、Z is for Zebra（斑马）。最后用完整的字母歌串联全部 26 个字母，庆祝学完 ABC！', keywords: 'U, V, W, X, Y, Z, Umbrella, Violin, Whale, Xylophone, Yo-yo, Zebra' }
+      ]
     },
     en: {
       intro: 'ABC Fun Learning is a carefully designed English beginner course for children aged 3-6. Through 6 progressive video lessons, this course guides young learners from zero to mastering all 26 English letters, including letter sounds and basic phonics. Featuring high-quality content from world-class children\'s educational channels like Super Simple Songs and CoComelon, children learn letters naturally through catchy songs and engaging animations.',
@@ -1952,7 +1941,15 @@ const COURSE_DETAIL = {
       ],
       howTo: 'We recommend parents spend 15-20 minutes daily with their child on one lesson. Watch the video together, then sing the alphabet song and practice writing letters in the air or on paper. Repeating each video 3-5 times yields the best results. After completing all 6 lessons, progress to the "Phonics Basics" course for deeper learning.',
       value: 'Research shows ages 3-6 are the golden period for language acquisition. Combining music, animation, and interactive exercises significantly enhances phonological awareness and letter recognition. HappySprout\'s ABC course follows a "Watch - Listen - Speak - Write" four-step methodology aligned with cognitive development science, making English learning both effective and joyful.',
-      tags: 'English letters, ABC learning, phonics, early literacy, preschool English, kindergarten reading, alphabet songs'
+      tags: 'English letters, ABC learning, phonics, early literacy, preschool English, kindergarten reading, alphabet songs',
+      lessons: [
+        { title: 'Lesson 1: Letters A B C D', desc: 'Follow Super Simple Songs\' classic alphabet song to learn the shapes and sounds of A, B, C, and D. Children discover each letter\'s keyword through cute animated characters: A is for Apple, B is for Ball, C is for Cat, D is for Dog. The simple, repetitive melody is perfect for young children to sing along.', keywords: 'A, B, C, D, Apple, Ball, Cat, Dog' },
+        { title: 'Lesson 2: Letters E F G H', desc: 'Continue the alphabet journey with CoComelon\'s fun animations for E, F, G, and H. E is for Elephant, F is for Fish, G is for Gorilla, H is for Hat. Each letter pairs with lively animal or object animations, building the "letter-sound-meaning" triple connection.', keywords: 'E, F, G, H, Elephant, Fish, Gorilla, Hat' },
+        { title: 'Lesson 3: Letters I J K L', desc: 'Learn I, J, K, and L. I is for Igloo, J is for Juice, K is for Kangaroo, L is for Lion. Includes a "letter hunt" activity where children search for hidden letters in the scenes, building observation skills alongside letter recognition.', keywords: 'I, J, K, L, Igloo, Juice, Kangaroo, Lion' },
+        { title: 'Lesson 4: Letters M N O P', desc: 'Discover M, N, O, and P. M is for Monkey, N is for Nose, O is for Octopus, P is for Penguin. This lesson introduces uppercase vs. lowercase comparison, helping children understand when each form is used.', keywords: 'M, N, O, P, Monkey, Nose, Octopus, Penguin' },
+        { title: 'Lesson 5: Letters Q R S T', desc: 'Learn Q, R, S, and T. Q is for Queen, R is for Rainbow, S is for Sun, T is for Turtle. Features a "letter dance" segment where children use their bodies to form letter shapes — standing with arms outstretched for T, curling up for S.', keywords: 'Q, R, S, T, Queen, Rainbow, Sun, Turtle' },
+        { title: 'Lesson 6: Letters U V W X Y Z', desc: 'Complete the alphabet! U is for Umbrella, V is for Violin, W is for Whale, X is for Xylophone, Y is for Yo-yo, Z is for Zebra. The full alphabet song ties all 26 letters together to celebrate finishing the ABCs!', keywords: 'U, V, W, X, Y, Z, Umbrella, Violin, Whale, Xylophone, Yo-yo, Zebra' }
+      ]
     }
   },
   'numbers-1-10': {
@@ -1969,7 +1966,12 @@ const COURSE_DETAIL = {
       ],
       howTo: '每天安排 15-20 分钟学习时间。先和视频中的角色一起数数，然后利用身边的物品（积木、水果、玩具等）进行实物数数练习。学完每个视频后，进入"互动练习"页面完成配套的数数游戏和配对练习，巩固所学内容。',
       value: '数学启蒙的关键不是死记硬背，而是建立"数感"——对数量关系的直觉理解。HappySprout 的数字课程采用 CPA（具体-图形-抽象）教学法，从实物操作过渡到视觉图形，最终建立抽象数字概念。这种方式特别适合 3-6 岁幼儿的思维发展特点，让数学学习变得自然而有趣。',
-      tags: '幼儿数学, 数字学习, 数学启蒙, 数数, 1到10, 儿童数学, 学前教育, 幼儿园数学'
+      tags: '幼儿数学, 数字学习, 数学启蒙, 数数, 1到10, 儿童数学, 学前教育, 幼儿园数学',
+      lessons: [
+        { title: '第1课：认识数字 1-5', desc: '通过 Numberblocks 的精彩动画，孩子们将认识数字 1、2、3、4、5。每个数字都被塑造成有性格的小角色——Numberblock 1 是一个小方块，Numberblock 2 由两个方块组成……孩子们直观地看到"1个方块"变成"2个方块"的过程。课程重点：一一对应点数、数字顺序、用手指表示数字。', keywords: '1, 2, 3, 4, 5, 数数, 一一对应, 数字顺序' },
+        { title: '第2课：认识数字 6-10', desc: '继续数字探索之旅！Numberblock 6 到 10 登场了。孩子们学到：5个方块加1个就是6、两个3组成6……动画展示数的"合成与分解"，为数感和加法打下基础。课程还引入"倒数"概念——从10倒数到1，像火箭发射一样酷！', keywords: '6, 7, 8, 9, 10, 倒数, 数的组成, 加法基础' },
+        { title: '第3课：数字游戏总复习', desc: '本课是数字王国的总结与升华。通过多种趣味游戏——数字配对、按数取物、缺失数字填空——来巩固1-10的认知。课程引入简单的"比大小"概念（哪堆积木更多？）和"加法初体验"（1个苹果加1个苹果等于几个？），让孩子在游戏中完成从认知到运用的跨越。', keywords: '数字复习, 数字配对, 比大小, 简单加法, 综合练习' }
+      ]
     },
     en: {
       intro: 'Number Kingdom Adventure is HappySprout\'s math beginner course designed for children aged 3-6. Through 3 carefully curated video lessons and companion interactive exercises, children discover numbers 1-10, develop counting skills, understand quantity relationships, and explore simple addition — all in a game-like environment. Featuring award-winning content from Numberblocks and HappySprout-exclusive interactive practice.',
@@ -1982,7 +1984,12 @@ const COURSE_DETAIL = {
       ],
       howTo: 'Dedicate 15-20 minutes daily. Count along with the video characters first, then practice counting with real objects (blocks, fruits, toys). After each video, head to the "Practice" section for matching games and counting exercises to reinforce learning.',
       value: 'The key to early math is building "number sense" — intuitive understanding of quantity relationships. HappySprout\'s numbers course uses the CPA (Concrete-Pictorial-Abstract) approach, moving from physical objects to visual representations and finally to abstract number concepts. This method aligns perfectly with cognitive development in ages 3-6.',
-      tags: 'early math, counting, numbers 1-10, preschool math, kindergarten math, number sense, addition basics'
+      tags: 'early math, counting, numbers 1-10, preschool math, kindergarten math, number sense, addition basics',
+      lessons: [
+        { title: 'Lesson 1: Numbers 1-5', desc: 'Through Numberblocks\' brilliant animations, children discover numbers 1, 2, 3, 4, and 5 — each a character with personality. Numberblock 1 is a single block, Numberblock 2 is made of two blocks... Children visually see "1 block" become "2 blocks." Key concepts: one-to-one correspondence, number sequence, finger counting.', keywords: '1, 2, 3, 4, 5, counting, one-to-one correspondence, number sequence' },
+        { title: 'Lesson 2: Numbers 6-10', desc: 'The number journey continues with Numberblocks 6 through 10! Children learn: 5 blocks plus 1 makes 6, two groups of 3 make 6... Animations demonstrate number composition and decomposition, building number sense and addition foundations. Also introduces counting backwards from 10 — as cool as a rocket launch!', keywords: '6, 7, 8, 9, 10, counting backwards, number composition, addition foundations' },
+        { title: 'Lesson 3: Number Games Review', desc: 'A comprehensive review through fun games — number matching, counting objects, filling in missing numbers — to solidify understanding of 1-10. Introduces simple "greater than/less than" concepts (which pile has more blocks?) and "first addition" (1 apple plus 1 apple equals?). Kids transition from recognition to application through play.', keywords: 'number review, number matching, comparing numbers, simple addition, comprehensive practice' }
+      ]
     }
   },
   'phonics-basics': {
@@ -1999,7 +2006,10 @@ const COURSE_DETAIL = {
       ],
       howTo: '本课程建议在完成"ABC 字母快乐学"后学习。每天 15-20 分钟，先看视频学习拼读规则，然后和孩子一起用字母卡片或白板练习拼读。重点不在于速度，而是确保孩子理解每个字母的发音原理。可以配合 HappySprout 的"跟读录音"互动练习，让孩子听到自己的发音并进行对比。',
       value: '自然拼读是英语阅读的基石。全球大量教育研究证明，系统学习自然拼读的孩子，其阅读能力显著优于仅靠整体记忆单词的孩子。HappySprout 的自然拼读课程结合国际公认的 Jolly Phonics 和 Letters and Sounds 教学体系，为中国孩子量身打造符合第二语言学习规律的拼读方案，让孩子少走弯路。',
-      tags: '自然拼读, Phonics, 英语拼读, 儿童英语阅读, 英语启蒙, 拼读法, 学英语, 幼儿英语'
+      tags: '自然拼读, Phonics, 英语拼读, 儿童英语阅读, 英语启蒙, 拼读法, 学英语, 幼儿英语',
+      lessons: [
+        { title: '拼读入门：A-Z 字母发音歌', desc: '这是自然拼读的基石课程。不同于 ABC 字母歌（教字母名称），本课教的是每个字母的"发音"（letter sound）——这是拼读的核心。例如字母 A 不读"诶"而读"/æ/"（如 apple 中的 a 音）。通过富有节奏感的 Phonics Song，孩子们学习全部 26 个字母的拼读发音。课程采用 Jolly Phonics 的分组教学法：第一组 s, a, t, p, i, n（这些字母能组合出最多的简单单词），循序渐进。学完后孩子可以尝试拼读最简单的 CVC 单词如 sat、pin、tap。', keywords: 'Phonics, letter sounds, A-Z sounds, blending, Jolly Phonics, CVC words' }
+      ]
     },
     en: {
       intro: 'Phonics Basics is HappySprout\'s systematic phonics course for children aged 4-7. Phonics — the proven method used in English-speaking countries — teaches children to connect letters with their sounds, enabling them to decode words independently. This course starts with fundamental letter sounds and progressively builds blending and segmenting skills essential for reading fluency.',
@@ -2012,7 +2022,10 @@ const COURSE_DETAIL = {
       ],
       howTo: 'This course is best taken after completing "ABC Fun Learning." Spend 15-20 minutes daily — watch the phonics video, then practice blending with letter cards or a whiteboard. Focus on understanding rather than speed. Use HappySprout\'s "Repeat & Record" interactive exercise to let children hear and compare their own pronunciation.',
       value: 'Phonics is the foundation of English reading. Extensive global research confirms that children who learn systematic phonics significantly outperform those who rely on whole-word memorization. HappySprout\'s phonics course integrates internationally recognized frameworks (Jolly Phonics, Letters and Sounds) adapted for second-language learners, providing an optimized path to English literacy.',
-      tags: 'phonics, letter sounds, CVC words, early reading, English literacy, blending, segmenting, decoding'
+      tags: 'phonics, letter sounds, CVC words, early reading, English literacy, blending, segmenting, decoding',
+      lessons: [
+        { title: 'Phonics Basics: A-Z Letter Sounds Song', desc: 'This is the cornerstone of phonics learning. Unlike the ABC song (which teaches letter names), this lesson teaches each letter\'s "sound" — the core of decoding. For example, the letter A is taught as /æ/ (as in "apple") rather than "ay." Through a rhythmic Phonics Song, children learn all 26 letter sounds. The lesson follows Jolly Phonics\'s grouping method: Group 1 covers s, a, t, p, i, n — the letters that form the most simple words. After this lesson, children can attempt to blend simple CVC words like "sat," "pin," and "tap."', keywords: 'Phonics, letter sounds, A-Z sounds, blending, Jolly Phonics, CVC words' }
+      ]
     }
   }
 };
@@ -2079,13 +2092,7 @@ const APP = {
   selectedPracticeType: null,
   videoHistory: {},
   timerInterval: null,
-  parentUnlocked: false,
-  patternInput: [],
-  lockPatternInput: [],
-  correctPattern: null,     // loaded from localStorage; parent creates on first visit
-  parentOverrideActive: false,   // temporarily disable time checks after parent unlock
   activeSearchQuery: '',
-  redirectAfterUnlock: null,    // callback after pattern unlock
   lang: 'zh',               // 'zh' | 'en'
 };
 
@@ -2095,7 +2102,7 @@ const I18N = {
     // Nav
     home: '首页',
     courses: '课程',
-    practice: '练习',
+    practice: '练习册',
     achievements: '成就',
     settings: '设置',
     search: '搜索',
@@ -2144,11 +2151,6 @@ const I18N = {
     takeBreakMsg: '你已经看了 {limit} 分钟啦，答对问题继续哦！',
     dailyLimitReached: '今日时长已用完',
     dailyLimitMsg: '你已经学习了 {limit} 分钟。明天再来吧！',
-    parentUnlock: '家长解锁',
-    parentVerify: '家长验证',
-    enterPattern: '请输入图形密码以解锁',
-    confirmUnlock: '确认解锁',
-    cancel: '取消',
     kidQuiz: '小朋友，答对才能继续哦：',
     quizTitle: '考考你！',
     quizQ1: '这个视频里出现了什么？',
@@ -2211,18 +2213,13 @@ const I18N = {
     totalStars: '累计星星',
     totalTime: '学习时长',
     streakCheckin: '连续打卡',
-    changeParentPIN: '修改家长密码',
     // Parent Panel
     parentSettings: '家长设置',
     parentSettingsSub: '管理孩子的学习时长、内容和安全',
-    enterPatternToAccess: '输入图案密码以访问设置',
-    enterPassword: '输入密码',
-    lock: '锁定',
     timeSettings: '时长设置',
     contentMgmt: '内容管理',
     learningReport: '学习报告',
     soundEffects: '音效',
-    changePIN: '修改密码',
     sessionLength: '单次观看时长',
     dailyLength: '每日总时长',
     blockedStart: '禁用时段（开始）',
@@ -2246,45 +2243,6 @@ const I18N = {
     soundOn: '已开启',
     soundOff: '已关闭',
     soundOffHint: '关闭后，点击和奖励音效将不再播放',
-    modifyParentPIN: '修改家长面板的图案密码',
-    currentPattern: '当前密码图案',
-    notSet: '未设置',
-    // PIN setup
-    welcomeTitle: '欢迎来到 HappySprout Kids Learning – Fun Educational Activities for Children！',
-    homeHeading: '儿童学习乐园 - 免费幼儿教育游戏与练习册',
-    coursesHeading: '儿童在线课程 - 3-12岁趣味学习资源',
-    welcomeSub: '家长您好，请先设置您的图案密码',
-    welcomeHint: '这个密码将用于管理孩子的学习时长和内容',
-    startSetup: '开始设置密码',
-    createPIN: '创建密码',
-    stepLabel: '设置新密码',
-    stepConfirm: '再次确认密码',
-    stepNum: '第 {step} 步',
-    drawPattern: '请依次点击圆点画出你想要的图形密码',
-    selected: '已选',
-    nextStep: '下一步',
-    confirmCreate: '确认创建',
-    needMin3: '请至少连接 3 个圆点',
-    mismatch: '两次输入不一致，请重试',
-    pinSuccess: '密码设置成功！',
-    pinSuccessMsg: '您的密码图案',
-    pinSuccessHint: '请记住这个图案，以后管理设置时需要用到',
-    startExplore: '开始探索',
-    drawYourPattern: '请画出您的图形密码',
-    confirm: '确认',
-    wrongPIN: '密码错误，请重试！',
-    forgotPIN: '忘记密码？重新设置',
-    resetPINConfirm: '确定要清除当前密码吗？清除后需要重新设置图案密码。',
-    resetPINBtn: '重新设置',
-    changePINTitle: '修改密码',
-    verifyCurrent: '验证当前密码',
-    setNewPIN: '设置新密码',
-    confirmNewPIN: '再次确认新密码',
-    confirmModify: '确认修改',
-    wrongPattern: '当前密码错误，请重试',
-    needMin2: '请至少选择 2 个点',
-    pinMismatch2: '两次输入的密码不一致，请重试',
-    pinChanged: '密码修改成功！新密码已生效。',
     saved: '设置已保存！',
     // Search
     searchVideos: '搜索视频',
@@ -2395,6 +2353,14 @@ const I18N = {
     aboutWhy3: '互动练习 + 闯关模式，告别单纯刷视频',
     aboutWhy4: '家长控制面板，科学管理屏幕时间',
     aboutWhy5: '趣味徽章 + 星星奖励，激发学习动力',
+    aboutWhyTitle: '我们的教育理念',
+    aboutWhyDesc: 'HappySprout 的设计基于三项经过验证的教育原则：',
+    aboutMethod1Title: '多感官学习法 (Multisensory Learning)',
+    aboutMethod1Desc: '孩子通过看（视频）、听（儿歌）、说（跟读练习）、做（互动游戏）四种感官通道同时学习。研究证明，多感官输入能激活大脑更多区域，记忆留存率是单一感官学习的 3-4 倍。',
+    aboutMethod2Title: '间隔重复 (Spaced Repetition)',
+    aboutMethod2Desc: '我们的练习册配合课程进度设计了智能重复机制——利用艾宾浩斯遗忘曲线的规律，在最容易遗忘的时间点进行精准巩固。',
+    aboutMethod3Title: '脚手架式教学 (Scaffolded Instruction)',
+    aboutMethod3Desc: '每个课程从最基础的认知开始，逐步过渡到更复杂的技能。每一步都有足够的支撑，不会因为难度跳跃过大而失去信心。',
     aboutContact: '联系我们',
     aboutContactText: '有任何建议或合作意向？欢迎给我们反馈！',
     feedbackTitle: '意见反馈',
@@ -2430,12 +2396,33 @@ const I18N = {
     footerPrivacy: '隐私政策',
     footerTerms: '使用条款',
     footerAboutPage: '了解更多',
+    footerFAQ: '常见问题',
+    // FAQ page
+    faqTitle: '常见问题解答',
+    faqSub: '关于 HappySprout 儿童学习平台的常见问题',
+    faqIntro: '以下是我们最常收到的家长问题。如果您还有其他疑问，欢迎通过反馈页面联系我们。',
+    faqQ1: 'HappySprout 适合多大年龄的孩子？',
+    faqA1: 'HappySprout 专为 3-12 岁儿童设计，课程按年龄段分为 3-5 岁幼儿专区、6-8 岁儿童专区和 9-12 岁少儿专区。每个年龄段的课程内容和难度都经过精心调整，确保符合孩子的认知发展水平。3-5 岁侧重字母认知、数字启蒙和儿歌律动；6-8 岁进入自然拼读、基础运算和趣味科学；9-12 岁则提供高级拼读、分数小数和项目制学习。',
+    faqQ2: '所有课程都是免费的吗？',
+    faqA2: '是的！HappySprout 的所有视频课程、互动练习和学习资源目前都完全免费。我们的核心使命是为每个孩子提供平等的高质量教育机会。未来可能会有付费高级功能（如个性化学习计划），但基础学习内容将始终保持免费。',
+    faqQ3: '如何管理孩子的学习时间？',
+    faqA3: '在"家长设置"面板中，您可以设置每日学习时长上限（建议 3-5 岁每天 20 分钟，6-8 岁 30 分钟，9-12 岁 40 分钟）、单次观看时长限制和可用时间段。点击底部导航栏的"设置"进入家长面板，打开"防沉迷模式"，为孩子营造健康的学习节奏。',
+    faqQ4: '孩子应该从哪个课程开始？',
+    faqA4: '对于 3-5 岁的零基础孩子，我们建议从"ABC 字母快乐学"开始英语启蒙，主要学习字母认知和基本发音；同时可以搭配"数字王国大冒险"学习数数。6-8 岁有一定基础的孩子可以直接进入"自然拼读入门"课程。您也可以根据孩子的兴趣自由探索——HappySprout 没有严格的先后顺序要求。',
+    faqQ5: '支持哪些设备？推荐用什么学习？',
+    faqA5: 'HappySprout 采用响应式设计，在手机、平板和电脑上都能获得良好体验。我们推荐平板作为最佳学习设备——10 寸左右的屏幕大小既适合观看教学视频，也方便进行互动练习（如听力选择、记忆翻牌等）。使用平板时建议开启屏幕使用时间功能，辅助家长进行时长管理。',
+    faqQ6: '家长如何追踪孩子的学习进度？',
+    faqA6: '在"成就"页面，您可以查看孩子的学习天数、连续打卡记录、观看的视频数量和获得的星星徽章。家长控制面板还提供详细的学习时长统计和已完成视频列表。我们建议家长每周与孩子一起查看成就页面，用积极的方式激励孩子保持学习习惯。',
+    faqQ7: 'HappySprout 的内容来自哪里？安全吗？',
+    faqA7: 'HappySprout 所有视频内容均来自 YouTube 上国际公认的优质儿童教育频道，包括 Super Simple Songs、CoComelon、Numberblocks、SciShow Kids、Art for Kids Hub 等。我们在筛选内容时优先考虑教育价值、适龄性和正面价值观，确保所有内容适合儿童观看。视频通过 YouTube 的无 Cookie 嵌入模式播放，不会向儿童投放定向广告。',
+    faqQ8: 'HappySprout 和普通视频网站有什么不同？',
+    faqA8: '与普通视频网站不同，HappySprout 不是随便播放视频的频道——我们是一个完整的学习系统：① 视频按年龄和学科分类，形成递进式学习路径；② 每个课程附带互动练习，帮助孩子巩固所学知识；③ 内置学习时长管理和防沉迷功能；④ 星星徽章激励体系和进度追踪；⑤ 无需注册、无广告、无算法推荐，孩子不会被无关内容分散注意力。',
   },
   en: {
     // Nav
     home: 'Home',
     courses: 'Courses',
-    practice: 'Practice',
+    practice: 'Worksheets',
     achievements: 'Stars',
     settings: 'Settings',
     search: 'Search',
@@ -2484,11 +2471,6 @@ const I18N = {
     takeBreakMsg: 'You\'ve watched for {limit} minutes. Answer a question to continue!',
     dailyLimitReached: 'Daily limit reached',
     dailyLimitMsg: 'You\'ve learned for {limit} minutes today. Come back tomorrow!',
-    parentUnlock: 'Parent Unlock',
-    parentVerify: 'Parent Verification',
-    enterPattern: 'Enter your pattern to unlock',
-    confirmUnlock: 'Confirm Unlock',
-    cancel: 'Cancel',
     kidQuiz: 'Answer correctly to continue:',
     quizTitle: 'Quiz Time!',
     quizQ1: 'What appeared in this video?',
@@ -2551,18 +2533,13 @@ const I18N = {
     totalStars: 'Total stars',
     totalTime: 'Learning time',
     streakCheckin: 'Day streak',
-    changeParentPIN: 'Change Parent PIN',
     // Parent Panel
     parentSettings: 'Parent Settings',
     parentSettingsSub: 'Manage screen time, content, and safety',
-    enterPatternToAccess: 'Enter pattern to access settings',
-    enterPassword: 'Enter Pattern',
-    lock: 'Lock',
     timeSettings: 'Screen Time',
     contentMgmt: 'Content',
     learningReport: 'Report',
     soundEffects: 'Sound',
-    changePIN: 'Change PIN',
     sessionLength: 'Session Limit',
     dailyLength: 'Daily Limit',
     blockedStart: 'Block Start Time',
@@ -2586,45 +2563,6 @@ const I18N = {
     soundOn: 'ON',
     soundOff: 'OFF',
     soundOffHint: 'When off, click and reward sounds are disabled',
-    modifyParentPIN: 'Change the parent panel pattern PIN:',
-    currentPattern: 'Current pattern',
-    notSet: 'Not set',
-    // PIN setup
-    welcomeTitle: 'Welcome to HappySprout Kids Learning – Fun Educational Activities for Children!',
-    homeHeading: 'Free Educational Games & Worksheets for Kids',
-    coursesHeading: 'Online Courses for Kids - Fun Learning for Ages 3-12',
-    welcomeSub: 'Hello parent, please set up your pattern PIN',
-    welcomeHint: 'This PIN will be used to manage learning time and content',
-    startSetup: 'Set Up PIN',
-    createPIN: 'Create PIN',
-    stepLabel: 'Set New Pattern',
-    stepConfirm: 'Confirm Pattern',
-    stepNum: 'Step {step}',
-    drawPattern: 'Tap the dots in sequence to draw your pattern',
-    selected: 'Selected',
-    nextStep: 'Next',
-    confirmCreate: 'Confirm & Create',
-    needMin3: 'Please select at least 3 dots',
-    mismatch: 'Patterns do not match, please try again',
-    pinSuccess: 'PIN Set Successfully!',
-    pinSuccessMsg: 'Your pattern',
-    pinSuccessHint: 'Remember this pattern — you\'ll need it to access settings',
-    startExplore: 'Start Exploring',
-    drawYourPattern: 'Draw your pattern',
-    confirm: 'Confirm',
-    wrongPIN: 'Wrong pattern, try again!',
-    forgotPIN: 'Forgot PIN? Reset',
-    resetPINConfirm: 'Sure you want to clear your PIN? You\'ll need to set it up again.',
-    resetPINBtn: 'Reset',
-    changePINTitle: 'Change PIN',
-    verifyCurrent: 'Verify Current Pattern',
-    setNewPIN: 'Set New Pattern',
-    confirmNewPIN: 'Confirm New Pattern',
-    confirmModify: 'Confirm Change',
-    wrongPattern: 'Current pattern is incorrect, try again',
-    needMin2: 'Please select at least 2 dots',
-    pinMismatch2: 'Patterns do not match, try again',
-    pinChanged: 'PIN changed successfully!',
     saved: 'Settings saved!',
     // Search
     searchVideos: 'Search Videos',
@@ -2734,6 +2672,14 @@ const I18N = {
     aboutWhy3: 'Interactive practice + quiz mode — beyond passive watching',
     aboutWhy4: 'Parent control panel — manage screen time scientifically',
     aboutWhy5: 'Fun badges + star rewards — ignite learning motivation',
+    aboutWhyTitle: 'Our Educational Philosophy',
+    aboutWhyDesc: 'HappySprout is built on three proven educational principles:',
+    aboutMethod1Title: 'Multisensory Learning',
+    aboutMethod1Desc: 'Children learn through four sensory channels simultaneously: watching (video), listening (songs), speaking (repeat exercises), and doing (interactive games). Research shows multisensory input activates more brain regions, with 3-4x better memory retention than single-channel learning.',
+    aboutMethod2Title: 'Spaced Repetition',
+    aboutMethod2Desc: 'Our worksheets follow course progress with intelligent review timing — leveraging the Ebbinghaus forgetting curve to reinforce knowledge precisely at the optimal moments.',
+    aboutMethod3Title: 'Scaffolded Instruction',
+    aboutMethod3Desc: 'Each course starts from basic recognition and progresses to complex skills, with sufficient support at every step — never overwhelming children with difficulty jumps that erode confidence.',
     aboutContact: 'Contact Us',
     aboutContactText: 'Have suggestions or partnership ideas? We\'d love to hear from you!',
     feedbackTitle: 'Feedback',
@@ -2769,6 +2715,27 @@ const I18N = {
     footerPrivacy: 'Privacy Policy',
     footerTerms: 'Terms of Use',
     footerAboutPage: 'Learn More',
+    footerFAQ: 'FAQ',
+    // FAQ page
+    faqTitle: 'Frequently Asked Questions',
+    faqSub: 'Common questions about the HappySprout kids learning platform',
+    faqIntro: 'Here are the questions we hear most often from parents. If you have other questions, feel free to reach out via our feedback page.',
+    faqQ1: 'What age is HappySprout suitable for?',
+    faqA1: 'HappySprout is designed for children aged 3-12, with content organized into three age-specific hubs: Ages 3-5 (Early Discovery), Ages 6-8 (Growing & Building), and Ages 9-12 (Advanced Learning). Each level is carefully calibrated to match children\'s cognitive development. Ages 3-5 focus on letter recognition, counting, and nursery rhymes; ages 6-8 move into phonics, basic operations, and fun science; ages 9-12 offer advanced phonics, fractions, and project-based learning.',
+    faqQ2: 'Are all courses really free?',
+    faqA2: 'Yes! All of HappySprout\'s video courses, interactive exercises, and learning resources are currently completely free. Our core mission is equal access to high-quality education for every child. Some advanced features (such as personalized learning plans) may become paid options in the future, but foundational learning content will always remain free.',
+    faqQ3: 'How do I manage my child\'s screen time?',
+    faqA3: 'In the Parent Settings panel, you can set daily learning limits (we recommend 20 min/day for ages 3-5, 30 min for 6-8, 40 min for 9-12), per-session limits, and blocked hours. Tap the Settings icon in the bottom nav, enter the parent panel, and enable "Blocked Hours" mode to build healthy learning rhythms.',
+    faqQ4: 'Which course should my child start with?',
+    faqA4: 'For absolute beginners aged 3-5, we recommend starting with "ABC Fun Learning" for letter recognition and pronunciation, paired with "Number Kingdom Adventure" for counting. Children aged 6-8 with some foundation can jump straight into "Phonics Basics." You can also explore freely based on your child\'s interests — HappySprout has no strict prerequisite order.',
+    faqQ5: 'What devices are supported? Which is best?',
+    faqA5: 'HappySprout features responsive design for a smooth experience on phones, tablets, and desktop computers. We recommend tablets as the ideal learning device — a ~10-inch screen is perfect for watching educational videos and doing interactive exercises (listening challenges, memory games, etc.). We suggest enabling built-in screen time features on the tablet for additional parental oversight.',
+    faqQ6: 'How can parents track learning progress?',
+    faqA6: 'On the Achievements page, you can view your child\'s learning days, check-in streaks, videos watched, and earned stars and badges. The Parent Control Panel also provides detailed learning time statistics and completed video lists. We encourage parents to review the Achievements page together with their child weekly as a positive motivator.',
+    faqQ7: 'Where does HappySprout\'s content come from? Is it safe?',
+    faqA7: 'All video content on HappySprout is sourced from internationally recognized, high-quality children\'s educational channels on YouTube — including Super Simple Songs, CoComelon, Numberblocks, SciShow Kids, and Art for Kids Hub. We prioritize educational value, age-appropriateness, and positive messaging in our curation. Videos play through YouTube\'s privacy-enhanced (no-cookie) embed mode, which does not serve targeted ads to children.',
+    faqQ8: 'How is HappySprout different from regular video sites?',
+    faqA8: 'Unlike regular video platforms, HappySprout is a complete learning system: ① Videos categorized by age and subject into progressive learning paths; ② Each course includes interactive exercises to reinforce learning; ③ Built-in screen time management and anti-addiction features; ④ Star and badge reward system with progress tracking; ⑤ No registration required, no ads, no algorithmic recommendations — children stay focused on learning without distractions.',
   }
 };
 
@@ -2857,7 +2824,6 @@ function getStore() {
     totalWatchTime: 0,       // seconds
     avatar: "🐱",
     soundEnabled: true,
-    parentPattern: null,     // will be set by parent on first visit
     parentSettings: {
       sessionLimit: 20,      // minutes
       dailyLimit: 60,        // minutes
@@ -3061,14 +3027,14 @@ const SEO_TITLES = {
 
 const SEO_DESCRIPTIONS = {
   zh: {
-    home: 'HappySprout 提供 100+ 免费儿童教育游戏、可打印练习册和创意学习活动，专为 3-12 岁孩子设计，让学习充满乐趣。立即开始探索！',
-    courses: '浏览 HappySprout 精选儿童在线课程，涵盖英语启蒙、数学思维、科学探索等主题，适合 3-12 岁儿童的自适应学习路径。',
-    practice: '免费下载儿童练习册和可打印学习材料。HappySprout 提供字母描红、数字练习、迷宫游戏等寓教于乐的习题。'
+    home: 'HappySprout 提供100+免费儿童教育视频、互动练习册和创意学习活动，专为3-12岁孩子设计，让学习充满乐趣。立即开始探索！',
+    courses: '浏览 HappySprout 精选儿童在线课程，涵盖英语启蒙、数学思维、科学探索等主题，适合3-12岁儿童的自适应学习路径。',
+    practice: 'HappySprout 互动练习册——字母描红、数字认读、听力选择、记忆翻牌等在线互动练习，帮助3-12岁儿童巩固课堂知识。'
   },
   en: {
-    home: 'HappySprout offers 100+ free educational games, printable worksheets & creative activities for kids ages 3-12. Make learning fun — start exploring today!',
+    home: 'HappySprout offers 100+ free educational videos, interactive worksheets & creative activities for kids ages 3-12. Make learning fun — start exploring today!',
     courses: 'Explore HappySprout curated online courses for kids — English, math, science & more. Adaptive learning paths for ages 3-12.',
-    practice: 'Download free kids worksheets & printable learning materials. Alphabet tracing, number practice, mazes & more fun exercises from HappySprout.'
+    practice: 'HappySprout interactive worksheets — alphabet tracing, number recognition, listening exercises, memory games & more online practice for kids ages 3-12.'
   }
 };
 
@@ -3596,14 +3562,14 @@ function getFAQSchema(lang) {
   var faqs = isZh ? [
     { q: "HappySprout 适合多大年龄的孩子？", a: "HappySprout 专为 3-12 岁儿童设计，课程按年龄段分为 3-5 岁、6-8 岁、9-12 岁，每个年龄段的课程内容和难度都经过精心调整，确保符合孩子的认知发展水平。" },
     { q: "所有课程都是免费的吗？", a: "是的！HappySprout 的所有视频课程、互动练习和学习资源目前都完全免费。我们致力于为每个孩子提供平等的高质量教育机会。部分高级功能未来可能会有付费选项，但核心学习内容将始终保持免费。" },
-    { q: "如何设置孩子的学习时间限制？", a: "您可以在\u201c家长设置\u201d中配置每日学习时长限制和可用时间段。打开家长控制面板（点击右上角图标），使用图案密码进入，即可自定义防沉迷设置，帮助孩子养成健康的学习习惯。" },
+    { q: "如何设置孩子的学习时间限制？", a: "您可以在\u201c家长设置\u201d中配置每日学习时长限制和可用时间段。在底部导航栏点击\u201c我\u201d进入个人页面，再进入家长面板即可自定义防沉迷设置，帮助孩子养成健康的学习习惯。" },
     { q: "孩子需要从哪个课程开始？", a: "对于 3-5 岁的孩子，建议从\u201cABC 字母快乐学\u201d开始英语启蒙，或从\u201c数字王国大冒险\u201d开始数学启蒙。6-8 岁的孩子可以尝试\u201c自然拼读入门\u201d课程。您也可以根据孩子的兴趣自由选择，没有严格的先后顺序。" },
     { q: "支持手机和平板使用吗？", a: "完全支持！HappySprout 采用响应式设计，在手机、平板和电脑上都能获得良好的使用体验。我们推荐平板作为最佳学习设备——屏幕大小适合观看视频和进行互动练习。" },
     { q: "家长如何追踪孩子的学习进度？", a: "在\u201c个人中心\u201d页面，您可以查看孩子的学习天数、观看记录、获得的星星数量和学习徽章。家长控制面板还提供详细的学习时长统计，帮助您了解孩子的学习习惯。" }
   ] : [
     { q: "What age is HappySprout suitable for?", a: "HappySprout is designed for children aged 3-12, with courses organized by age groups: 3-5, 6-8, and 9-12. Each age group features content and difficulty levels carefully calibrated to match children's cognitive development stages." },
     { q: "Are all courses free?", a: "Yes! All of HappySprout's video courses, interactive exercises, and learning resources are currently completely free. We are committed to providing equal access to high-quality education for every child. Some advanced features may have paid options in the future, but core learning content will always remain free." },
-    { q: "How do I set screen time limits for my child?", a: "You can configure daily learning time limits and available time slots in Parent Settings. Open the parent control panel (tap the icon in the top-right corner), enter your pattern PIN, and customize anti-addiction settings to help your child develop healthy learning habits." },
+    { q: "How do I set screen time limits for my child?", a: "You can configure daily learning time limits and available time slots in Parent Settings. Go to the Me page and enter the parent panel to customize anti-addiction settings and help your child develop healthy learning habits." },
     { q: "Which course should my child start with?", a: "For children aged 3-5, we recommend starting with 'ABC Fun Learning' for English or 'Number Kingdom Adventure' for math. Children aged 6-8 can try 'Phonics Basics.' You can also choose freely based on your child's interests — there is no strict sequence." },
     { q: "Does it work on phones and tablets?", a: "Absolutely! HappySprout features responsive design for a great experience on phones, tablets, and desktop computers. We recommend tablets as the ideal learning device for their screen size — perfect for watching videos and doing interactive exercises." },
     { q: "How can parents track their child's learning progress?", a: "On the Profile page, you can view your child's learning days, watch history, earned stars, and badges. The parent control panel also provides detailed learning time statistics to help you understand your child's learning habits." }
@@ -3684,7 +3650,7 @@ function navigateTo(page, params = {}) {
     document.querySelectorAll('.nav-item').forEach(el => {
       el.classList.toggle('active', el.dataset.page === 'parent');
     });
-  } else if (['watch', 'course', 'search', 'favorites', 'channel', 'about', 'feedback', 'feedbackThanks', 'blog', 'blogPost'].includes(page)) {
+  } else if (['watch', 'course', 'search', 'favorites', 'channel', 'about', 'feedback', 'feedbackThanks', 'blog', 'blogPost', 'faq'].includes(page)) {
     document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
   }
 
@@ -3713,6 +3679,7 @@ function navigateTo(page, params = {}) {
     case 'feedbackThanks': renderFeedbackThanks(main); break;
     case 'blog': renderBlogIndex(main); break;
     case 'blogPost': renderBlogPost(main, params.postId); break;
+    case 'faq': renderFAQ(main); break;
     case 'ageHub': renderAgeHub(main, params.age); break;
     case 'subjectHub': renderSubjectHub(main, params.subject); break;
     default: renderHome(main);
@@ -4387,6 +4354,7 @@ function renderHome(container) {
               <a class="footer-link" href="#practice" data-page="practice">🎮 ${t('footerPractice')}</a>
               <a class="footer-link" href="#ageHub" data-page="ageHub">👶 ${t('footerAgeGroups')}</a>
               <a class="footer-link" href="#blog" data-page="blog">✍️ ${t('footerBlog')}</a>
+              <a class="footer-link" href="#faq" data-page="faq">❓ ${t('footerFAQ')}</a>
               <a class="footer-link" href="#search" data-page="search">🔍 ${t('footerSearch')}</a>
             </div>
             <!-- Subjects + Support -->
@@ -4537,20 +4505,19 @@ function startSessionTimer(videoId) {
   sessionSeconds = 0;
   dailySeconds = s.dailyWatchTime || 0;
   sessionPaused = false;
-  APP.parentOverrideActive = false;
 
   if (APP.timerInterval) clearInterval(APP.timerInterval);
   APP.timerInterval = setInterval(() => {
     if (sessionPaused) return;
 
-    // Check blocked hours (skip if parent overrode)
+    // Check blocked hours
     const now = new Date();
     const hhmm = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
     if (s.parentSettings.blockEnabled) {
       const blockStart = s.parentSettings.blockStart;
       const blockEnd = s.parentSettings.blockEnd;
       const isBlocked = isInBlockedTime(hhmm, blockStart, blockEnd);
-      if (isBlocked && !APP.parentOverrideActive) {
+      if (isBlocked) {
         showLockScreen('🌙 ' + t('restTime'), t('restTimeMsg', {blockStart: blockStart, blockEnd: blockEnd}), 'blocked');
         return;
       }
@@ -4587,12 +4554,12 @@ function startSessionTimer(videoId) {
     if (dailyEl) dailyEl.textContent = formatTime(dailySeconds);
 
     // Session limit reached
-    if (sessionSeconds >= s.parentSettings.sessionLimit * 60 && !APP.parentOverrideActive) {
+    if (sessionSeconds >= s.parentSettings.sessionLimit * 60) {
       showLockScreen('⏰ ' + t('takeBreak'), t('takeBreakMsg', {limit: s.parentSettings.sessionLimit}), 'session');
     }
 
     // Daily limit reached
-    if (dailySeconds >= s.parentSettings.dailyLimit * 60 && !APP.parentOverrideActive) {
+    if (dailySeconds >= s.parentSettings.dailyLimit * 60) {
       showLockScreen('📅 ' + t('dailyLimitReached'), t('dailyLimitMsg', {limit: s.parentSettings.dailyLimit}), 'daily');
     }
   }, 1000);
@@ -4607,7 +4574,7 @@ function showLockScreen(title, message, lockType = 'session') {
   // Pause the timer
   sessionPaused = true;
 
-  // For blocked time: no math quiz, just the message + parent override
+  // For blocked time: no math quiz, just the message
   const showQuiz = lockType !== 'blocked';
 
   const overlay = document.createElement('div');
@@ -4618,12 +4585,7 @@ function showLockScreen(title, message, lockType = 'session') {
       <h2>${title}</h2>
       <p style="margin-bottom:16px;color:var(--text-light)">${message}</p>
       ${showQuiz ? '<div id="lock-question"></div>' : '<div style="font-size:48px;margin:12px 0">🌙</div>'}
-      <div style="margin-top:${showQuiz ? '16' : '8'}px;border-top:1px dashed #ddd;padding-top:12px">
-        <button style="padding:10px 24px;border-radius:50px;border:2px solid var(--purple);background:white;color:var(--purple);font-size:14px;font-weight:700;cursor:pointer" onclick="showParentOverrideOnLock(this.closest('.quiz-overlay'))">
-          👨‍👩‍👧 ${t('parentUnlock')}
-        </button>
-        ${!showQuiz ? '<button style="padding:10px 24px;border-radius:50px;border:none;background:#f0e8d8;font-size:14px;font-weight:700;cursor:pointer;margin-left:8px" onclick="this.closest(\'.quiz-overlay\').remove();navigateTo(\'home\')">' + t('backHome') + '</button>' : ''}
-      </div>
+      ${!showQuiz ? '<div style="margin-top:8px;border-top:1px dashed #ddd;padding-top:12px"><button style="padding:10px 24px;border-radius:50px;border:none;background:#f0e8d8;font-size:14px;font-weight:700;cursor:pointer" onclick="this.closest(\'.quiz-overlay\').remove();navigateTo(\'home\')">' + t('backHome') + '</button></div>' : ''}
     </div>
   `;
   document.body.appendChild(overlay);
@@ -4643,74 +4605,6 @@ function showLockScreen(title, message, lockType = 'session') {
       ${options.map(o => `<button class="quiz-option" onclick="handleLockAnswer(${o},${answer},this)">${o}</button>`).join('')}
     `;
   }
-}
-
-// ─── PARENT OVERRIDE ON LOCK SCREEN ───────────────────────────
-function showParentOverrideOnLock(overlay) {
-  // Replace lock popup content with pattern input
-  const popup = overlay.querySelector('.quiz-popup');
-  popup.innerHTML = `
-    <h2>🔒 ${t('parentVerify')}</h2>
-    <p style="color:var(--text-light);margin-bottom:12px">${t('enterPattern')}</p>
-    <div class="pattern-grid" id="lock-pattern-grid" style="margin:12px auto">
-      ${[1,2,3,4,5,6,7,8,9].map(i =>
-        `<button class="pattern-dot" data-idx="${i}" onclick="lockPatternClick(${i})">${i}</button>`
-      ).join('')}
-    </div>
-    <div style="margin:8px 0;font-size:13px;color:var(--text-light)">
-      ${t('selected')}：<span id="lock-pattern-display"></span>
-    </div>
-    <button style="padding:10px 28px;border-radius:50px;border:none;background:var(--purple);color:white;font-size:15px;font-weight:700;cursor:pointer" onclick="verifyLockPattern(this.closest('.quiz-overlay'))">${t('confirmUnlock')}</button>
-    <button style="padding:10px 28px;border-radius:50px;border:2px solid #f0e8d8;background:white;font-size:15px;font-weight:700;cursor:pointer;margin-left:8px" onclick="cancelLockOverride(this.closest('.quiz-overlay'))">${t('cancel')}</button>
-  `;
-  APP.lockPatternInput = [];
-  updateLockPatternDisplay();
-  playClick();
-}
-
-function lockPatternClick(idx) {
-  if (!APP.lockPatternInput) APP.lockPatternInput = [];
-  APP.lockPatternInput.push(idx);
-  const dots = document.querySelectorAll('#lock-pattern-grid .pattern-dot');
-  dots.forEach(d => { if (d.dataset.idx == idx) d.classList.add('selected'); });
-  updateLockPatternDisplay();
-  playClick();
-}
-
-function updateLockPatternDisplay() {
-  const display = document.getElementById('lock-pattern-display');
-  if (display) display.textContent = (APP.lockPatternInput || []).join(' → ');
-}
-
-function verifyLockPattern(overlay) {
-  const input = (APP.lockPatternInput || []).join(',');
-  const correct = (APP.correctPattern || []).join(',');
-  if (input === correct) {
-    playSuccess(); showConfetti(20);
-    APP.parentOverrideActive = true; // prevent immediate re-lock
-    sessionPaused = false;
-    overlay.remove();
-  } else {
-    playError();
-    // Reset pattern
-    APP.lockPatternInput = [];
-    document.querySelectorAll('#lock-pattern-grid .pattern-dot').forEach(d => d.classList.remove('selected'));
-    updateLockPatternDisplay();
-    // Shake animation hint
-    const popup = overlay.querySelector('.quiz-popup');
-    if (popup) {
-      popup.style.animation = 'none';
-      popup.offsetHeight; // trigger reflow
-      popup.style.animation = 'shake 0.4s ease';
-    }
-  }
-}
-
-function cancelLockOverride(overlay) {
-  // Re-show the original lock screen by reloading the current page
-  overlay.remove();
-  sessionPaused = true;
-  navigateTo('home');
 }
 
 function handleLockAnswer(chosen, correct, btn) {
@@ -5029,6 +4923,21 @@ function buildCourseDetail(courseId) {
         }).join('') +
       '</ul>' +
     '</div>' +
+    (d.lessons ? '<div style="margin-bottom:16px">' +
+      '<h2 style="font-size:16px;margin-bottom:12px;color:#4A4A4A">📺 ' + (lang === 'zh' ? '课程大纲与内容摘要' : 'Syllabus & Lesson Summaries') + '</h2>' +
+      d.lessons.map(function(lsn, i) {
+        return '<details style="background:white;border:1px solid #f0e8d8;border-radius:12px;margin-bottom:8px;overflow:hidden">' +
+          '<summary style="padding:14px 16px;font-size:14px;font-weight:600;color:#333;cursor:pointer;display:flex;align-items:center;gap:8px">' +
+            '<span style="width:28px;height:28px;background:' + (course ? course.color : '#FF8C42') + ';color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0">' + (i+1) + '</span>' +
+            '<span>' + lsn.title + '</span>' +
+          '</summary>' +
+          '<div style="padding:0 16px 16px 52px">' +
+            '<p style="font-size:13px;line-height:1.8;color:#555;margin-bottom:8px">' + lsn.desc + '</p>' +
+            '<span style="font-size:11px;color:#999">' + (lang === 'zh' ? '关键词: ' : 'Keywords: ') + lsn.keywords + '</span>' +
+          '</div>' +
+        '</details>';
+      }).join('') +
+    '</div>' : '') +
     '<div style="background:#fcf6ff;border-radius:16px;padding:20px;margin-bottom:16px">' +
       '<h2 style="font-size:16px;margin-bottom:10px;color:#4A4A4A">💡 ' + howText + '</h2>' +
       '<p style="font-size:14px;line-height:1.8;color:#555">' + d.howTo + '</p>' +
@@ -5437,15 +5346,11 @@ function renderMe(container) {
         <p style="margin:6px 0;font-weight:600">🔥 ${t('streakCheckin')}：<span style="color:var(--orange)">${s.streak} ${APP.lang === 'zh' ? '天' : 'days'}</span></p>
       </div>
 
-      <!-- Change PIN -->
-      <div style="margin-top:20px;text-align:center">
-        <button style="padding:10px 24px;border-radius:50px;border:2px dashed #ddd;background:#faf8f5;font-size:13px;font-weight:600;cursor:pointer;color:var(--text-light)" onclick="verifyThenChangePin()">
-          🔒 ${t('changeParentPIN')}
-        </button>
-      </div>
-
       <!-- About & Feedback -->
-      <div style="margin-top:20px;display:flex;gap:10px;justify-content:center">
+      <div style="margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <button style="padding:10px 20px;border-radius:50px;border:2px solid var(--orange);background:white;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;color:var(--orange)" onclick="navigateTo('parent')">
+          ⚙️ ${t('parentSettings')}
+        </button>
         <button style="padding:10px 20px;border-radius:50px;border:2px solid #E0E0E0;background:white;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px" onclick="navigateTo('about')">
           🌱 ${t('aboutUs')}
         </button>
@@ -5458,12 +5363,6 @@ function renderMe(container) {
       </div>
     </div>
   `;
-}
-
-function verifyThenChangePin() {
-  // Must verify old pattern first
-  APP.redirectAfterUnlock = () => openChangePin();
-  openParentLock();
 }
 
 function changeAvatar(avatar) {
@@ -5506,6 +5405,26 @@ function renderAbout(container) {
             <span style="color:var(--text-light);font-size:14px;line-height:1.5">${t('aboutWhy' + n)}</span>
           </div>
           `).join('')}
+        </div>
+      </div>
+
+      <!-- Educational Methodology -->
+      <div class="about-card" style="background:linear-gradient(135deg,#e8f5e9,#f3e5f5);border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow);margin-bottom:16px">
+        <h2 style="font-size:18px;margin-bottom:14px;color:#2E7D32">🧠 ${t('aboutWhyTitle')}</h2>
+        <p style="color:#444;line-height:1.8;font-size:14px;margin-bottom:16px">${t('aboutWhyDesc')}</p>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div style="background:white;border-radius:12px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,0.05)">
+            <h3 style="font-size:15px;color:#FF8C42;margin-bottom:6px">1. ${t('aboutMethod1Title')}</h3>
+            <p style="color:#555;font-size:13px;line-height:1.7">${t('aboutMethod1Desc')}</p>
+          </div>
+          <div style="background:white;border-radius:12px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,0.05)">
+            <h3 style="font-size:15px;color:#4A90D9;margin-bottom:6px">2. ${t('aboutMethod2Title')}</h3>
+            <p style="color:#555;font-size:13px;line-height:1.7">${t('aboutMethod2Desc')}</p>
+          </div>
+          <div style="background:white;border-radius:12px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,0.05)">
+            <h3 style="font-size:15px;color:#C77DFF;margin-bottom:6px">3. ${t('aboutMethod3Title')}</h3>
+            <p style="color:#555;font-size:13px;line-height:1.7">${t('aboutMethod3Desc')}</p>
+          </div>
         </div>
       </div>
 
@@ -5767,349 +5686,9 @@ function startVoiceSearch() {
 
 // ─── PARENT PANEL ─────────────────────────────────────────────
 
-// ─── FIRST-TIME PIN SETUP ─────────────────────────────────────
-function showFirstTimePinSetup() {
-  const overlay = document.createElement('div');
-  overlay.className = 'modal-overlay';
-  overlay.id = 'first-time-setup';
-  overlay.innerHTML = `
-    <div class="modal-content" style="text-align:center;padding:40px 28px">
-      <div style="font-size:64px;margin-bottom:12px">🔒</div>
-      <h2 style="font-size:24px;margin-bottom:8px">${t('welcomeTitle')}</h2>
-      <p style="color:var(--text-light);margin-bottom:8px;font-size:14px">${t('welcomeSub')}</p>
-      <p style="color:var(--text-light);margin-bottom:24px;font-size:13px">${t('welcomeHint')}</p>
-      <button style="padding:14px 40px;border-radius:50px;border:none;background:var(--orange);color:white;font-weight:700;font-size:17px;cursor:pointer;box-shadow:0 4px 16px rgba(255,140,66,0.35)" onclick="startPinSetupStep1()">
-        🔑 ${t('startSetup')}
-      </button>
-    </div>
-  `;
-  document.body.appendChild(overlay);
-}
-
-function startPinSetupStep1() {
-  document.getElementById('first-time-setup')?.remove();
-  showPinSetupGrid(1);
-}
-
-function showPinSetupGrid(step) {
-  APP.pinSetupStep = step;
-  APP.pinSetupInput = [];
-  const labels = [t('stepLabel'), t('stepConfirm')];
-
-  const overlay = document.createElement('div');
-  overlay.className = 'modal-overlay';
-  overlay.id = 'pin-setup-grid';
-  overlay.innerHTML = `
-    <div class="modal-content" style="text-align:center">
-      <h2 style="margin-bottom:4px">🔒 ${t('createPIN')}</h2>
-      <p style="color:var(--orange);font-weight:700;margin-bottom:16px">${t('stepNum', {step: step})}：${labels[step-1]}</p>
-      <p style="color:var(--text-light);font-size:13px;margin-bottom:12px">${t('drawPattern')}</p>
-      <div class="pattern-grid" id="setup-pattern-grid" style="margin:12px auto">
-        ${[1,2,3,4,5,6,7,8,9].map(i => `
-        <button class="pattern-dot" data-idx="${i}" onclick="setupPinDotClick(${i})">${i}</button>
-        `).join('')}
-      </div>
-      <div style="margin:12px 0;font-size:14px;color:var(--text-light)">
-        ${t('selected')}：<span id="setup-pin-display"></span>
-      </div>
-      <button style="padding:10px 28px;border-radius:50px;border:3px solid var(--orange);background:white;font-size:15px;font-weight:700;cursor:pointer" onclick="submitPinSetupStep()">${step === 1 ? t('nextStep') : t('confirmCreate')}</button>
-      <button style="padding:10px 20px;border-radius:50px;border:none;background:#f0e8d8;font-size:14px;font-weight:600;cursor:pointer;margin-left:8px" onclick="resetPinSetup()">🔄 ${t('resetPINBtn')}</button>
-      <p id="setup-pin-error" style="margin-top:12px;font-size:12px;color:#e74c3c;display:none"></p>
-    </div>
-  `;
-  document.body.appendChild(overlay);
-  updateSetupPinDisplay();
-}
-
-function setupPinDotClick(idx) {
-  APP.pinSetupInput.push(idx);
-  const dots = document.querySelectorAll('#setup-pattern-grid .pattern-dot');
-  dots.forEach(d => { if (d.dataset.idx == idx) d.classList.add('selected'); });
-  updateSetupPinDisplay();
-  playClick();
-}
-
-function resetPinSetup() {
-  APP.pinSetupInput = [];
-  document.querySelectorAll('#setup-pattern-grid .pattern-dot').forEach(d => d.classList.remove('selected'));
-  updateSetupPinDisplay();
-  const err = document.getElementById('setup-pin-error');
-  if (err) err.style.display = 'none';
-  // If on step 2, go back to step 1
-  if (APP.pinSetupStep === 2) {
-    document.getElementById('pin-setup-grid')?.remove();
-    APP.pinSetupFirst = null;
-    showPinSetupGrid(1);
-  }
-}
-
-function updateSetupPinDisplay() {
-  const display = document.getElementById('setup-pin-display');
-  if (display) display.textContent = (APP.pinSetupInput || []).join(' → ');
-}
-
-function submitPinSetupStep() {
-  const input = APP.pinSetupInput;
-  if (input.length < 3) {
-    const err = document.getElementById('setup-pin-error');
-    if (err) { err.textContent = t('needMin3'); err.style.display = 'block'; }
-    playError();
-    return;
-  }
-
-  if (APP.pinSetupStep === 1) {
-    // Step 1: save input, move to step 2
-    APP.pinSetupFirst = [...input];
-    document.getElementById('pin-setup-grid')?.remove();
-    showPinSetupGrid(2);
-  } else {
-    // Step 2: confirm
-    const first = APP.pinSetupFirst.join(',');
-    const second = input.join(',');
-    if (first !== second) {
-      const err = document.getElementById('setup-pin-error');
-      if (err) { err.textContent = t('mismatch'); err.style.display = 'block'; }
-      playError();
-      APP.pinSetupInput = [];
-      document.querySelectorAll('#setup-pattern-grid .pattern-dot').forEach(d => d.classList.remove('selected'));
-      updateSetupPinDisplay();
-      // Reset to step 1
-      APP.pinSetupInput = [];
-      APP.pinSetupFirst = [...APP.pinSetupFirst]; // keep first attempt
-      return;
-    }
-
-    // Success! Save pattern
-    const pattern = APP.pinSetupFirst;
-    const s = getStore();
-    s.parentPattern = pattern;
-    APP.correctPattern = pattern;
-    saveStore(s);
-    playSuccess();
-
-    document.getElementById('pin-setup-grid')?.remove();
-
-    // Show success message
-    const overlay = document.createElement('div');
-    overlay.className = 'modal-overlay';
-    overlay.innerHTML = `
-      <div class="modal-content" style="text-align:center;padding:32px 24px">
-        <div style="font-size:64px;margin-bottom:8px">✅</div>
-        <h2 style="margin-bottom:8px">${t('pinSuccess')}</h2>
-        <p style="color:var(--text-light);margin-bottom:4px">${t('pinSuccessMsg')}：<strong>${pattern.join(' → ')}</strong></p>
-        <p style="color:var(--text-light);font-size:13px;margin-bottom:20px">${t('pinSuccessHint')}</p>
-        <button style="padding:12px 36px;border-radius:50px;border:none;background:var(--orange);color:white;font-weight:700;font-size:16px;cursor:pointer" onclick="this.closest('.modal-overlay').remove();navigateTo('home')">
-          🚀 ${t('startExplore')}
-        </button>
-      </div>
-    `;
-    document.body.appendChild(overlay);
-  }
-}
-
-// ─── PARENT PANEL LOCK / UNLOCK ────────────────────────────────
-function openParentLock() {
-  if (APP.parentUnlocked && APP.currentPage === 'parent') return;
-
-  // If no pattern set yet, redirect to first-time setup
-  if (!APP.correctPattern) {
-    showFirstTimePinSetup();
-    return;
-  }
-
-  // Show pattern lock
-  const overlay = document.createElement('div');
-  overlay.className = 'modal-overlay';
-  overlay.innerHTML = `
-    <div class="modal-content" style="text-align:center">
-      <h2 style="margin-bottom:8px">🔒 ${t('parentVerify')}</h2>
-      <p style="color:var(--text-light);margin-bottom:16px">${t('drawYourPattern')}</p>
-      <div class="pattern-grid" id="pattern-grid">
-        ${[1,2,3,4,5,6,7,8,9].map(i => `
-        <button class="pattern-dot" data-idx="${i}" onclick="patternDotClick(${i})">${i}</button>
-        `).join('')}
-      </div>
-      <div style="margin:12px 0;font-size:14px;color:var(--text-light)">
-        ${t('selected')}：<span id="pattern-display"></span>
-      </div>
-      <button style="padding:10px 28px;border-radius:50px;border:3px solid var(--orange);background:white;font-size:15px;font-weight:700;cursor:pointer" onclick="checkPattern()">${t('confirm')}</button>
-      <button style="padding:10px 28px;border-radius:50px;border:none;background:#f0e8d8;font-size:15px;font-weight:700;cursor:pointer;margin-left:8px" onclick="document.querySelector('.modal-overlay').remove()">${t('cancel')}</button>
-      <div style="margin-top:20px;padding-top:16px;border-top:1px solid #f0e8d8">
-        <button style="padding:8px 24px;border-radius:50px;border:2px dashed #e74c3c;background:white;color:#e74c3c;font-size:13px;font-weight:600;cursor:pointer" onclick="resetParentPin()">🔄 ${t('forgotPIN')}</button>
-      </div>
-    </div>
-  `;
-  document.body.appendChild(overlay);
-
-  APP.patternInput = [];
-  updatePatternDisplay();
-}
-
-function patternDotClick(idx) {
-  APP.patternInput.push(idx);
-  // Visual feedback
-  const dots = document.querySelectorAll('.pattern-dot');
-  dots.forEach(d => { if (d.dataset.idx == idx) d.classList.add('selected'); });
-  updatePatternDisplay();
-  playClick();
-}
-
-function resetParentPin() {
-  if (!confirm(t('resetPINConfirm'))) return;
-  APP.correctPattern = null;
-  const s = getStore();
-  delete s.parentPattern;
-  saveStore(s);
-  document.querySelector('.modal-overlay')?.remove();
-  showFirstTimePinSetup();
-}
-
-function updatePatternDisplay() {
-  const display = document.getElementById('pattern-display');
-  if (display) display.textContent = APP.patternInput.join(' → ');
-}
-
-function checkPattern() {
-  const input = APP.patternInput.join(',');
-  const correct = (APP.correctPattern || []).join(',');
-  if (input === correct) {
-    APP.parentUnlocked = true;
-    document.querySelector('.modal-overlay')?.remove();
-    playSuccess();
-    // If there's a redirect target, go there; otherwise parent panel
-    if (APP.redirectAfterUnlock) {
-      const target = APP.redirectAfterUnlock;
-      APP.redirectAfterUnlock = null;
-      target();
-    } else {
-      navigateTo('parent');
-    }
-  } else {
-    playError();
-    alert(t('wrongPIN'));
-    APP.patternInput = [];
-    document.querySelectorAll('.pattern-dot').forEach(d => d.classList.remove('selected'));
-    updatePatternDisplay();
-  }
-}
-
-// ─── CHANGE PIN (pattern lock) ─────────────────────────────────
-function openChangePin() {
-  // Step 1: verify old pattern
-  showChangePinStep(1);
-}
-
-function showChangePinStep(step) {
-  const labels = [t('verifyCurrent'), t('setNewPIN'), t('confirmNewPIN')];
-  const overlay = document.createElement('div');
-  overlay.className = 'modal-overlay';
-  overlay.innerHTML = `
-    <div class="pattern-popup" style="background:white;border-radius:24px;padding:32px 24px;text-align:center;max-width:380px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.2)">
-      <h2 style="font-size:20px;margin-bottom:4px">🔒 ${t('changePINTitle')}</h2>
-      <p style="color:var(--orange);font-weight:700;margin-bottom:16px">${t('stepNum', {step: step})}：${labels[step-1]}</p>
-      <div class="pattern-grid" style="display:grid;grid-template-columns:repeat(3,72px);grid-template-rows:repeat(3,72px);gap:10px;justify-content:center;margin-bottom:16px">
-        ${[1,2,3,4,5,6,7,8,9].map(i => `
-        <button class="pattern-dot" data-idx="${i}" onclick="changePinDotClick(${i})">${i}</button>
-        `).join('')}
-      </div>
-      <div style="margin:12px 0;font-size:14px;color:var(--text-light)">
-        ${t('selected')}：<span id="change-pin-display"></span>
-      </div>
-      <div style="display:flex;gap:8px;justify-content:center">
-        <button style="padding:10px 28px;border-radius:50px;border:3px solid var(--orange);background:white;font-size:15px;font-weight:700;cursor:pointer" onclick="submitChangePinStep(${step})">${step < 3 ? t('nextStep') : t('confirmModify')}</button>
-        <button style="padding:10px 20px;border-radius:50px;border:none;background:#f0e8d8;font-size:15px;font-weight:700;cursor:pointer" onclick="document.querySelector('.modal-overlay').remove()">${t('cancel')}</button>
-      </div>
-      <p id="change-pin-error" style="margin-top:12px;font-size:12px;color:#e74c3c;display:none"></p>
-    </div>
-  `;
-  document.body.appendChild(overlay);
-  APP.changePinStep = step;
-  APP.changePinInput = [];
-  if (step === 1) {
-    APP.changePinOld = null;
-    APP.changePinNew = null;
-  }
-  updateChangePinDisplay();
-}
-
-function changePinDotClick(idx) {
-  APP.changePinInput.push(idx);
-  document.querySelectorAll('.pattern-dot').forEach(d => {
-    if (parseInt(d.dataset.idx) === idx) d.classList.add('selected');
-  });
-  updateChangePinDisplay();
-  playClick();
-}
-
-function updateChangePinDisplay() {
-  const el = document.getElementById('change-pin-display');
-  if (el) el.textContent = (APP.changePinInput || []).join(' → ');
-}
-
-function submitChangePinStep(step) {
-  const input = (APP.changePinInput || []).join(',');
-  const errorEl = document.getElementById('change-pin-error');
-  
-  if (APP.changePinInput.length < 2) {
-    if (errorEl) { errorEl.style.display = 'block'; errorEl.textContent = t('needMin2'); }
-    return;
-  }
-  
-  if (step === 1) {
-    // Verify old pattern
-    const correct = (APP.correctPattern || []).join(',');
-    if (input !== correct) {
-      if (errorEl) { errorEl.style.display = 'block'; errorEl.textContent = t('wrongPattern'); playError(); }
-      APP.changePinInput = [];
-      document.querySelectorAll('.pattern-dot').forEach(d => d.classList.remove('selected'));
-      updateChangePinDisplay();
-      return;
-    }
-    // Old pattern verified, move to step 2
-    if (errorEl) errorEl.style.display = 'none';
-    playSuccess();
-    document.querySelector('.modal-overlay').remove();
-    showChangePinStep(2);
-  } else if (step === 2) {
-    // Save new pattern, move to step 3
-    APP.changePinNew = APP.changePinInput;
-    document.querySelector('.modal-overlay').remove();
-    showChangePinStep(3);
-  } else if (step === 3) {
-    // Confirm new pattern matches
-    const newPat = (APP.changePinNew || []).join(',');
-    if (input !== newPat) {
-      if (errorEl) { errorEl.style.display = 'block'; errorEl.textContent = t('pinMismatch2'); playError(); }
-      APP.changePinInput = [];
-      document.querySelectorAll('.pattern-dot').forEach(d => d.classList.remove('selected'));
-      updateChangePinDisplay();
-      return;
-    }
-    // Success - save new pattern
-    APP.correctPattern = [...APP.changePinNew];
-    const s = getStore();
-    s.parentPattern = APP.correctPattern;
-    saveStore(s);
-    document.querySelector('.modal-overlay').remove();
-    playSuccess();
-    // If coming from Me page, show a confirmation
-    alert('✅ ' + t('pinChanged'));
-    navigateTo('me');
-  }
-}
+// ─── PARENT PANEL ─────────────────────────────────────────────
 
 function renderParent(container) {
-  if (!APP.parentUnlocked) {
-    container.innerHTML = `
-      <div class="page active" style="text-align:center;padding:60px 20px">
-        <div style="font-size:64px;margin-bottom:16px">🔒</div>
-        <h2 style="font-size:20px;margin-bottom:8px">${t('parentSettings')}</h2>
-        <p style="color:var(--text-light);margin-bottom:24px">${t('enterPatternToAccess')}</p>
-        <button style="padding:14px 36px;border-radius:50px;border:none;background:var(--orange);color:white;font-weight:700;font-size:16px;cursor:pointer;box-shadow:0 4px 16px rgba(255,140,66,0.35)" onclick="openParentLock()">🔒 ${t('enterPassword')}</button>
-      </div>`;
-    return;
-  }
-
   const s = getStore();
   const ps = s.parentSettings;
 
@@ -6120,7 +5699,6 @@ function renderParent(container) {
           <h2 style="font-size:22px">⚙️ ${t('parentSettings')}</h2>
           <p style="font-size:13px;color:var(--text-light)">${t('parentSettingsSub')}</p>
         </div>
-        <button style="padding:8px 16px;border-radius:20px;border:2px solid #f0e8d8;background:white;font-size:13px;font-weight:600;cursor:pointer" onclick="APP.parentUnlocked=false;navigateTo('home');playClick()">🔒 ${t('lock')}</button>
       </div>
 
       <!-- Tab bar -->
@@ -6129,7 +5707,6 @@ function renderParent(container) {
         <button class="parent-tab" onclick="switchParentTab('whitelist',this)">📋 ${t('contentMgmt')}</button>
         <button class="parent-tab" onclick="switchParentTab('report',this)">📊 ${t('learningReport')}</button>
         <button class="parent-tab" onclick="switchParentTab('sound',this)">🔊 ${t('soundEffects')}</button>
-        <button class="parent-tab" onclick="switchParentTab('pin',this)">🔒 ${t('changePIN')}</button>
       </div>
 
       <div id="parent-tab-content">
@@ -6216,17 +5793,6 @@ function renderParent(container) {
           </div>
           <p style="font-size:12px;color:var(--text-light);padding:8px">${t('soundOffHint')}</p>
         </div>
-
-        <!-- Change PIN -->
-        <div id="tab-pin" style="display:none">
-          <p style="color:var(--text-light);margin-bottom:12px">${t('modifyParentPIN')}</p>
-          <div style="background:white;border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow);text-align:center">
-            <p style="margin-bottom:12px">${t('currentPattern')}：<strong>${(APP.correctPattern || []).join(' → ') || t('notSet')}</strong></p>
-            <button style="padding:12px 32px;border-radius:50px;border:none;background:var(--orange);color:white;font-weight:700;font-size:15px;cursor:pointer" onclick="openChangePin()">
-              🔒 ${t('changePIN')}
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   `;
@@ -6235,7 +5801,7 @@ function renderParent(container) {
 function switchParentTab(tab, btn) {
   document.querySelectorAll('.parent-tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
-  ['time','whitelist','report','sound','pin'].forEach(t => {
+  ['time','whitelist','report','sound'].forEach(t => {
     const el = document.getElementById('tab-' + t);
     if (el) el.style.display = t === tab ? 'block' : 'none';
   });
@@ -6443,6 +6009,46 @@ function renderBlogPost(container, postId) {
   '</div>';
 }
 
+// ─── RENDER: FAQ ──────────────────────────────────────────────
+function renderFAQ(container) {
+  var lang = APP.lang === 'en' ? 'en' : 'zh';
+  var faqs = [
+    { q: t('faqQ1'), a: t('faqA1'), icon: '👶' },
+    { q: t('faqQ2'), a: t('faqA2'), icon: '🆓' },
+    { q: t('faqQ3'), a: t('faqA3'), icon: '⏰' },
+    { q: t('faqQ4'), a: t('faqA4'), icon: '🚀' },
+    { q: t('faqQ5'), a: t('faqA5'), icon: '📱' },
+    { q: t('faqQ6'), a: t('faqA6'), icon: '📊' },
+    { q: t('faqQ7'), a: t('faqA7'), icon: '🛡️' },
+    { q: t('faqQ8'), a: t('faqA8'), icon: '✨' }
+  ];
+
+  var faqItems = faqs.map(function(f, i) {
+    return '<details style="background:white;border-radius:12px;padding:16px 20px;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,0.06);cursor:pointer;transition:all 0.2s" open="' + (i < 3 ? 'true' : 'false') + '">' +
+      '<summary style="font-size:15px;font-weight:700;color:#333;list-style:none;display:flex;align-items:flex-start;gap:10px">' +
+        '<span style="font-size:20px;flex-shrink:0">' + f.icon + '</span>' +
+        '<span>' + f.q + '</span>' +
+        '<span style="margin-left:auto;font-size:12px;color:#ccc;transition:transform 0.3s">▼</span>' +
+      '</summary>' +
+      '<div style="margin-top:12px;padding-top:12px;border-top:1px solid #f0e8d8;font-size:14px;line-height:1.8;color:#555">' + f.a + '</div>' +
+    '</details>';
+  }).join('');
+
+  container.innerHTML = '<div class="page active">' +
+    '<button style="padding:8px 16px;border:none;background:#f0e8d8;border-radius:20px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:12px" onclick="navigateTo(\'about\')">← ' + (lang === 'zh' ? '返回关于我们' : 'Back to About') + '</button>' +
+    '<div style="text-align:center;padding:20px 0">' +
+      '<h1 style="font-size:24px;color:#333;margin-bottom:6px">' + t('faqTitle') + '</h1>' +
+      '<p style="font-size:14px;color:#888">' + t('faqSub') + '</p>' +
+    '</div>' +
+    '<p style="font-size:14px;color:#666;margin-bottom:20px">' + t('faqIntro') + '</p>' +
+    '<div style="max-width:680px;margin:0 auto">' + faqItems + '</div>' +
+    '<div style="text-align:center;margin-top:24px;padding:20px;background:linear-gradient(135deg,#FFF3E0,#FFECB3);border-radius:16px">' +
+      '<p style="font-size:14px;color:#8B6914;margin-bottom:10px">' + (lang === 'zh' ? '没有找到答案？给我们反馈吧！' : 'Didn\'t find your answer? Send us feedback!') + '</p>' +
+      '<button onclick="navigateTo(\'feedback\')" style="padding:10px 28px;border:none;background:var(--orange);color:white;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer">' + (lang === 'zh' ? '💬 提交反馈' : '💬 Send Feedback') + '</button>' +
+    '</div>' +
+  '</div>';
+}
+
 // ─── CONTENT CLUSTER: AGE HUBS ─────────────────────────────────
 const AGE_HUBS = {
   '3-5': {
@@ -6452,13 +6058,15 @@ const AGE_HUBS = {
       title: '3-5岁幼儿学习专区',
       subtitle: '启蒙阶段 · 培养学习兴趣与基础认知能力',
       intro: '3-5岁是孩子认知发展的关键期。在这个阶段，孩子像海绵一样吸收周围的信息。HappySprout 为幼儿精心挑选了最适合启蒙阶段的视频课程，涵盖英语字母、数字认知、儿歌律动和简单科学探索。所有内容均来自 Super Simple Songs、CoComelon、Numberblocks 等国际顶级儿童教育品牌，确保孩子在安全、有趣的环境中快乐学习。',
-      tips: ['每天学习15-20分钟，重在养成好习惯', '学习时家长陪伴效果最佳', '同一内容重复3-5次能加深印象', '结合实物游戏巩固学习效果']
+      tips: ['每天学习15-20分钟，重在养成好习惯', '学习时家长陪伴效果最佳', '同一内容重复3-5次能加深印象', '结合实物游戏巩固学习效果'],
+      whyThisWorks: '【为什么这个年龄段的学习方法有效？】3-5岁孩子的大脑正处于"突触修剪"高峰期，神经元连接以惊人速度形成。这个阶段的学习不是"灌输知识"，而是通过多感官刺激（视觉、听觉、运动）激活大脑不同区域。儿歌律动之所以有效，是因为旋律和节奏激活了大脑的"布洛卡区"（语言中枢）和运动皮层——孩子跟着唱跳时，语言和身体协调能力同时得到锻炼。重复观看同一内容不是无聊，而是幼儿巩固神经通路的核心方式。'
     },
     en: {
       title: 'Learning Hub for Ages 3-5',
       subtitle: 'Early Discovery · Building Curiosity & Basic Skills',
       intro: 'Ages 3-5 are the critical window for cognitive development. Children absorb information like sponges. HappySprout curates the best beginner content — English letters, number recognition, nursery rhymes, and simple science — from top brands like Super Simple Songs, CoComelon, and Numberblocks.',
-      tips: ['15-20 min daily — focus on habit building', 'Parent accompaniment doubles effectiveness', 'Repeat content 3-5 times for deeper learning', 'Pair with hands-on activities for best results']
+      tips: ['15-20 min daily — focus on habit building', 'Parent accompaniment doubles effectiveness', 'Repeat content 3-5 times for deeper learning', 'Pair with hands-on activities for best results'],
+      whyThisWorks: 'Why does this age-group approach work? The 3-5 year-old brain is at its "synaptic pruning" peak, forming neural connections at an astonishing rate. Learning at this stage is not about "filling a bucket" — it is about multi-sensory stimulation (visual, auditory, motor) that activates different brain regions simultaneously. Nursery rhymes work because melody and rhythm engage both Broca\'s area (language center) and the motor cortex — when children sing and move, language and physical coordination develop together. Repeated viewing of the same content is not boring — it is how young children cement neural pathways.'
     }
   },
   '6-8': {
@@ -6468,13 +6076,15 @@ const AGE_HUBS = {
       title: '6-8岁儿童学习专区',
       subtitle: '成长阶段 · 系统学习与技能提升',
       intro: '6-8岁的孩子已经具备了一定的学习基础，进入了系统化学习的关键阶段。HappySprout 为这个年龄段的孩子提供了自然拼读、基础数学运算、趣味科学实验和创意艺术课程。课程内容难度适中，循序渐进，配合互动练习帮助孩子巩固所学知识，建立学习自信。',
-      tips: ['每次学习25-30分钟，中间休息5分钟', '鼓励孩子做学习笔记或口头复述', '用 HappySprout 练习页面检测学习效果', '设立小目标，完成后给予积极反馈']
+      tips: ['每次学习25-30分钟，中间休息5分钟', '鼓励孩子做学习笔记或口头复述', '用 HappySprout 练习页面检测学习效果', '设立小目标，完成后给予积极反馈'],
+      whyThisWorks: '【为什么自然拼读在这个阶段最有效？】6-8岁是"语音意识"发展的黄金期——孩子开始能分辨和操作口语中的音素。自然拼读（Phonics）不要求死记单词，而是建立"字母→发音→拼读"的映射关系，这正是大脑语言区在这一年龄段的自然学习方式。同时，这个年龄段的孩子开始发展"工作记忆"——能在脑中短暂保存信息并进行操作。互动练习（如听力选择、记忆翻牌）正是利用这一能力，在游戏中强化学习效果。研究显示，在6-8岁接受系统自然拼读训练的孩子，三年级时的阅读流畅度比未受训的同龄人高出40%以上。'
     },
     en: {
       title: 'Learning Hub for Ages 6-8',
       subtitle: 'Growing & Building · Systematic Learning & Skill Development',
       intro: 'Children aged 6-8 are ready for more structured learning. HappySprout provides phonics, basic math operations, fun science experiments, and creative art courses. Content progresses gradually with companion interactive exercises to reinforce knowledge and build confidence.',
-      tips: ['25-30 min sessions with 5 min breaks', 'Encourage note-taking or verbal summaries', 'Use HappySprout practice pages to check progress', 'Set small goals and celebrate achievements']
+      tips: ['25-30 min sessions with 5 min breaks', 'Encourage note-taking or verbal summaries', 'Use HappySprout practice pages to check progress', 'Set small goals and celebrate achievements'],
+      whyThisWorks: 'Why is phonics most effective at this age? Ages 6-8 are the golden window for "phonological awareness" — children begin to distinguish and manipulate phonemes in spoken language. Phonics builds the "letter→sound→blending" mapping that aligns with the brain\'s natural language acquisition at this stage. Children also begin developing "working memory" — the ability to hold and manipulate information in mind. Interactive exercises (listening challenges, memory games) leverage this capacity, reinforcing learning through play. Research shows children who receive systematic phonics instruction at ages 6-8 demonstrate 40%+ higher reading fluency by grade 3 compared to peers without it.'
     }
   },
   '9-12': {
@@ -6484,13 +6094,15 @@ const AGE_HUBS = {
       title: '9-12岁少儿学习专区',
       subtitle: '进阶阶段 · 深度学习与思维拓展',
       intro: '9-12岁的孩子进入了深度学习期，思维从具体走向抽象。HappySprout 精选了更适合大孩子的学习资源，包括高级自然拼读、分数和小数、地球科学和设计思维课程。通过主题式学习和项目制探索，帮助孩子建立系统化的知识框架，培养批判性思维和独立学习能力。',
-      tips: ['每次学习30-40分钟，培养自主学习习惯', '引导孩子做学习计划和进度跟踪', '鼓励孩子提出问题并自己寻找答案', '多学科交叉学习，促进知识融会贯通']
+      tips: ['每次学习30-40分钟，培养自主学习习惯', '引导孩子做学习计划和进度跟踪', '鼓励孩子提出问题并自己寻找答案', '多学科交叉学习，促进知识融会贯通'],
+      whyThisWorks: '【为什么9-12岁需要跨学科学习？】根据皮亚杰的认知发展理论，9-12岁是"具体运算阶段"向"形式运算阶段"过渡的关键期——孩子开始能进行抽象推理和假设性思考。这个阶段的跨学科学习（如将数学应用于科学实验、用艺术表达科学概念）能促进"知识迁移"——将在一个领域学到的技能应用到另一个领域。这也是培养"元认知"（思考自己的思考）的黄金期：让孩子做学习计划和进度跟踪，本质上是训练他们监控和调节自己的学习过程——这是终身学习能力的基石。'
     },
     en: {
       title: 'Learning Hub for Ages 9-12',
       subtitle: 'Advanced · Deep Learning & Critical Thinking',
       intro: 'Children aged 9-12 enter a phase of deeper, more abstract learning. HappySprout curates resources for advanced phonics, fractions and decimals, earth science, and design thinking. Thematic and project-based exploration builds systematic knowledge frameworks and independent learning skills.',
-      tips: ['30-40 min sessions — build self-directed habits', 'Guide children to plan and track their own learning', 'Encourage asking questions and finding answers', 'Cross-disciplinary learning for integrated knowledge']
+      tips: ['30-40 min sessions — build self-directed habits', 'Guide children to plan and track their own learning', 'Encourage asking questions and finding answers', 'Cross-disciplinary learning for integrated knowledge'],
+      whyThisWorks: 'Why does cross-disciplinary learning matter at ages 9-12? According to Piaget\'s theory of cognitive development, ages 9-12 mark the transition from the "concrete operational" to the "formal operational" stage — children begin abstract reasoning and hypothetical thinking. Cross-disciplinary learning (applying math to science experiments, expressing scientific concepts through art) promotes "knowledge transfer" — applying skills from one domain to another. This is also the golden window for developing "metacognition" (thinking about thinking): having children plan and track their own learning trains them to monitor and regulate their learning process — the foundation of lifelong learning ability.'
     }
   }
 };
@@ -6525,6 +6137,10 @@ function renderAgeHub(container, ageRange) {
     '<div style="background:#fef9f0;border-radius:12px;padding:16px;margin-bottom:20px">' +
       '<h2 style="font-size:15px;margin-bottom:10px;color:#8B6914">💡 ' + tipText + '</h2>' +
       '<ul style="margin:0;padding-left:20px">' + d.tips.map(function(t) { return '<li style="padding:4px 0;font-size:13px;color:#555">' + t + '</li>'; }).join('') + '</ul>' +
+    '</div>' +
+    '<div style="background:linear-gradient(135deg,#e8f5e9,#f3e5f5);border-radius:12px;padding:20px;margin-bottom:20px;border-left:4px solid ' + hub.color + '">' +
+      '<h3 style="font-size:14px;margin-bottom:8px;color:#2E7D32">🧠 ' + (lang === 'zh' ? '背后的教育原理' : 'The Learning Science Behind It') + '</h3>' +
+      '<p style="font-size:13px;line-height:1.8;color:#555">' + d.whyThisWorks + '</p>' +
     '</div>' +
     '<button onclick="navigateTo(\'courses\')" style="padding:10px 24px;border:2px solid ' + hub.color + ';background:white;border-radius:50px;font-size:14px;font-weight:600;cursor:pointer;color:' + hub.color + ';margin-bottom:12px">' + toCourseText + '</button>' +
     '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">' +
@@ -6601,17 +6217,6 @@ function init() {
   if (!s.streakDates) s.streakDates = [];
   if (!s.progress) s.progress = {};
   saveStore(s);
-
-  // Load parent pattern from localStorage
-  if (s.parentPattern) {
-    APP.correctPattern = s.parentPattern;
-  }
-
-  // If no parent pattern has been set, show first-time setup
-  if (!APP.correctPattern) {
-    showFirstTimePinSetup();
-    return;
-  }
 
   // Initial render
   updateNavLabels();

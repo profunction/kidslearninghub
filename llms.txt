@@ -14,7 +14,7 @@
 
 - **Video Search**: Navigate to search page for video lookup
 - **Favorites**: Bookmark and manage favorite videos
-- **Parental Controls**: PIN-protected settings for session limits, daily limits, and content filtering
+- **Parental Controls**: Settings for session limits, daily limits, time blocking, and content filtering
 - **Progress Tracking**: Stars and completion tracking for each video
 - **Drawing Board**: In-video drawing overlay for creative learning
 - **Blog**: Parent education articles on teaching math, focus skills, early literacy, screen time management, and creative learning
