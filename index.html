@@ -1,0 +1,4465 @@
+<!DOCTYPE html>
+<html lang="zh-CN" id="app-root">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="description" content="Discover fun and engaging educational activities for kids at HappySprout. Printable worksheets, learning games, and creative ideas to help children grow with joy.">
+<title>HappySprout Kids Learning – Fun Educational Activities for Children</title>
+<style>
+/* ================================================================
+   HappySprout Kids Learning – Fun Educational Activities for Children - CSS Design System
+   目标：明亮、圆角、大图标、高饱和度、卡通风格
+   ================================================================ */
+:root {
+  /* Primary palette - bright, kid-friendly */
+  --yellow: #FFD93D;
+  --orange: #FF8C42;
+  --coral: #FF6B6B;
+  --pink: #FF6B9D;
+  --purple: #C77DFF;
+  --blue: #4ECDC4;
+  --teal: #45B7D1;
+  --green: #96CEB4;
+  --lime: #A8E6CF;
+  --sky: #7EC8E3;
+
+  /* UI colors */
+  --bg: #FFF8F0;
+  --bg-card: #FFFFFF;
+  --text: #2D3436;
+  --text-light: #636E72;
+  --shadow: 0 4px 20px rgba(0,0,0,0.08);
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 12px;
+  --radius-xs: 8px;
+
+  /* Age group colors */
+  --age-3-5: #FF8C42;
+  --age-6-8: #C77DFF;
+  --age-9-12: #4ECDC4;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding-bottom: 100px;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ============================================
+   TOP BAR
+   ============================================ */
+.top-bar {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(12px);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 20px;
+  border-bottom: 2px solid #f0e8d8;
+}
+.top-bar .logo {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 20px; font-weight: 800;
+  background: linear-gradient(135deg, var(--orange), var(--coral));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.top-bar .logo .mascot { font-size: 32px; }
+.top-bar-actions { display: flex; gap: 8px; align-items: center; }
+.top-btn {
+  width: 42px; height: 42px; border-radius: 50%;
+  border: 2px solid #f0e8d8; background: white;
+  font-size: 20px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.top-btn:active { transform: scale(0.9); background: #f8f0e0; }
+
+/* ============================================
+   BOTTOM NAV
+   ============================================ */
+.bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(12px);
+  display: flex; justify-content: space-around;
+  padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+  border-top: 2px solid #f0e8d8;
+}
+.nav-item {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  padding: 6px 12px; border-radius: 16px;
+  cursor: pointer; transition: all 0.2s;
+  font-size: 11px; color: var(--text-light); font-weight: 600;
+  background: none; border: none;
+}
+.nav-item .nav-icon { font-size: 26px; }
+.nav-item.active { color: var(--orange); transform: scale(1.08); }
+.nav-item:active { transform: scale(0.92); }
+
+/* ============================================
+   PAGE CONTAINER
+   ============================================ */
+.page { display: none; padding: 16px 20px; }
+.page.active { display: block; animation: fadeSlideIn 0.3s ease; }
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
+   SECTION TITLES
+   ============================================ */
+.section-title {
+  font-size: 20px; font-weight: 800; margin: 20px 0 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.section-title .icon { font-size: 28px; }
+
+/* ============================================
+   AGE FILTER PILLS
+   ============================================ */
+.age-filters {
+  display: flex; gap: 10px; margin: 16px 0;
+  overflow-x: auto; padding-bottom: 4px;
+}
+.age-pill {
+  padding: 12px 28px; border-radius: 50px; border: 3px solid #f0e8d8;
+  background: white; font-size: 16px; font-weight: 700; cursor: pointer;
+  white-space: nowrap; transition: all 0.25s;
+  color: var(--text-light);
+}
+.age-pill.active { border-color: var(--orange); background: #FFF3E8; color: var(--orange); }
+.age-pill:active { transform: scale(0.95); }
+.age-pill .age-emoji { font-size: 22px; margin-right: 4px; }
+
+/* ============================================
+   CATEGORY CARDS
+   ============================================ */
+.category-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px; margin: 12px 0;
+}
+.cat-card {
+  background: white; border-radius: var(--radius-lg);
+  padding: 20px 14px; text-align: center;
+  cursor: pointer; border: 3px solid transparent;
+  box-shadow: var(--shadow); transition: all 0.25s;
+}
+.cat-card:hover { transform: translateY(-4px); }
+.cat-card:active { transform: scale(0.95); }
+.cat-card.selected { border-color: var(--orange); box-shadow: 0 0 0 4px rgba(255,140,66,0.2); background: #FFF8F3; }
+.cat-card .cat-icon { font-size: 44px; display: block; margin-bottom: 8px; }
+.cat-card .cat-icon svg { width: 44px; height: 44px; display: block; margin: 0 auto; }
+.cat-card .cat-label { font-size: 14px; font-weight: 700; }
+
+/* ============================================
+   CHANNEL ROW
+   ============================================ */
+.channel-row {
+  display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 8px;
+}
+.channel-chip {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 16px; border: 2px solid #eee;
+  border-radius: 14px; background: white;
+  cursor: pointer; transition: all 0.2s;
+  font-family: var(--font); font-weight: 600; font-size: 13px;
+}
+.channel-chip:hover { border-color: var(--chip-bg, #888); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.channel-chip:active { transform: scale(0.97); }
+.chip-avatar {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: var(--chip-bg, #888);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; color: white; flex-shrink: 0;
+}
+.chip-name { color: var(--text); max-width: 160px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.chip-count {
+  background: #f0f0f0; color: #999; font-size: 11px;
+  padding: 2px 8px; border-radius: 10px; font-weight: 700;
+}
+
+/* Channel banner */
+.channel-hero {
+  background: var(--channel-hero-bg, linear-gradient(135deg, #667eea, #764ba2));
+  border-radius: var(--radius-lg); padding: 32px 24px;
+  color: white; margin-bottom: 20px;
+  position: relative; overflow: hidden;
+}
+.channel-hero::after {
+  content: ''; position: absolute; top: -30px; right: -20px;
+  width: 120px; height: 120px; border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+}
+.channel-hero h2 { font-size: 26px; margin-bottom: 4px; }
+.channel-hero p { opacity: 0.85; font-size: 14px; }
+
+/* ============================================
+   VIDEO CARDS
+   ============================================ */
+.video-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+@media (max-width: 900px) {
+  .video-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 600px) {
+  .video-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 400px) {
+  .video-grid { grid-template-columns: 1fr; }
+}
+.show-more-btn {
+  display: block; width: 100%; margin: 20px 0; padding: 14px;
+  border: 2px dashed #ddd; border-radius: 16px;
+  background: #faf8f5; color: var(--purple);
+  font-size: 16px; font-weight: 700; cursor: pointer;
+  transition: all 0.2s;
+}
+.show-more-btn:hover { background: #f0ecff; border-color: var(--purple); }
+.show-more-btn:active { transform: scale(0.98); }
+
+/* Category group banners in All Videos */
+.cat-group-banner {
+  display: flex; align-items: center; gap: 12px;
+  margin-top: 24px; margin-bottom: 0;
+  padding: 14px 16px;
+  background: white; border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.cat-group-bar {
+  width: 5px; height: 42px; border-radius: 3px; flex-shrink: 0;
+}
+.cat-group-emoji { font-size: 28px; flex-shrink: 0; }
+.cat-group-text { flex: 1; min-width: 0; }
+.cat-group-name {
+  font-size: 17px; font-weight: 800; color: #333; line-height: 1.3;
+}
+.cat-group-en {
+  font-size: 12px; color: #999; font-weight: 500; line-height: 1.3;
+}
+.cat-group-count {
+  font-size: 13px; color: #fff; background: #5B4C7B; padding: 4px 12px;
+  border-radius: 20px; font-weight: 700; flex-shrink: 0; white-space: nowrap;
+}
+
+.video-card {
+  background: white; border-radius: var(--radius-lg);
+  overflow: hidden; cursor: pointer;
+  box-shadow: var(--shadow); transition: all 0.25s;
+  border: 3px solid transparent;
+}
+.video-card:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+.video-card:active { transform: scale(0.97); }
+
+.video-thumb {
+  position: relative; background: #e8e4df;
+  aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.video-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.video-thumb .play-btn {
+  position: absolute; width: 56px; height: 56px; border-radius: 50%;
+  background: rgba(0,0,0,0.55); display: flex; align-items: center; justify-content: center;
+  font-size: 24px; color: white; pointer-events: none;
+}
+.video-duration {
+  position: absolute; bottom: 8px; right: 8px;
+  background: rgba(0,0,0,0.7); color: white;
+  padding: 3px 8px; border-radius: 6px; font-size: 12px; font-weight: 600;
+}
+.video-age-tag {
+  position: absolute; top: 8px; left: 8px;
+  background: var(--orange); color: white;
+  padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700;
+}
+.video-info { padding: 14px; }
+.video-info h3 { font-size: 15px; font-weight: 700; line-height: 1.4; margin-bottom: 4px; }
+.video-info .channel { font-size: 12px; color: var(--text-light); }
+
+.progress-bar-wrap {
+  height: 6px; background: #f0e8d8; border-radius: 10px; margin-top: 8px; overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%; border-radius: 10px;
+  background: linear-gradient(90deg, var(--orange), var(--coral));
+  transition: width 0.5s;
+}
+
+/* ============================================
+   FEATURED DANCE HITS ROW
+   ============================================ */
+.featured-dance-row {
+  display: flex; gap: 12px; overflow-x: auto;
+  padding: 4px 0 12px; margin-bottom: 4px;
+  scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.featured-dance-row::-webkit-scrollbar { display: none; }
+.featured-dance-card {
+  min-width: 180px; max-width: 180px; flex-shrink: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: var(--radius-lg); overflow: hidden;
+  cursor: pointer; scroll-snap-align: start;
+  box-shadow: 0 4px 16px rgba(102,126,234,0.25);
+  transition: transform 0.25s, box-shadow 0.25s;
+  border: 2px solid transparent;
+}
+.featured-dance-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(102,126,234,0.35); }
+.featured-dance-card:active { transform: scale(0.97); }
+.featured-dance-thumb {
+  position: relative; aspect-ratio: 16/9;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.featured-dance-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.featured-dance-thumb .play-overlay {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.2);
+  display: flex; align-items: center; justify-content: center;
+}
+.featured-dance-thumb .play-circle {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(255,255,255,0.9);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; color: #667eea; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.featured-dance-duration {
+  position: absolute; bottom: 6px; right: 6px;
+  background: rgba(0,0,0,0.65); color: white;
+  padding: 2px 7px; border-radius: 5px; font-size: 11px; font-weight: 600;
+}
+.featured-dance-info { padding: 12px; background: white; }
+.featured-dance-info h4 {
+  font-size: 13px; font-weight: 700; line-height: 1.4;
+  margin-bottom: 4px; color: var(--text);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.featured-dance-info .chan {
+  font-size: 11px; color: var(--text-light);
+}
+
+/* Featured Stories (绘本故事) */
+.featured-story-row {
+  display: flex; gap: 12px; overflow-x: auto;
+  padding: 4px 0 12px; margin-bottom: 4px;
+  scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.featured-story-row::-webkit-scrollbar { display: none; }
+.featured-story-card {
+  min-width: 180px; max-width: 180px; flex-shrink: 0;
+  background: linear-gradient(135deg, #FFB347 0%, #FF8C42 100%);
+  border-radius: var(--radius-lg); overflow: hidden;
+  cursor: pointer; scroll-snap-align: start;
+  box-shadow: 0 4px 16px rgba(255,179,71,0.3);
+  transition: transform 0.25s, box-shadow 0.25s;
+  border: 2px solid transparent;
+}
+.featured-story-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(255,179,71,0.45); }
+.featured-story-card:active { transform: scale(0.97); }
+.featured-story-thumb {
+  position: relative; aspect-ratio: 16/9;
+  background: linear-gradient(135deg, #FFB347, #FF8C42);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.featured-story-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.featured-story-thumb .play-overlay {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.2);
+  display: flex; align-items: center; justify-content: center;
+}
+.featured-story-thumb .play-circle {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(255,255,255,0.9);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; color: #FF8C42; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.featured-story-duration {
+  position: absolute; bottom: 6px; right: 6px;
+  background: rgba(0,0,0,0.65); color: white;
+  padding: 2px 7px; border-radius: 5px; font-size: 11px; font-weight: 600;
+}
+.featured-story-info { padding: 12px; background: white; }
+.featured-story-info h4 {
+  font-size: 13px; font-weight: 700; line-height: 1.4;
+  margin-bottom: 4px; color: var(--text);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.featured-story-info .chan {
+  font-size: 11px; color: var(--text-light);
+}
+
+/* ============================================
+   BANNER CAROUSEL
+   ============================================ */
+.banner-wrap {
+  position: relative; border-radius: var(--radius-lg); overflow: hidden;
+  height: 180px; margin-bottom: 12px;
+}
+.banner-slide {
+  position: absolute; inset: 0; display: flex; align-items: center;
+  padding: 24px 28px; color: white; font-weight: 800; font-size: 22px;
+  transition: opacity 0.5s; opacity: 0;
+}
+.banner-slide.active { opacity: 1; }
+.banner-1 { background: linear-gradient(135deg, #FF8C42, #FF6B6B); }
+.banner-2 { background: linear-gradient(135deg, #C77DFF, #7EC8E3); }
+.banner-3 { background: linear-gradient(135deg, #4ECDC4, #96CEB4); }
+.banner-dots {
+  position: absolute; bottom: 12px; right: 20px; display: flex; gap: 6px;
+}
+.banner-dot {
+  width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.5);
+  cursor: pointer; border: none;
+}
+.banner-dot.active { background: white; transform: scale(1.3); }
+
+/* ============================================
+   VIDEO PLAYER PAGE
+   ============================================ */
+.player-wrap {
+  position: relative; width: 100%; aspect-ratio: 16/9;
+  background: #000; border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 12px;
+}
+.player-wrap iframe { width: 100%; height: 100%; border: none; }
+.video-actions {
+  display: flex; gap: 10px; flex-wrap: wrap; margin: 12px 0;
+}
+.action-btn {
+  padding: 12px 22px; border-radius: 50px; border: 2px solid #f0e8d8;
+  background: white; font-size: 14px; font-weight: 700; cursor: pointer;
+  display: flex; align-items: center; gap: 6px; transition: all 0.2s;
+}
+.action-btn:active { transform: scale(0.95); }
+.action-btn.favorited { border-color: var(--coral); background: #FFF0EC; color: var(--coral); }
+.action-btn.completed { border-color: var(--green); background: #EDFFF5; color: #27ae60; }
+
+.drawing-overlay {
+  position: absolute; inset: 0; z-index: 10; pointer-events: none;
+  display: none;
+}
+.drawing-overlay.active { display: block; pointer-events: auto; }
+.drawing-overlay canvas { width: 100%; height: 100%; cursor: crosshair; }
+
+.timer-indicator {
+  display: flex; align-items: center; gap: 8px; padding: 10px 16px;
+  background: #FFF3E8; border-radius: 50px; font-size: 13px; font-weight: 600;
+  color: var(--orange); margin: 8px 0;
+}
+
+/* Quiz popup */
+.quiz-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 200;
+  display: flex; align-items: center; justify-content: center;
+  animation: fadeIn 0.3s;
+}
+.quiz-popup {
+  background: white; border-radius: var(--radius-lg); padding: 32px 24px;
+  max-width: 400px; width: 90%; text-align: center;
+}
+.quiz-popup h2 { font-size: 22px; margin-bottom: 12px; }
+.quiz-option {
+  display: block; width: 100%; padding: 14px; margin: 8px 0;
+  border: 3px solid #f0e8d8; border-radius: var(--radius-md);
+  background: white; font-size: 16px; font-weight: 600; cursor: pointer;
+  transition: all 0.2s;
+}
+.quiz-option:hover { border-color: var(--blue); background: #f0faf9; }
+.quiz-option.correct { border-color: var(--green); background: #EDFFF5; }
+.quiz-option.wrong { border-color: var(--coral); background: #FFF0EC; }
+
+/* ============================================
+   COURSE PAGE
+   ============================================ */
+.course-header {
+  background: linear-gradient(135deg, var(--purple), var(--teal));
+  border-radius: var(--radius-lg); padding: 24px; color: white; margin-bottom: 16px;
+}
+.course-header h2 { font-size: 24px; margin-bottom: 8px; }
+.course-progress-text { font-size: 14px; opacity: 0.9; margin-bottom: 10px; }
+.course-progress-bar {
+  height: 10px; background: rgba(255,255,255,0.3); border-radius: 10px; overflow: hidden;
+}
+.course-progress-fill {
+  height: 100%; background: white; border-radius: 10px; transition: width 0.5s;
+}
+
+.timeline { position: relative; padding-left: 32px; }
+.timeline::before {
+  content: ''; position: absolute; left: 15px; top: 0; bottom: 0;
+  width: 3px; background: #f0e8d8; border-radius: 3px;
+}
+.timeline-node {
+  position: relative; padding: 16px; margin-bottom: 12px;
+  background: white; border-radius: var(--radius-md);
+  box-shadow: var(--shadow); cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; gap: 14px;
+}
+.timeline-node.locked { opacity: 0.5; cursor: not-allowed; }
+.timeline-node.current { border: 3px solid var(--purple); }
+.timeline-node.completed { border-left: 4px solid var(--green); }
+.timeline-node::before {
+  content: ''; position: absolute; left: -25px; top: 24px;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: white; border: 3px solid #f0e8d8; z-index: 2;
+}
+.timeline-node.completed::before { background: var(--green); border-color: var(--green); }
+.timeline-node.current::before { background: var(--purple); border-color: var(--purple); animation: pulse 1.5s infinite; }
+@keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(199,125,255,0.5); } 50% { box-shadow: 0 0 0 12px rgba(199,125,255,0); } }
+.timeline-thumb {
+  width: 100px; height: 56px; border-radius: var(--radius-sm); background: #e8e4df;
+  flex-shrink: 0; display: flex; align-items: center; justify-content: center; overflow: hidden;
+}
+.timeline-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.timeline-info { flex: 1; }
+.timeline-info h4 { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+.timeline-info .meta { font-size: 12px; color: var(--text-light); }
+.timeline-check { font-size: 24px; color: var(--green); flex-shrink: 0; }
+.timeline-lock { font-size: 20px; color: #ccc; flex-shrink: 0; }
+
+/* ============================================
+   PRACTICE EXERCISES
+   ============================================ */
+.practice-types {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px; margin: 12px 0;
+}
+.practice-card {
+  background: white; border-radius: var(--radius-lg); padding: 20px 14px;
+  text-align: center; cursor: pointer; border: 3px solid transparent;
+  box-shadow: var(--shadow); transition: all 0.25s;
+}
+.practice-card:active { transform: scale(0.95); }
+.practice-card .p-icon { font-size: 40px; display: block; margin-bottom: 8px; }
+.practice-card .p-label { font-size: 14px; font-weight: 700; }
+
+.exercise-area {
+  background: white; border-radius: var(--radius-lg); padding: 24px;
+  box-shadow: var(--shadow); margin: 16px 0; min-height: 300px;
+}
+.listen-option {
+  display: inline-block; padding: 12px 20px; margin: 6px;
+  border: 2px solid #f0e8d8; border-radius: var(--radius-md);
+  background: white; cursor: pointer; font-size: 18px; font-weight: 600;
+  transition: all 0.2s;
+}
+.listen-option:hover { border-color: var(--blue); }
+.listen-option.correct { border-color: var(--green); background: #EDFFF5; }
+.listen-option.wrong { border-color: var(--coral); background: #FFF0EC; }
+
+.memory-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  max-width: 360px; margin: 0 auto;
+}
+.memory-card {
+  aspect-ratio: 1; border-radius: var(--radius-md); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px; background: #f0e8d8; border: 3px solid transparent;
+  transition: all 0.3s; position: relative; transform-style: preserve-3d;
+}
+.memory-card.flipped { background: white; border-color: var(--blue); }
+.memory-card.matched { background: var(--lime); border-color: var(--green); opacity: 0.7; pointer-events: none; }
+
+.drag-target {
+  display: inline-block; width: 100px; height: 100px;
+  border: 3px dashed #ccc; border-radius: var(--radius-md);
+  margin: 8px; text-align: center; line-height: 100px;
+  font-size: 32px; transition: all 0.3s;
+}
+.drag-target.over { border-color: var(--green); background: #EDFFF5; }
+.drag-source {
+  display: inline-block; padding: 12px 18px; margin: 6px;
+  background: white; border: 2px solid #f0e8d8; border-radius: var(--radius-md);
+  cursor: grab; font-weight: 700; transition: all 0.2s; user-select: none;
+}
+.drag-source:active { cursor: grabbing; }
+.drag-source.dragging { opacity: 0.5; }
+
+/* ============================================
+   PROFILE PAGE
+   ============================================ */
+.profile-header {
+  text-align: center; padding: 24px;
+}
+.avatar-display {
+  width: 100px; height: 100px; border-radius: 50%;
+  margin: 0 auto 12px; font-size: 60px;
+  display: flex; align-items: center; justify-content: center;
+  background: #FFF3E8; border: 4px solid var(--orange);
+}
+.avatar-selector {
+  display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin: 12px 0;
+}
+.avatar-option {
+  width: 60px; height: 60px; border-radius: 50%; border: 3px solid #f0e8d8;
+  font-size: 36px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  background: white; transition: all 0.2s;
+}
+.avatar-option.selected { border-color: var(--orange); transform: scale(1.15); }
+
+.stat-row { display: flex; gap: 12px; margin: 12px 0; }
+.stat-box {
+  flex: 1; background: white; border-radius: var(--radius-md);
+  padding: 16px; text-align: center; box-shadow: var(--shadow);
+}
+.stat-box .stat-num { font-size: 28px; font-weight: 800; color: var(--orange); }
+.stat-box .stat-label { font-size: 12px; color: var(--text-light); margin-top: 4px; }
+
+.streak-calendar {
+  display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin: 12px 0;
+}
+.streak-day {
+  aspect-ratio: 1; border-radius: 8px; display: flex; align-items: center;
+  justify-content: center; font-size: 12px; font-weight: 600; background: #f0e8d8;
+}
+.streak-day.done { background: var(--green); color: white; }
+
+.badge-wall { display: flex; gap: 12px; flex-wrap: wrap; margin: 12px 0; }
+.badge-item {
+  width: 72px; height: 72px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 36px; background: #f0e8d8; opacity: 0.3;
+}
+.badge-item.earned { opacity: 1; background: #FFF3E8; border: 3px solid var(--orange); }
+
+/* ============================================
+   PARENT PANEL
+   ============================================ */
+.parent-lock {
+  position: fixed; bottom: 20px; right: 20px; z-index: 50;
+  width: 44px; height: 44px; border-radius: 50%; background: rgba(0,0,0,0.1);
+  border: none; font-size: 20px; cursor: pointer; display: flex;
+  align-items: center; justify-content: center;
+}
+
+.pattern-grid {
+  display: grid; grid-template-columns: repeat(3, 80px); grid-template-rows: repeat(3, 80px);
+  gap: 10px; justify-content: center; margin: 24px auto;
+}
+.pattern-dot {
+  width: 80px; height: 80px; border-radius: 50%; background: #f0e8d8;
+  border: 3px solid #ddd; cursor: pointer; transition: all 0.2s;
+}
+.pattern-dot.selected { background: var(--orange); border-color: var(--orange); transform: scale(1.1); }
+
+/* Toggle switch */
+.toggle-switch { position: relative; display: inline-block; width: 48px; height: 26px; }
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: 0.3s; border-radius: 26px; }
+.toggle-slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background-color: white; transition: 0.3s; border-radius: 50%; }
+.toggle-switch input:checked + .toggle-slider { background-color: var(--blue); }
+.toggle-switch input:checked + .toggle-slider:before { transform: translateX(22px); }
+.toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #eee; }
+.toggle-row label { font-weight: 600; font-size: 14px; }
+
+.parent-tab-bar {
+  display: flex; gap: 4px; margin: 16px 0; overflow-x: auto;
+}
+.parent-tab {
+  padding: 10px 18px; border-radius: 50px; border: 2px solid #f0e8d8;
+  background: white; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap;
+}
+.parent-tab.active { background: var(--orange); color: white; border-color: var(--orange); }
+
+.setting-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px; background: white; border-radius: var(--radius-md);
+  margin: 8px 0; box-shadow: var(--shadow);
+}
+.setting-row label { font-weight: 700; font-size: 14px; }
+.setting-row input, .setting-row select {
+  padding: 10px 16px; border-radius: var(--radius-sm);
+  border: 2px solid #f0e8d8; font-size: 14px; font-weight: 600; width: 80px; text-align: center;
+}
+
+.whitelist-video {
+  display: flex; align-items: center; gap: 10px; padding: 12px;
+  border-radius: var(--radius-sm); margin: 6px 0; background: white;
+}
+.whitelist-video.hidden-video { opacity: 0.4; }
+.whitelist-video span { flex: 1; font-size: 13px; font-weight: 600; }
+.whitelist-toggle {
+  padding: 8px 16px; border-radius: 50px; border: 2px solid #f0e8d8;
+  font-size: 12px; font-weight: 700; cursor: pointer; background: white;
+}
+.whitelist-toggle.hide { border-color: var(--coral); color: var(--coral); }
+
+/* ============================================
+   FAVORITES & PLAYLISTS
+   ============================================ */
+.fav-section { margin: 12px 0; }
+.playlist-chip {
+  display: inline-block; padding: 10px 18px; margin: 4px;
+  border-radius: 50px; border: 2px solid #f0e8d8; font-size: 13px;
+  font-weight: 600; cursor: pointer; background: white;
+}
+.playlist-chip.active { background: var(--blue); color: white; border-color: var(--blue); }
+.playlist-chip.add { border-style: dashed; color: var(--text-light); }
+
+/* ============================================
+   SEARCH
+   ============================================ */
+.search-bar {
+  display: flex; gap: 10px; margin: 12px 0;
+}
+.search-input {
+  flex: 1; padding: 14px 20px; border-radius: 50px;
+  border: 3px solid #f0e8d8; font-size: 16px; font-weight: 600;
+  outline: none;
+}
+.search-input:focus { border-color: var(--blue); }
+.voice-btn {
+  width: 52px; height: 52px; border-radius: 50%;
+  border: 3px solid #f0e8d8; background: white;
+  font-size: 24px; cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.voice-btn:active { transform: scale(0.9); }
+.voice-btn.listening { border-color: var(--coral); background: #FFF0EC; animation: pulse 1s infinite; }
+
+/* ============================================
+   CELEBRATION ANIMATION
+   ============================================ */
+.confetti-container {
+  position: fixed; inset: 0; z-index: 300; pointer-events: none; overflow: hidden;
+}
+.confetti-piece {
+  position: absolute; width: 12px; height: 12px; border-radius: 3px;
+  animation: confettiFall 2s ease-out forwards;
+}
+@keyframes confettiFall {
+  0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+.star-popup {
+  position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  z-index: 250; font-size: 60px; animation: starBurst 1.5s ease-out forwards;
+  pointer-events: none;
+}
+@keyframes starBurst {
+  0% { transform: translate(-50%,-50%) scale(0); opacity: 1; }
+  50% { transform: translate(-50%,-50%) scale(1.5); opacity: 1; }
+  100% { transform: translate(-50%,-50%) scale(2); opacity: 0; }
+}
+
+/* ============================================
+   MODALS & OVERLAYS
+   ============================================ */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 200;
+  display: flex; align-items: center; justify-content: center;
+  animation: fadeIn 0.2s;
+}
+.modal-content {
+  background: white; border-radius: var(--radius-lg); padding: 28px 24px;
+  max-width: 420px; width: 90%; max-height: 80vh; overflow-y: auto;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 600px) {
+  .category-grid { grid-template-columns: repeat(3, 1fr); }
+  .banner-wrap { height: 140px; }
+  .banner-slide { font-size: 18px; padding: 16px 20px; }
+  .pattern-grid { grid-template-columns: repeat(3, 65px); grid-template-rows: repeat(3, 65px); }
+  .pattern-dot { width: 65px; height: 65px; }
+  .stat-row { flex-wrap: wrap; }
+}
+
+@media (min-width: 768px) {
+  .page { max-width: 900px; margin: 0 auto; }
+  .category-grid { grid-template-columns: repeat(5, 1fr); }
+}
+
+/* ============================================
+   SKELETON LOADING
+   ============================================ */
+.skeleton {
+  background: linear-gradient(90deg, #f0e8d8 25%, #f8f4ed 50%, #f0e8d8 75%);
+  background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 8px;
+}
+@keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-6px); }
+  80% { transform: translateX(4px); }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     TOP BAR
+     ============================================================ -->
+<header class="top-bar">
+  <div class="logo">
+    <span class="mascot">🧭</span>
+    <span>HappySprout Kids Learning – Fun Educational Activities for Children</span>
+  </div>
+  <div class="top-bar-actions">
+    <button class="top-btn" id="lang-toggle" onclick="toggleLang()" title="Switch Language">🌐</button>
+    <button class="top-btn" onclick="navigateTo('search')" title="搜索">🔍</button>
+    <button class="top-btn" onclick="navigateTo('favorites')" title="收藏夹">❤️</button>
+  </div>
+</header>
+
+<!-- ============================================================
+     MAIN CONTENT AREA - All pages rendered here
+     ============================================================ -->
+<main id="main-content"></main>
+
+<!-- ============================================================
+     BOTTOM NAVIGATION
+     ============================================================ -->
+<nav class="bottom-nav" id="bottom-nav">
+  <button class="nav-item active" data-page="home" onclick="navigateTo('home')">
+    <span class="nav-icon">🏠</span> <span class="nav-label">首页</span>
+  </button>
+  <button class="nav-item" data-page="courses" onclick="navigateTo('courses')">
+    <span class="nav-icon">📖</span> <span class="nav-label">课程</span>
+  </button>
+  <button class="nav-item" data-page="practice" onclick="navigateTo('practice')">
+    <span class="nav-icon">🎮</span> <span class="nav-label">练习</span>
+  </button>
+  <button class="nav-item" data-page="me" onclick="navigateTo('me')">
+    <span class="nav-icon">⭐</span> <span class="nav-label">成就</span>
+  </button>
+  <button class="nav-item" data-page="parent" onclick="navigateTo('parent')">
+    <span class="nav-icon">🔒</span> <span class="nav-label">设置</span>
+  </button>
+</nav>
+
+<!-- Parent panel quick lock button (also accessible from bottom nav) -->
+<button class="parent-lock" onclick="openParentLock()" title="家长面板">🔒</button>
+
+<!-- ============================================================
+     JAVASCRIPT APPLICATION
+     ============================================================ -->
+<script>
+/* ================================================================
+   HappySprout Kids Learning – Fun Educational Activities for Children - Application Core
+   SPA routing, data management, YouTube iframe API, sound effects
+   ================================================================ */
+
+// ─── VIDEO DATABASE ───────────────────────────────────────────
+// 59 videos — English10 Math9 Science10 Music10 Story11 Art9
+const VIDEO_DB = [
+  {
+    id: "hq3yfQnllfQ",
+    title: "Phonics Song with TWO Words - A For Apple",
+    channel: "ChuChu TV",
+    duration: "4:06",
+    ages: [3, 6],
+    category: "英语启蒙",
+    courseId: "phonics-basics"
+  },
+  {
+    id: "XqZsoesa55w",
+    title: "Baby Shark Dance | Sing and Dance!",
+    channel: "Pinkfong",
+    duration: "1:25",
+    ages: [3, 5],
+    category: "音乐律动",
+    courseId: null
+  },
+  {
+    id: "DR-cfDsHCGA",
+    title: "Counting 1-10 Song | Number Songs for Children",
+    channel: "The Singing Walrus",
+    duration: "2:41",
+    ages: [3, 6],
+    category: "数学思维",
+    courseId: "numbers-1-10"
+  },
+  {
+    id: "b25g4nZTHvM",
+    title: "Why Do We Have Seasons? | SciShow Kids",
+    channel: "SciShow Kids",
+    duration: "3:26",
+    ages: [6, 10],
+    category: "科学探索",
+    courseId: null
+  },
+  {
+    id: "l4WNrvVjiTw",
+    title: "If You're Happy | Kids Song",
+    channel: "Super Simple Songs",
+    duration: "2:09",
+    ages: [3, 7],
+    category: "音乐律动",
+    courseId: null
+  },
+  {
+    id: "yCjJyiqpAuU",
+    title: "Twinkle Twinkle Little Star | Nursery Rhymes",
+    channel: "Super Simple Songs",
+    duration: "2:33",
+    ages: [3, 6],
+    category: "英语启蒙",
+    courseId: "abc-fun"
+  },
+  {
+    id: "tbbKjDjMDok",
+    title: "Little Snowflake | Kids Songs",
+    channel: "Super Simple Songs",
+    duration: "2:48",
+    ages: [3, 6],
+    category: "音乐律动",
+    courseId: null
+  },
+  {
+    id: "1dNI74FZ6Vc",
+    title: "ABC Phonics Song | Learn ABCs",
+    channel: "The Learning Station",
+    duration: "6:38",
+    ages: [3, 8],
+    category: "英语启蒙",
+    courseId: null
+  },
+  {
+    id: "ZhODBFQ2-bQ",
+    title: "Five Little Monkeys | Kids Song",
+    channel: "Super Simple Songs",
+    duration: "3:08",
+    ages: [3, 6],
+    category: "音乐律动",
+    courseId: null
+  },
+  {
+    id: "SFE0mMWbA-Y",
+    title: "Clean Up Song | Tidying Up for Kids",
+    channel: "Super Simple Songs",
+    duration: "2:08",
+    ages: [3, 6],
+    category: "音乐律动",
+    courseId: null
+  },
+  {
+    id: "rD6FRDd9Hew",
+    title: "How's The Weather? | Learn About Weather",
+    channel: "Super Simple Songs",
+    duration: "2:37",
+    ages: [3, 7],
+    category: "科学探索",
+    courseId: null
+  },
+  {
+    id: "Vb2ZXRh74WU",
+    title: "StoryBots Outer Space | Planets & Solar System",
+    channel: "Netflix Jr.",
+    duration: "2:53",
+    ages: [5, 9],
+    category: "科学探索",
+    courseId: null
+  },
+  {
+    id: "Ye8mB6VsUHw",
+    title: "Sesame Street: Cookie Monster Sings C is for Cookie",
+    channel: "Sesame Street",
+    duration: "2:14",
+    ages: [3, 6],
+    category: "英语启蒙",
+    courseId: "abc-fun"
+  },
+  {
+    id: "izfUsHZw9bs",
+    title: "5 Little Ducks song | Newborn Baby Songs & Nursery Rhymes",
+    channel: "Little LaLa's Nursery Rhymes",
+    duration: "15:12",
+    ages: [2, 5],
+    category: "故事模式",
+    courseId: null
+  },
+  {
+    id: "3bKuoH8CkFc",
+    title: "Why Do We Lose Control of Our Emotions?",
+    channel: "Kids Want to Know",
+    duration: "6:47",
+    ages: [6, 12],
+    category: "故事模式",
+    courseId: null
+  },
+  // ─── 艺术手工 (Art & Craft) ────────────────────────────
+  {
+    id: "FWsyKw2-en4",
+    title: "How To Draw Funny Summer Lemonade",
+    channel: "Art for Kids Hub",
+    duration: "7:19",
+    ages: [5, 12],
+    category: "艺术手工",
+    courseId: null
+  },
+  {
+    id: "4vYbtb6zFPQ",
+    title: "How To Draw Bean The Capybara Swimming",
+    channel: "Art for Kids Hub",
+    duration: "8:19",
+    ages: [5, 12],
+    category: "艺术手工",
+    courseId: null
+  },
+  {
+    id: "XpBNNPxlVtE",
+    title: "How To Draw Cuddles Teddy Bear Nurse",
+    channel: "Art for Kids Hub",
+    duration: "6:15",
+    ages: [4, 10],
+    category: "艺术手工",
+    courseId: null
+  },
+  // ─── 数学思维 (Math) ──────────────────────────────────
+  {
+    id: "g92uG8hUFpI",
+    title: "Counting Level 1 | Numberblocks 45 Min Compilation",
+    channel: "Numberblocks",
+    duration: "53:50",
+    ages: [3, 7],
+    category: "数学思维",
+    courseId: "numbers-1-10"
+  },
+  {
+    id: "1TBFfxeOgWM",
+    title: "Numberblocks and Shapes! Learn to Count Compilation",
+    channel: "Numberblocks",
+    duration: "62:40",
+    ages: [4, 8],
+    category: "数学思维",
+    courseId: null
+  },
+  {
+    id: "0Mzigl1D2p4",
+    title: "Numberblocks - 1, 2, 3, Let's Count! Full Episodes",
+    channel: "Numberblocks",
+    duration: "71:57",
+    ages: [3, 7],
+    category: "数学思维",
+    courseId: null
+  },
+  // ─── 科学探索 (Science) ────────────────────────────────
+  {
+    id: "4VinwOQkHGg",
+    title: "The Yuckiest Animals | SciShow Kids Compilation",
+    channel: "SciShow Kids",
+    duration: "26:34",
+    ages: [5, 10],
+    category: "科学探索",
+    courseId: null
+  },
+  {
+    id: "yzwdJjo4vGw",
+    title: "Coolest Ocean Facts! | SciShow Kids Compilation",
+    channel: "SciShow Kids",
+    duration: "24:23",
+    ages: [5, 10],
+    category: "科学探索",
+    courseId: null
+  },
+  // ─── 故事模式 (Story) ──────────────────────────────────
+  {
+    id: "c8RBVbvwMd4",
+    title: "The Very Hungry Caterpillar - Read Aloud",
+    channel: "Red Apple Reading",
+    duration: "3:08",
+    ages: [3, 7],
+    category: "故事模式",
+    courseId: null
+  },
+  {
+    id: "BgKVBhO6GkU",
+    title: "'The Giving Tree' read by Keith Carradine",
+    channel: "StorylineOnline",
+    duration: "7:39",
+    ages: [5, 10],
+    category: "故事模式",
+    courseId: null
+  },
+  {
+    id: "yt_GmmOx06Y",
+    title: "'The Most Magnificent Thing' read by Olivia Munn",
+    channel: "StorylineOnline",
+    duration: "8:08",
+    ages: [5, 10],
+    category: "故事模式",
+    courseId: null
+  },
+  // ─── 英语启蒙 (English) ───────────────────────────────
+  {
+    id: "tVlcKp3bWH8",
+    title: "Hello! Kids Greeting Song | Feelings Song",
+    channel: "Super Simple Songs",
+    duration: "1:18",
+    ages: [3, 6],
+    category: "英语启蒙",
+    courseId: "abc-fun"
+  },
+  // ─── 艺术手工 (Art & Craft) +5 ────────────────────────
+  {
+    id: "ll4qNMUzcr0",
+    title: "How To Draw The World Cup Trophy",
+    channel: "Art for Kids Hub",
+    duration: "8:00",
+    ages: [5, 12],
+    category: "艺术手工",
+    courseId: null
+  },
+  {
+    id: "O9iotlHmt2k",
+    title: "How To Draw A Cowgirl and Cowboy Crab",
+    channel: "Art for Kids Hub",
+    duration: "7:30",
+    ages: [5, 12],
+    category: "艺术手工",
+    courseId: null
+  },
+  {
+    id: "rUMKTka2ZU0",
+    title: "How To Draw Chompers The Crocodile",
+    channel: "Art for Kids Hub",
+    duration: "8:00",
+    ages: [5, 12],
+    category: "艺术手工",
+    courseId: null
+  },
+  {
+    id: "EvWSWpHsPSI",
+    title: "How To Draw Dottie The Birthday Donut",
+    channel: "Art for Kids Hub",
+    duration: "6:30",
+    ages: [4, 10],
+    category: "艺术手工",
+    courseId: null
+  },
+  {
+    id: "K2M8g6UGwxk",
+    title: "How To Draw Ziggy The Sloth That Loves Music",
+    channel: "Art for Kids Hub",
+    duration: "7:00",
+    ages: [5, 12],
+    category: "艺术手工",
+    courseId: null
+  },
+  {
+    id: "RQ-Yhzv2FRM",
+    title: "How To Draw A Queen Bee",
+    channel: "Art for Kids Hub",
+    duration: "5:30",
+    ages: [4, 10],
+    category: "艺术手工",
+    courseId: null
+  },
+  // ─── 数学思维 (Math) +5 ───────────────────────────────
+  {
+    id: "jft6MQeq9sY",
+    title: "@Numberblocks - Learn to Add! | Learn to Count | Addition",
+    channel: "Numberblocks",
+    duration: "18:00",
+    ages: [4, 8],
+    category: "数学思维",
+    courseId: "numbers-1-10"
+  },
+  {
+    id: "TSO6fk72QQE",
+    title: "Numberblocks Fun! | Full Episodes - 1 Hour Compilation",
+    channel: "Numberblocks",
+    duration: "60:00",
+    ages: [3, 7],
+    category: "数学思维",
+    courseId: null
+  },
+  {
+    id: "c2GN65bckFw",
+    title: "Count To 100! | Numberblocks 1 Hour Compilation",
+    channel: "Numberblocks",
+    duration: "62:00",
+    ages: [3, 7],
+    category: "数学思维",
+    courseId: null
+  },
+  {
+    id: "W_GH5z8Nuoc",
+    title: "Multiplication for Kids Compilation | Best Times Tables",
+    channel: "Numberblocks",
+    duration: "45:00",
+    ages: [6, 10],
+    category: "数学思维",
+    courseId: null
+  },
+  {
+    id: "zY5HxvfcGWA",
+    title: "Colourful Maths | 3 Hours Numberblocks Full Episodes",
+    channel: "Numberblocks",
+    duration: "180:00",
+    ages: [4, 9],
+    category: "数学思维",
+    courseId: null
+  },
+  // ─── 科学探索 (Science) +5 ─────────────────────────────
+  {
+    id: "ca4Pne18klU",
+    title: "Best of 2023! | SciShow Kids Compilation",
+    channel: "SciShow Kids",
+    duration: "28:00",
+    ages: [5, 10],
+    category: "科学探索",
+    courseId: null
+  },
+  {
+    id: "v8cDsAf0nN0",
+    title: "Squeaks' Adventure Around The World! | SciShow Kids",
+    channel: "SciShow Kids",
+    duration: "22:00",
+    ages: [5, 10],
+    category: "科学探索",
+    courseId: null
+  },
+  {
+    id: "HaEmIakO7f4",
+    title: "Natural Disasters Compilation | Dr. Binocs Show",
+    channel: "Peekaboo Kidz",
+    duration: "21:00",
+    ages: [6, 12],
+    category: "科学探索",
+    courseId: null
+  },
+  {
+    id: "XtSq1wcFSEI",
+    title: "Your Body's Senses | SciShow Kids Compilation",
+    channel: "SciShow Kids",
+    duration: "24:00",
+    ages: [5, 10],
+    category: "科学探索",
+    courseId: null
+  },
+  {
+    id: "kcWST_OOd6c",
+    title: "Mysteries of the World with Dr. Binocs",
+    channel: "Peekaboo Kidz",
+    duration: "30:00",
+    ages: [6, 12],
+    category: "科学探索",
+    courseId: null
+  },
+  // ─── 音乐律动 (Music) +5 ──────────────────────────────
+  {
+    id: "W-P8UvOwvrY",
+    title: "Rock-A-Bye Baby + More Nursery Rhymes | CoComelon",
+    channel: "CoComelon",
+    duration: "36:00",
+    ages: [3, 6],
+    category: "音乐律动",
+    courseId: null
+  },
+  {
+    id: "020g-0hhCAU",
+    title: "Baby Shark | CoComelon Nursery Rhymes & Kids Songs",
+    channel: "CoComelon",
+    duration: "2:25",
+    ages: [3, 5],
+    category: "音乐律动",
+    courseId: null
+  },
+  {
+    id: "Gmrj5-70xV4",
+    title: "Baa Baa Black Sheep + More Nursery Rhymes | CoComelon",
+    channel: "CoComelon",
+    duration: "32:00",
+    ages: [3, 6],
+    category: "音乐律动",
+    courseId: null
+  },
+  {
+    id: "yDImFv1Z5wE",
+    title: "Best Baby Shark Songs 60 Minute Compilation | Pinkfong",
+    channel: "Pinkfong",
+    duration: "60:00",
+    ages: [3, 6],
+    category: "音乐律动",
+    courseId: null
+  },
+  {
+    id: "bXA3EM4LqMU",
+    title: "Wheels on the Bus (Play Version) + More | CoComelon",
+    channel: "CoComelon",
+    duration: "34:00",
+    ages: [3, 6],
+    category: "音乐律动",
+    courseId: null
+  },
+  // ─── 英语启蒙 (English) +5 ─────────────────────────────
+  {
+    id: "5XEN4vtH4Ic",
+    title: "ABC Song | Kids Alphabet Review | Super Simple Songs",
+    channel: "Super Simple Songs",
+    duration: "2:30",
+    ages: [3, 6],
+    category: "英语启蒙",
+    courseId: "abc-fun"
+  },
+  {
+    id: "l-sEZaHet8c",
+    title: "The Alphabet Song + More | Learn Letters Compilation",
+    channel: "Super Simple Songs",
+    duration: "55:00",
+    ages: [3, 7],
+    category: "英语启蒙",
+    courseId: "abc-fun"
+  },
+  {
+    id: "n8PyUO2PL4A",
+    title: "The Alphabet Is So Much Fun + More Kids Songs",
+    channel: "Super Simple Songs",
+    duration: "58:00",
+    ages: [3, 7],
+    category: "英语启蒙",
+    courseId: "abc-fun"
+  },
+  {
+    id: "Uj9w-uBuLgw",
+    title: "ABC Songs for Kids | A to Z (Uppercase) | Super Simple ABCs",
+    channel: "Super Simple ABCs",
+    duration: "60:00",
+    ages: [3, 7],
+    category: "英语启蒙",
+    courseId: null
+  },
+  {
+    id: "71h8MZshGSs",
+    title: "ABC Song + More Nursery Rhymes & Kids Songs | CoComelon",
+    channel: "CoComelon",
+    duration: "35:00",
+    ages: [3, 7],
+    category: "英语启蒙",
+    courseId: "abc-fun"
+  },
+  // ─── 故事模式 (Story) +6 ───────────────────────────────
+  {
+    id: "nG2a4cBEkMM",
+    title: "Chicka Chicka Boom Boom Compilation | Animated Read Aloud",
+    channel: "Buddy Son Storytime",
+    duration: "7:00",
+    ages: [3, 7],
+    category: "故事模式",
+    courseId: null
+  },
+  {
+    id: "-GSnmRZlgc4",
+    title: "Pete the Cat I Love My White Shoes | Animated Read Aloud",
+    channel: "LolliPop Animated Book",
+    duration: "3:47",
+    ages: [3, 7],
+    category: "故事模式",
+    courseId: null
+  },
+  {
+    id: "f13aaTam3Lg",
+    title: "Brown Bear, Brown Bear, What Do You See? Animated Read Aloud",
+    channel: "MovingStories",
+    duration: "4:30",
+    ages: [3, 7],
+    category: "故事模式",
+    courseId: null
+  },
+  {
+    id: "ALmNPxNehYE",
+    title: "Where The Wild Things Are | Children's Book Read Aloud",
+    channel: "Happy Cultivated",
+    duration: "4:00",
+    ages: [4, 9],
+    category: "故事模式",
+    courseId: null
+  },
+  {
+    id: "TOnuVm4OrCc",
+    title: "The Rainbow Fish | A Story of Sharing and Friendship",
+    channel: "My Bedtime Stories",
+    duration: "7:00",
+    ages: [4, 9],
+    category: "故事模式",
+    courseId: null
+  },
+  {
+    id: "uU1sX_Yg3JU",
+    title: "Goodnight Moon | Classic Kids Bedtime Story Read Aloud",
+    channel: "Buddy Son Storytime",
+    duration: "4:00",
+    ages: [3, 7],
+    category: "故事模式",
+    courseId: null
+  }
+];
+
+// ─── COURSE DATABASE ──────────────────────────────────────────
+const COURSE_DB = [
+  {
+    id: "abc-fun",
+    name: "ABC 字母快乐学",
+    icon: "🔤",
+    color: "#FF8C42",
+    description: "从零开始学字母，唱歌跳舞记ABC！",
+    videoIds: ["yCjJyiqpAuU", "hq3yfQnllfQ", "Ye8mB6VsUHw", "5XEN4vtH4Ic", "71h8MZshGSs", "Uj9w-uBuLgw"]
+  },
+  {
+    id: "numbers-1-10",
+    name: "数字王国大冒险",
+    icon: "🔢",
+    color: "#C77DFF",
+    description: "数一数、加一加，我是数字小天才！",
+    videoIds: ["DR-cfDsHCGA", "jft6MQeq9sY", "g92uG8hUFpI"]
+  },
+  {
+    id: "phonics-basics",
+    name: "自然拼读入门",
+    icon: "🔤",
+    color: "#FF6B9D",
+    description: "从A到Z，自然拼读打基础！",
+    videoIds: ["hq3yfQnllfQ"]
+  }
+];
+
+// ─── PRACTICE EXERCISE DATA ───────────────────────────────────
+const PRACTICE_DATA = [
+  {
+    type: "listen",
+    title: "👂 听音选图",
+    description: "听听说的是什么，点击正确的图片吧！",
+    icon: "👂",
+    questions: [
+      { word: "Apple", word_cn: "苹果", emoji: "🍎", options: ["🍎","🍌","🍇","🍊"], answer: 0 },
+      { word: "Cat", word_cn: "猫", emoji: "🐱", options: ["🐶","🐱","🐰","🐻"], answer: 1 },
+      { word: "Sun", word_cn: "太阳", emoji: "☀️", options: ["🌙","⭐","☀️","☁️"], answer: 2 },
+      { word: "Fish", word_cn: "鱼", emoji: "🐟", options: ["🐟","🐦","🐸","🐍"], answer: 0 },
+      { word: "Star", word_cn: "星星", emoji: "⭐", options: ["💎","⭐","🔮","💡"], answer: 1 }
+    ]
+  },
+  {
+    type: "match",
+    title: "🤝 拖拽配对",
+    description: "把单词拖到正确的图片上！",
+    icon: "🤝",
+    pairs: [
+      { word: "Dog", emoji: "🐶" },
+      { word: "Tree", emoji: "🌳" },
+      { word: "Book", emoji: "📚" },
+      { word: "Moon", emoji: "🌙" }
+    ]
+  },
+  {
+    type: "speak",
+    title: "🎙️ 跟读录音",
+    description: "大声跟读，听一听自己的声音！",
+    icon: "🎙️",
+    words: ["Hello", "Thank you", "Good morning", "One two three"]
+  },
+  {
+    type: "memory",
+    title: "🃏 记忆翻牌",
+    description: "翻开卡片，找到相同的配对吧！",
+    icon: "🃏",
+    cards: ["🍎","🍎","🐱","🐱","⭐","⭐","🌈","🌈","🚀","🚀","🎵","🎵"]
+  }
+];
+
+// ─── BADGE DEFINITIONS ────────────────────────────────────────
+const BADGES = [
+  { id: "first-watch", name: "初次探索", icon: "🎬", desc: "完成第一次学习" },
+  { id: "streak-3", name: "坚持3天", icon: "🔥", desc: "连续学习3天" },
+  { id: "streak-7", name: "周冠军", icon: "🏆", desc: "连续学习7天" },
+  { id: "star-5", name: "星星收集者", icon: "⭐", desc: "获得5颗星星" },
+  { id: "star-15", name: "星光熠熠", icon: "🌟", desc: "获得15颗星星" },
+  { id: "video-10", name: "小影迷", icon: "📺", desc: "观看10个视频" },
+  { id: "course-abc", name: "字母达人", icon: "🔤", desc: "完成ABC字母课程" },
+  { id: "course-math", name: "数学新星", icon: "🔢", desc: "完成数字课程" }
+];
+
+// ─── APP STATE ─────────────────────────────────────────────────
+const APP = {
+  currentPage: 'home',
+  ageFilter: null,          // null = all, or max age like 5, 8, 12
+  categoryFilter: null,
+  selectedCourseId: null,
+  selectedPracticeType: null,
+  videoHistory: {},
+  timerInterval: null,
+  parentUnlocked: false,
+  patternInput: [],
+  lockPatternInput: [],
+  correctPattern: null,     // loaded from localStorage; parent creates on first visit
+  parentOverrideActive: false,   // temporarily disable time checks after parent unlock
+  activeSearchQuery: '',
+  redirectAfterUnlock: null,    // callback after pattern unlock
+  lang: 'zh',               // 'zh' | 'en'
+};
+
+// ─── I18N (Internationalization) ──────────────────────────────
+const I18N = {
+  zh: {
+    // Nav
+    home: '首页',
+    courses: '课程',
+    practice: '练习',
+    achievements: '成就',
+    settings: '设置',
+    search: '搜索',
+    favorites: '收藏夹',
+    // Home
+    exploreSubjects: '探索学科',
+    all: '全部',
+    age3_5: '3-5岁',
+    age6_8: '6-8岁',
+    age9_12: '9-12岁',
+    popularChannels: '热门频道',
+    continueWatching: '继续观看',
+    allVideos: '全部视频',
+    expandMore: '展开更多视频',
+    collapse: '收起',
+    weeklyThemeOcean: '本周主题：海洋探险',
+    weeklyThemeOceanSub: '探索海洋的奇妙世界！',
+    weeklyThemeArt: '创意手工周',
+    weeklyThemeArtSub: '动动小手，做出艺术品！',
+    weeklyThemeMusic: '音乐律动节',
+    weeklyThemeMusicSub: '跟着节奏一起摇摆！',
+    featuredDanceHits: '🎵 律动金曲',
+    featuredDanceHitsSub: '宝贝最爱的唱跳精选',
+    noVideoFound: '没有找到符合条件的视频',
+    completedLabel: '已完成',
+    // Watch
+    back: '返回',
+    backHome: '返回首页',
+    backCourseList: '返回课程列表',
+    backToVideo: '返回视频',
+    sessionTimer: '本次观看',
+    todayLabel: '今日',
+    minutes: '分钟',
+    favorited: '已收藏',
+    favorite: '收藏',
+    completedDone: '已完成',
+    completeCheckin: '完成打卡',
+    drawingBoard: '画板',
+    closeDrawing: '关闭画板',
+    clear: '清除',
+    viewCourse: '查看课程',
+    goPractice: '去练习',
+    restTime: '现在是休息时间哦！',
+    restTimeMsg: '家长设置了 {blockStart} 到 {blockEnd} 不能观看。',
+    takeBreak: '休息一下！',
+    takeBreakMsg: '你已经看了 {limit} 分钟啦，答对问题继续哦！',
+    dailyLimitReached: '今日时长已用完',
+    dailyLimitMsg: '你已经学习了 {limit} 分钟。明天再来吧！',
+    parentUnlock: '家长解锁',
+    parentVerify: '家长验证',
+    enterPattern: '请输入图形密码以解锁',
+    confirmUnlock: '确认解锁',
+    cancel: '取消',
+    kidQuiz: '小朋友，答对才能继续哦：',
+    quizTitle: '考考你！',
+    quizQ1: '这个视频里出现了什么？',
+    quizQ1_opts: ['字母 ABC', '数字 123', '小动物', '颜色'],
+    quizQ2: '视频主要教什么？',
+    quizQ2_opts: ['唱歌跳舞', '学知识', '做手工', '讲故事'],
+    quizQ3: '你学会了吗？',
+    quizQ3_opts: ['学会了！', '还没呢'],
+    // Course
+    themedCourses: '主题课程',
+    courseUnlockHint: '完成前一课才能解锁下一课哦！加油！',
+    lessonsCompleted: '课已完成',
+    noCourses: '暂无课程',
+    learnedCount: '已学',
+    lessonsCompletedPct: '课 · 完成',
+    courseContent: '课程内容',
+    lessonPrefix: '第',
+    lessonSuffix: '课',
+    // Practice
+    interactivePractice: '互动练习',
+    practiceHint: '选一个练习开始吧！做完有星星奖励哦 ⭐',
+    listenTitle: '听音选图',
+    listenDesc: '听听说的是什么，点击正确的图片吧！',
+    matchTitle: '拖拽配对',
+    matchDesc: '把单词拖到正确的图片上！',
+    speakTitle: '跟读录音',
+    speakDesc: '大声跟读，听一听自己的声音！',
+    memoryTitle: '记忆翻牌',
+    memoryDesc: '翻开卡片，找到相同的配对吧！',
+    questionNum: '第 {n}/{total} 题',
+    tapToHear: '点击听单词',
+    matchProgress: '拖拽配对 ({matched}/{total})',
+    matchHint: '把左边的单词拖到右边正确的图片上',
+    speakProgress: '跟读录音 ({n}/{total})',
+    startRecord: '开始录音',
+    stopRecord: '停止录音',
+    nextQ: '下一题 →',
+    recording: '正在录音...大声跟读吧！',
+    recordingDone: '太棒了！回放听听看吧~',
+    noMic: '无法访问麦克风，请允许录音权限',
+    memoryProgress: '记忆翻牌 (配对 {matched}/{total})',
+    moves: '步数',
+    exerciseDone: '练习完成！',
+    scoreLabel: '得分',
+    starsEarned: '颗星星',
+    retry: '再练一次',
+    // Me (Profile)
+    littleExplorer: '小探险家',
+    streakDays: '连续学习 {n} 天',
+    chooseBuddy: '选择你的小伙伴',
+    videosWatched: '学习视频',
+    starsCollected: '获得星星',
+    streakDaysLabel: '连续天数',
+    learningMinutes: '学习分钟',
+    checkinCalendar: '打卡日历',
+    badgeWall: '徽章墙',
+    notEarned: '尚未获得',
+    weeklyReport: '本周学习报告',
+    totalVideosWatched: '观看视频',
+    totalStars: '累计星星',
+    totalTime: '学习时长',
+    streakCheckin: '连续打卡',
+    changeParentPIN: '修改家长密码',
+    // Parent Panel
+    parentSettings: '家长设置',
+    parentSettingsSub: '管理孩子的学习时长、内容和安全',
+    enterPatternToAccess: '输入图案密码以访问设置',
+    enterPassword: '输入密码',
+    lock: '锁定',
+    timeSettings: '时长设置',
+    contentMgmt: '内容管理',
+    learningReport: '学习报告',
+    soundEffects: '音效',
+    changePIN: '修改密码',
+    sessionLength: '单次观看时长',
+    dailyLength: '每日总时长',
+    blockedStart: '禁用时段（开始）',
+    blockedEnd: '禁用时段（结束）',
+    blockToggle: '🔒 启用时段禁用',
+    blockedHint: '设置后，在禁用时段内视频会自动锁定',
+    saveAll: '保存所有时长设置',
+    manageVideos: '管理每条视频的显示/隐藏',
+    hidden: '隐藏中',
+    shown: '显示',
+    videosWatchedTotal: '观看视频总数',
+    starsTotal: '获得星星数',
+    streakDaysTotal: '连续打卡',
+    totalLearning: '累计学习',
+    badgesEarned: '已获徽章',
+    videosCompleted: '已完成视频',
+    videosFavorited: '收藏视频',
+    completedVideosList: '已完成视频',
+    noCompletedVideos: '尚未完成任何视频',
+    soundFeedback: '音效反馈',
+    soundOn: '已开启',
+    soundOff: '已关闭',
+    soundOffHint: '关闭后，点击和奖励音效将不再播放',
+    modifyParentPIN: '修改家长面板的图案密码',
+    currentPattern: '当前密码图案',
+    notSet: '未设置',
+    // PIN setup
+    welcomeTitle: '欢迎来到 HappySprout Kids Learning – Fun Educational Activities for Children！',
+    welcomeSub: '家长您好，请先设置您的图案密码',
+    welcomeHint: '这个密码将用于管理孩子的学习时长和内容',
+    startSetup: '开始设置密码',
+    createPIN: '创建密码',
+    stepLabel: '设置新密码',
+    stepConfirm: '再次确认密码',
+    stepNum: '第 {step} 步',
+    drawPattern: '请依次点击圆点画出你想要的图形密码',
+    selected: '已选',
+    nextStep: '下一步',
+    confirmCreate: '确认创建',
+    needMin3: '请至少连接 3 个圆点',
+    mismatch: '两次输入不一致，请重试',
+    pinSuccess: '密码设置成功！',
+    pinSuccessMsg: '您的密码图案',
+    pinSuccessHint: '请记住这个图案，以后管理设置时需要用到',
+    startExplore: '开始探索',
+    drawYourPattern: '请画出您的图形密码',
+    confirm: '确认',
+    wrongPIN: '密码错误，请重试！',
+    changePINTitle: '修改密码',
+    verifyCurrent: '验证当前密码',
+    setNewPIN: '设置新密码',
+    confirmNewPIN: '再次确认新密码',
+    confirmModify: '确认修改',
+    wrongPattern: '当前密码错误，请重试',
+    needMin2: '请至少选择 2 个点',
+    pinMismatch2: '两次输入的密码不一致，请重试',
+    pinChanged: '密码修改成功！新密码已生效。',
+    saved: '设置已保存！',
+    // Search
+    searchVideos: '搜索视频',
+    searchPlaceholder: '搜索站内视频...',
+    voiceSearch: '语音搜索',
+    foundResults: '找到 {n} 个结果',
+    noResults: '没有找到相关视频',
+    searchHint: '输入关键词搜索，或点击🎤语音搜索',
+    noVoiceSupport: '你的浏览器不支持语音搜索',
+    // Favorites
+    favTitle: '收藏夹',
+    newPlaylist: '+ 新建',
+    unfavorite: '取消收藏',
+    noFavs: '还没有收藏任何视频哦～去看视频并点击❤️收藏吧！',
+    playlistName: '请输入播放列表名称',
+    // Channel
+    allVideosCount: '共 {n} 个视频',
+    noChannelVideos: '该频道暂无视频',
+    defaultChannelDesc: '精选儿童教育视频',
+    // Channel descriptions
+    channelSSS_desc: '简单易学的英语儿歌，适合低龄宝宝启蒙',
+    channelPinkfong_desc: 'Baby Shark 的创造者，超萌动画儿歌',
+    channelWalrus_desc: '音乐与学习结合的趣味频道',
+    channelChuChu_desc: '色彩丰富的3D动画儿歌频道',
+    channelCrashCourse_desc: '用有趣的方式讲解科学知识',
+    channelLearningStation_desc: '边唱边跳学字母和拼读',
+    channelNetflixJr_desc: 'StoryBots 带你探索太空和科学',
+    channelArtHub_desc: '跟着Rob一家学画画，亲子艺术启蒙',
+    channelNumberblocks_desc: '数字积木动画，沉浸式数学启蒙',
+    channelSciShowKids_desc: '用孩子的语言解释科学世界',
+    channelStoryline_desc: '好莱坞明星为孩子们朗读经典绘本',
+    channelRedApple_desc: '温馨的儿童绘本朗读频道',
+    channelKidsWant_desc: '解答孩子心中的十万个为什么',
+    channelSesame_desc: '芝麻街经典角色陪伴学习成长',
+    channelLaLa_desc: '温馨治愈的英文童谣频道',
+    channelCocomelon_desc: '全球最受欢迎的幼儿启蒙儿歌频道',
+    channelSSSABCs_desc: '简单有趣的字母学习启蒙频道',
+    channelLolliPop_desc: '生动有趣的动画绘本朗读频道',
+    channelBuddySon_desc: '温暖可爱的儿童故事朗读频道',
+    channelMovingStories_desc: '精彩动画绘本朗读频道',
+    channelHappyCultivated_desc: '快乐成长的经典童书朗读频道',
+    channelBedtime_desc: '温柔治愈的睡前故事频道',
+    channelPeekaboo_desc: 'Dr. Binocs带你探索科学世界',
+    // Categories
+    cat_abc: '英语启蒙',
+    cat_math: '数学思维',
+    cat_science: '科学探索',
+    cat_art: '艺术手工',
+    cat_music: '音乐律动',
+    cat_story: '故事模式',
+    // Stories
+    storyMode: '📖 绘本故事',
+    storyModeSub: '听故事，学语言，长智慧',
+    // Badges
+    badge_first_watch: '初次探索',
+    badge_first_watch_desc: '完成第一次学习',
+    badge_streak3: '坚持3天',
+    badge_streak3_desc: '连续学习3天',
+    badge_streak7: '周冠军',
+    badge_streak7_desc: '连续学习7天',
+    badge_star5: '星星收集者',
+    badge_star5_desc: '获得5颗星星',
+    badge_star15: '星光熠熠',
+    badge_star15_desc: '获得15颗星星',
+    badge_video10: '小影迷',
+    badge_video10_desc: '观看10个视频',
+    badge_course_abc: '字母达人',
+    badge_course_abc_desc: '完成ABC字母课程',
+    badge_course_math: '数学新星',
+    badge_course_math_desc: '完成数字课程',
+    badge_unlocked: '解锁！',
+    // Courses
+    course_abc_fun_name: 'ABC 字母快乐学',
+    course_abc_fun_desc: '从零开始学字母，唱歌跳舞记ABC！',
+    course_numbers_name: '数字王国大冒险',
+    course_numbers_desc: '数一数、加一加，我是数字小天才！',
+    course_phonics_name: '自然拼读入门',
+    course_phonics_desc: '从A到Z，自然拼读打基础！',
+    // Age tags
+    age_years: '{a}-{b}岁',
+    // Other
+    videoNotFound: '视频未找到',
+    courseNotFound: '课程未找到',
+    starPopup_text: '完成学习 +1 星星！',
+    starPopup_stars: '获得 {n} 颗星！',
+    starDaily: '日',
+    starMon: '一',
+    starTue: '二',
+    starWed: '三',
+    starThu: '四',
+    starFri: '五',
+    starSat: '六',
+    // Added from database fields kept for reference
+    abcCourse: 'ABC字母快乐学',
+    numberCourse: '数字王国大冒险',
+    phonicsCourse: '自然拼读入门',
+    // About & Feedback
+    aboutUs: '关于我们',
+    feedback: '意见反馈',
+    aboutTitle: '关于 HappySprout',
+    aboutMission: '我们的使命',
+    aboutMissionText: '让每个孩子都能在快乐中学习，在探索中成长。我们相信，最好的教育不是灌输，而是点燃好奇心。',
+    aboutStory: '品牌故事',
+    aboutStoryText: 'HappySprout 诞生于一群热爱儿童教育的父母和老师的共同梦想。我们观察到，许多孩子在使用屏幕时只是被动观看，缺少互动和引导。于是，我们打造了这个将顶级教育视频与互动练习、游戏化激励相结合的平台，让孩子从"被动看"变为"主动学"。',
+    aboutWhy: '为什么选择我们？',
+    aboutWhy1: '精选全球顶级儿童教育频道，内容安全可靠',
+    aboutWhy2: '中英双语支持，适合双语启蒙',
+    aboutWhy3: '互动练习 + 闯关模式，告别单纯刷视频',
+    aboutWhy4: '家长控制面板，科学管理屏幕时间',
+    aboutWhy5: '趣味徽章 + 星星奖励，激发学习动力',
+    aboutContact: '联系我们',
+    aboutContactText: '有任何建议或合作意向？欢迎给我们反馈！',
+    feedbackTitle: '意见反馈',
+    feedbackSub: '帮助我们做得更好！你的每一个建议都至关重要。',
+    feedbackType: '反馈类型',
+    feedbackBug: '问题报告 🐛',
+    feedbackFeature: '功能建议 💡',
+    feedbackContent: '内容建议 📚',
+    feedbackOther: '其他 💬',
+    feedbackMessage: '详细描述',
+    feedbackMessagePlaceholder: '请告诉我们你的想法或遇到的问题...',
+    feedbackEmail: '你的邮箱（选填）',
+    feedbackEmailPlaceholder: '留下邮箱以便我们回复你',
+    feedbackSubmit: '提交反馈',
+    feedbackThanks: '感谢你的反馈！',
+    feedbackThanksMsg: '你的声音是我们进步的动力。我们会认真对待每一条建议！',
+    feedbackGoHome: '返回首页',
+  },
+  en: {
+    // Nav
+    home: 'Home',
+    courses: 'Courses',
+    practice: 'Practice',
+    achievements: 'Stars',
+    settings: 'Settings',
+    search: 'Search',
+    favorites: 'Favorites',
+    // Home
+    exploreSubjects: 'Explore Subjects',
+    all: 'All',
+    age3_5: 'Ages 3-5',
+    age6_8: 'Ages 6-8',
+    age9_12: 'Ages 9-12',
+    popularChannels: 'Popular Channels',
+    continueWatching: 'Continue Watching',
+    allVideos: 'All Videos',
+    expandMore: 'Show More Videos',
+    collapse: 'Show Less',
+    weeklyThemeOcean: 'Weekly Theme: Ocean Adventure',
+    weeklyThemeOceanSub: 'Explore the wonderful world of the ocean!',
+    weeklyThemeArt: 'Creative Art Week',
+    weeklyThemeArtSub: 'Get crafty and make some art!',
+    weeklyThemeMusic: 'Music & Rhythm Festival',
+    weeklyThemeMusicSub: 'Dance and sing along to the beat!',
+    featuredDanceHits: '🎵 Dance Hits',
+    featuredDanceHitsSub: 'Top sing-along picks for kids',
+    noVideoFound: 'No videos found',
+    completedLabel: 'Completed',
+    // Watch
+    back: 'Back',
+    backHome: 'Back to Home',
+    backCourseList: 'Back to Courses',
+    backToVideo: 'Back to Video',
+    sessionTimer: 'Session',
+    todayLabel: 'Today',
+    minutes: 'min',
+    favorited: 'Favorited',
+    favorite: 'Favorite',
+    completedDone: 'Completed',
+    completeCheckin: 'Complete +Star',
+    drawingBoard: 'Draw',
+    closeDrawing: 'Close Board',
+    clear: 'Clear',
+    viewCourse: 'View Course',
+    goPractice: 'Practice',
+    restTime: 'Rest time!',
+    restTimeMsg: 'Parent settings: no watching from {blockStart} to {blockEnd}.',
+    takeBreak: 'Take a break!',
+    takeBreakMsg: 'You\'ve watched for {limit} minutes. Answer a question to continue!',
+    dailyLimitReached: 'Daily limit reached',
+    dailyLimitMsg: 'You\'ve learned for {limit} minutes today. Come back tomorrow!',
+    parentUnlock: 'Parent Unlock',
+    parentVerify: 'Parent Verification',
+    enterPattern: 'Enter your pattern to unlock',
+    confirmUnlock: 'Confirm Unlock',
+    cancel: 'Cancel',
+    kidQuiz: 'Answer correctly to continue:',
+    quizTitle: 'Quiz Time!',
+    quizQ1: 'What appeared in this video?',
+    quizQ1_opts: ['Letters ABC', 'Numbers 123', 'Animals', 'Colors'],
+    quizQ2: 'What does this video teach?',
+    quizQ2_opts: ['Sing & Dance', 'Learn Knowledge', 'Crafts', 'Storytelling'],
+    quizQ3: 'Did you learn it?',
+    quizQ3_opts: ['Yes, I did!', 'Not yet'],
+    // Course
+    themedCourses: 'Themed Courses',
+    courseUnlockHint: 'Complete each lesson to unlock the next! Keep it up!',
+    lessonsCompleted: 'lessons done',
+    noCourses: 'No courses yet',
+    learnedCount: 'Learned',
+    lessonsCompletedPct: 'lessons ·',
+    courseContent: 'Course Content',
+    lessonPrefix: 'Lesson ',
+    lessonSuffix: '',
+    // Practice
+    interactivePractice: 'Interactive Practice',
+    practiceHint: 'Pick an exercise to start! Earn stars for completing them ⭐',
+    listenTitle: 'Listen & Choose',
+    listenDesc: 'Listen to the word and pick the right picture!',
+    matchTitle: 'Drag & Match',
+    matchDesc: 'Drag each word to the correct picture!',
+    speakTitle: 'Repeat & Record',
+    speakDesc: 'Speak out loud and hear your own voice!',
+    memoryTitle: 'Memory Match',
+    memoryDesc: 'Flip the cards and find matching pairs!',
+    questionNum: 'Q{n}/{total}',
+    tapToHear: 'Tap to Hear',
+    matchProgress: 'Drag & Match ({matched}/{total})',
+    matchHint: 'Drag words on the left to the right pictures',
+    speakProgress: 'Repeat & Record ({n}/{total})',
+    startRecord: 'Start Recording',
+    stopRecord: 'Stop Recording',
+    nextQ: 'Next →',
+    recording: 'Recording... Speak loud!',
+    recordingDone: 'Great job! Listen to your recording~',
+    noMic: 'Cannot access microphone. Please allow recording.',
+    memoryProgress: 'Memory Match (Pairs {matched}/{total})',
+    moves: 'Moves',
+    exerciseDone: 'Exercise Complete!',
+    scoreLabel: 'Score',
+    starsEarned: 'stars',
+    retry: 'Try Again',
+    // Me (Profile)
+    littleExplorer: 'Little Explorer',
+    streakDays: '{n}-day streak',
+    chooseBuddy: 'Choose your buddy',
+    videosWatched: 'Videos Watched',
+    starsCollected: 'Stars Earned',
+    streakDaysLabel: 'Day Streak',
+    learningMinutes: 'Minutes Learned',
+    checkinCalendar: 'Check-in Calendar',
+    badgeWall: 'Badge Wall',
+    notEarned: 'Not yet',
+    weeklyReport: 'Weekly Report',
+    totalVideosWatched: 'Videos watched',
+    totalStars: 'Total stars',
+    totalTime: 'Learning time',
+    streakCheckin: 'Day streak',
+    changeParentPIN: 'Change Parent PIN',
+    // Parent Panel
+    parentSettings: 'Parent Settings',
+    parentSettingsSub: 'Manage screen time, content, and safety',
+    enterPatternToAccess: 'Enter pattern to access settings',
+    enterPassword: 'Enter Pattern',
+    lock: 'Lock',
+    timeSettings: 'Screen Time',
+    contentMgmt: 'Content',
+    learningReport: 'Report',
+    soundEffects: 'Sound',
+    changePIN: 'Change PIN',
+    sessionLength: 'Session Limit',
+    dailyLength: 'Daily Limit',
+    blockedStart: 'Block Start Time',
+    blockedEnd: 'Block End Time',
+    blockToggle: '🔒 Enable Time Block',
+    blockedHint: 'Videos will auto-lock during blocked hours',
+    saveAll: 'Save All Settings',
+    manageVideos: 'Show/hide each video:',
+    hidden: 'Hidden',
+    shown: 'Visible',
+    videosWatchedTotal: 'Total videos watched',
+    starsTotal: 'Total stars',
+    streakDaysTotal: 'Day streak',
+    totalLearning: 'Total learning time',
+    badgesEarned: 'Badges earned',
+    videosCompleted: 'Videos completed',
+    videosFavorited: 'Videos favorited',
+    completedVideosList: 'Completed Videos',
+    noCompletedVideos: 'No videos completed yet',
+    soundFeedback: 'Sound Feedback',
+    soundOn: 'ON',
+    soundOff: 'OFF',
+    soundOffHint: 'When off, click and reward sounds are disabled',
+    modifyParentPIN: 'Change the parent panel pattern PIN:',
+    currentPattern: 'Current pattern',
+    notSet: 'Not set',
+    // PIN setup
+    welcomeTitle: 'Welcome to HappySprout Kids Learning – Fun Educational Activities for Children!',
+    welcomeSub: 'Hello parent, please set up your pattern PIN',
+    welcomeHint: 'This PIN will be used to manage learning time and content',
+    startSetup: 'Set Up PIN',
+    createPIN: 'Create PIN',
+    stepLabel: 'Set New Pattern',
+    stepConfirm: 'Confirm Pattern',
+    stepNum: 'Step {step}',
+    drawPattern: 'Tap the dots in sequence to draw your pattern',
+    selected: 'Selected',
+    nextStep: 'Next',
+    confirmCreate: 'Confirm & Create',
+    needMin3: 'Please select at least 3 dots',
+    mismatch: 'Patterns do not match, please try again',
+    pinSuccess: 'PIN Set Successfully!',
+    pinSuccessMsg: 'Your pattern',
+    pinSuccessHint: 'Remember this pattern — you\'ll need it to access settings',
+    startExplore: 'Start Exploring',
+    drawYourPattern: 'Draw your pattern',
+    confirm: 'Confirm',
+    wrongPIN: 'Wrong pattern, try again!',
+    changePINTitle: 'Change PIN',
+    verifyCurrent: 'Verify Current Pattern',
+    setNewPIN: 'Set New Pattern',
+    confirmNewPIN: 'Confirm New Pattern',
+    confirmModify: 'Confirm Change',
+    wrongPattern: 'Current pattern is incorrect, try again',
+    needMin2: 'Please select at least 2 dots',
+    pinMismatch2: 'Patterns do not match, try again',
+    pinChanged: 'PIN changed successfully!',
+    saved: 'Settings saved!',
+    // Search
+    searchVideos: 'Search Videos',
+    searchPlaceholder: 'Search videos...',
+    voiceSearch: 'Voice Search',
+    foundResults: 'Found {n} results',
+    noResults: 'No videos found',
+    searchHint: 'Type a keyword or tap 🎤 for voice search',
+    noVoiceSupport: 'Your browser does not support voice search',
+    // Favorites
+    favTitle: 'Favorites',
+    newPlaylist: '+ New',
+    unfavorite: 'Remove',
+    noFavs: 'No favorites yet! Watch videos and tap ❤️ to add!',
+    playlistName: 'Enter playlist name:',
+    // Channel
+    allVideosCount: '{n} videos',
+    noChannelVideos: 'No videos in this channel',
+    defaultChannelDesc: 'Curated educational videos for kids',
+    // Channel descriptions
+    channelSSS_desc: 'Easy English songs for young learners',
+    channelPinkfong_desc: 'Creator of Baby Shark, super cute animated songs',
+    channelWalrus_desc: 'Fun channel combining music and learning',
+    channelChuChu_desc: 'Colorful 3D animated nursery rhyme channel',
+    channelCrashCourse_desc: 'Explaining science in a fun way',
+    channelLearningStation_desc: 'Sing and dance while learning ABCs and phonics',
+    channelNetflixJr_desc: 'StoryBots explore space and science',
+    channelArtHub_desc: 'Draw along with Rob and family - art for kids',
+    channelNumberblocks_desc: 'Animated number blocks - immersive math learning',
+    channelSciShowKids_desc: 'Explaining science in kid-friendly language',
+    channelStoryline_desc: 'Hollywood stars reading classic picture books',
+    channelRedApple_desc: 'Warm and cozy children\'s book read-alouds',
+    channelKidsWant_desc: 'Answering kids\' biggest "why" questions',
+    channelSesame_desc: 'Classic Sesame Street characters help kids learn',
+    channelLaLa_desc: 'Sweet and soothing English nursery rhymes',
+    channelCocomelon_desc: 'The world\'s most popular preschool learning songs',
+    channelSSSABCs_desc: 'Simple and fun alphabet learning for kids',
+    channelLolliPop_desc: 'Vivid animated children\'s book read-alouds',
+    channelBuddySon_desc: 'Warm and lovely children\'s storytime',
+    channelMovingStories_desc: 'Exciting animated picture book read-alouds',
+    channelHappyCultivated_desc: 'Classic children\'s books for happy learning',
+    channelBedtime_desc: 'Gentle and soothing bedtime stories',
+    channelPeekaboo_desc: 'Dr. Binocs explores the world of science',
+    // Categories
+    cat_abc: 'ABC & Phonics',
+    cat_math: 'Math & Logic',
+    cat_science: 'Science',
+    cat_art: 'Art & Crafts',
+    cat_music: 'Music & Rhythm',
+    cat_story: 'Story Mode',
+    // Stories
+    storyMode: '📖 Storybooks',
+    storyModeSub: 'Listen, learn languages, grow wisdom',
+    // Badges
+    badge_first_watch: 'First Explore',
+    badge_first_watch_desc: 'Complete your first lesson',
+    badge_streak3: '3-Day Streak',
+    badge_streak3_desc: 'Learn for 3 days in a row',
+    badge_streak7: 'Weekly Champ',
+    badge_streak7_desc: 'Learn for 7 days in a row',
+    badge_star5: 'Star Collector',
+    badge_star5_desc: 'Earn 5 stars',
+    badge_star15: 'Star Shine',
+    badge_star15_desc: 'Earn 15 stars',
+    badge_video10: 'Movie Fan',
+    badge_video10_desc: 'Watch 10 videos',
+    badge_course_abc: 'ABC Master',
+    badge_course_abc_desc: 'Complete the ABC course',
+    badge_course_math: 'Math Star',
+    badge_course_math_desc: 'Complete the Numbers course',
+    badge_unlocked: 'Unlocked!',
+    // Courses
+    course_abc_fun_name: 'ABC Fun Learning',
+    course_abc_fun_desc: 'Learn letters from scratch, sing and dance ABC!',
+    course_numbers_name: 'Number Kingdom Adventure',
+    course_numbers_desc: 'Count and add — I\'m a number genius!',
+    course_phonics_name: 'Phonics Basics',
+    course_phonics_desc: 'From A to Z, build phonics foundations!',
+    // Age tags
+    age_years: 'Age {a}-{b}',
+    // Other
+    videoNotFound: 'Video not found',
+    courseNotFound: 'Course not found',
+    starPopup_text: 'Lesson Complete +1 Star!',
+    starPopup_stars: 'Earned {n} stars!',
+    starDaily: 'Sun',
+    starMon: 'Mon',
+    starTue: 'Tue',
+    starWed: 'Wed',
+    starThu: 'Thu',
+    starFri: 'Fri',
+    starSat: 'Sat',
+    abcCourse: 'ABC Alphabet Fun',
+    numberCourse: 'Number Kingdom',
+    phonicsCourse: 'Phonics Basics',
+    // About & Feedback
+    aboutUs: 'About Us',
+    feedback: 'Feedback',
+    aboutTitle: 'About HappySprout',
+    aboutMission: 'Our Mission',
+    aboutMissionText: 'Let every child learn with joy and grow through exploration. We believe the best education is not about filling a bucket, but lighting a fire of curiosity.',
+    aboutStory: 'Our Story',
+    aboutStoryText: 'HappySprout was born from the shared dream of parents and teachers who love children\'s education. We noticed that many kids passively consume screen content without real interaction. So we built a platform that combines top educational videos with interactive practice and gamified rewards — turning "passive watching" into "active learning."',
+    aboutWhy: 'Why Choose Us?',
+    aboutWhy1: 'Curated top global kids\' educational channels — safe and trustworthy',
+    aboutWhy2: 'Bilingual support (Chinese & English) — perfect for dual-language learning',
+    aboutWhy3: 'Interactive practice + quiz mode — beyond passive watching',
+    aboutWhy4: 'Parent control panel — manage screen time scientifically',
+    aboutWhy5: 'Fun badges + star rewards — ignite learning motivation',
+    aboutContact: 'Contact Us',
+    aboutContactText: 'Have suggestions or partnership ideas? We\'d love to hear from you!',
+    feedbackTitle: 'Feedback',
+    feedbackSub: 'Help us improve! Every suggestion matters.',
+    feedbackType: 'Feedback Type',
+    feedbackBug: 'Bug Report 🐛',
+    feedbackFeature: 'Feature Request 💡',
+    feedbackContent: 'Content Suggestion 📚',
+    feedbackOther: 'Other 💬',
+    feedbackMessage: 'Details',
+    feedbackMessagePlaceholder: 'Tell us what you think or what issue you encountered...',
+    feedbackEmail: 'Your Email (optional)',
+    feedbackEmailPlaceholder: 'Leave your email so we can get back to you',
+    feedbackSubmit: 'Submit Feedback',
+    feedbackThanks: 'Thank you for your feedback!',
+    feedbackThanksMsg: 'Your voice drives our improvement. We take every suggestion seriously!',
+    feedbackGoHome: 'Back to Home',
+  }
+};
+
+// ─── I18N helpers ──────────────────────────────────────────────
+function t(path, replacements) {
+  const lang = APP.lang || 'zh';
+  let text = I18N[lang]?.[path] || I18N['zh']?.[path] || path;
+  if (replacements) {
+    Object.keys(replacements).forEach(k => {
+      text = text.replace('{' + k + '}', replacements[k]);
+    });
+  }
+  return text;
+}
+
+// Also expose as global for inline template usage
+window.t = t;
+
+function toggleLang() {
+  APP.lang = APP.lang === 'zh' ? 'en' : 'zh';
+  const s = getStore();
+  s.lang = APP.lang;
+  saveStore(s);
+  document.documentElement.lang = APP.lang === 'zh' ? 'zh-CN' : 'en';
+  // Re-render current page
+  navigateTo(APP.currentPage);
+  updateNavLabels();
+}
+
+function updateNavLabels() {
+  document.querySelectorAll('.nav-item').forEach(el => {
+    const label = el.querySelector('.nav-label');
+    if (!label) return;
+    const page = el.dataset.page;
+    const keyMap = { home:'home', courses:'courses', practice:'practice', me:'achievements', parent:'settings' };
+    if (keyMap[page]) label.textContent = t(keyMap[page]);
+  });
+}
+
+// Load language from store
+(function() {
+  const s = getStore();
+  if (s.lang) { APP.lang = s.lang; }
+  else { s.lang = 'zh'; saveStore(s); }
+  document.documentElement.lang = APP.lang === 'zh' ? 'zh-CN' : 'en';
+})();
+
+// ─── PERSISTENT STORAGE (localStorage simulates backend) ───────
+function getStore() {
+  const raw = localStorage.getItem('kids_edu_store');
+  return raw ? JSON.parse(raw) : {
+    favorites: [],           // video IDs
+    completed: [],           // video IDs
+    progress: {},            // { videoId: secondsWatched }
+    playlists: { "默认": [] },
+    activePlaylist: "默认",
+    stars: 0,
+    streak: 0,               // current streak days
+    streakDates: [],         // array of date strings "YYYY-MM-DD"
+    badges: [],
+    watchCount: 0,
+    totalWatchTime: 0,       // seconds
+    avatar: "🐱",
+    soundEnabled: true,
+    parentPattern: null,     // will be set by parent on first visit
+    parentSettings: {
+      sessionLimit: 20,      // minutes
+      dailyLimit: 60,        // minutes
+      blockStart: "21:00",
+      blockEnd: "07:00",
+      blockEnabled: false,
+      hiddenVideos: [],
+    },
+    lastActiveDate: null,
+    dailyWatchTime: 0,       // seconds today
+  };
+}
+
+function saveStore(s) {
+  localStorage.setItem('kids_edu_store', JSON.stringify(s));
+}
+
+// ─── SOUND ENGINE (AudioContext short beeps) ──────────────────
+let audioCtx = null;
+function getAudioCtx() {
+  if (!audioCtx) { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+  return audioCtx;
+}
+
+function playBeep(freq = 600, duration = 0.12, type = 'sine') {
+  const s = getStore();
+  if (!s.soundEnabled) return;
+  try {
+    const ctx = getAudioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = type;
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0.15, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.start(ctx.currentTime); osc.stop(ctx.currentTime + duration);
+  } catch(e) { /* audio not available */ }
+}
+
+function playClick() { playBeep(800, 0.08); }
+function playSuccess() { playBeep(880, 0.15); }
+function playError() { playBeep(200, 0.2, 'square'); }
+function playCelebration() { playBeep(1047, 0.2); }
+
+// ─── CELEBRATION EFFECTS ──────────────────────────────────────
+function showConfetti(count = 50) {
+  const container = document.createElement('div');
+  container.className = 'confetti-container';
+  const colors = ['#FF6B6B','#FFD93D','#4ECDC4','#C77DFF','#96CEB4','#FF8C42','#45B7D1'];
+  for (let i = 0; i < count; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random() * 100 + '%';
+    piece.style.top = -(Math.random() * 20) + 'px';
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.animationDelay = Math.random() * 0.8 + 's';
+    piece.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+    piece.style.width = (8 + Math.random() * 10) + 'px';
+    piece.style.height = (8 + Math.random() * 10) + 'px';
+    container.appendChild(piece);
+  }
+  document.body.appendChild(container);
+  setTimeout(() => container.remove(), 3000);
+}
+
+function showStarPopup(text = '⭐ +1 星星！') {
+  const el = document.createElement('div');
+  el.className = 'star-popup';
+  el.textContent = text;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 1600);
+}
+
+// ─── VIDEO HELPERS ────────────────────────────────────────────
+function getVideo(id) { return VIDEO_DB.find(v => v.id === id); }
+function getVideosByAge(maxAge) {
+  if (!maxAge) return [...VIDEO_DB];
+  return VIDEO_DB.filter(v => v.ages[0] <= maxAge && v.ages[1] >= maxAge - 2);
+}
+function getVideosByCategory(cat) {
+  return VIDEO_DB.filter(v => v.category === cat);
+}
+function getYouTubeThumb(id) {
+  return `https://img.youtube.com/vi/${id}/mqdefault.jpg`;
+}
+
+// ─── STORE OPERATIONS ─────────────────────────────────────────
+function addStar(n = 1) {
+  const s = getStore(); s.stars += n;
+  // Check badge: star-5, star-15
+  if (s.stars >= 5 && !s.badges.includes('star-5')) { s.badges.push('star-5'); showBadgeEarned('star-5'); }
+  if (s.stars >= 15 && !s.badges.includes('star-15')) { s.badges.push('star-15'); showBadgeEarned('star-15'); }
+  saveStore(s);
+  return s.stars;
+}
+
+function markCompleted(videoId) {
+  const s = getStore();
+  if (!s.completed.includes(videoId)) {
+    s.completed.push(videoId);
+    s.watchCount++;
+
+    // Check badge: first-watch
+    if (s.watchCount >= 1 && !s.badges.includes('first-watch')) { s.badges.push('first-watch'); showBadgeEarned('first-watch'); }
+    if (s.watchCount >= 10 && !s.badges.includes('video-10')) { s.badges.push('video-10'); showBadgeEarned('video-10'); }
+
+    // Check course completion
+    checkCourseCompletion(videoId, s);
+  }
+  saveStore(s);
+}
+
+function checkCourseCompletion(videoId, s) {
+  // Check abc-fun course
+  const abcCourse = COURSE_DB.find(c => c.id === 'abc-fun');
+  if (abcCourse && abcCourse.videoIds.every(vid => s.completed.includes(vid)) && !s.badges.includes('course-abc')) {
+    s.badges.push('course-abc'); showBadgeEarned('course-abc');
+  }
+  // Check numbers course
+  const numCourse = COURSE_DB.find(c => c.id === 'numbers-1-10');
+  if (numCourse && numCourse.videoIds.every(vid => s.completed.includes(vid)) && !s.badges.includes('course-math')) {
+    s.badges.push('course-math'); showBadgeEarned('course-math');
+  }
+}
+
+function showBadgeEarned(badgeId) {
+  const badge = BADGES.find(b => b.id === badgeId);
+  if (!badge) return;
+  const badgeNameKey = {'first-watch':'badge_first_watch','streak-3':'badge_streak3','streak-7':'badge_streak7','star-5':'badge_star5','star-15':'badge_star15','video-10':'badge_video10','course-abc':'badge_course_abc','course-math':'badge_course_math'}[badgeId];
+  setTimeout(() => {
+    showStarPopup(`🏅 ${t(badgeNameKey)} ${t('badge_unlocked')}`);
+    playCelebration(); showConfetti(40);
+  }, 500);
+}
+
+function toggleFavorite(videoId) {
+  const s = getStore();
+  const idx = s.favorites.indexOf(videoId);
+  if (idx >= 0) { s.favorites.splice(idx, 1); } else { s.favorites.push(videoId); }
+  saveStore(s); playClick();
+  return idx < 0; // returns true if now favorited
+}
+
+function isFavorited(videoId) { return getStore().favorites.includes(videoId); }
+function isCompleted(videoId) { return getStore().completed.includes(videoId); }
+
+function updateStreak() {
+  const s = getStore();
+  const today = new Date().toISOString().slice(0, 10);
+  if (s.lastActiveDate === today) return; // already recorded today
+  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+  if (s.lastActiveDate === yesterday) { s.streak++; } else { s.streak = 1; }
+  s.lastActiveDate = today;
+  if (!s.streakDates.includes(today)) s.streakDates.push(today);
+
+  // Check streak badges
+  if (s.streak >= 3 && !s.badges.includes('streak-3')) { s.badges.push('streak-3'); showBadgeEarned('streak-3'); }
+  if (s.streak >= 7 && !s.badges.includes('streak-7')) { s.badges.push('streak-7'); showBadgeEarned('streak-7'); }
+  saveStore(s);
+}
+
+// ─── ROUTING ──────────────────────────────────────────────────
+function navigateTo(page, params = {}) {
+  APP.currentPage = page;
+  APP.ageFilter = params.ageFilter !== undefined ? params.ageFilter : APP.ageFilter;
+  APP.categoryFilter = params.categoryFilter !== undefined ? params.categoryFilter : APP.categoryFilter;
+
+  // Update bottom nav
+  document.querySelectorAll('.nav-item').forEach(el => {
+    el.classList.toggle('active', el.dataset.page === page || (page === 'watch' && el.dataset.page === 'home') || (page === 'search' && el.dataset.page === null) || (page === 'favorites' && el.dataset.page === null));
+  });
+
+  // Special highlighting: parent page highlights the parent nav tab
+  if (page === 'parent') {
+    document.querySelectorAll('.nav-item').forEach(el => {
+      el.classList.toggle('active', el.dataset.page === 'parent');
+    });
+  } else if (['watch', 'course', 'search', 'favorites', 'channel', 'about', 'feedback', 'feedbackThanks'].includes(page)) {
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  }
+
+  const main = document.getElementById('main-content');
+  main.innerHTML = '';
+
+  switch(page) {
+    case 'home': renderHome(main); break;
+    case 'watch': renderWatch(main, params.videoId); break;
+    case 'course': renderCourse(main, params.courseId); break;
+    case 'practice': renderPractice(main, params.videoId); break;
+    case 'me': renderMe(main); break;
+    case 'favorites': renderFavorites(main); break;
+    case 'search': renderSearch(main); break;
+    case 'parent': renderParent(main); break;
+    case 'courses': renderCoursesList(main); break;
+    case 'channel': renderChannel(main, params.channelName); break;
+    case 'about': renderAbout(main); break;
+    case 'feedback': renderFeedback(main); break;
+    case 'feedbackThanks': renderFeedbackThanks(main); break;
+    default: renderHome(main);
+  }
+
+  window.scrollTo(0, 0);
+}
+
+// ─── RENDER: HOME ─────────────────────────────────────────────
+function renderHome(container) {
+  const age = APP.ageFilter;
+  const cat = APP.categoryFilter;
+  let videos = getVideosByAge(age);
+  if (cat) { videos = videos.filter(function(v) { return v.category === cat; }); }
+  const s = getStore();
+  const hiddenVids = s.parentSettings.hiddenVideos || [];
+  videos = videos.filter(v => !hiddenVids.includes(v.id));
+
+  // Continue watching
+  const lastWatched = s.progress ? Object.entries(s.progress).sort((a,b) => b[1].lastWatched - a[1].lastWatched)[0] : null;
+  const continueVideo = lastWatched ? getVideo(lastWatched[0]) : null;
+  const continueProgress = lastWatched ? lastWatched[1] : null;
+
+  // Get video duration in seconds helper
+  function durationToSeconds(dur) {
+    const [m, s] = dur.split(':').map(Number);
+    return m * 60 + s;
+  }
+
+  const ageLabels = { 5: t('age3_5'), 8: t('age6_8'), 12: t('age9_12') };
+
+  container.innerHTML = `
+    <div class="page active">
+      <!-- Age filter pills -->
+      <div class="age-filters">
+        <button class="age-pill ${age === null ? 'active' : ''}" onclick="navigateTo('home',{ageFilter:null})">
+          🌍 ${t('all')}
+        </button>
+        <button class="age-pill ${age === 5 ? 'active' : ''}" onclick="navigateTo('home',{ageFilter:5})">
+          <span class="age-emoji">🧒</span> ${t('age3_5')}
+        </button>
+        <button class="age-pill ${age === 8 ? 'active' : ''}" onclick="navigateTo('home',{ageFilter:8})">
+          <span class="age-emoji">👦</span> ${t('age6_8')}
+        </button>
+        <button class="age-pill ${age === 12 ? 'active' : ''}" onclick="navigateTo('home',{ageFilter:12})">
+          <span class="age-emoji">🧑</span> ${t('age9_12')}
+        </button>
+      </div>
+
+      <!-- Banner carousel -->
+      <div class="banner-wrap" id="home-banner">
+        <div class="banner-slide banner-1 active">
+          <span>🌟 ${t('weeklyThemeOcean')}<br><small style="font-size:14px;font-weight:500">${t('weeklyThemeOceanSub')}</small></span>
+        </div>
+        <div class="banner-slide banner-2">
+          <span>🎨 ${t('weeklyThemeArt')}<br><small style="font-size:14px;font-weight:500">${t('weeklyThemeArtSub')}</small></span>
+        </div>
+        <div class="banner-slide banner-3">
+          <span>🎵 ${t('weeklyThemeMusic')}<br><small style="font-size:14px;font-weight:500">${t('weeklyThemeMusicSub')}</small></span>
+        </div>
+        <div class="banner-dots">
+          <button class="banner-dot active" onclick="goToBannerSlide(0)"></button>
+          <button class="banner-dot" onclick="goToBannerSlide(1)"></button>
+          <button class="banner-dot" onclick="goToBannerSlide(2)"></button>
+        </div>
+      </div>
+
+      <!-- Category cards -->
+      <div class="section-title"><span class="icon">📚</span> ${t('exploreSubjects')}</div>
+      <div class="category-grid">
+        ${['英语启蒙','数学思维','科学探索','艺术手工','音乐律动','故事模式'].map(c => {
+          const catKey = {'英语启蒙':'cat_abc','数学思维':'cat_math','科学探索':'cat_science','艺术手工':'cat_art','音乐律动':'cat_music','故事模式':'cat_story'}[c];
+          const label = t(catKey);
+          const svgIcons = {
+            '英语启蒙': `<svg viewBox="0 0 48 48" fill="none"><rect x="6" y="8" width="36" height="32" rx="3" stroke="#FF8C42" stroke-width="3" fill="#FFF5EC"/><text x="24" y="28" text-anchor="middle" font-size="11" font-weight="800" fill="#FF8C42" font-family="system-ui,sans-serif">ABC</text><circle cx="14" cy="14" r="2.5" fill="#FF8C42"/><circle cx="24" cy="14" r="2.5" fill="#FF8C42"/><circle cx="34" cy="14" r="2.5" fill="#FF8C42"/></svg>`,
+            '数学思维': `<svg viewBox="0 0 48 48" fill="none"><rect x="6" y="8" width="36" height="32" rx="8" stroke="#C77DFF" stroke-width="3" fill="#F8F0FF"/><line x1="19" y1="16" x2="19" y2="32" stroke="#C77DFF" stroke-width="2.5" stroke-linecap="round"/><line x1="29" y1="16" x2="29" y2="32" stroke="#C77DFF" stroke-width="2.5" stroke-linecap="round"/><line x1="12" y1="22" x2="36" y2="22" stroke="#C77DFF" stroke-width="2.5" stroke-linecap="round"/><circle cx="24" cy="22" r="4" fill="#C77DFF" stroke="white" stroke-width="2"/></svg>`,
+            '科学探索': `<svg viewBox="0 0 48 48" fill="none"><rect x="20" y="4" width="8" height="10" rx="2" fill="none" stroke="#4ECDC4" stroke-width="2.5"/><path d="M14 14 L20 14 L18 26 L14 32 L34 32 L30 26 L28 14 L34 14" fill="none" stroke="#4ECDC4" stroke-width="2.5" stroke-linejoin="round"/><line x1="14" y1="32" x2="34" y2="32" stroke="#4ECDC4" stroke-width="2.5" stroke-linecap="round"/><circle cx="24" cy="24" r="4" fill="#E0F7F6" stroke="#4ECDC4" stroke-width="1.5"/><circle cx="24" cy="18" r="1.5" fill="#4ECDC4"/></svg>`,
+            '艺术手工': `<svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="16" stroke="#FF6B9D" stroke-width="3" fill="#FFF0F5"/><circle cx="18" cy="20" r="5" fill="#FF8C42"/><circle cx="30" cy="20" r="5" fill="#C77DFF"/><circle cx="24" cy="30" r="5" fill="#4ECDC4"/><circle cx="14" cy="30" r="3" fill="#45B7D1"/><line x1="38" y1="10" x2="28" y2="20" stroke="#FF6B9D" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+            '音乐律动': `<svg viewBox="0 0 48 48" fill="none"><line x1="16" y1="32" x2="16" y2="10" stroke="#45B7D1" stroke-width="3" stroke-linecap="round"/><line x1="32" y1="28" x2="32" y2="14" stroke="#45B7D1" stroke-width="3" stroke-linecap="round"/><ellipse cx="16" cy="34" rx="6" ry="4" fill="#45B7D1"/><ellipse cx="32" cy="30" rx="6" ry="4" fill="#45B7D1"/><circle cx="23" cy="16" r="2" fill="#FF6B9D"/><circle cx="29" cy="12" r="1.8" fill="#FF6B9D"/></svg>`,
+            '故事模式': `<svg viewBox="0 0 48 48" fill="none"><rect x="6" y="6" width="26" height="36" rx="3" stroke="#FFB347" stroke-width="2.5" fill="#FFF8EC"/><line x1="12" y1="14" x2="26" y2="14" stroke="#FFB347" stroke-width="1.5" stroke-linecap="round"/><line x1="12" y1="20" x2="26" y2="20" stroke="#FFB347" stroke-width="1.5" stroke-linecap="round"/><line x1="12" y1="26" x2="22" y2="26" stroke="#FFB347" stroke-width="1.5" stroke-linecap="round"/><rect x="32" y="6" width="10" height="36" rx="2" stroke="#FFB347" stroke-width="2" fill="#FFF8EC"/><polygon points="34,12 34,36 40,30 40,18" fill="#FFB347" opacity="0.2" stroke="none"/><circle cx="15.5" cy="34" r="1" fill="#FFB347"/><circle cx="19.5" cy="34" r="1" fill="#FFB347"/><circle cx="23.5" cy="34" r="1" fill="#FFB347"/><circle cx="8" cy="8" r="2" fill="#FFD700" opacity="0.6"/></svg>`
+          };
+          const colors = { '英语启蒙':'#FF8C42', '数学思维':'#C77DFF', '科学探索':'#4ECDC4', '艺术手工':'#FF6B9D', '音乐律动':'#45B7D1', '故事模式':'#FFB347' };
+          return `
+            <button class="cat-card ${APP.categoryFilter === c ? 'selected' : ''}" onclick='navigateTo("home",{categoryFilter:APP.categoryFilter==="${c}"?null:"${c}"})'>
+              <span class="cat-icon">${svgIcons[c]}</span>
+              <span class="cat-label">${label}</span>
+            </button>`;
+        }).join('')}
+      </div>
+
+      <!-- Featured Dance Hits (律动金曲) -->
+      ${(() => {
+        const danceIds = ['hq3yfQnllfQ','XqZsoesa55w','tbbKjDjMDok','ZhODBFQ2-bQ','l4WNrvVjiTw'];
+        const danceVids = danceIds.map(id => getVideo(id)).filter(Boolean);
+        return danceVids.length ? `
+        <div class="section-title" style="margin-top:4px"><span class="icon">🎵</span> ${t('featuredDanceHits')} <small style="font-weight:400;color:#999;font-size:13px">${t('featuredDanceHitsSub')}</small></div>
+        <div class="featured-dance-row">
+          ${danceVids.map(v => `
+          <div class="featured-dance-card" onclick="navigateTo('watch',{videoId:'${v.id}'})">
+            <div class="featured-dance-thumb">
+              <img src="${getYouTubeThumb(v.id)}" alt="${v.title}" onerror="this.style.display='none'">
+              <div class="play-overlay"><div class="play-circle">▶</div></div>
+              <div class="featured-dance-duration">${v.duration}</div>
+            </div>
+            <div class="featured-dance-info">
+              <h4>${v.title}</h4>
+              <div class="chan">${v.channel}</div>
+            </div>
+          </div>
+          `).join('')}
+        </div>
+        ` : '';
+      })()}
+
+      <!-- Featured Stories (绘本故事) -->
+      ${(() => {
+        const storyIds = ['-GSnmRZlgc4','f13aaTam3Lg','nG2a4cBEkMM','TOnuVm4OrCc','uU1sX_Yg3JU','ALmNPxNehYE','izfUsHZw9bs','c8RBVbvwMd4','BgKVBhO6GkU','yt_GmmOx06Y'];
+        const storyVids = storyIds.map(id => getVideo(id)).filter(Boolean);
+        return storyVids.length ? `
+        <div class="section-title" style="margin-top:4px" id="story-section"><span class="icon">📖</span> ${t('storyMode')} <small style="font-weight:400;color:#999;font-size:13px">${t('storyModeSub')}</small></div>
+        <div class="featured-story-row">
+          ${storyVids.map(v => `
+          <div class="featured-story-card" onclick="navigateTo('watch',{videoId:'${v.id}'})">
+            <div class="featured-story-thumb">
+              <img src="${getYouTubeThumb(v.id)}" alt="${v.title}" onerror="this.style.display='none'">
+              <div class="play-overlay"><div class="play-circle">▶</div></div>
+              <div class="featured-story-duration">${v.duration}</div>
+            </div>
+            <div class="featured-story-info">
+              <h4>${v.title}</h4>
+              <div class="chan">${v.channel}</div>
+            </div>
+          </div>
+          `).join('')}
+        </div>
+        ` : '';
+      })()}
+
+      <!-- Continue watching -->
+      ${continueVideo && !isCompleted(continueVideo.id) ? `
+      <div class="section-title"><span class="icon">▶️</span> ${t('continueWatching')}</div>
+      <div class="video-card" onclick="navigateTo('watch',{videoId:'${continueVideo.id}'})">
+        <div class="video-thumb">
+          <img src="${getYouTubeThumb(continueVideo.id)}" alt="${continueVideo.title}" onerror="this.style.display='none'">
+          <div class="play-btn">▶</div>
+          <div class="video-duration">${continueVideo.duration}</div>
+        </div>
+        <div class="video-info">
+          <h3>${continueVideo.title}</h3>
+          <div class="channel">${continueVideo.channel}</div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar-fill" style="width:${continueProgress ? Math.min(100, Math.round(continueProgress.watched / durationToSeconds(continueVideo.duration) * 100)) : 0}%"></div>
+          </div>
+        </div>
+      </div>
+      ` : ''}
+
+      <!-- All Videos: Grouped by Category -->
+      ${(function buildAllVideosHtml() {
+        // Build one video card HTML
+        function card(v) {
+          var h = '<div class="video-card" onclick="navigateTo(\'watch\',{videoId:\'' + v.id + '\'})">';
+          h += '<div class="video-thumb">';
+          h += '<img src="' + getYouTubeThumb(v.id) + '" alt="' + v.title.replace(/'/g,'&#39;') + '" onerror="this.style.display=\'none\'">';
+          h += '<div class="play-btn">▶</div>';
+          h += '<div class="video-age-tag">' + v.ages[0] + '-' + v.ages[1] + (APP.lang === 'zh' ? '岁' : 'y') + '</div>';
+          h += '<div class="video-duration">' + v.duration + '</div>';
+          h += '</div>';
+          h += '<div class="video-info"><h3>' + v.title + '</h3><div class="channel">' + v.channel + '</div>';
+          if (isCompleted(v.id)) h += '<span style="color:#27ae60;font-size:12px;font-weight:700">✅ ' + t('completedLabel') + '</span>';
+          h += '</div></div>';
+          return h;
+        }
+        // Build one category group with big colored banner
+        function group(catName, meta) {
+          var gv = videos.filter(function(v) { return v.category === catName; });
+          if (gv.length === 0) return '';
+          var h = '<div class="cat-group-banner">';
+          h += '<div class="cat-group-bar" style="background:' + meta.color + '"></div>';
+          h += '<span class="cat-group-emoji">' + meta.emoji + '</span>';
+          h += '<div class="cat-group-text">';
+          h += '<div class="cat-group-name">' + t(meta.catKey) + '</div>';
+          h += '<div class="cat-group-en">' + meta.en + '</div>';
+          h += '</div>';
+          h += '<span class="cat-group-count">' + gv.length + ' ' + (APP.lang === 'zh' ? '个视频' : 'videos') + '</span>';
+          h += '</div><div class="video-grid">';
+          gv.forEach(function(v) { h += card(v); });
+          h += '</div>';
+          return h;
+        }
+        if (cat) {
+          var cm = {
+            '英语启蒙': { emoji: '🔤', en: 'English ABC', color: '#FF8C42', catKey: 'cat_abc' },
+            '数学思维': { emoji: '🔢', en: 'Math', color: '#C77DFF', catKey: 'cat_math' },
+            '科学探索': { emoji: '🔬', en: 'Science', color: '#4ECDC4', catKey: 'cat_science' },
+            '音乐律动': { emoji: '🎵', en: 'Music & Rhythm', color: '#45B7D1', catKey: 'cat_music' },
+            '艺术手工': { emoji: '🎨', en: 'Art & Craft', color: '#FF6B9D', catKey: 'cat_art' },
+            '故事模式': { emoji: '📖', en: 'Story Mode', color: '#FFB347', catKey: 'cat_story' }
+          }[cat];
+          return group(cat, cm) || '<p style="text-align:center;color:#999;padding:40px">📭 ' + t('noVideoFound') + '</p>';
+        }
+        var catOrder = ['英语启蒙','数学思维','科学探索','音乐律动','艺术手工','故事模式'];
+        var catMeta = {
+          '英语启蒙': { emoji: '🔤', en: 'English ABC', color: '#FF8C42', catKey: 'cat_abc' },
+          '数学思维': { emoji: '🔢', en: 'Math', color: '#C77DFF', catKey: 'cat_math' },
+          '科学探索': { emoji: '🔬', en: 'Science', color: '#4ECDC4', catKey: 'cat_science' },
+          '音乐律动': { emoji: '🎵', en: 'Music & Rhythm', color: '#45B7D1', catKey: 'cat_music' },
+          '艺术手工': { emoji: '🎨', en: 'Art & Craft', color: '#FF6B9D', catKey: 'cat_art' },
+          '故事模式': { emoji: '📖', en: 'Story Mode', color: '#FFB347', catKey: 'cat_story' }
+        };
+        return catOrder.map(function(c) { return group(c, catMeta[c]); }).join('');
+      })()}
+      ${videos.length === 0 ? '<p style="text-align:center;color:#999;padding:40px">📭 ' + t('noVideoFound') + '</p>' : ''}
+    </div>
+  `;
+
+  // Start banner autoplay
+  startBannerCarousel();
+}
+
+function showMoreVideos() {
+  const more = document.getElementById('more-vids');
+  const showBtn = document.getElementById('show-more-btn');
+  const hideBtn = document.getElementById('show-less-btn');
+  if (more) more.style.display = 'grid';
+  if (showBtn) showBtn.style.display = 'none';
+  if (hideBtn) hideBtn.style.display = 'block';
+}
+
+function showLessVideos() {
+  const more = document.getElementById('more-vids');
+  const showBtn = document.getElementById('show-more-btn');
+  const hideBtn = document.getElementById('show-less-btn');
+  if (more) more.style.display = 'none';
+  if (showBtn) showBtn.style.display = 'block';
+  if (hideBtn) hideBtn.style.display = 'none';
+  // Scroll back to the video section
+  document.querySelector('.section-title')?.scrollIntoView({ behavior: 'smooth' });
+}
+
+let bannerTimer = null;
+let bannerIdx = 0;
+function startBannerCarousel() {
+  if (bannerTimer) clearInterval(bannerTimer);
+  bannerIdx = 0;
+  bannerTimer = setInterval(() => {
+    bannerIdx = (bannerIdx + 1) % 3;
+    goToBannerSlide(bannerIdx);
+  }, 4000);
+}
+
+function goToBannerSlide(idx) {
+  bannerIdx = idx;
+  const slides = document.querySelectorAll('#home-banner .banner-slide');
+  const dots = document.querySelectorAll('#home-banner .banner-dot');
+  slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+  dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+}
+
+// ─── RENDER: WATCH (Video Player) ─────────────────────────────
+function renderWatch(container, videoId) {
+  const video = getVideo(videoId);
+  if (!video) { container.innerHTML = '<p style="padding:40px;text-align:center">' + t('videoNotFound') + '</p>'; return; }
+
+  updateStreak();
+
+  const s = getStore();
+  const favorited = isFavorited(videoId);
+  const completed = isCompleted(videoId);
+
+  container.innerHTML = `
+    <div class="page active">
+      <button style="padding:8px 16px;border:none;background:#f0e8d8;border-radius:20px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:12px" onclick="navigateTo('home')">← ${t('back')}</button>
+
+      <!-- Video player -->
+      <div class="player-wrap" id="player-container">
+        <iframe id="youtube-player"
+          src="https://www.youtube-nocookie.com/embed/${video.id}?rel=0&modestbranding=1&cc_load_policy=1&enablejsapi=1${window.location.protocol === 'https:' || window.location.protocol === 'http:' ? '&origin=' + encodeURIComponent(window.location.origin) : ''}"
+          allow="autoplay; encrypted-media; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+        <!-- Drawing overlay -->
+        <div class="drawing-overlay" id="drawing-overlay">
+          <canvas id="drawing-canvas"></canvas>
+          <button style="position:absolute;top:8px;right:8px;padding:6px 14px;border-radius:20px;border:none;background:var(--orange);color:white;font-weight:700;cursor:pointer;font-size:13px" onclick="toggleDrawing()">✕ ${t('closeDrawing')}</button>
+          <button style="position:absolute;top:8px;right:100px;padding:6px 14px;border-radius:20px;border:none;background:white;font-weight:700;cursor:pointer;font-size:13px" onclick="clearDrawing()">🗑 ${t('clear')}</button>
+        </div>
+      </div>
+
+      <!-- Timer -->
+      <div class="timer-indicator">
+        ⏱️ ${t('sessionTimer')}：<span id="session-timer">00:00</span> / ${s.parentSettings.sessionLimit}${t('minutes')}
+        <span style="margin-left:auto">${t('todayLabel')}：<span id="daily-timer">${formatTime(s.dailyWatchTime)}</span> / ${s.parentSettings.dailyLimit}${t('minutes')}</span>
+      </div>
+
+      <!-- Actions -->
+      <div class="video-actions">
+        <button class="action-btn ${favorited ? 'favorited' : ''}" id="fav-btn" onclick="handleFavorite('${videoId}')">
+          ${favorited ? '❤️ ' + t('favorited') : '🤍 ' + t('favorite')}
+        </button>
+        <button class="action-btn ${completed ? 'completed' : ''}" id="complete-btn" onclick="handleComplete('${videoId}')">
+          ${completed ? '✅ ' + t('completedDone') : '⭐ ' + t('completeCheckin')}
+        </button>
+        <button class="action-btn" onclick="toggleDrawing()">🎨 ${t('drawingBoard')}</button>
+        ${video.courseId ? `<button class="action-btn" onclick="navigateTo('course',{courseId:'${video.courseId}'})">📖 ${t('viewCourse')}</button>` : ''}
+        <button class="action-btn" onclick="navigateTo('practice',{videoId:'${videoId}'})">🎮 ${t('goPractice')}</button>
+      </div>
+
+      <!-- Video info -->
+      <div style="background:white;padding:16px;border-radius:var(--radius-lg);box-shadow:var(--shadow)">
+        <h2 style="font-size:18px;margin-bottom:6px">${video.title}</h2>
+        <p style="color:var(--text-light);font-size:13px;margin-bottom:4px">📺 ${video.channel} · ⏱ ${video.duration}</p>
+        <p style="color:var(--text-light);font-size:13px">🏷 ${video.category} · 👶 ${video.ages[0]}-${video.ages[1]}岁</p>
+      </div>
+    </div>
+  `;
+
+  // Initialize session timer
+  startSessionTimer(videoId);
+  // Setup YouTube message listener
+  setupYouTubeListener(videoId);
+}
+
+let sessionSeconds = 0;
+let dailySeconds = 0;
+let sessionPaused = false;
+
+function formatTime(secs) {
+  const m = Math.floor(secs / 60);
+  const s = secs % 60;
+  return String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+}
+
+function startSessionTimer(videoId) {
+  const s = getStore();
+  sessionSeconds = 0;
+  dailySeconds = s.dailyWatchTime || 0;
+  sessionPaused = false;
+  APP.parentOverrideActive = false;
+
+  if (APP.timerInterval) clearInterval(APP.timerInterval);
+  APP.timerInterval = setInterval(() => {
+    if (sessionPaused) return;
+
+    // Check blocked hours (skip if parent overrode)
+    const now = new Date();
+    const hhmm = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+    if (s.parentSettings.blockEnabled) {
+      const blockStart = s.parentSettings.blockStart;
+      const blockEnd = s.parentSettings.blockEnd;
+      const isBlocked = isInBlockedTime(hhmm, blockStart, blockEnd);
+      if (isBlocked && !APP.parentOverrideActive) {
+        showLockScreen('🌙 ' + t('restTime'), t('restTimeMsg', {blockStart: blockStart, blockEnd: blockEnd}), 'blocked');
+        return;
+      }
+    }
+
+    sessionSeconds++;
+    dailySeconds++;
+    s.dailyWatchTime = dailySeconds;
+
+    // Update track progress for 85% auto-complete
+    const video = getVideo(videoId);
+    if (video) {
+      const [m, sec] = video.duration.split(':').map(Number);
+      const totalSec = m * 60 + sec;
+      if (!s.progress) s.progress = {};
+      s.progress[videoId] = {
+        watched: sessionSeconds,
+        total: totalSec,
+        lastWatched: Date.now()
+      };
+
+      // 85% auto-complete
+      if (sessionSeconds >= totalSec * 0.85 && !s.completed.includes(videoId)) {
+        handleComplete(videoId);
+      }
+    }
+
+    saveStore(s);
+
+    // Update display
+    const sessionEl = document.getElementById('session-timer');
+    const dailyEl = document.getElementById('daily-timer');
+    if (sessionEl) sessionEl.textContent = formatTime(sessionSeconds);
+    if (dailyEl) dailyEl.textContent = formatTime(dailySeconds);
+
+    // Session limit reached
+    if (sessionSeconds >= s.parentSettings.sessionLimit * 60 && !APP.parentOverrideActive) {
+      showLockScreen('⏰ ' + t('takeBreak'), t('takeBreakMsg', {limit: s.parentSettings.sessionLimit}), 'session');
+    }
+
+    // Daily limit reached
+    if (dailySeconds >= s.parentSettings.dailyLimit * 60 && !APP.parentOverrideActive) {
+      showLockScreen('📅 ' + t('dailyLimitReached'), t('dailyLimitMsg', {limit: s.parentSettings.dailyLimit}), 'daily');
+    }
+  }, 1000);
+}
+
+function isInBlockedTime(current, start, end) {
+  if (start <= end) return current >= start && current < end;
+  return current >= start || current < end; // overnight range e.g. 21:00-07:00
+}
+
+function showLockScreen(title, message, lockType = 'session') {
+  // Pause the timer
+  sessionPaused = true;
+
+  // For blocked time: no math quiz, just the message + parent override
+  const showQuiz = lockType !== 'blocked';
+
+  const overlay = document.createElement('div');
+  overlay.className = 'quiz-overlay';
+  overlay.id = 'lock-overlay';
+  overlay.innerHTML = `
+    <div class="quiz-popup" style="max-width:420px">
+      <h2>${title}</h2>
+      <p style="margin-bottom:16px;color:var(--text-light)">${message}</p>
+      ${showQuiz ? '<div id="lock-question"></div>' : '<div style="font-size:48px;margin:12px 0">🌙</div>'}
+      <div style="margin-top:${showQuiz ? '16' : '8'}px;border-top:1px dashed #ddd;padding-top:12px">
+        <button style="padding:10px 24px;border-radius:50px;border:2px solid var(--purple);background:white;color:var(--purple);font-size:14px;font-weight:700;cursor:pointer" onclick="showParentOverrideOnLock(this.closest('.quiz-overlay'))">
+          👨‍👩‍👧 ${t('parentUnlock')}
+        </button>
+        ${!showQuiz ? '<button style="padding:10px 24px;border-radius:50px;border:none;background:#f0e8d8;font-size:14px;font-weight:700;cursor:pointer;margin-left:8px" onclick="this.closest(\'.quiz-overlay\').remove();navigateTo(\'home\')">' + t('backHome') + '</button>' : ''}
+      </div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  if (showQuiz) {
+    // Generate a simple math question for kids
+    const a = Math.floor(Math.random() * 10) + 1;
+    const b = Math.floor(Math.random() * 10) + 1;
+    const answer = a + b;
+    const wrongAnswers = [answer + 1, answer - 1, answer + 2].filter(x => x > 0 && x !== answer).slice(0, 2);
+    const options = [answer, ...wrongAnswers].sort(() => Math.random() - 0.5);
+
+    const qDiv = overlay.querySelector('#lock-question');
+    qDiv.innerHTML = `
+      <p style="font-size:15px;color:var(--text-light);margin-bottom:8px">${t('kidQuiz')}</p>
+      <p style="font-size:24px;font-weight:800;margin:12px 0">${a} + ${b} = ?</p>
+      ${options.map(o => `<button class="quiz-option" onclick="handleLockAnswer(${o},${answer},this)">${o}</button>`).join('')}
+    `;
+  }
+}
+
+// ─── PARENT OVERRIDE ON LOCK SCREEN ───────────────────────────
+function showParentOverrideOnLock(overlay) {
+  // Replace lock popup content with pattern input
+  const popup = overlay.querySelector('.quiz-popup');
+  popup.innerHTML = `
+    <h2>🔒 ${t('parentVerify')}</h2>
+    <p style="color:var(--text-light);margin-bottom:12px">${t('enterPattern')}</p>
+    <div class="pattern-grid" id="lock-pattern-grid" style="margin:12px auto">
+      ${[1,2,3,4,5,6,7,8,9].map(i =>
+        `<button class="pattern-dot" data-idx="${i}" onclick="lockPatternClick(${i})">${i}</button>`
+      ).join('')}
+    </div>
+    <div style="margin:8px 0;font-size:13px;color:var(--text-light)">
+      ${t('selected')}：<span id="lock-pattern-display"></span>
+    </div>
+    <button style="padding:10px 28px;border-radius:50px;border:none;background:var(--purple);color:white;font-size:15px;font-weight:700;cursor:pointer" onclick="verifyLockPattern(this.closest('.quiz-overlay'))">${t('confirmUnlock')}</button>
+    <button style="padding:10px 28px;border-radius:50px;border:2px solid #f0e8d8;background:white;font-size:15px;font-weight:700;cursor:pointer;margin-left:8px" onclick="cancelLockOverride(this.closest('.quiz-overlay'))">${t('cancel')}</button>
+  `;
+  APP.lockPatternInput = [];
+  updateLockPatternDisplay();
+  playClick();
+}
+
+function lockPatternClick(idx) {
+  if (!APP.lockPatternInput) APP.lockPatternInput = [];
+  APP.lockPatternInput.push(idx);
+  const dots = document.querySelectorAll('#lock-pattern-grid .pattern-dot');
+  dots.forEach(d => { if (d.dataset.idx == idx) d.classList.add('selected'); });
+  updateLockPatternDisplay();
+  playClick();
+}
+
+function updateLockPatternDisplay() {
+  const display = document.getElementById('lock-pattern-display');
+  if (display) display.textContent = (APP.lockPatternInput || []).join(' → ');
+}
+
+function verifyLockPattern(overlay) {
+  const input = (APP.lockPatternInput || []).join(',');
+  const correct = (APP.correctPattern || []).join(',');
+  if (input === correct) {
+    playSuccess(); showConfetti(20);
+    APP.parentOverrideActive = true; // prevent immediate re-lock
+    sessionPaused = false;
+    overlay.remove();
+  } else {
+    playError();
+    // Reset pattern
+    APP.lockPatternInput = [];
+    document.querySelectorAll('#lock-pattern-grid .pattern-dot').forEach(d => d.classList.remove('selected'));
+    updateLockPatternDisplay();
+    // Shake animation hint
+    const popup = overlay.querySelector('.quiz-popup');
+    if (popup) {
+      popup.style.animation = 'none';
+      popup.offsetHeight; // trigger reflow
+      popup.style.animation = 'shake 0.4s ease';
+    }
+  }
+}
+
+function cancelLockOverride(overlay) {
+  // Re-show the original lock screen by reloading the current page
+  overlay.remove();
+  sessionPaused = true;
+  navigateTo('home');
+}
+
+function handleLockAnswer(chosen, correct, btn) {
+  if (chosen === correct) {
+    btn.classList.add('correct');
+    playSuccess();
+    showConfetti(20);
+    setTimeout(() => {
+      document.querySelector('.quiz-overlay')?.remove();
+      sessionPaused = false;
+    }, 800);
+  } else {
+    btn.classList.add('wrong');
+    playError();
+    btn.disabled = true;
+  }
+}
+
+function handleFavorite(videoId) {
+  const nowFav = toggleFavorite(videoId);
+  const btn = document.getElementById('fav-btn');
+  if (btn) {
+    btn.className = 'action-btn ' + (nowFav ? 'favorited' : '');
+    btn.innerHTML = nowFav ? '❤️ ' + t('favorited') : '🤍 ' + t('favorite');
+  }
+}
+
+function handleComplete(videoId) {
+  markCompleted(videoId);
+  addStar(1);
+  playCelebration();
+  showConfetti(60);
+  showStarPopup('🌟 ' + t('starPopup_text'));
+
+  const btn = document.getElementById('complete-btn');
+  if (btn) {
+    btn.className = 'action-btn completed';
+    btn.innerHTML = '✅ ' + t('completedDone');
+  }
+  // Update streak
+  updateStreak();
+}
+
+// ─── YOUTUBE PLAYER MESSAGE LISTENER ──────────────────────────
+function setupYouTubeListener(videoId) {
+  // Listen for YouTube player state changes via postMessage
+  window.addEventListener('message', function onYTMessage(e) {
+    if (!e.data || typeof e.data !== 'string') return;
+    let data;
+    try { data = JSON.parse(e.data); } catch(err) { return; }
+    if (data.event === 'onStateChange' && data.info === 2) {
+      // Video paused - show quiz
+      showPauseQuiz(videoId);
+    }
+  });
+}
+
+let quizShownForVideo = {};
+function showPauseQuiz(videoId) {
+  if (quizShownForVideo[videoId]) return;
+  quizShownForVideo[videoId] = true;
+
+  setTimeout(() => {
+    const questions = [
+      { q: t('quizQ1'), opts: t('quizQ1_opts'), ans: 0 },
+      { q: t('quizQ2'), opts: t('quizQ2_opts'), ans: 1 },
+      { q: t('quizQ3'), opts: t('quizQ3_opts'), ans: 0 }
+    ];
+    const q = questions[Math.floor(Math.random() * questions.length)];
+
+    const overlay = document.createElement('div');
+    overlay.className = 'quiz-overlay';
+    overlay.innerHTML = `
+      <div class="quiz-popup">
+        <h2>🤔 ${t('quizTitle')}</h2>
+        <p style="margin-bottom:12px;font-weight:700">${q.q}</p>
+        ${q.opts.map((o,i) => `<button class="quiz-option" onclick="handleQuizAnswer(${i},${q.ans},this.closest('.quiz-overlay'))">${o}</button>`).join('')}
+      </div>
+    `;
+    document.body.appendChild(overlay);
+  }, 1500);
+}
+
+function handleQuizAnswer(chosen, correct, overlay) {
+  if (chosen === correct) {
+    playSuccess(); showConfetti(15);
+  } else {
+    playError();
+  }
+  setTimeout(() => overlay?.remove(), 800);
+}
+
+// ─── DRAWING OVERLAY ──────────────────────────────────────────
+function toggleDrawing() {
+  const overlay = document.getElementById('drawing-overlay');
+  if (!overlay) return;
+  const active = overlay.classList.toggle('active');
+  if (active) {
+    const canvas = document.getElementById('drawing-canvas');
+    const rect = canvas.parentElement.getBoundingClientRect();
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+    setupDrawingCanvas(canvas);
+  }
+}
+
+function setupDrawingCanvas(canvas) {
+  const ctx = canvas.getContext('2d');
+  let drawing = false;
+  canvas.onmousedown = e => { drawing = true; ctx.beginPath(); ctx.moveTo(e.offsetX, e.offsetY); };
+  canvas.onmousemove = e => { if (!drawing) return; ctx.lineWidth = 3; ctx.strokeStyle = '#FF8C42'; ctx.lineCap = 'round'; ctx.lineTo(e.offsetX, e.offsetY); ctx.stroke(); };
+  canvas.onmouseup = () => { drawing = false; };
+  canvas.onmouseleave = () => { drawing = false; };
+  // Touch support
+  canvas.ontouchstart = e => { e.preventDefault(); drawing = true; const t = e.touches[0]; ctx.beginPath(); ctx.moveTo(t.clientX - canvas.getBoundingClientRect().left, t.clientY - canvas.getBoundingClientRect().top); };
+  canvas.ontouchmove = e => { e.preventDefault(); if (!drawing) return; const t = e.touches[0]; ctx.lineWidth = 3; ctx.strokeStyle = '#FF8C42'; ctx.lineCap = 'round'; ctx.lineTo(t.clientX - canvas.getBoundingClientRect().left, t.clientY - canvas.getBoundingClientRect().top); ctx.stroke(); };
+  canvas.ontouchend = () => { drawing = false; };
+}
+
+function clearDrawing() {
+  const canvas = document.getElementById('drawing-canvas');
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+}
+
+// ─── RENDER: COURSES LIST ─────────────────────────────────────
+function renderCoursesList(container) {
+  const s = getStore();
+  container.innerHTML = `
+    <div class="page active">
+      <div class="section-title"><span class="icon">📖</span> ${t('themedCourses')}</div>
+      <p style="color:var(--text-light);margin-bottom:16px">${t('courseUnlockHint')}</p>
+      ${COURSE_DB.map(c => {
+        const completedCount = c.videoIds.filter(vid => s.completed.includes(vid)).length;
+        const pct = Math.round(completedCount / c.videoIds.length * 100);
+        const courseNameKey = {'abc-fun':'course_abc_fun_name','numbers-1-10':'course_numbers_name','phonics-basics':'course_phonics_name'}[c.id];
+        const courseDescKey = {'abc-fun':'course_abc_fun_desc','numbers-1-10':'course_numbers_desc','phonics-basics':'course_phonics_desc'}[c.id];
+        return `
+        <div style="background:white;border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow);margin-bottom:14px;cursor:pointer" onclick="navigateTo('course',{courseId:'${c.id}'})">
+          <div style="display:flex;align-items:center;gap:14px">
+            <span style="font-size:44px">${c.icon}</span>
+            <div style="flex:1">
+              <h3 style="font-size:18px">${t(courseNameKey)}</h3>
+              <p style="font-size:13px;color:var(--text-light)">${t(courseDescKey)}</p>
+              <div style="margin-top:8px">
+                <div class="progress-bar-wrap" style="height:8px">
+                  <div class="progress-bar-fill" style="width:${pct}%;background:${c.color}"></div>
+                </div>
+                <span style="font-size:11px;color:var(--text-light)">${completedCount}/${c.videoIds.length} ${t('lessonsCompleted')}</span>
+              </div>
+            </div>
+          </div>
+        </div>`;
+      }).join('')}
+      ${COURSE_DB.length === 0 ? '<p style="text-align:center;color:#999;padding:40px">📭 ' + t('noCourses') + '</p>' : ''}
+    </div>
+  `;
+}
+
+// ─── RENDER: CHANNEL ──────────────────────────────────────────
+function renderChannel(container, channelName) {
+  const s = getStore();
+  const hiddenVids = s.parentSettings.hiddenVideos || [];
+  const videos = VIDEO_DB.filter(v => v.channel === channelName && !hiddenVids.includes(v.id));
+
+  const chanLogos = {
+    'Super Simple Songs': { bg: 'linear-gradient(135deg, #FF8C42, #FFB347)', icon: '🎵', descKey: 'channelSSS_desc' },
+    'Pinkfong': { bg: 'linear-gradient(135deg, #FF6B9D, #FF8FB3)', icon: '🦈', descKey: 'channelPinkfong_desc' },
+    'The Singing Walrus': { bg: 'linear-gradient(135deg, #45B7D1, #7EC8E3)', icon: '🦭', descKey: 'channelWalrus_desc' },
+    'ChuChu TV': { bg: 'linear-gradient(135deg, #F4A261, #F8C291)', icon: '🚂', descKey: 'channelChuChu_desc' },
+    'Crash Course Kids': { bg: 'linear-gradient(135deg, #4ECDC4, #7EDDD6)', icon: '🔬', descKey: 'channelCrashCourse_desc' },
+    'The Learning Station': { bg: 'linear-gradient(135deg, #7B68EE, #9B8FFF)', icon: '📖', descKey: 'channelLearningStation_desc' },
+    'Netflix Jr.': { bg: 'linear-gradient(135deg, #E50914, #FF4444)', icon: '🎬', descKey: 'channelNetflixJr_desc' },
+    'Art for Kids Hub': { bg: 'linear-gradient(135deg, #FF6B9D, #FF8FB3)', icon: '🎨', descKey: 'channelArtHub_desc' },
+    'Numberblocks': { bg: 'linear-gradient(135deg, #C77DFF, #A855F7)', icon: '🧮', descKey: 'channelNumberblocks_desc' },
+    'SciShow Kids': { bg: 'linear-gradient(135deg, #4ECDC4, #7EDDD6)', icon: '🔬', descKey: 'channelSciShowKids_desc' },
+    'StorylineOnline': { bg: 'linear-gradient(135deg, #FFB347, #FFD700)', icon: '📖', descKey: 'channelStoryline_desc' },
+    'Red Apple Reading': { bg: 'linear-gradient(135deg, #E74C3C, #FF6B6B)', icon: '📕', descKey: 'channelRedApple_desc' },
+    'Kids Want to Know': { bg: 'linear-gradient(135deg, #7B68EE, #9B8FFF)', icon: '🤔', descKey: 'channelKidsWant_desc' },
+    'Sesame Street': { bg: 'linear-gradient(135deg, #8BC34A, #AED581)', icon: '🐤', descKey: 'channelSesame_desc' },
+    'Little LaLa\'s Nursery Rhymes': { bg: 'linear-gradient(135deg, #FF6B9D, #FFB6C1)', icon: '🦆', descKey: 'channelLaLa_desc' },
+    'CoComelon': { bg: 'linear-gradient(135deg, #4CAF50, #81C784)', icon: '🍉', descKey: 'channelCocomelon_desc' },
+    'Super Simple ABCs': { bg: 'linear-gradient(135deg, #FF9800, #FFB74D)', icon: '🔤', descKey: 'channelSSSABCs_desc' },
+    'LolliPop Animated Book': { bg: 'linear-gradient(135deg, #E91E63, #F06292)', icon: '📕', descKey: 'channelLolliPop_desc' },
+    'Buddy Son Storytime': { bg: 'linear-gradient(135deg, #2196F3, #64B5F6)', icon: '📘', descKey: 'channelBuddySon_desc' },
+    'MovingStories': { bg: 'linear-gradient(135deg, #9C27B0, #BA68C8)', icon: '📗', descKey: 'channelMovingStories_desc' },
+    'Happy Cultivated': { bg: 'linear-gradient(135deg, #FF5722, #FF8A65)', icon: '📙', descKey: 'channelHappyCultivated_desc' },
+    'My Bedtime Stories': { bg: 'linear-gradient(135deg, #607D8B, #90A4AE)', icon: '🌙', descKey: 'channelBedtime_desc' },
+    'Peekaboo Kidz': { bg: 'linear-gradient(135deg, #00BCD4, #4DD0E1)', icon: '🔍', descKey: 'channelPeekaboo_desc' }
+  };
+  const logo = chanLogos[channelName] || { bg: 'linear-gradient(135deg, #667eea, #764ba2)', icon: '📺', descKey: 'defaultChannelDesc' };
+
+  container.innerHTML = `
+    <div class="page active">
+      <button style="padding:8px 16px;border:none;background:#f0e8d8;border-radius:20px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:12px" onclick="navigateTo('home')">← ${t('backHome')}</button>
+
+      <div class="channel-hero" style="--channel-hero-bg:${logo.bg}">
+        <span style="font-size:48px;display:block;margin-bottom:8px">${logo.icon}</span>
+        <h2>${channelName}</h2>
+        <p>${t(logo.descKey)} · ${t('allVideosCount', {n: videos.length})}</p>
+      </div>
+
+      <div class="video-grid">
+        ${videos.map(v => `
+        <div class="video-card" onclick="navigateTo('watch',{videoId:'${v.id}'})">
+          <div class="video-thumb">
+            <img src="${getYouTubeThumb(v.id)}" alt="${v.title}" onerror="this.style.display='none'">
+            <div class="play-btn">▶</div>
+            <div class="video-age-tag">${v.ages[0]}-${v.ages[1]}${APP.lang === 'zh' ? '岁' : 'y'}</div>
+            <div class="video-duration">${v.duration}</div>
+          </div>
+          <div class="video-info">
+            <h3>${v.title}</h3>
+            <div class="channel">${v.category}</div>
+            ${isCompleted(v.id) ? '<span style="color:#27ae60;font-size:12px;font-weight:700">✅ ' + t('completedLabel') + '</span>' : ''}
+          </div>
+        </div>
+        `).join('')}
+      </div>
+      ${videos.length === 0 ? '<p style="text-align:center;color:#999;padding:40px">📭 ' + t('noChannelVideos') + '</p>' : ''}
+    </div>
+  `;
+}
+
+// ─── RENDER: COURSE DETAIL ────────────────────────────────────
+function renderCourse(container, courseId) {
+  const course = COURSE_DB.find(c => c.id === courseId);
+  if (!course) { container.innerHTML = '<p style="padding:40px;text-align:center">' + t('courseNotFound') + '</p>'; return; }
+
+  const s = getStore();
+  const completedCount = course.videoIds.filter(vid => s.completed.includes(vid)).length;
+  const pct = Math.round(completedCount / course.videoIds.length * 100);
+  const courseNameKey = {'abc-fun':'course_abc_fun_name','numbers-1-10':'course_numbers_name','phonics-basics':'course_phonics_name'}[courseId];
+
+  // Find the first uncompleted lesson (current)
+  let currentIdx = course.videoIds.findIndex(vid => !s.completed.includes(vid));
+  if (currentIdx === -1) currentIdx = course.videoIds.length - 1; // all completed
+
+  container.innerHTML = `
+    <div class="page active">
+      <button style="padding:8px 16px;border:none;background:#f0e8d8;border-radius:20px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:12px" onclick="navigateTo('courses')">← ${t('backCourseList')}</button>
+
+      <div class="course-header" style="background:linear-gradient(135deg,${course.color},${course.color}dd)">
+        <span style="font-size:40px">${course.icon}</span>
+        <h2>${t(courseNameKey)}</h2>
+        <div class="course-progress-text">
+          ${t('learnedCount')} ${completedCount}/${course.videoIds.length} ${t('lessonsCompletedPct')} ${pct}%
+        </div>
+        <div class="course-progress-bar">
+          <div class="course-progress-fill" style="width:${pct}%"></div>
+        </div>
+      </div>
+
+      <div class="section-title"><span class="icon">📋</span> ${t('courseContent')}</div>
+      <div class="timeline">
+        ${course.videoIds.map((vid, idx) => {
+          const v = getVideo(vid);
+          if (!v) return '';
+          const isCompleted = s.completed.includes(vid);
+          const isLocked = idx > 0 && !s.completed.includes(course.videoIds[idx - 1]) && !isCompleted;
+          const isCurrent = idx === currentIdx && !isCompleted;
+          let stateClass = '';
+          if (isCompleted) stateClass = 'completed';
+          else if (isCurrent) stateClass = 'current';
+          else if (isLocked) stateClass = 'locked';
+
+          return `
+          <div class="timeline-node ${stateClass}" ${!isLocked ? `onclick="navigateTo('watch',{videoId:'${vid}'})"` : ''}>
+            <div class="timeline-thumb">
+              <img src="${getYouTubeThumb(vid)}" alt="${v.title}" onerror="this.style.display='none'">
+            </div>
+            <div class="timeline-info">
+              <h4>${t('lessonPrefix')}${idx+1}${t('lessonSuffix')}${APP.lang === 'zh' ? '：' : ': '}${v.title}</h4>
+              <div class="meta">${v.channel} · ⏱ ${v.duration}</div>
+            </div>
+            ${isCompleted ? '<span class="timeline-check">✅</span>' : isLocked ? '<span class="timeline-lock">🔒</span>' : '<span style="font-size:20px">▶️</span>'}
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+  `;
+}
+
+// ─── RENDER: PRACTICE ─────────────────────────────────────────
+function renderPractice(container, videoId) {
+  // If videoId is provided, show exercises related to that video
+  // Otherwise show all practice types
+  const video = videoId ? getVideo(videoId) : null;
+
+  container.innerHTML = `
+    <div class="page active">
+      ${video ? `<button style="padding:8px 16px;border:none;background:#f0e8d8;border-radius:20px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:12px" onclick="navigateTo('watch',{videoId:'${video.id}'})">← ${t('backToVideo')}</button>` : ''}
+      <div class="section-title"><span class="icon">🎮</span> ${t('interactivePractice')}</div>
+      <p style="color:var(--text-light);margin-bottom:16px">${t('practiceHint')}</p>
+
+      <div class="practice-types" id="practice-list">
+        ${PRACTICE_DATA.map(p => {
+          const typeKey = {listen:'listenTitle', match:'matchTitle', speak:'speakTitle', memory:'memoryTitle'}[p.type];
+          const descKey = {listen:'listenDesc', match:'matchDesc', speak:'speakDesc', memory:'memoryDesc'}[p.type];
+          return `
+        <div class="practice-card" onclick="startExercise('${p.type}')">
+          <span class="p-icon">${p.icon}</span>
+          <span class="p-label">${t(typeKey)}</span>
+          <small style="display:block;margin-top:4px;color:var(--text-light)">${t(descKey)}</small>
+        </div>`;
+        }).join('')}
+      </div>
+
+      <div id="exercise-container"></div>
+    </div>
+  `;
+}
+
+// ─── EXERCISE: LISTEN & CHOOSE ────────────────────────────────
+function startExercise(type) {
+  const data = PRACTICE_DATA.find(p => p.type === type);
+  if (!data) return;
+
+  const container = document.getElementById('exercise-container');
+  const list = document.getElementById('practice-list');
+  if (list) list.style.display = 'none';
+
+  if (type === 'listen') { renderListenExercise(container, data); }
+  else if (type === 'match') { renderMatchExercise(container, data); }
+  else if (type === 'speak') { renderSpeakExercise(container, data); }
+  else if (type === 'memory') { renderMemoryExercise(container, data); }
+}
+
+function renderListenExercise(container, data) {
+  let qIdx = 0;
+  let score = 0;
+
+  function showQ() {
+    if (qIdx >= data.questions.length) {
+      finishExercise(container, score, data.questions.length);
+      return;
+    }
+    const q = data.questions[qIdx];
+    container.innerHTML = `
+      <div class="exercise-area">
+        <h3 style="margin-bottom:16px">👂 ${t('questionNum', {n: qIdx+1, total: data.questions.length})}</h3>
+        <button style="padding:14px 32px;border-radius:50px;border:3px solid var(--blue);background:white;font-size:18px;font-weight:700;cursor:pointer;margin-bottom:16px" onclick="speakWord('${q.word}','${q.word_cn}')">
+          🔊 ${t('tapToHear')}
+        </button>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
+          ${q.options.map((o,i) => `
+          <button class="listen-option" style="font-size:36px;width:80px;height:80px" onclick="checkListenAnswer(${i},${q.answer},this)" data-idx="${i}">${o}</button>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  window.checkListenAnswer = function(chosen, correct, btn) {
+    const allBtns = container.querySelectorAll('.listen-option');
+    allBtns.forEach(b => b.style.pointerEvents = 'none');
+    if (chosen === correct) {
+      btn.classList.add('correct'); score++; playSuccess();
+    } else {
+      btn.classList.add('wrong');
+      allBtns[correct].classList.add('correct');
+      playError();
+    }
+    setTimeout(() => { qIdx++; showQ(); }, 1200);
+  };
+
+  showQ();
+}
+
+function speakWord(word, word_cn) {
+  if ('speechSynthesis' in window) {
+    const utterance = new SpeechSynthesisUtterance(word);
+    utterance.lang = 'en-US';
+    utterance.rate = 0.8;
+    window.speechSynthesis.speak(utterance);
+  }
+  playClick();
+}
+
+function renderMatchExercise(container, data) {
+  const pairs = [...data.pairs];
+  // Shuffle and prepare
+  const shuffledWords = [...pairs].sort(() => Math.random() - 0.5);
+  const shuffledEmojis = [...pairs].sort(() => Math.random() - 0.5);
+  let matched = 0;
+
+  function render() {
+    container.innerHTML = `
+      <div class="exercise-area">
+        <h3 style="margin-bottom:16px">🤝 ${t('matchProgress', {matched: matched, total: pairs.length})}</h3>
+        <p style="font-size:13px;color:var(--text-light);margin-bottom:12px">${t('matchHint')}</p>
+        <div style="display:flex;gap:20px;flex-wrap:wrap;justify-content:center">
+          <div style="display:flex;flex-direction:column;gap:10px" id="word-list">
+            ${shuffledWords.map((p, i) => `
+            <div class="drag-source" draggable="true" data-word="${p.word}" id="word-${i}" ondragstart="dragStart(event,'${p.word}')" ondragend="dragEnd(event)">
+              ${p.word}
+            </div>
+            `).join('')}
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center" id="emoji-list">
+            ${shuffledEmojis.map((p, i) => `
+            <div class="drag-target" data-answer="${p.emoji}" id="target-${i}"
+              ondragover="event.preventDefault()"
+              ondragenter="event.target.classList.add('over')"
+              ondragleave="event.target.classList.remove('over')"
+              ondrop="handleDrop(event,'${p.emoji}',this)">
+              ${p.emoji}
+            </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  window.dragStart = function(e, word) { e.dataTransfer.setData('text/plain', word); };
+  window.dragEnd = function(e) {};
+
+  window.handleDrop = function(e, targetEmoji, el) {
+    e.preventDefault();
+    el.classList.remove('over');
+    const word = e.dataTransfer.getData('text/plain');
+    const pair = pairs.find(p => p.word === word && p.emoji === targetEmoji);
+    if (pair) {
+      // Remove the matched word source
+      const sources = container.querySelectorAll('.drag-source');
+      sources.forEach(s => { if (s.dataset.word === word) s.remove(); });
+      el.style.borderColor = 'var(--green)';
+      el.style.background = '#EDFFF5';
+      el.innerHTML = targetEmoji + '<br><small style="font-size:10px;color:var(--green)">✓ ' + word + '</small>';
+      matched++; playSuccess();
+      if (matched >= pairs.length) {
+        setTimeout(() => finishExercise(container, pairs.length, pairs.length), 800);
+      }
+    } else {
+      playError();
+      el.style.borderColor = 'var(--coral)';
+      setTimeout(() => { el.style.borderColor = '#ccc'; }, 500);
+    }
+  };
+
+  render();
+}
+
+function renderSpeakExercise(container, data) {
+  let wIdx = 0;
+  const words = data.words;
+
+  function render() {
+    if (wIdx >= words.length) {
+      finishExercise(container, words.length, words.length);
+      return;
+    }
+    container.innerHTML = `
+      <div class="exercise-area">
+        <h3 style="margin-bottom:16px">🎙️ ${t('speakProgress', {n: wIdx+1, total: words.length})}</h3>
+        <p style="font-size:28px;font-weight:800;margin:20px 0;color:var(--orange)">"${words[wIdx]}"</p>
+        <button style="padding:14px 28px;border-radius:50px;border:none;background:var(--orange);color:white;font-size:16px;font-weight:700;cursor:pointer;margin:8px" onclick="startRecording()">🔴 ${t('startRecord')}</button>
+        <button style="padding:14px 28px;border-radius:50px;border:3px solid #f0e8d8;background:white;font-size:16px;font-weight:700;cursor:pointer;margin:8px" onclick="stopRecording()">⏹ ${t('stopRecord')}</button>
+        <div id="recording-status" style="margin:12px 0;font-size:14px;color:var(--text-light)"></div>
+        <audio id="recording-playback" controls style="display:none;width:100%;margin-top:8px"></audio>
+        <button id="next-word-btn" style="display:none;padding:12px 28px;border-radius:50px;border:none;background:var(--green);color:white;font-size:15px;font-weight:700;cursor:pointer;margin-top:12px" onclick="nextSpeakWord()">${t('nextQ')}</button>
+      </div>
+    `;
+  }
+
+  let mediaRecorder, audioChunks = [];
+  window.startRecording = function() {
+    audioChunks = [];
+    navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+      mediaRecorder = new MediaRecorder(stream);
+      mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(audioChunks, { type: 'audio/webm' });
+        const url = URL.createObjectURL(blob);
+        const audio = document.getElementById('recording-playback');
+        audio.src = url; audio.style.display = 'block';
+        document.getElementById('recording-status').textContent = '🌟 ' + t('recordingDone');
+        document.getElementById('next-word-btn').style.display = 'inline-block';
+        playSuccess();
+        // Stop all tracks
+        stream.getTracks().forEach(t => t.stop());
+      };
+      mediaRecorder.start();
+      document.getElementById('recording-status').textContent = '🔴 ' + t('recording');
+    }).catch(() => {
+      document.getElementById('recording-status').textContent = '⚠️ ' + t('noMic');
+    });
+  };
+
+  window.stopRecording = function() {
+    if (mediaRecorder && mediaRecorder.state === 'recording') {
+      mediaRecorder.stop();
+    }
+  };
+
+  window.nextSpeakWord = function() { wIdx++; render(); };
+
+  render();
+}
+
+function renderMemoryExercise(container, data) {
+  const cards = [...data.cards].sort(() => Math.random() - 0.5);
+  const state = { flipped: new Set(), matched: new Set(), firstCard: null, moves: 0, totalPairs: cards.length / 2 };
+  let locked = false;
+
+  function render() {
+    container.innerHTML = `
+      <div class="exercise-area">
+        <h3 style="margin-bottom:12px">🃏 ${t('memoryProgress', {matched: state.matched.size, total: state.totalPairs})}</h3>
+        <div class="memory-grid">
+          ${cards.map((emoji, idx) => {
+            const isFlipped = state.flipped.has(idx) || state.matched.has(idx);
+            const isMatched = state.matched.has(idx);
+            return `
+            <div class="memory-card ${isFlipped ? 'flipped' : ''} ${isMatched ? 'matched' : ''}" onclick="flipMemoryCard(${idx})" data-idx="${idx}">
+              ${isFlipped ? emoji : '❓'}
+            </div>`;
+          }).join('')}
+        </div>
+        <p style="text-align:center;margin-top:12px;color:var(--text-light)">${t('moves')}: ${state.moves}</p>
+      </div>
+    `;
+  }
+
+  window.flipMemoryCard = function(idx) {
+    if (locked) return;
+    if (state.flipped.has(idx) || state.matched.has(idx)) return;
+
+    state.flipped.add(idx);
+    state.moves++;
+    playClick();
+    render();
+
+    if (state.firstCard === null) {
+      state.firstCard = idx;
+    } else {
+      locked = true;
+      const first = state.firstCard;
+      if (cards[first] === cards[idx]) {
+        // Match!
+        state.matched.add(first); state.matched.add(idx);
+        state.flipped.delete(first); state.flipped.delete(idx);
+        state.firstCard = null; locked = false;
+        playSuccess();
+        render();
+        if (state.matched.size === cards.length) {
+          setTimeout(() => finishExercise(container, state.totalPairs, state.totalPairs), 500);
+        }
+      } else {
+        // No match
+        setTimeout(() => {
+          state.flipped.delete(first); state.flipped.delete(idx);
+          state.firstCard = null; locked = false;
+          playError();
+          render();
+        }, 800);
+      }
+    }
+  };
+
+  render();
+}
+
+function finishExercise(container, score, total) {
+  const stars = score === total ? 3 : score >= total * 0.6 ? 2 : 1;
+  addStar(stars);
+  updateStreak();
+  playCelebration(); showConfetti(50); showStarPopup(`🎉 获得 ${stars} 颗星！`);
+
+  container.innerHTML = `
+    <div class="exercise-area" style="text-align:center">
+      <div style="font-size:60px;margin:20px 0">${'⭐'.repeat(stars)}</div>
+      <h2 style="font-size:24px;margin-bottom:8px">${t('exerciseDone')}</h2>
+      <p style="color:var(--text-light)">${t('scoreLabel')}: ${score}/${total} · ${t('starsEarned')} ${stars} ${t('starsEarned')}</p>
+      <button style="margin-top:20px;padding:14px 32px;border-radius:50px;border:none;background:var(--orange);color:white;font-size:16px;font-weight:700;cursor:pointer" onclick="navigateTo('practice')">${t('retry')}</button>
+      <button style="margin-top:20px;margin-left:8px;padding:14px 32px;border-radius:50px;border:3px solid #f0e8d8;background:white;font-size:16px;font-weight:700;cursor:pointer" onclick="navigateTo('home')">${t('backHome')}</button>
+    </div>
+  `;
+
+  const list = document.getElementById('practice-list');
+  if (list) list.style.display = 'grid';
+}
+
+// ─── RENDER: ME (Profile) ─────────────────────────────────────
+function renderMe(container) {
+  const s = getStore();
+  const avatars = ['🐱','🐶','🐰','🐼','🦊','🐸','🐵','🦄','🐲','🐧'];
+
+  // Generate streak calendar for last 4 weeks
+  const today = new Date();
+  const days = [];
+  for (let i = 27; i >= 0; i--) {
+    const d = new Date(today); d.setDate(d.getDate() - i);
+    days.push(d.toISOString().slice(0, 10));
+  }
+  const dayLabels = [t('starDaily'), t('starMon'), t('starTue'), t('starWed'), t('starThu'), t('starFri'), t('starSat')];
+
+  container.innerHTML = `
+    <div class="page active">
+      <!-- Avatar & Stats -->
+      <div class="profile-header">
+        <div class="avatar-display">${s.avatar}</div>
+        <h2 style="font-size:20px">${t('littleExplorer')} #${s.avatar}</h2>
+        <p style="color:var(--text-light);font-size:13px">${t('streakDays', {n: s.streak})} 🔥</p>
+      </div>
+
+      <!-- Avatar selector -->
+      <div style="text-align:center;margin-bottom:16px">
+        <p style="font-weight:700;margin-bottom:8px">${t('chooseBuddy')}</p>
+        <div class="avatar-selector">
+          ${avatars.map(a => `
+          <button class="avatar-option ${s.avatar === a ? 'selected' : ''}" onclick="changeAvatar('${a}')">${a}</button>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- Stat row -->
+      <div class="stat-row">
+        <div class="stat-box">
+          <div class="stat-num">${s.watchCount}</div>
+          <div class="stat-label">${t('videosWatched')}</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">${s.stars}</div>
+          <div class="stat-label">${t('starsCollected')}</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">${s.streak}</div>
+          <div class="stat-label">${t('streakDaysLabel')}</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">${Math.floor((s.totalWatchTime || 0) / 60)}</div>
+          <div class="stat-label">${t('learningMinutes')}</div>
+        </div>
+      </div>
+
+      <!-- Streak calendar -->
+      <div class="section-title"><span class="icon">📅</span> ${t('checkinCalendar')}</div>
+      <div style="display:flex;gap:6px;margin-bottom:8px">
+        ${dayLabels.map(l => `<span style="flex:1;text-align:center;font-size:11px;color:var(--text-light);font-weight:600">${l}</span>`).join('')}
+      </div>
+      <div class="streak-calendar">
+        ${days.map(d => {
+          const isActive = (s.streakDates || []).includes(d);
+          return `<div class="streak-day ${isActive ? 'done' : ''}">${new Date(d).getDate()}</div>`;
+        }).join('')}
+      </div>
+
+      <!-- Badge wall -->
+      <div class="section-title"><span class="icon">🏅</span> ${t('badgeWall')}</div>
+      <div class="badge-wall">
+        ${BADGES.map(b => {
+          const earned = s.badges.includes(b.id);
+          const badgeNameKey = {'first-watch':'badge_first_watch','streak-3':'badge_streak3','streak-7':'badge_streak7','star-5':'badge_star5','star-15':'badge_star15','video-10':'badge_video10','course-abc':'badge_course_abc','course-math':'badge_course_math'}[b.id];
+          const badgeDescKey = badgeNameKey + '_desc';
+          return `
+          <div style="text-align:center">
+            <div class="badge-item ${earned ? 'earned' : ''}" title="${earned ? t(badgeNameKey) + '：' + t(badgeDescKey) : '??? ' + t('notEarned')}">${earned ? b.icon : '❓'}</div>
+            <small style="font-size:10px;display:block;margin-top:4px;color:${earned ? 'var(--text)' : '#ccc'}">${earned ? t(badgeNameKey) : '???'}</small>
+          </div>`;
+        }).join('')}
+      </div>
+
+      <!-- Learning report -->
+      <div class="section-title"><span class="icon">📊</span> ${t('weeklyReport')}</div>
+      <div style="background:white;border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow)">
+        <p style="margin:6px 0;font-weight:600">📺 ${t('totalVideosWatched')}：<span style="color:var(--orange)">${s.watchCount}</span></p>
+        <p style="margin:6px 0;font-weight:600">⭐ ${t('totalStars')}：<span style="color:var(--orange)">${s.stars}</span></p>
+        <p style="margin:6px 0;font-weight:600">⏱ ${t('totalTime')}：<span style="color:var(--orange)">${Math.floor((s.totalWatchTime || 0) / 60)} ${t('minutes')}</span></p>
+        <p style="margin:6px 0;font-weight:600">🔥 ${t('streakCheckin')}：<span style="color:var(--orange)">${s.streak} ${APP.lang === 'zh' ? '天' : 'days'}</span></p>
+      </div>
+
+      <!-- Change PIN -->
+      <div style="margin-top:20px;text-align:center">
+        <button style="padding:10px 24px;border-radius:50px;border:2px dashed #ddd;background:#faf8f5;font-size:13px;font-weight:600;cursor:pointer;color:var(--text-light)" onclick="verifyThenChangePin()">
+          🔒 ${t('changeParentPIN')}
+        </button>
+      </div>
+
+      <!-- About & Feedback -->
+      <div style="margin-top:20px;display:flex;gap:10px;justify-content:center">
+        <button style="padding:10px 20px;border-radius:50px;border:2px solid #E0E0E0;background:white;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px" onclick="navigateTo('about')">
+          🌱 ${t('aboutUs')}
+        </button>
+        <button style="padding:10px 20px;border-radius:50px;border:2px solid #E0E0E0;background:white;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px" onclick="navigateTo('feedback')">
+          💬 ${t('feedback')}
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function verifyThenChangePin() {
+  // Must verify old pattern first
+  APP.redirectAfterUnlock = () => openChangePin();
+  openParentLock();
+}
+
+function changeAvatar(avatar) {
+  const s = getStore(); s.avatar = avatar; saveStore(s);
+  navigateTo('me'); playClick();
+}
+
+// ─── RENDER: ABOUT US ──────────────────────────────────────────
+function renderAbout(container) {
+  container.innerHTML = `
+    <div class="page active">
+      <button style="padding:8px 16px;border:none;background:#f0e8d8;border-radius:20px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:12px" onclick="navigateTo('me')">← ${t('back')}</button>
+
+      <!-- Hero -->
+      <div style="text-align:center;padding:32px 20px 24px;background:linear-gradient(135deg, #FFF5E6, #FFEDD5, #E8F5E9);border-radius:var(--radius-lg);margin-bottom:20px">
+        <div style="font-size:56px;margin-bottom:12px">🌱</div>
+        <h1 style="font-size:24px;color:var(--orange);margin-bottom:8px">${t('aboutTitle')}</h1>
+        <p style="color:var(--text-light);font-size:14px;max-width:340px;margin:0 auto">Discover fun and engaging educational activities for kids at HappySprout.</p>
+      </div>
+
+      <!-- Mission -->
+      <div class="about-card" style="background:white;border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow);margin-bottom:16px;border-left:5px solid #FF9800">
+        <h2 style="font-size:18px;margin-bottom:10px">🎯 ${t('aboutMission')}</h2>
+        <p style="color:var(--text-light);line-height:1.7;font-size:14px">${t('aboutMissionText')}</p>
+      </div>
+
+      <!-- Story -->
+      <div class="about-card" style="background:white;border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow);margin-bottom:16px;border-left:5px solid #4CAF50">
+        <h2 style="font-size:18px;margin-bottom:10px">📖 ${t('aboutStory')}</h2>
+        <p style="color:var(--text-light);line-height:1.7;font-size:14px">${t('aboutStoryText')}</p>
+      </div>
+
+      <!-- Why Us -->
+      <div class="about-card" style="background:white;border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow);margin-bottom:16px;border-left:5px solid #2196F3">
+        <h2 style="font-size:18px;margin-bottom:14px">✨ ${t('aboutWhy')}</h2>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          ${[1,2,3,4,5].map(n => `
+          <div style="display:flex;align-items:flex-start;gap:10px">
+            <span style="font-size:20px;flex-shrink:0">✅</span>
+            <span style="color:var(--text-light);font-size:14px;line-height:1.5">${t('aboutWhy' + n)}</span>
+          </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- Contact -->
+      <div style="background:linear-gradient(135deg, #FFF3E0, #FFECB3);border-radius:var(--radius-lg);padding:24px;text-align:center;margin-bottom:16px">
+        <h2 style="font-size:18px;margin-bottom:8px">📬 ${t('aboutContact')}</h2>
+        <p style="color:var(--text-light);font-size:14px;margin-bottom:14px">${t('aboutContactText')}</p>
+        <button style="padding:12px 32px;border-radius:50px;border:none;background:var(--orange);color:white;font-size:15px;font-weight:700;cursor:pointer" onclick="navigateTo('feedback')">
+          ${t('feedbackSubmit')} →
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+// ─── RENDER: FEEDBACK ──────────────────────────────────────────
+function renderFeedback(container) {
+  container.innerHTML = `
+    <div class="page active">
+      <button style="padding:8px 16px;border:none;background:#f0e8d8;border-radius:20px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:12px" onclick="navigateTo('me')">← ${t('back')}</button>
+
+      <div style="text-align:center;padding:20px 0 10px">
+        <div style="font-size:48px;margin-bottom:8px">💬</div>
+        <h1 style="font-size:22px;color:var(--orange);margin-bottom:6px">${t('feedbackTitle')}</h1>
+        <p style="color:var(--text-light);font-size:13px">${t('feedbackSub')}</p>
+      </div>
+
+      <form id="feedback-form" onsubmit="submitFeedback(event)" style="background:white;border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow)">
+        <!-- Type -->
+        <label style="font-weight:700;font-size:14px;display:block;margin-bottom:10px">${t('feedbackType')}</label>
+        <div id="fb-type-group" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px">
+          ${['Bug','Feature','Content','Other'].map(t => `
+          <label style="display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:20px;border:2px solid #E0E0E0;font-size:13px;cursor:pointer;transition:all 0.2s" class="fb-type-label" data-type="${t}">
+            <input type="radio" name="fbType" value="${t}" style="display:none">
+            <span>${t('feedback' + t)}</span>
+          </label>
+          `).join('')}
+        </div>
+
+        <!-- Message -->
+        <label style="font-weight:700;font-size:14px;display:block;margin-bottom:8px">${t('feedbackMessage')}</label>
+        <textarea id="fb-message" rows="5" placeholder="${t('feedbackMessagePlaceholder')}" required
+          style="width:100%;padding:12px;border-radius:12px;border:2px solid #E0E0E0;font-size:14px;resize:vertical;box-sizing:border-box;font-family:inherit"></textarea>
+
+        <!-- Email -->
+        <label style="font-weight:700;font-size:14px;display:block;margin-top:18px;margin-bottom:8px">${t('feedbackEmail')}</label>
+        <input id="fb-email" type="email" placeholder="${t('feedbackEmailPlaceholder')}"
+          style="width:100%;padding:12px;border-radius:12px;border:2px solid #E0E0E0;font-size:14px;box-sizing:border-box">
+
+        <!-- Submit -->
+        <button type="submit" id="fb-submit-btn"
+          style="margin-top:22px;width:100%;padding:14px;border-radius:50px;border:none;background:var(--orange);color:white;font-size:16px;font-weight:700;cursor:pointer;transition:all 0.2s">
+          📨 ${t('feedbackSubmit')}
+        </button>
+      </form>
+    </div>
+  `;
+
+  // Type label click styling
+  const labels = container.querySelectorAll('.fb-type-label');
+  labels.forEach(l => {
+    l.addEventListener('click', () => {
+      labels.forEach(x => { x.style.borderColor = '#E0E0E0'; x.style.background = '#fff'; });
+      l.style.borderColor = 'var(--orange)';
+      l.style.background = '#FFF3E0';
+      l.querySelector('input').checked = true;
+    });
+  });
+}
+
+function submitFeedback(e) {
+  e.preventDefault();
+  const type = document.querySelector('input[name="fbType"]:checked');
+  const msg = document.getElementById('fb-message').value.trim();
+  const email = document.getElementById('fb-email').value.trim();
+
+  if (!type) { alert('Please select a feedback type'); return; }
+  if (!msg) { alert('Please enter your feedback'); return; }
+
+  // Store feedback locally
+  const s = getStore();
+  if (!s.feedback) s.feedback = [];
+  s.feedback.push({
+    type: type.value,
+    message: msg,
+    email: email,
+    date: new Date().toISOString()
+  });
+  saveStore(s);
+
+  // Disable button
+  const btn = document.getElementById('fb-submit-btn');
+  btn.textContent = '✓ ' + t('saved');
+  btn.style.background = '#4CAF50';
+  btn.disabled = true;
+
+  setTimeout(() => {
+    navigateTo('feedbackThanks');
+  }, 800);
+}
+
+// ─── RENDER: FEEDBACK THANKS ───────────────────────────────────
+function renderFeedbackThanks(container) {
+  container.innerHTML = `
+    <div class="page active">
+      <div style="text-align:center;padding:60px 20px">
+        <div style="font-size:72px;margin-bottom:16px">🎉</div>
+        <h1 style="font-size:22px;color:var(--orange);margin-bottom:10px">${t('feedbackThanks')}</h1>
+        <p style="color:var(--text-light);font-size:14px;max-width:300px;margin:0 auto 24px">${t('feedbackThanksMsg')}</p>
+        <button style="padding:12px 36px;border-radius:50px;border:none;background:var(--orange);color:white;font-size:16px;font-weight:700;cursor:pointer" onclick="navigateTo('home')">
+          ${t('feedbackGoHome')}
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+// ─── RENDER: FAVORITES ────────────────────────────────────────
+function renderFavorites(container) {
+  const s = getStore();
+  const favVideos = s.favorites.map(id => getVideo(id)).filter(Boolean);
+  const playlists = Object.keys(s.playlists || { "默认": [] });
+  const activePl = s.activePlaylist || "默认";
+  const activeVids = s.playlists[activePl] || [];
+
+  container.innerHTML = `
+    <div class="page active">
+      <button style="padding:8px 16px;border:none;background:#f0e8d8;border-radius:20px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:12px" onclick="navigateTo('home')">← ${t('back')}</button>
+      <div class="section-title"><span class="icon">❤️</span> ${t('favTitle')}</div>
+
+      <!-- Playlist chips -->
+      <div style="margin:12px 0">
+        ${playlists.map(p => `
+        <button class="playlist-chip ${p === activePl ? 'active' : ''}" onclick="switchPlaylist('${p}')">${p} (${(s.playlists[p]||[]).length})</button>
+        `).join('')}
+        <button class="playlist-chip add" onclick="createPlaylist()">${t('newPlaylist')}</button>
+      </div>
+
+      <!-- Favorites grid -->
+      <div class="video-grid">
+        ${favVideos.map(v => `
+        <div class="video-card" onclick="navigateTo('watch',{videoId:'${v.id}'})">
+          <div class="video-thumb">
+            <img src="${getYouTubeThumb(v.id)}" alt="${v.title}" onerror="this.style.display='none'">
+            <div class="play-btn">▶</div>
+            <div class="video-duration">${v.duration}</div>
+          </div>
+          <div class="video-info">
+            <h3>${v.title}</h3>
+            <div class="channel">${v.channel}</div>
+            <button style="margin-top:8px;padding:6px 14px;border-radius:20px;border:2px solid var(--coral);background:transparent;color:var(--coral);font-size:12px;font-weight:600;cursor:pointer" onclick="event.stopPropagation();removeFavorite('${v.id}')">${t('unfavorite')}</button>
+          </div>
+        </div>
+        `).join('')}
+      </div>
+      ${favVideos.length === 0 ? '<p style="text-align:center;color:#999;padding:40px">💝 ' + t('noFavs') + '</p>' : ''}
+    </div>
+  `;
+}
+
+function switchPlaylist(name) {
+  const s = getStore(); s.activePlaylist = name; saveStore(s);
+  navigateTo('favorites'); playClick();
+}
+
+function createPlaylist() {
+  const name = prompt(t('playlistName'));
+  if (name && name.trim()) {
+    const s = getStore();
+    if (!s.playlists) s.playlists = { "默认": [] };
+    s.playlists[name.trim()] = [];
+    s.activePlaylist = name.trim();
+    saveStore(s);
+    navigateTo('favorites'); playClick();
+  }
+}
+
+function removeFavorite(videoId) {
+  toggleFavorite(videoId);
+  navigateTo('favorites');
+}
+
+// ─── RENDER: SEARCH ────────────────────────────────────────────
+function renderSearch(container) {
+  const s = getStore();
+  const hiddenVids = s.parentSettings.hiddenVideos || [];
+  const query = APP.activeSearchQuery || '';
+  const results = query
+    ? VIDEO_DB.filter(v => {
+        const q = query.toLowerCase();
+        return (v.title.toLowerCase().includes(q) || v.channel.toLowerCase().includes(q) || v.category.includes(q)) && !hiddenVids.includes(v.id);
+      })
+    : [];
+
+  container.innerHTML = `
+    <div class="page active">
+      <button style="padding:8px 16px;border:none;background:#f0e8d8;border-radius:20px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:12px" onclick="navigateTo('home')">← ${t('back')}</button>
+      <div class="section-title"><span class="icon">🔍</span> ${t('searchVideos')}</div>
+
+      <div class="search-bar">
+        <input class="search-input" id="search-input" type="text" placeholder="${t('searchPlaceholder')}" value="${query}" oninput="performSearch(this.value)">
+        <button class="voice-btn" id="voice-search-btn" onclick="startVoiceSearch()" title="${t('voiceSearch')}">🎤</button>
+      </div>
+
+      ${query ? '<p style="color:var(--text-light);margin:8px 0">' + t('foundResults', {n: results.length}) + '</p>' : ''}
+
+      <div class="video-grid">
+        ${results.map(v => `
+        <div class="video-card" onclick="navigateTo('watch',{videoId:'${v.id}'})">
+          <div class="video-thumb">
+            <img src="${getYouTubeThumb(v.id)}" alt="${v.title}" onerror="this.style.display='none'">
+            <div class="play-btn">▶</div>
+            <div class="video-age-tag">${v.ages[0]}-${v.ages[1]}${APP.lang === 'zh' ? '岁' : 'y'}</div>
+            <div class="video-duration">${v.duration}</div>
+          </div>
+          <div class="video-info">
+            <h3>${v.title}</h3>
+            <div class="channel">${v.channel} · ${v.category}</div>
+          </div>
+        </div>
+        `).join('')}
+      </div>
+      ${query && results.length === 0 ? '<p style="text-align:center;color:#999;padding:40px">🔍 ' + t('noResults') + '</p>' : ''}
+      ${!query ? '<p style="text-align:center;color:#999;padding:40px">🔍 ' + t('searchHint') + '</p>' : ''}
+    </div>
+  `;
+}
+
+function performSearch(val) {
+  APP.activeSearchQuery = val;
+  navigateTo('search');
+}
+
+function startVoiceSearch() {
+  const btn = document.getElementById('voice-search-btn');
+  if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+    alert(t('noVoiceSupport'));
+    return;
+  }
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const recognition = new SpeechRecognition();
+  recognition.lang = 'zh-CN';
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+
+  btn.classList.add('listening');
+  recognition.start();
+
+  recognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    const input = document.getElementById('search-input');
+    if (input) { input.value = transcript; performSearch(transcript); }
+  };
+
+  recognition.onerror = () => { btn.classList.remove('listening'); };
+  recognition.onend = () => { btn.classList.remove('listening'); };
+}
+
+// ─── PARENT PANEL ─────────────────────────────────────────────
+
+// ─── FIRST-TIME PIN SETUP ─────────────────────────────────────
+function showFirstTimePinSetup() {
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.id = 'first-time-setup';
+  overlay.innerHTML = `
+    <div class="modal-content" style="text-align:center;padding:40px 28px">
+      <div style="font-size:64px;margin-bottom:12px">🔒</div>
+      <h2 style="font-size:24px;margin-bottom:8px">${t('welcomeTitle')}</h2>
+      <p style="color:var(--text-light);margin-bottom:8px;font-size:14px">${t('welcomeSub')}</p>
+      <p style="color:var(--text-light);margin-bottom:24px;font-size:13px">${t('welcomeHint')}</p>
+      <button style="padding:14px 40px;border-radius:50px;border:none;background:var(--orange);color:white;font-weight:700;font-size:17px;cursor:pointer;box-shadow:0 4px 16px rgba(255,140,66,0.35)" onclick="startPinSetupStep1()">
+        🔑 ${t('startSetup')}
+      </button>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+}
+
+function startPinSetupStep1() {
+  document.getElementById('first-time-setup')?.remove();
+  showPinSetupGrid(1);
+}
+
+function showPinSetupGrid(step) {
+  APP.pinSetupStep = step;
+  APP.pinSetupInput = [];
+  const labels = [t('stepLabel'), t('stepConfirm')];
+
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.id = 'pin-setup-grid';
+  overlay.innerHTML = `
+    <div class="modal-content" style="text-align:center">
+      <h2 style="margin-bottom:4px">🔒 ${t('createPIN')}</h2>
+      <p style="color:var(--orange);font-weight:700;margin-bottom:16px">${t('stepNum', {step: step})}：${labels[step-1]}</p>
+      <p style="color:var(--text-light);font-size:13px;margin-bottom:12px">${t('drawPattern')}</p>
+      <div class="pattern-grid" id="setup-pattern-grid" style="margin:12px auto">
+        ${[1,2,3,4,5,6,7,8,9].map(i => `
+        <button class="pattern-dot" data-idx="${i}" onclick="setupPinDotClick(${i})">${i}</button>
+        `).join('')}
+      </div>
+      <div style="margin:12px 0;font-size:14px;color:var(--text-light)">
+        ${t('selected')}：<span id="setup-pin-display"></span>
+      </div>
+      <button style="padding:10px 28px;border-radius:50px;border:3px solid var(--orange);background:white;font-size:15px;font-weight:700;cursor:pointer" onclick="submitPinSetupStep()">${step === 1 ? t('nextStep') : t('confirmCreate')}</button>
+      <p id="setup-pin-error" style="margin-top:12px;font-size:12px;color:#e74c3c;display:none"></p>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+  updateSetupPinDisplay();
+}
+
+function setupPinDotClick(idx) {
+  APP.pinSetupInput.push(idx);
+  const dots = document.querySelectorAll('#setup-pattern-grid .pattern-dot');
+  dots.forEach(d => { if (d.dataset.idx == idx) d.classList.add('selected'); });
+  updateSetupPinDisplay();
+  playClick();
+}
+
+function updateSetupPinDisplay() {
+  const display = document.getElementById('setup-pin-display');
+  if (display) display.textContent = (APP.pinSetupInput || []).join(' → ');
+}
+
+function submitPinSetupStep() {
+  const input = APP.pinSetupInput;
+  if (input.length < 3) {
+    const err = document.getElementById('setup-pin-error');
+    if (err) { err.textContent = t('needMin3'); err.style.display = 'block'; }
+    playError();
+    return;
+  }
+
+  if (APP.pinSetupStep === 1) {
+    // Step 1: save input, move to step 2
+    APP.pinSetupFirst = [...input];
+    document.getElementById('pin-setup-grid')?.remove();
+    showPinSetupGrid(2);
+  } else {
+    // Step 2: confirm
+    const first = APP.pinSetupFirst.join(',');
+    const second = input.join(',');
+    if (first !== second) {
+      const err = document.getElementById('setup-pin-error');
+      if (err) { err.textContent = t('mismatch'); err.style.display = 'block'; }
+      playError();
+      APP.pinSetupInput = [];
+      document.querySelectorAll('#setup-pattern-grid .pattern-dot').forEach(d => d.classList.remove('selected'));
+      updateSetupPinDisplay();
+      // Reset to step 1
+      APP.pinSetupInput = [];
+      APP.pinSetupFirst = [...APP.pinSetupFirst]; // keep first attempt
+      return;
+    }
+
+    // Success! Save pattern
+    const pattern = APP.pinSetupFirst;
+    const s = getStore();
+    s.parentPattern = pattern;
+    APP.correctPattern = pattern;
+    saveStore(s);
+    playSuccess();
+
+    document.getElementById('pin-setup-grid')?.remove();
+
+    // Show success message
+    const overlay = document.createElement('div');
+    overlay.className = 'modal-overlay';
+    overlay.innerHTML = `
+      <div class="modal-content" style="text-align:center;padding:32px 24px">
+        <div style="font-size:64px;margin-bottom:8px">✅</div>
+        <h2 style="margin-bottom:8px">${t('pinSuccess')}</h2>
+        <p style="color:var(--text-light);margin-bottom:4px">${t('pinSuccessMsg')}：<strong>${pattern.join(' → ')}</strong></p>
+        <p style="color:var(--text-light);font-size:13px;margin-bottom:20px">${t('pinSuccessHint')}</p>
+        <button style="padding:12px 36px;border-radius:50px;border:none;background:var(--orange);color:white;font-weight:700;font-size:16px;cursor:pointer" onclick="this.closest('.modal-overlay').remove();navigateTo('home')">
+          🚀 ${t('startExplore')}
+        </button>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+  }
+}
+
+// ─── PARENT PANEL LOCK / UNLOCK ────────────────────────────────
+function openParentLock() {
+  if (APP.parentUnlocked && APP.currentPage === 'parent') return;
+
+  // If no pattern set yet, redirect to first-time setup
+  if (!APP.correctPattern) {
+    showFirstTimePinSetup();
+    return;
+  }
+
+  // Show pattern lock
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.innerHTML = `
+    <div class="modal-content" style="text-align:center">
+      <h2 style="margin-bottom:8px">🔒 ${t('parentVerify')}</h2>
+      <p style="color:var(--text-light);margin-bottom:16px">${t('drawYourPattern')}</p>
+      <div class="pattern-grid" id="pattern-grid">
+        ${[1,2,3,4,5,6,7,8,9].map(i => `
+        <button class="pattern-dot" data-idx="${i}" onclick="patternDotClick(${i})">${i}</button>
+        `).join('')}
+      </div>
+      <div style="margin:12px 0;font-size:14px;color:var(--text-light)">
+        ${t('selected')}：<span id="pattern-display"></span>
+      </div>
+      <button style="padding:10px 28px;border-radius:50px;border:3px solid var(--orange);background:white;font-size:15px;font-weight:700;cursor:pointer" onclick="checkPattern()">${t('confirm')}</button>
+      <button style="padding:10px 28px;border-radius:50px;border:none;background:#f0e8d8;font-size:15px;font-weight:700;cursor:pointer;margin-left:8px" onclick="document.querySelector('.modal-overlay').remove()">${t('cancel')}</button>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  APP.patternInput = [];
+  updatePatternDisplay();
+}
+
+function patternDotClick(idx) {
+  APP.patternInput.push(idx);
+  // Visual feedback
+  const dots = document.querySelectorAll('.pattern-dot');
+  dots.forEach(d => { if (d.dataset.idx == idx) d.classList.add('selected'); });
+  updatePatternDisplay();
+  playClick();
+}
+
+function updatePatternDisplay() {
+  const display = document.getElementById('pattern-display');
+  if (display) display.textContent = APP.patternInput.join(' → ');
+}
+
+function checkPattern() {
+  const input = APP.patternInput.join(',');
+  const correct = (APP.correctPattern || []).join(',');
+  if (input === correct) {
+    APP.parentUnlocked = true;
+    document.querySelector('.modal-overlay')?.remove();
+    playSuccess();
+    // If there's a redirect target, go there; otherwise parent panel
+    if (APP.redirectAfterUnlock) {
+      const target = APP.redirectAfterUnlock;
+      APP.redirectAfterUnlock = null;
+      target();
+    } else {
+      navigateTo('parent');
+    }
+  } else {
+    playError();
+    alert(t('wrongPIN'));
+    APP.patternInput = [];
+    document.querySelectorAll('.pattern-dot').forEach(d => d.classList.remove('selected'));
+    updatePatternDisplay();
+  }
+}
+
+// ─── CHANGE PIN (pattern lock) ─────────────────────────────────
+function openChangePin() {
+  // Step 1: verify old pattern
+  showChangePinStep(1);
+}
+
+function showChangePinStep(step) {
+  const labels = [t('verifyCurrent'), t('setNewPIN'), t('confirmNewPIN')];
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.innerHTML = `
+    <div class="pattern-popup" style="background:white;border-radius:24px;padding:32px 24px;text-align:center;max-width:380px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.2)">
+      <h2 style="font-size:20px;margin-bottom:4px">🔒 ${t('changePINTitle')}</h2>
+      <p style="color:var(--orange);font-weight:700;margin-bottom:16px">${t('stepNum', {step: step})}：${labels[step-1]}</p>
+      <div class="pattern-grid" style="display:grid;grid-template-columns:repeat(3,72px);grid-template-rows:repeat(3,72px);gap:10px;justify-content:center;margin-bottom:16px">
+        ${[1,2,3,4,5,6,7,8,9].map(i => `
+        <button class="pattern-dot" data-idx="${i}" onclick="changePinDotClick(${i})">${i}</button>
+        `).join('')}
+      </div>
+      <div style="margin:12px 0;font-size:14px;color:var(--text-light)">
+        ${t('selected')}：<span id="change-pin-display"></span>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:center">
+        <button style="padding:10px 28px;border-radius:50px;border:3px solid var(--orange);background:white;font-size:15px;font-weight:700;cursor:pointer" onclick="submitChangePinStep(${step})">${step < 3 ? t('nextStep') : t('confirmModify')}</button>
+        <button style="padding:10px 20px;border-radius:50px;border:none;background:#f0e8d8;font-size:15px;font-weight:700;cursor:pointer" onclick="document.querySelector('.modal-overlay').remove()">${t('cancel')}</button>
+      </div>
+      <p id="change-pin-error" style="margin-top:12px;font-size:12px;color:#e74c3c;display:none"></p>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+  APP.changePinStep = step;
+  APP.changePinInput = [];
+  if (step === 1) {
+    APP.changePinOld = null;
+    APP.changePinNew = null;
+  }
+  updateChangePinDisplay();
+}
+
+function changePinDotClick(idx) {
+  APP.changePinInput.push(idx);
+  document.querySelectorAll('.pattern-dot').forEach(d => {
+    if (parseInt(d.dataset.idx) === idx) d.classList.add('selected');
+  });
+  updateChangePinDisplay();
+  playClick();
+}
+
+function updateChangePinDisplay() {
+  const el = document.getElementById('change-pin-display');
+  if (el) el.textContent = (APP.changePinInput || []).join(' → ');
+}
+
+function submitChangePinStep(step) {
+  const input = (APP.changePinInput || []).join(',');
+  const errorEl = document.getElementById('change-pin-error');
+  
+  if (APP.changePinInput.length < 2) {
+    if (errorEl) { errorEl.style.display = 'block'; errorEl.textContent = t('needMin2'); }
+    return;
+  }
+  
+  if (step === 1) {
+    // Verify old pattern
+    const correct = (APP.correctPattern || []).join(',');
+    if (input !== correct) {
+      if (errorEl) { errorEl.style.display = 'block'; errorEl.textContent = t('wrongPattern'); playError(); }
+      APP.changePinInput = [];
+      document.querySelectorAll('.pattern-dot').forEach(d => d.classList.remove('selected'));
+      updateChangePinDisplay();
+      return;
+    }
+    // Old pattern verified, move to step 2
+    if (errorEl) errorEl.style.display = 'none';
+    playSuccess();
+    document.querySelector('.modal-overlay').remove();
+    showChangePinStep(2);
+  } else if (step === 2) {
+    // Save new pattern, move to step 3
+    APP.changePinNew = APP.changePinInput;
+    document.querySelector('.modal-overlay').remove();
+    showChangePinStep(3);
+  } else if (step === 3) {
+    // Confirm new pattern matches
+    const newPat = (APP.changePinNew || []).join(',');
+    if (input !== newPat) {
+      if (errorEl) { errorEl.style.display = 'block'; errorEl.textContent = t('pinMismatch2'); playError(); }
+      APP.changePinInput = [];
+      document.querySelectorAll('.pattern-dot').forEach(d => d.classList.remove('selected'));
+      updateChangePinDisplay();
+      return;
+    }
+    // Success - save new pattern
+    APP.correctPattern = [...APP.changePinNew];
+    const s = getStore();
+    s.parentPattern = APP.correctPattern;
+    saveStore(s);
+    document.querySelector('.modal-overlay').remove();
+    playSuccess();
+    // If coming from Me page, show a confirmation
+    alert('✅ ' + t('pinChanged'));
+    navigateTo('me');
+  }
+}
+
+function renderParent(container) {
+  if (!APP.parentUnlocked) {
+    container.innerHTML = `
+      <div class="page active" style="text-align:center;padding:60px 20px">
+        <div style="font-size:64px;margin-bottom:16px">🔒</div>
+        <h2 style="font-size:20px;margin-bottom:8px">${t('parentSettings')}</h2>
+        <p style="color:var(--text-light);margin-bottom:24px">${t('enterPatternToAccess')}</p>
+        <button style="padding:14px 36px;border-radius:50px;border:none;background:var(--orange);color:white;font-weight:700;font-size:16px;cursor:pointer;box-shadow:0 4px 16px rgba(255,140,66,0.35)" onclick="openParentLock()">🔒 ${t('enterPassword')}</button>
+      </div>`;
+    return;
+  }
+
+  const s = getStore();
+  const ps = s.parentSettings;
+
+  container.innerHTML = `
+    <div class="page active">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+        <div>
+          <h2 style="font-size:22px">⚙️ ${t('parentSettings')}</h2>
+          <p style="font-size:13px;color:var(--text-light)">${t('parentSettingsSub')}</p>
+        </div>
+        <button style="padding:8px 16px;border-radius:20px;border:2px solid #f0e8d8;background:white;font-size:13px;font-weight:600;cursor:pointer" onclick="APP.parentUnlocked=false;navigateTo('home');playClick()">🔒 ${t('lock')}</button>
+      </div>
+
+      <!-- Tab bar -->
+      <div class="parent-tab-bar" style="margin-bottom:16px">
+        <button class="parent-tab active" onclick="switchParentTab('time',this)">⏱ ${t('timeSettings')}</button>
+        <button class="parent-tab" onclick="switchParentTab('whitelist',this)">📋 ${t('contentMgmt')}</button>
+        <button class="parent-tab" onclick="switchParentTab('report',this)">📊 ${t('learningReport')}</button>
+        <button class="parent-tab" onclick="switchParentTab('sound',this)">🔊 ${t('soundEffects')}</button>
+        <button class="parent-tab" onclick="switchParentTab('pin',this)">🔒 ${t('changePIN')}</button>
+      </div>
+
+      <div id="parent-tab-content">
+        <!-- Time settings -->
+        <div id="tab-time">
+          <div class="setting-row">
+            <label>${t('sessionLength')}</label>
+            <div>
+              <input type="number" id="session-limit" value="${ps.sessionLimit}" min="5" max="120"> ${t('minutes')}
+              <button style="margin-left:8px;padding:6px 14px;border-radius:20px;border:none;background:var(--orange);color:white;font-weight:700;cursor:pointer;font-size:12px" onclick="saveTimeSettings()">${APP.lang === 'zh' ? '保存' : 'Save'}</button>
+            </div>
+          </div>
+          <div class="setting-row">
+            <label>${t('dailyLength')}</label>
+            <div>
+              <input type="number" id="daily-limit" value="${ps.dailyLimit}" min="10" max="300"> ${t('minutes')}
+            </div>
+          </div>
+          <div class="toggle-row">
+            <label>${t('blockToggle')}</label>
+            <label class="toggle-switch">
+              <input type="checkbox" id="block-enabled" ${ps.blockEnabled ? 'checked' : ''} onchange="toggleBlockTimeInputs()">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div id="block-time-fields" style="display:${ps.blockEnabled ? 'block' : 'none'}">
+            <div class="setting-row">
+              <label>${t('blockedStart')}</label>
+              <input type="time" id="block-start" value="${ps.blockStart}">
+            </div>
+            <div class="setting-row">
+              <label>${t('blockedEnd')}</label>
+              <input type="time" id="block-end" value="${ps.blockEnd}">
+            </div>
+            <p style="font-size:12px;color:var(--text-light);padding:8px">💡 ${t('blockedHint')}</p>
+          </div>
+          <button style="margin-top:8px;padding:10px 24px;border-radius:50px;border:none;background:var(--blue);color:white;font-weight:700;cursor:pointer" onclick="saveTimeSettings()">💾 ${t('saveAll')}</button>
+        </div>
+
+        <!-- Content whitelist -->
+        <div id="tab-whitelist" style="display:none">
+          <p style="color:var(--text-light);margin-bottom:12px">${t('manageVideos')}</p>
+          ${VIDEO_DB.map(v => {
+            const hidden = (ps.hiddenVideos || []).includes(v.id);
+            return `
+            <div class="whitelist-video ${hidden ? 'hidden-video' : ''}">
+              <span>${v.title.substring(0, 40)}...</span>
+              <span style="font-size:11px;color:var(--text-light)">${v.category} | ${v.ages[0]}-${v.ages[1]}${APP.lang === 'zh' ? '岁' : 'y'}</span>
+              <button class="whitelist-toggle ${hidden ? 'hide' : ''}" onclick="toggleVideoHidden('${v.id}')">${hidden ? t('hidden') : t('shown')}</button>
+            </div>`;
+          }).join('')}
+        </div>
+
+        <!-- Learning report -->
+        <div id="tab-report" style="display:none">
+          <div style="background:white;border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow)">
+            <h3 style="margin-bottom:12px">📊 ${t('learningReport')}</h3>
+            <p style="margin:8px 0"><strong>${t('videosWatchedTotal')}：</strong>${s.watchCount}</p>
+            <p style="margin:8px 0"><strong>${t('starsTotal')}：</strong>${s.stars} ⭐</p>
+            <p style="margin:8px 0"><strong>${t('streakDaysTotal')}：</strong>${s.streak} ${APP.lang === 'zh' ? '天' : 'days'}</p>
+            <p style="margin:8px 0"><strong>${t('totalLearning')}：</strong>${Math.floor((s.totalWatchTime || 0) / 60)} ${t('minutes')}</p>
+            <p style="margin:8px 0"><strong>${t('badgesEarned')}：</strong>${s.badges.length}/${BADGES.length}</p>
+            <p style="margin:8px 0"><strong>${t('videosCompleted')}：</strong>${s.completed.length}/${VIDEO_DB.length}</p>
+            <p style="margin:8px 0"><strong>${t('videosFavorited')}：</strong>${s.favorites.length}</p>
+          </div>
+
+          <div style="background:white;border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow);margin-top:12px">
+            <h3 style="margin-bottom:8px">📋 ${t('completedVideosList')}</h3>
+            ${s.completed.length === 0 ? '<p style="color:var(--text-light)">' + t('noCompletedVideos') + '</p>' :
+            s.completed.map(vid => {
+              const v = getVideo(vid);
+              return v ? `<p style="font-size:13px;margin:4px 0">✅ ${v.title} (${v.category})</p>` : '';
+            }).join('')}
+          </div>
+        </div>
+
+        <!-- Sound settings -->
+        <div id="tab-sound" style="display:none">
+          <div class="setting-row">
+            <label>🔊 ${t('soundFeedback')}</label>
+            <button style="padding:10px 20px;border-radius:50px;border:none;background:${s.soundEnabled ? 'var(--green)' : '#ccc'};color:white;font-weight:700;cursor:pointer" onclick="toggleSound()">
+              ${s.soundEnabled ? t('soundOn') : t('soundOff')}
+            </button>
+          </div>
+          <p style="font-size:12px;color:var(--text-light);padding:8px">${t('soundOffHint')}</p>
+        </div>
+
+        <!-- Change PIN -->
+        <div id="tab-pin" style="display:none">
+          <p style="color:var(--text-light);margin-bottom:12px">${t('modifyParentPIN')}</p>
+          <div style="background:white;border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow);text-align:center">
+            <p style="margin-bottom:12px">${t('currentPattern')}：<strong>${(APP.correctPattern || []).join(' → ') || t('notSet')}</strong></p>
+            <button style="padding:12px 32px;border-radius:50px;border:none;background:var(--orange);color:white;font-weight:700;font-size:15px;cursor:pointer" onclick="openChangePin()">
+              🔒 ${t('changePIN')}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function switchParentTab(tab, btn) {
+  document.querySelectorAll('.parent-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  ['time','whitelist','report','sound','pin'].forEach(t => {
+    const el = document.getElementById('tab-' + t);
+    if (el) el.style.display = t === tab ? 'block' : 'none';
+  });
+}
+
+function toggleBlockTimeInputs() {
+  const checked = document.getElementById('block-enabled')?.checked;
+  const fields = document.getElementById('block-time-fields');
+  if (fields) fields.style.display = checked ? 'block' : 'none';
+}
+
+function saveTimeSettings() {
+  const s = getStore();
+  const sessionLimit = parseInt(document.getElementById('session-limit')?.value) || 20;
+  const dailyLimit = parseInt(document.getElementById('daily-limit')?.value) || 60;
+  const blockStart = document.getElementById('block-start')?.value || '21:00';
+  const blockEnd = document.getElementById('block-end')?.value || '07:00';
+  const blockEnabled = document.getElementById('block-enabled')?.checked || false;
+
+  s.parentSettings.sessionLimit = sessionLimit;
+  s.parentSettings.dailyLimit = dailyLimit;
+  s.parentSettings.blockStart = blockStart;
+  s.parentSettings.blockEnd = blockEnd;
+  s.parentSettings.blockEnabled = blockEnabled;
+  saveStore(s);
+  playSuccess();
+  alert('✅ ' + t('saved'));
+}
+
+function toggleVideoHidden(videoId) {
+  const s = getStore();
+  if (!s.parentSettings.hiddenVideos) s.parentSettings.hiddenVideos = [];
+  const idx = s.parentSettings.hiddenVideos.indexOf(videoId);
+  if (idx >= 0) { s.parentSettings.hiddenVideos.splice(idx, 1); } else { s.parentSettings.hiddenVideos.push(videoId); }
+  saveStore(s);
+  navigateTo('parent');
+  // Re-show whitelist tab
+  setTimeout(() => {
+    const tabs = document.querySelectorAll('.parent-tab');
+    tabs.forEach(t => t.classList.remove('active'));
+    tabs[1]?.classList.add('active');
+    ['time','whitelist','report','sound'].forEach(t => {
+      const el = document.getElementById('tab-' + t);
+      if (el) el.style.display = t === 'whitelist' ? 'block' : 'none';
+    });
+  }, 100);
+  playClick();
+}
+
+function toggleSound() {
+  const s = getStore();
+  s.soundEnabled = !s.soundEnabled;
+  saveStore(s);
+  navigateTo('parent');
+  setTimeout(() => {
+    const tabs = document.querySelectorAll('.parent-tab');
+    tabs.forEach(t => t.classList.remove('active'));
+    tabs[3]?.classList.add('active');
+    ['time','whitelist','report','sound'].forEach(t => {
+      const el = document.getElementById('tab-' + t);
+      if (el) el.style.display = t === 'sound' ? 'block' : 'none';
+    });
+  }, 100);
+  playClick();
+}
+
+// ─── INIT ──────────────────────────────────────────────────────
+function init() {
+  // Ensure store has all default fields
+  const defaults = getStore();
+  const s = { ...defaults, ...JSON.parse(localStorage.getItem('kids_edu_store') || '{}') };
+  // Merge missing defaults
+  if (!s.playlists) s.playlists = { "默认": [] };
+  if (!s.parentSettings) s.parentSettings = { sessionLimit: 20, dailyLimit: 60, blockStart: "21:00", blockEnd: "07:00", blockEnabled: false, hiddenVideos: [] };
+  if (!s.parentSettings.hiddenVideos) s.parentSettings.hiddenVideos = [];
+  if (!s.soundEnabled && s.soundEnabled !== false) s.soundEnabled = true;
+  if (!s.streakDates) s.streakDates = [];
+  if (!s.progress) s.progress = {};
+  saveStore(s);
+
+  // Load parent pattern from localStorage
+  if (s.parentPattern) {
+    APP.correctPattern = s.parentPattern;
+  }
+
+  // If no parent pattern has been set, show first-time setup
+  if (!APP.correctPattern) {
+    showFirstTimePinSetup();
+    return;
+  }
+
+  // Initial render
+  updateNavLabels();
+  navigateTo('home');
+}
+
+// ─── START ─────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', init);
+
+// Clean up timer on page unload
+window.addEventListener('beforeunload', () => {
+  if (APP.timerInterval) clearInterval(APP.timerInterval);
+});
+</script>
+
+</body>
+</html>
