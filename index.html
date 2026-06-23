@@ -946,6 +946,62 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px s
 }
 
 /* ============================================
+   SIDE DECORATIONS (desktop only)
+   ============================================ */
+.side-decoration {
+  display: none;
+  position: fixed;
+  top: 80px;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+}
+.side-decoration-left {
+  left: max(8px, calc((100vw - 900px) / 2 - 160px));
+}
+.side-decoration-right {
+  right: max(8px, calc((100vw - 900px) / 2 - 160px));
+}
+.side-decoration svg {
+  width: 140px;
+  height: auto;
+  display: block;
+}
+/* Float animations */
+@keyframes floatSideA {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(2deg); }
+}
+@keyframes floatSideB {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(-2deg); }
+}
+@keyframes twinkleSide {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+@keyframes bounceSide {
+  0%, 100% { transform: translateY(0) scale(1); }
+  30% { transform: translateY(-14px) scale(1.08); }
+  60% { transform: translateY(-4px) scale(1.03); }
+}
+.side-cloud-wrap { animation: floatSideA 5s ease-in-out infinite; }
+.side-star-wrap { animation: floatSideB 4.5s ease-in-out infinite; }
+.side-heart-wrap { animation: floatSideA 6s ease-in-out infinite; }
+.side-balloon-wrap { animation: floatSideB 5.5s ease-in-out infinite; }
+.side-rainbow-wrap { animation: floatSideA 7s ease-in-out infinite; }
+.side-note-wrap { animation: floatSideB 4s ease-in-out infinite; }
+.side-sparkle { animation: twinkleSide 2.5s ease-in-out infinite; }
+.side-sparkle:nth-child(2) { animation-delay: 0.8s; }
+.side-sparkle:nth-child(3) { animation-delay: 1.6s; }
+.side-decoration svg .pup-jump { animation: bounceSide 3s ease-in-out infinite; }
+.side-decoration svg .pup-jump2 { animation: bounceSide 3s ease-in-out infinite; animation-delay: 1.5s; }
+
+@media (min-width: 1100px) {
+  .side-decoration { display: block; }
+}
+
+/* ============================================
    KIDS ILLUSTRATION ROW
    ============================================ */
 .kids-illustration-row {
@@ -3393,6 +3449,240 @@ function renderHome(container) {
   const ageLabels = { 5: t('age3_5'), 8: t('age6_8'), 12: t('age9_12') };
 
   container.innerHTML = `
+    <!-- 🌸 Side Decorations (Desktop) 🌸 -->
+    <div class="side-decoration side-decoration-left">
+      <svg viewBox="0 0 160 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Cloud with ABC -->
+        <g class="side-cloud-wrap">
+          <ellipse cx="60" cy="85" rx="42" ry="28" fill="#FFF" opacity="0.9"/>
+          <ellipse cx="38" cy="70" rx="24" ry="18" fill="#FFF" opacity="0.9"/>
+          <ellipse cx="82" cy="70" rx="24" ry="18" fill="#FFF" opacity="0.9"/>
+          <ellipse cx="60" cy="80" rx="40" ry="24" fill="#FFE8D6" opacity="0.5"/>
+          <text x="60" y="94" text-anchor="middle" font-size="13" font-weight="800" fill="#FF8C42" font-family="system-ui,sans-serif">ABC</text>
+          <!-- Cloud eyes -->
+          <circle cx="49" cy="78" r="2" fill="#FF8C42"/>
+          <circle cx="71" cy="78" r="2" fill="#FF8C42"/>
+          <path d="M54 84 Q60 90 66 84" stroke="#FF8C42" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        </g>
+        <!-- Sparkle stars around cloud -->
+        <g class="side-sparkle"><text x="100" y="55" font-size="14">✦</text></g>
+        <g class="side-sparkle"><text x="22" y="55" font-size="10">✦</text></g>
+        <g class="side-sparkle"><text x="90" y="100" font-size="8">✦</text></g>
+
+        <!-- Cute Child Character reading -->
+        <g class="side-star-wrap">
+          <g transform="translate(30, 140)">
+            <!-- Body -->
+            <ellipse cx="30" cy="82" rx="16" ry="20" fill="#FFB347" rx="16" ry="20"/>
+            <!-- Head -->
+            <circle cx="30" cy="54" r="16" fill="#FFD1A4"/>
+            <!-- Hair -->
+            <ellipse cx="30" cy="45" rx="18" ry="10" fill="#4A3728"/>
+            <ellipse cx="20" cy="42" rx="6" ry="8" fill="#4A3728"/>
+            <ellipse cx="40" cy="42" rx="6" ry="8" fill="#4A3728"/>
+            <!-- Eyes -->
+            <circle cx="24" cy="54" r="2.5" fill="#333"/>
+            <circle cx="36" cy="54" r="2.5" fill="#333"/>
+            <!-- Cheeks -->
+            <circle cx="21" cy="58" r="3.5" fill="#FFB6C1" opacity="0.5"/>
+            <circle cx="39" cy="58" r="3.5" fill="#FFB6C1" opacity="0.5"/>
+            <!-- Smile -->
+            <path d="M25 61 Q30 66 35 61" stroke="#333" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <!-- Arms holding book -->
+            <ellipse cx="14" cy="72" rx="6" ry="4" fill="#FFB347" transform="rotate(-20,14,72)"/>
+            <ellipse cx="46" cy="72" rx="6" ry="4" fill="#FFB347" transform="rotate(20,46,72)"/>
+            <!-- Book -->
+            <rect x="18" y="66" width="24" height="16" rx="2" fill="#4ECDC4" stroke="#2CB0A0" stroke-width="1"/>
+            <line x1="30" y1="66" x2="30" y2="82" stroke="#2CB0A0" stroke-width="0.8"/>
+            <!-- Legs -->
+            <ellipse cx="24" cy="102" rx="7" ry="9" fill="#4A90D9"/>
+            <ellipse cx="36" cy="102" rx="7" ry="9" fill="#4A90D9"/>
+            <!-- Shoes -->
+            <ellipse cx="21" cy="111" rx="7" ry="4" fill="#FF6B6B"/>
+            <ellipse cx="39" cy="111" rx="7" ry="4" fill="#FF6B6B"/>
+          </g>
+        </g>
+
+        <!-- Hearts -->
+        <g class="side-heart-wrap"><text x="100" y="160" font-size="16" fill="#FF6B9D">♥</text></g>
+        <g class="side-heart-wrap"><text x="80" y="130" font-size="11" fill="#FF69B4">♥</text></g>
+
+        <!-- More stars bottom -->
+        <g class="side-sparkle"><text x="35" y="250" font-size="12" fill="#FFD700">★</text></g>
+        <g class="side-sparkle"><text x="100" y="280" font-size="9" fill="#FFD700">★</text></g>
+        <g class="side-sparkle"><text x="55" y="340" font-size="14" fill="#87CEEB">✿</text></g>
+
+        <!-- Pencil icon -->
+        <g class="pup-jump">
+          <g transform="translate(100, 220)">
+            <rect x="0" y="8" width="8" height="36" rx="2" fill="#FFD700" transform="rotate(-30,4,26)"/>
+            <rect x="4" y="8" width="2" height="36" fill="#FFA500" opacity="0.6" transform="rotate(-30,5,26)"/>
+            <polygon points="0,8 8,8 8,2 4,-2 0,2" fill="#FFC0CB" transform="rotate(-30,4,26)"/>
+            <polygon points="2,2 6,2 4,-3" fill="#333" transform="rotate(-30,4,26)"/>
+          </g>
+        </g>
+
+        <!-- Small bunny -->
+        <g class="pup-jump2">
+          <g transform="translate(90, 320)">
+            <ellipse cx="20" cy="40" rx="12" ry="14" fill="#FFF" stroke="#E0E0E0" stroke-width="1"/>
+            <circle cx="20" cy="26" r="10" fill="#FFF" stroke="#E0E0E0" stroke-width="1"/>
+            <ellipse cx="20" cy="16" rx="7" ry="10" fill="#FFB6C1"/>
+            <ellipse cx="20" cy="16" rx="4" ry="7" fill="#FFC0CB"/>
+            <circle cx="17" cy="27" r="1.5" fill="#333"/>
+            <circle cx="23" cy="27" r="1.5" fill="#333"/>
+            <ellipse cx="20" cy="30" rx="2" ry="1" fill="#FFB6C1"/>
+            <circle cx="17" cy="38" r="4" fill="#FFF" stroke="#E0E0E0" stroke-width="0.8"/>
+            <circle cx="23" cy="38" r="4" fill="#FFF" stroke="#E0E0E0" stroke-width="0.8"/>
+          </g>
+        </g>
+
+        <!-- Ground grass -->
+        <g transform="translate(10, 460)" opacity="0.3">
+          <rect x="0" y="0" width="140" height="30" rx="15" fill="#90EE90" opacity="0.3"/>
+          <ellipse cx="20" cy="-3" rx="8" ry="12" fill="#7CCD7C"/>
+          <ellipse cx="60" cy="-5" rx="6" ry="10" fill="#90EE90"/>
+          <ellipse cx="110" cy="-4" rx="8" ry="11" fill="#7CCD7C"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="side-decoration side-decoration-right">
+      <svg viewBox="0 0 160 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Rainbow arc -->
+        <g class="side-rainbow-wrap">
+          <path d="M20 120 Q80 20 140 120" stroke="#FF6B6B" stroke-width="5" fill="none" opacity="0.7"/>
+          <path d="M26 120 Q80 30 134 120" stroke="#FFB347" stroke-width="5" fill="none" opacity="0.7"/>
+          <path d="M32 120 Q80 40 128 120" stroke="#FFD700" stroke-width="5" fill="none" opacity="0.7"/>
+          <path d="M38 120 Q80 50 122 120" stroke="#90EE90" stroke-width="5" fill="none" opacity="0.7"/>
+          <path d="M44 120 Q80 60 116 120" stroke="#87CEEB" stroke-width="5" fill="none" opacity="0.7"/>
+          <path d="M50 120 Q80 70 110 120" stroke="#DDA0DD" stroke-width="5" fill="none" opacity="0.7"/>
+          <!-- Sun -->
+          <circle cx="80" cy="50" r="16" fill="#FFD700"/>
+          <circle cx="80" cy="50" r="12" fill="#FFEB3B"/>
+          <g opacity="0.6">
+            <line x1="80" y1="28" x2="80" y2="22" stroke="#FFD700" stroke-width="2" stroke-linecap="round"/>
+            <line x1="80" y1="72" x2="80" y2="78" stroke="#FFD700" stroke-width="2" stroke-linecap="round"/>
+            <line x1="58" y1="50" x2="52" y2="50" stroke="#FFD700" stroke-width="2" stroke-linecap="round"/>
+            <line x1="102" y1="50" x2="108" y2="50" stroke="#FFD700" stroke-width="2" stroke-linecap="round"/>
+            <line x1="64" y1="34" x2="60" y2="30" stroke="#FFD700" stroke-width="2" stroke-linecap="round"/>
+            <line x1="96" y1="34" x2="100" y2="30" stroke="#FFD700" stroke-width="2" stroke-linecap="round"/>
+            <line x1="64" y1="66" x2="60" y2="70" stroke="#FFD700" stroke-width="2" stroke-linecap="round"/>
+            <line x1="96" y1="66" x2="100" y2="70" stroke="#FFD700" stroke-width="2" stroke-linecap="round"/>
+          </g>
+          <!-- Sun face -->
+          <circle cx="76" cy="47" r="1.5" fill="#FF8C00"/>
+          <circle cx="84" cy="47" r="1.5" fill="#FF8C00"/>
+          <path d="M76 54 Q80 58 84 54" stroke="#FF8C00" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        </g>
+
+        <!-- Balloons -->
+        <g class="side-balloon-wrap">
+          <!-- Balloon 1 - Red -->
+          <g transform="translate(90, 160)">
+            <ellipse cx="0" cy="0" rx="14" ry="18" fill="#FF6B6B"/>
+            <ellipse cx="-4" cy="-4" rx="5" ry="6" fill="#FF8E8E" opacity="0.5"/>
+            <polygon points="-4,18 4,18 0,22" fill="#FF6B6B"/>
+            <path d="M0 22 L0 55" stroke="#AAA" stroke-width="1" stroke-dasharray="2,1"/>
+          </g>
+          <!-- Balloon 2 - Blue -->
+          <g transform="translate(55, 175)">
+            <ellipse cx="0" cy="0" rx="12" ry="16" fill="#4ECDC4"/>
+            <ellipse cx="-3" cy="-3" rx="4" ry="5" fill="#7EDDD6" opacity="0.5"/>
+            <polygon points="-3,16 3,16 0,19" fill="#4ECDC4"/>
+            <path d="M0 19 L0 48" stroke="#AAA" stroke-width="1" stroke-dasharray="2,1"/>
+          </g>
+          <!-- Balloon 3 - Purple -->
+          <g transform="translate(120, 190)">
+            <ellipse cx="0" cy="0" rx="10" ry="14" fill="#C77DFF"/>
+            <ellipse cx="-3" cy="-3" rx="4" ry="4" fill="#D9A8FF" opacity="0.5"/>
+            <polygon points="-3,14 3,14 0,17" fill="#C77DFF"/>
+            <path d="M0 17 L0 40" stroke="#AAA" stroke-width="1" stroke-dasharray="2,1"/>
+          </g>
+        </g>
+
+        <!-- Musical Notes -->
+        <g class="side-note-wrap">
+          <text x="20" y="170" font-size="22" fill="#FF6B9D">♪</text>
+          <text x="110" y="240" font-size="18" fill="#45B7D1">♫</text>
+          <text x="50" y="130" font-size="14" fill="#FFB347">♪</text>
+        </g>
+
+        <!-- Cute Girl Character drawing -->
+        <g class="side-star-wrap">
+          <g transform="translate(40, 250)">
+            <!-- Body -->
+            <ellipse cx="30" cy="82" rx="15" ry="19" fill="#FF6B9D"/>
+            <!-- Dress -->
+            <path d="M15 80 L45 80 L50 105 L10 105 Z" fill="#FF69B4"/>
+            <path d="M15 80 L45 80 L42 95 L18 95 Z" fill="#FF85C8" opacity="0.4"/>
+            <!-- Head -->
+            <circle cx="30" cy="54" r="16" fill="#FFD1A4"/>
+            <!-- Hair -->
+            <ellipse cx="30" cy="44" rx="19" ry="12" fill="#8B4513"/>
+            <path d="M14 44 Q10 58 14 68" stroke="#8B4513" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <path d="M46 44 Q50 58 46 68" stroke="#8B4513" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <!-- Bow -->
+            <path d="M30 38 L22 32 L26 38 L22 44 Z" fill="#FF4500"/>
+            <path d="M30 38 L38 32 L34 38 L38 44 Z" fill="#FF4500"/>
+            <circle cx="30" cy="38" r="2" fill="#FF6347"/>
+            <!-- Eyes -->
+            <circle cx="24" cy="54" r="2.5" fill="#333"/>
+            <circle cx="36" cy="54" r="2.5" fill="#333"/>
+            <!-- Eyelashes -->
+            <path d="M20 52 L18 50" stroke="#333" stroke-width="1.2" stroke-linecap="round"/>
+            <path d="M40 52 L42 50" stroke="#333" stroke-width="1.2" stroke-linecap="round"/>
+            <!-- Cheeks -->
+            <circle cx="21" cy="58" r="3.5" fill="#FFB6C1" opacity="0.5"/>
+            <circle cx="39" cy="58" r="3.5" fill="#FFB6C1" opacity="0.5"/>
+            <!-- Smile -->
+            <path d="M25 60 Q30 65 35 60" stroke="#333" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <!-- Arms -->
+            <ellipse cx="12" cy="72" rx="5" ry="3.5" fill="#FFD1A4" transform="rotate(-15,12,72)"/>
+            <ellipse cx="48" cy="72" rx="5" ry="3.5" fill="#FFD1A4" transform="rotate(15,48,72)"/>
+            <!-- Paintbrush in right hand -->
+            <line x1="48" y1="72" x2="58" y2="58" stroke="#8B4513" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="60" cy="55" r="2.5" fill="#FF4500"/>
+            <!-- Legs -->
+            <ellipse cx="24" cy="102" rx="7" ry="9" fill="#FFD1A4"/>
+            <ellipse cx="36" cy="102" rx="7" ry="9" fill="#FFD1A4"/>
+            <!-- Shoes -->
+            <ellipse cx="20" cy="111" rx="7" ry="4" fill="#FF69B4"/>
+            <ellipse cx="40" cy="111" rx="7" ry="4" fill="#FF69B4"/>
+          </g>
+        </g>
+
+        <!-- Butterfly -->
+        <g class="pup-jump">
+          <g transform="translate(115, 290)">
+            <ellipse cx="0" cy="0" rx="3" ry="8" fill="#4A3728"/>
+            <ellipse cx="-8" cy="-6" rx="7" ry="5" fill="#FFB6C1" transform="rotate(25,-8,-6)"/>
+            <ellipse cx="8" cy="-6" rx="7" ry="5" fill="#87CEEB" transform="rotate(-25,8,-6)"/>
+            <ellipse cx="-6" cy="2" rx="5" ry="3.5" fill="#FFC0CB" transform="rotate(15,-6,2)"/>
+            <ellipse cx="6" cy="2" rx="5" ry="3.5" fill="#ADD8E6" transform="rotate(-15,6,2)"/>
+          </g>
+        </g>
+
+        <!-- Flowers -->
+        <g class="side-sparkle">
+          <circle cx="30" cy="400" r="5" fill="#FF69B4"/>
+          <circle cx="30" cy="400" r="2" fill="#FFD700"/>
+        </g>
+        <g class="side-sparkle">
+          <circle cx="120" cy="420" r="4" fill="#87CEEB"/>
+          <circle cx="120" cy="420" r="1.5" fill="#FFD700"/>
+        </g>
+
+        <!-- Ground grass -->
+        <g transform="translate(10, 460)" opacity="0.3">
+          <rect x="0" y="0" width="140" height="30" rx="15" fill="#90EE90" opacity="0.3"/>
+          <ellipse cx="30" cy="-4" rx="7" ry="11" fill="#A8E6A8"/>
+          <ellipse cx="80" cy="-3" rx="6" ry="9" fill="#90EE90"/>
+          <ellipse cx="120" cy="-5" rx="8" ry="12" fill="#A8E6A8"/>
+        </g>
+      </svg>
+    </div>
+
     <div class="page active">
       <h1 style="font-size:22px;font-weight:800;color:var(--orange);margin-bottom:12px">${t('homeHeading')}</h1>
       <!-- Age filter pills -->
