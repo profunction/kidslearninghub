@@ -1103,6 +1103,23 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px s
 }
 
 /* ============================================
+   RELATED RECOMMENDATIONS
+   ============================================ */
+.related-section { padding: 0 20px 30px; max-width: 900px; margin: 0 auto; }
+.related-section h3 { font-size: 16px; font-weight: 700; margin-bottom: 14px; color: #4A4A4A; display: flex; align-items: center; gap: 8px; }
+.related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+.related-card { 
+  background: white; border-radius: 14px; padding: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  cursor: pointer; transition: all 0.25s; display: flex; flex-direction: column; gap: 6px;
+  border: 2px solid transparent; text-decoration: none; color: inherit;
+}
+.related-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.10); border-color: var(--orange); }
+.related-card .rc-icon { font-size: 28px; line-height: 1; }
+.related-card .rc-title { font-size: 13px; font-weight: 700; line-height: 1.4; }
+.related-card .rc-desc { font-size: 11px; color: #888; line-height: 1.4; }
+.related-card .rc-badge { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 10px; background: #f0e8d8; color: #8B6914; margin-top: 2px; }
+
+/* ============================================
    SITE FOOTER
    ============================================ */
 .site-footer {
@@ -3175,29 +3192,280 @@ function updateBreadcrumb(page, params) {
   if (!bc) return;
   var isZh = document.documentElement.lang === 'zh-CN';
 
-  var labels = {
-    home:     isZh ? '首页' : 'Home',
-    courses:  isZh ? '课程' : 'Courses',
-    course:   isZh ? '课程详情' : 'Course',
-    practice: isZh ? '练习册' : 'Worksheets',
-    blog:     isZh ? '博客' : 'Blog',
-    blogPost: isZh ? '文章' : 'Article',
-    about:    isZh ? '关于我们' : 'About',
-    feedback: isZh ? '反馈' : 'Feedback',
-    ageHub:   isZh ? '按年龄' : 'By Age',
-    search:   isZh ? '搜索' : 'Search',
-    me:       isZh ? '个人中心' : 'Profile',
-    parent:   isZh ? '家长设置' : 'Settings'
-  };
-
-  var html = '<span class="breadcrumb-item"><a href="#home" data-page="home">' + labels.home + '</a></span>';
-
-  if (page !== 'home' && labels[page]) {
-    html += '<span class="breadcrumb-item">' + labels[page] + '</span>';
+  // Helper: build a breadcrumb link (clickable) or current (non-clickable)
+  function bcLink(href, pageId, label) {
+    return '<span class="breadcrumb-item"><a href="#' + href + '" data-page="' + pageId + '">' + label + '</a></span>';
+  }
+  function bcCurrent(label) {
+    return '<span class="breadcrumb-item">' + label + '</span>';
   }
 
-  bc.innerHTML = html;
+  // Translation shortcuts
+  var L = {
+    home: isZh ? '首页' : 'Home',
+    courses: isZh ? '课程' : 'Courses',
+    blog: isZh ? '博客' : 'Blog',
+    byAge: isZh ? '按年龄' : 'By Age',
+    bySubject: isZh ? '按学科' : 'By Subject',
+    practice: isZh ? '练习册' : 'Worksheets',
+    about: isZh ? '关于我们' : 'About',
+    feedback: isZh ? '反馈' : 'Feedback',
+    search: isZh ? '搜索' : 'Search',
+    profile: isZh ? '个人中心' : 'Profile',
+    settings: isZh ? '家长设置' : 'Settings',
+    watch: isZh ? '播放' : 'Watch'
+  };
+
+  var items = [bcLink('home', 'home', L.home)];
+
+  switch(page) {
+    case 'home':
+      // Only home, nothing to add
+      break;
+
+    case 'courses':
+      items.push(bcCurrent(L.courses));
+      break;
+
+    case 'course':
+      items.push(bcLink('courses', 'courses', L.courses));
+      var cInfo = params.courseId ? COURSE_DB.find(function(c){return c.id===params.courseId;}) : null;
+      items.push(bcCurrent(cInfo ? cInfo.icon + ' ' + cInfo.name : (isZh ? '课程详情' : 'Course')));
+      break;
+
+    case 'practice':
+      items.push(bcCurrent(L.practice));
+      break;
+
+    case 'blog':
+      items.push(bcCurrent(L.blog));
+      break;
+
+    case 'blogPost':
+      items.push(bcLink('blog', 'blog', L.blog));
+      var pInfo = params.postId ? BLOG_POSTS.find(function(p){return p.id===params.postId;}) : null;
+      items.push(bcCurrent(pInfo ? (isZh ? pInfo.zh.title : pInfo.en.title) : (isZh ? '文章' : 'Article')));
+      break;
+
+    case 'ageHub':
+      if (params.age && AGE_HUBS[params.age]) {
+        var ah = AGE_HUBS[params.age];
+        items.push(bcLink('ageHub', 'ageHub', L.byAge));
+        items.push(bcCurrent(ah.icon + ' ' + (isZh ? ah.zh.title : ah.en.title)));
+      } else {
+        items.push(bcCurrent(L.byAge));
+      }
+      break;
+
+    case 'subjectHub':
+      if (params.subject) {
+        var sm = params.subject;
+        var subNames = {math:isZh?'数学':'Math',english:isZh?'英语':'English',science:isZh?'科学':'Science',art:isZh?'艺术':'Art'};
+        items.push(bcLink('ageHub', 'ageHub', L.bySubject));
+        items.push(bcCurrent(subNames[sm] || sm));
+      } else {
+        items.push(bcCurrent(L.bySubject));
+      }
+      break;
+
+    case 'watch':
+      var vInfo = params.videoId ? getVideo(params.videoId) : null;
+      items.push(bcCurrent(vInfo ? vInfo.title : L.watch));
+      break;
+
+    case 'search':
+      items.push(bcCurrent(L.search));
+      break;
+
+    case 'about':
+      items.push(bcCurrent(L.about));
+      break;
+
+    case 'feedback':
+      items.push(bcCurrent(L.feedback));
+      break;
+
+    case 'me':
+      items.push(bcCurrent(L.profile));
+      break;
+
+    case 'parent':
+      items.push(bcCurrent(L.settings));
+      break;
+
+    default:
+      break;
+  }
+
+  bc.innerHTML = items.join('');
   bc.classList.toggle('home-hidden', page === 'home');
+}
+
+// ─── RELATED RECOMMENDATIONS ENGINE ──────────────────────────────
+
+// Build a related-items array for any page, returning 3-5 recommendations
+function getRelatedItems(page, params) {
+  var isZh = document.documentElement.lang === 'zh-CN';
+  var items = [];
+
+  function card(pageId, p, title, desc, icon, badge) {
+    var paramsStr = p && Object.keys(p).length ? JSON.stringify(p).replace(/"/g, '&quot;') : '';
+    return {
+      page: pageId, params: p,
+      title: title, desc: desc, icon: icon, badge: badge,
+      paramsAttr: paramsStr
+    };
+  }
+
+  // Shuffle helper
+  function shuffle(arr) { for (var i = arr.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = arr[i]; arr[i] = arr[j]; arr[j] = t; } return arr; }
+
+  switch(page) {
+
+    case 'courses':
+      // Link to subject hubs
+      items.push(card('subjectHub', {subject:'math'}, isZh?'儿童数学学习资源':'Kids Math', isZh?'数数、运算、逻辑思维训练':'Counting, Operations & Logic', '🔢', isZh?'数学思维':'Math'));
+      items.push(card('subjectHub', {subject:'english'}, isZh?'儿童英语学习资源':'Kids English', isZh?'字母、拼读、阅读启蒙':'Letters, Phonics & Reading', '🔤', isZh?'英语启蒙':'English'));
+      items.push(card('subjectHub', {subject:'science'}, isZh?'儿童科学探索资源':'Kids Science', isZh?'自然、实验、观察与发现':'Nature, Experiments & Discovery', '🔬', isZh?'科学探索':'Science'));
+      items.push(card('ageHub', {age:'3-5'}, isZh?'3-5岁幼儿学习专区':'Ages 3-5 Learning Hub', isZh?'启蒙阶段 · 培养学习兴趣':'Early Discovery & Basic Skills', '🌱', '3-5 '+(isZh?'岁':'yrs')));
+      items.push(card('ageHub', {age:'6-8'}, isZh?'6-8岁儿童学习专区':'Ages 6-8 Learning Hub', isZh?'系统学习与技能提升':'Systematic Learning & Skills', '🌿', '6-8 '+(isZh?'岁':'yrs')));
+      break;
+
+    case 'course':
+      var courseId = params.courseId;
+      // Other courses
+      COURSE_DB.forEach(function(c) {
+        if (c.id !== courseId) {
+          items.push(card('course', {courseId:c.id}, c.icon+' '+c.name, c.description, c.icon, isZh?'课程':'Course'));
+        }
+      });
+      // Videos from this course
+      var cvideos = COURSE_DB.find(function(c){return c.id===courseId;});
+      if (cvideos) {
+        var vids = shuffle(cvideos.videoIds.slice()).slice(0, 3);
+        vids.forEach(function(vid) {
+          var v = getVideo(vid);
+          if (v) items.push(card('watch', {videoId:v.id}, v.title, v.channel + ' · ' + v.duration, '📺', v.category));
+        });
+      }
+      break;
+
+    case 'blog':
+      // Suggest other content hubs
+      items.push(card('courses', {}, isZh?'浏览全部课程':'Browse All Courses', isZh?'英语、数学、科学、艺术等':'English, Math, Science, Art', '📚'));
+      items.push(card('subjectHub', {subject:'math'}, isZh?'数学学习资源':'Math Resources', isZh?'数数与简单运算':'Counting & Operations', '🔢'));
+      items.push(card('subjectHub', {subject:'english'}, isZh?'英语学习资源':'English Resources', isZh?'字母、拼读与阅读':'Letters, Phonics & Reading', '🔤'));
+      items.push(card('ageHub', {age:'3-5'}, isZh?'3-5岁启蒙资源':'Ages 3-5 Resources', isZh?'培养学习兴趣和基础能力':'Building Curiosity & Basics', '🌱'));
+      break;
+
+    case 'blogPost':
+      var postId = params.postId;
+      // Other blog posts
+      BLOG_POSTS.forEach(function(p) {
+        if (p.id !== postId) {
+          items.push(card('blogPost', {postId:p.id}, p.icon+' '+(isZh?p.zh.title:p.en.title), isZh?p.zh.summary:p.en.summary, p.icon, isZh?'博客':'Blog'));
+        }
+      });
+      // Related courses
+      items.push(card('courses', {}, isZh?'探索儿童课程':'Explore Kids Courses', isZh?'系统化的儿童学习路径':'Structured learning paths for kids', '📚', isZh?'课程':'Courses'));
+      items.push(card('subjectHub', {subject:'math'}, isZh?'数学学习资源':'Math Resources', isZh?'数数逻辑训练':'Counting & Logic', '🔢'));
+      break;
+
+    case 'ageHub':
+      var age = params.age;
+      // Other age groups
+      var allAges = ['3-5','6-8','9-12'];
+      var hubIcons = {'3-5':'🌱','6-8':'🌿','9-12':'🌳'};
+      allAges.forEach(function(a) {
+        if (a !== age && AGE_HUBS[a]) {
+          var ah = AGE_HUBS[a];
+          items.push(card('ageHub', {age:a}, hubIcons[a]+' '+(isZh?ah.zh.title:ah.en.title), isZh?ah.zh.subtitle:ah.en.subtitle, hubIcons[a]));
+        }
+      });
+      // Subject hubs
+      items.push(card('subjectHub', {subject:'math'}, isZh?'数学学习资源':'Math Resources', isZh?'数数运算与逻辑':'Counting & Logic', '🔢'));
+      items.push(card('subjectHub', {subject:'english'}, isZh?'英语学习资源':'English Resources', isZh?'字母拼读与阅读':'Letters & Phonics', '🔤'));
+      break;
+
+    case 'subjectHub':
+      var sub = params.subject;
+      var subMap = {math:{icon:'🔢',zh:'数学学习资源',en:'Math Resources'},english:{icon:'🔤',zh:'英语学习资源',en:'English Resources'},science:{icon:'🔬',zh:'科学探索资源',en:'Science Resources'},art:{icon:'🎨',zh:'艺术创意资源',en:'Art Resources'}};
+      // Other subjects
+      Object.keys(subMap).forEach(function(k) {
+        if (k !== sub) {
+          items.push(card('subjectHub', {subject:k}, subMap[k].icon+' '+(isZh?subMap[k].zh:subMap[k].en), isZh?'探索更多精彩内容':'Explore more content', subMap[k].icon));
+        }
+      });
+      // Age hubs
+      items.push(card('ageHub', {age:'3-5'}, '🌱 '+(isZh?'3-5岁幼儿学习专区':'Ages 3-5 Hub'), isZh?'启蒙培养学习兴趣':'Early Discovery & Curiosity', '🌱'));
+      items.push(card('ageHub', {age:'6-8'}, '🌿 '+(isZh?'6-8岁儿童学习专区':'Ages 6-8 Hub'), isZh?'系统学习与技能提升':'Systematic Learning', '🌿'));
+      break;
+
+    case 'watch':
+      var videoId = params.videoId;
+      var v = getVideo(videoId);
+      if (!v) break;
+      // Same category videos
+      var sameCat = VIDEO_DB.filter(function(v2){return v2.category===v.category && v2.id!==videoId;});
+      shuffle(sameCat).slice(0, 2).forEach(function(sv){
+        items.push(card('watch', {videoId:sv.id}, sv.title, sv.channel+' · '+sv.duration, '📺', sv.category));
+      });
+      // Different category videos
+      var diffCat = VIDEO_DB.filter(function(v2){return v2.category!==v.category && v2.ages.some(function(a){return a>=v.ages[0]&&a<=v.ages[1];});});
+      shuffle(diffCat).slice(0, 2).forEach(function(sv){
+        items.push(card('watch', {videoId:sv.id}, sv.title, sv.channel+' · '+sv.duration, '🎬', sv.category));
+      });
+      // Related course
+      if (v.courseId) {
+        var cr = COURSE_DB.find(function(c){return c.id===v.courseId;});
+        if (cr) items.push(card('course', {courseId:cr.id}, cr.icon+' '+cr.name, cr.description, cr.icon));
+      }
+      break;
+
+    case 'practice':
+      items.push(card('courses', {}, isZh?'查看全部课程':'View All Courses', isZh?'系统学习路径':'Structured Learning Paths', '📚'));
+      items.push(card('subjectHub', {subject:'math'}, isZh?'数学学习资源':'Math Resources', isZh?'数数运算练习':'Counting Practice', '🔢'));
+      items.push(card('subjectHub', {subject:'english'}, isZh?'英语学习资源':'English Resources', isZh?'字母拼读练习':'Phonics Practice', '🔤'));
+      items.push(card('subjectHub', {subject:'science'}, isZh?'科学探索资源':'Science Resources', isZh?'趣味实验与观察':'Fun Experiments', '🔬'));
+      break;
+
+    case 'search':
+      items.push(card('courses', {}, isZh?'浏览全部课程':'Browse All Courses', isZh?'系统化儿童学习路径':'Structured learning paths for kids', '📚'));
+      items.push(card('subjectHub', {subject:'math'}, isZh?'数学学习资源':'Math Resources', isZh?'数数运算与逻辑思维':'Counting, Operations & Logic', '🔢'));
+      items.push(card('subjectHub', {subject:'english'}, isZh?'英语学习资源':'English Resources', isZh?'字母拼读与阅读启蒙':'Letters, Phonics & Reading', '🔤'));
+      items.push(card('ageHub', {age:'3-5'}, isZh?'3-5岁幼儿学习专区':'Ages 3-5 Hub', isZh?'启蒙培养学习兴趣':'Early Discovery & Curiosity', '🌱'));
+      items.push(card('ageHub', {age:'6-8'}, isZh?'6-8岁儿童学习专区':'Ages 6-8 Hub', isZh?'系统学习与技能提升':'Systematic Learning', '🌿'));
+      break;
+  }
+
+  // Limit to 5, shuffle for variety
+  return shuffle(items).slice(0, 5);
+}
+
+// Render related recommendations HTML
+function renderRelatedSection(page, params) {
+  var items = getRelatedItems(page, params);
+  if (!items.length) return '';
+  var isZh = document.documentElement.lang === 'zh-CN';
+
+  var html = '<div class="related-section"><h3>💡 ' + (isZh ? '相关学习资源推荐' : 'Related Learning Resources') + '</h3>';
+  html += '<div class="related-grid">';
+
+  items.forEach(function(item) {
+    html += '<a href="#' + item.page + '" class="related-card" data-page="' + item.page + '"';
+    if (item.params && Object.keys(item.params).length) {
+      html += ' data-params=\'' + JSON.stringify(item.params) + '\'';
+    }
+    html += '>';
+    html += '<span class="rc-icon">' + item.icon + '</span>';
+    html += '<span class="rc-title">' + item.title + '</span>';
+    if (item.desc) html += '<span class="rc-desc">' + item.desc + '</span>';
+    if (item.badge) html += '<span class="rc-badge">' + item.badge + '</span>';
+    html += '</a>';
+  });
+
+  html += '</div></div>';
+  return html;
 }
 
 // ─── COURSE SCHEMA ─────────────────────────────────────────────
@@ -3436,7 +3704,7 @@ function navigateTo(page, params = {}) {
     case 'practice': renderPractice(main, params.videoId); break;
     case 'me': renderMe(main); break;
     case 'favorites': renderFavorites(main); break;
-    case 'search': renderSearch(main); break;
+    case 'search': if (params.query) APP.activeSearchQuery = params.query; renderSearch(main); break;
     case 'parent': renderParent(main); break;
     case 'courses': renderCoursesList(main); break;
     case 'channel': renderChannel(main, params.channelName); break;
@@ -3448,6 +3716,12 @@ function navigateTo(page, params = {}) {
     case 'ageHub': renderAgeHub(main, params.age); break;
     case 'subjectHub': renderSubjectHub(main, params.subject); break;
     default: renderHome(main);
+  }
+
+  // Inject related recommendations for content pages
+  var relPages = ['courses','course','blog','blogPost','ageHub','subjectHub','watch','practice','search'];
+  if (relPages.indexOf(page) !== -1) {
+    main.innerHTML += renderRelatedSection(page, params);
   }
 
   window.scrollTo(0, 0);
@@ -4766,7 +5040,7 @@ function buildCourseDetail(courseId) {
     '<div style="margin-bottom:16px">' +
       '<span style="font-size:12px;color:#999;margin-right:8px">' + tagsText + ':</span>' +
       d.tags.split(', ').map(function(tag) {
-        return '<span style="display:inline-block;background:#f0e8d8;color:#8B6914;padding:3px 10px;border-radius:12px;font-size:11px;margin:2px">' + tag + '</span>';
+        return '<a href="#search" data-page="search" data-params=\'{"query":"' + tag + '"}\' class="clickable-tag" style="display:inline-block;background:#f0e8d8;color:#8B6914;padding:3px 10px;border-radius:12px;font-size:11px;margin:2px;text-decoration:none;cursor:pointer;transition:all 0.2s" onmouseover="this.style.background=\'#e8d4a0\'" onmouseout="this.style.background=\'#f0e8d8\'">' + tag + '</a>';
       }).join(' ') +
     '</div>' +
     '<button onclick="navigateTo(\'practice\')" style="width:100%;padding:14px;border:none;background:linear-gradient(135deg,' + (course ? course.color : '#FF8C42') + ',' + (course ? course.color : '#FF8C42') + 'dd);color:white;border-radius:50px;font-size:15px;font-weight:700;cursor:pointer">🎮 ' + tryPracticeText + '</button>' +
@@ -6038,12 +6312,12 @@ const BLOG_POSTS = [
     zh: {
       title: '如何在家教孩子学数学：5个简单高效的启蒙方法',
       summary: '数学启蒙不必去补习班！本文分享5个在家就能操作的幼儿数学游戏和练习方法，适合3-6岁孩子，让孩子在生活中学数学。',
-      content: '<p>很多家长觉得教孩子数学很难，其实数学无处不在。最好的数学启蒙，就藏在日常生活中。以下是5个经过验证的高效方法：</p><h3>1. 数数游戏（日常物品）</h3><p>吃饭时数豆子、下楼时数台阶、逛超市时数水果。让孩子用手指点数，建立数与量的对应关系。<strong>关键：</strong>不要急于写数字，先确保孩子真正理解"3个苹果"和"数字3"的关系。</p><h3>2. 排序与分类</h3><p>把袜子按颜色分类、把玩具从大到小排列、把水果按种类分组。这些看似简单的活动，其实是在培养孩子的逻辑思维能力。</p><h3>3. 形状探索</h3><p>指着窗户说"这是长方形"、指着钟表说"这是圆形"。在家附近的街上寻找不同形状的物体，用积木搭建各种结构。空间感和几何直觉从小培养。</p><h3>4. 数学绘本阅读</h3><p>选择以数字、计数为主题的绘本，如《好饿的毛毛虫》《十只熊一个家》。阅读时和孩子一起数画中的物品。</p><h3>5. 使用 HappySprout 数字课程</h3><p>我们的<strong>数字王国大冒险</strong>课程专为3-6岁孩子设计。结合 Numberblocks 视频和互动练习，让孩子在游戏中掌握数数、加法和数感。每天15分钟，坚持2周就能看到明显进步。</p><p style="margin-top:16px;color:#8B6914;background:#fef9f0;padding:12px;border-radius:8px;font-size:14px">💡 <strong>温馨提示：</strong>每个孩子的发展节奏不同。不要和"别人家的孩子"比较，关注孩子自己的进步最重要。</p>'
+      content: '<p>很多家长觉得教孩子数学很难，其实数学无处不在。最好的数学启蒙，就藏在日常生活中。以下是5个经过验证的高效方法：</p><h3>1. 数数游戏（日常物品）</h3><p>吃饭时数豆子、下楼时数台阶、逛超市时数水果。让孩子用手指点数，建立数与量的对应关系。<strong>关键：</strong>不要急于写数字，先确保孩子真正理解"3个苹果"和"数字3"的关系。</p><h3>2. 排序与分类</h3><p>把袜子按颜色分类、把玩具从大到小排列、把水果按种类分组。这些看似简单的活动，其实是在培养孩子的逻辑思维能力。</p><h3>3. 形状探索</h3><p>指着窗户说"这是长方形"、指着钟表说"这是圆形"。在家附近的街上寻找不同形状的物体，用积木搭建各种结构。空间感和几何直觉从小培养。</p><h3>4. 数学绘本阅读</h3><p>选择以数字、计数为主题的绘本，如《好饿的毛毛虫》《十只熊一个家》。阅读时和孩子一起数画中的物品。</p><h3>5. 使用 HappySprout <a href="#course" data-page="course" data-params=\'{"courseId":"numbers-1-10"}\'>数字王国大冒险课程</a></h3><p>我们的<strong>数字王国大冒险</strong>课程专为3-6岁孩子设计。结合 Numberblocks 视频和互动练习，让孩子在游戏中掌握数数、加法和数感。每天15分钟，坚持2周就能看到明显进步。也可以试试 <a href="#subjectHub" data-page="subjectHub" data-params=\'{"subject":"math"}\'>儿童数学学习专区</a> 获取更多资源。</p><p style="margin-top:16px;color:#8B6914;background:#fef9f0;padding:12px;border-radius:8px;font-size:14px">💡 <strong>温馨提示：</strong>每个孩子的发展节奏不同。不要和"别人家的孩子"比较，关注孩子自己的进步最重要。查看 <a href="#blog" data-page="blog">更多家长教育指南 →</a></p>'
     },
     en: {
       title: 'How to Teach Kids Math at Home: 5 Easy & Effective Methods',
       summary: 'No tutoring center needed! Here are 5 hands-on math activities you can do at home with your 3-6 year old. Turn everyday moments into math learning opportunities.',
-      content: '<p>Math is everywhere in daily life. The best early math education happens naturally. Here are 5 proven methods:</p><h3>1. Counting Games</h3><p>Count beans at meals, stairs on the way down, fruits at the grocery store. Have children point and count objects to build number-quantity connections.</p><h3>2. Sorting & Classifying</h3><p>Sort socks by color, arrange toys by size, group fruits by type. These simple activities develop logical thinking skills.</p><h3>3. Shape Exploration</h3><p>Point to windows ("rectangle!"), clocks ("circle!"). Find shapes around the neighborhood. Build structures with blocks.</p><h3>4. Math Picture Books</h3><p>Read counting books like "The Very Hungry Caterpillar." Count items in illustrations together.</p><h3>5. Use HappySprout Number Course</h3><p>Our <strong>Number Kingdom Adventure</strong> course combines Numberblocks videos with interactive practice. Just 15 minutes daily for 2 weeks — you will see progress!</p>'
+      content: '<p>Math is everywhere in daily life. The best early math education happens naturally. Here are 5 proven methods:</p><h3>1. Counting Games</h3><p>Count beans at meals, stairs on the way down, fruits at the grocery store. Have children point and count objects to build number-quantity connections.</p><h3>2. Sorting & Classifying</h3><p>Sort socks by color, arrange toys by size, group fruits by type. These simple activities develop logical thinking skills.</p><h3>3. Shape Exploration</h3><p>Point to windows ("rectangle!"), clocks ("circle!"). Find shapes around the neighborhood. Build structures with blocks.</p><h3>4. Math Picture Books</h3><p>Read counting books like "The Very Hungry Caterpillar." Count items in illustrations together.</p><h3>5. Use HappySprout <a href="#course" data-page="course" data-params=\'{"courseId":"numbers-1-10"}\'>Number Kingdom Adventure Course</a></h3><p>Our <strong>Number Kingdom Adventure</strong> course combines Numberblocks videos with interactive practice. Just 15 minutes daily for 2 weeks — you will see progress! Also explore our <a href="#subjectHub" data-page="subjectHub" data-params=\'{"subject":"math"}\'>Kids Math Resources hub</a> for more tools.</p>'
     }
   },
   {
@@ -6054,12 +6328,12 @@ const BLOG_POSTS = [
     zh: {
       title: '幼儿专注力培养的5个方法：让孩子坐得住、学得进',
       summary: '孩子坐不住？注意力不集中？本文分享5个科学的专注力培养方法，帮助3-8岁孩子提升注意力和学习效率。',
-      content: '<p>很多学龄前孩子的家长都有一个共同的烦恼：孩子坐不住。其实，3-6岁孩子的平均专注时间只有8-15分钟，这完全正常。关键在于如何科学地培养这项能力。</p><h3>1. 打造"无干扰"学习环境</h3><p>学习时关掉电视、收起iPad、清理桌上的玩具。一个干净、安静的环境是专注的前提。</p><h3>2. 分段学习法</h3><p>把任务切成小块。比如：先看5分钟视频 → 休息2分钟 → 再做5分钟练习。HappySprout 的课程视频恰好是短时长的设计，非常适合分段学习。</p><h3>3. 使用计时器</h3><p>给孩子看一个可视化计时器（沙漏或倒计时app）。告诉孩子："在铃响之前，我们专心完成这一关"。目标明确更容易专注。</p><h3>4. 正面奖励机制</h3><p>完成学习任务后给予积极反馈。可以是口头的"你真棒"、一个拥抱，或是收集 HappySprout 的学习星星。避免用零食作为奖励——会适得其反。</p><h3>5. 跟随孩子的兴趣</h3><p>如果孩子喜欢恐龙，就用恐龙来教数数；如果喜欢小汽车，就用汽车来学颜色。HappySprout 提供多种主题的视频内容，让孩子选择自己感兴趣的课程。</p>'
+      content: '<p>很多学龄前孩子的家长都有一个共同的烦恼：孩子坐不住。其实，3-6岁孩子的平均专注时间只有8-15分钟，这完全正常。关键在于如何科学地培养这项能力。</p><h3>1. 打造"无干扰"学习环境</h3><p>学习时关掉电视、收起iPad、清理桌上的玩具。一个干净、安静的环境是专注的前提。</p><h3>2. 分段学习法</h3><p>把任务切成小块。比如：先看5分钟视频 → 休息2分钟 → 再做5分钟练习。HappySprout 的 <a href="#courses" data-page="courses">课程视频</a> 恰好是短时长的设计，非常适合分段学习。</p><h3>3. 使用计时器</h3><p>给孩子看一个可视化计时器（沙漏或倒计时app）。告诉孩子："在铃响之前，我们专心完成这一关"。目标明确更容易专注。</p><h3>4. 正面奖励机制</h3><p>完成学习任务后给予积极反馈。可以是口头的"你真棒"、一个拥抱，或是收集 HappySprout 的 <a href="#me" data-page="me">学习星星和成就徽章</a>。避免用零食作为奖励——会适得其反。</p><h3>5. 跟随孩子的兴趣</h3><p>如果孩子喜欢恐龙，就用恐龙来教数数；如果喜欢小汽车，就用汽车来学颜色。HappySprout 提供 <a href="#courses" data-page="courses">多种主题的视频课程</a>，让孩子选择自己感兴趣的内容。也可以按 <a href="#ageHub" data-age="ageHub">年龄段浏览合适的学习资源</a>。</p>'
     },
     en: {
       title: '5 Ways to Build Your Child\'s Focus and Attention Span',
       summary: 'Can\'t get your child to sit still? Learn 5 science-backed methods to improve focus and learning efficiency for kids aged 3-8.',
-      content: '<p>It\'s completely normal for 3-6 year olds to have an attention span of only 8-15 minutes. The key is building this skill systematically.</p><h3>1. Distraction-Free Environment</h3><p>Turn off TV, put away tablets, clear the desk. A clean, quiet space is the foundation of focus.</p><h3>2. Chunk Learning</h3><p>Break tasks into small pieces: 5 min video → 2 min break → 5 min practice. HappySprout videos are designed in short formats perfect for this approach.</p><h3>3. Visual Timer</h3><p>Use an hourglass or countdown timer. Tell your child: "Let\'s finish this session before the timer rings." Clear goals make focus easier.</p><h3>4. Positive Reinforcement</h3><p>Give verbal praise or a hug after completing tasks — not snacks, which can backfire. HappySprout star rewards work great.</p><h3>5. Follow Interests</h3><p>If they love dinosaurs, use dinos for counting. HappySprout offers diverse themes — let children choose what excites them.</p>'
+      content: '<p>It\'s completely normal for 3-6 year olds to have an attention span of only 8-15 minutes. The key is building this skill systematically.</p><h3>1. Distraction-Free Environment</h3><p>Turn off TV, put away tablets, clear the desk. A clean, quiet space is the foundation of focus.</p><h3>2. Chunk Learning</h3><p>Break tasks into small pieces: 5 min video → 2 min break → 5 min practice. <a href="#courses" data-page="courses">HappySprout videos</a> are designed in short formats perfect for this approach.</p><h3>3. Visual Timer</h3><p>Use an hourglass or countdown timer. Tell your child: "Let\'s finish this session before the timer rings." Clear goals make focus easier.</p><h3>4. Positive Reinforcement</h3><p>Give verbal praise or a hug after completing tasks — not snacks, which can backfire. <a href="#me" data-page="me">HappySprout star rewards and badges</a> work great as positive motivators.</p><h3>5. Follow Interests</h3><p>If they love dinosaurs, use dinos for counting. <a href="#courses" data-page="courses">Browse our full course library</a> and let children choose what excites them. You can also <a href="#ageHub" data-page="ageHub">filter by age group</a> for age-appropriate content.</p>'
     }
   },
   {
@@ -6070,12 +6344,12 @@ const BLOG_POSTS = [
     zh: {
       title: '幼儿英语启蒙完全指南：何时开始？怎么教？用什么资源？',
       summary: '3岁学英语会不会太早？应该从字母开始还是从听说开始？本文系统解答幼儿英语启蒙的常见疑问。',
-      content: '<p>这是家长最常问的问题。答案很明确：<strong>3-6岁是语言学习黄金期，不是太早，是刚刚好。</strong></p><h3>什么时候开始？</h3><p>研究显示，3岁开始接触第二语言是最佳时机。这个年龄段的孩子大脑对语音的辨别能力最强，能够自然习得地道的发音。越早接触，越有机会达到母语水平的发音。</p><h3>从字母还是听说开始？</h3><p>正确顺序：<strong>听 → 说 → 读 → 写</strong>。不要急着让孩子认字母、背单词。先大量听儿歌、看动画，培养语感。HappySprout 的 ABC 字母快乐学课程就是从儿歌和动画入手，符合语言习得的自然规律。</p><h3>用什么资源？</h3><p>推荐资源搭配：<br>① Super Simple Songs（儿歌启蒙）<br>② CoComelon（日常场景英语）<br>③ Numberblocks（数学+英语）<br>④ HappySprout 互动练习（跟读纠正发音）</p><h3>每天学多久？</h3><p>3-6岁每天15-20分钟即可。关键是<strong>坚持每天</strong>，而不是一次学很久。快乐的学习体验比知识量更重要。</p>'
+      content: '<p>这是家长最常问的问题。答案很明确：<strong>3-6岁是语言学习黄金期，不是太早，是刚刚好。</strong></p><h3>什么时候开始？</h3><p>研究显示，3岁开始接触第二语言是最佳时机。这个年龄段的孩子大脑对语音的辨别能力最强，能够自然习得地道的发音。越早接触，越有机会达到母语水平的发音。</p><h3>从字母还是听说开始？</h3><p>正确顺序：<strong>听 → 说 → 读 → 写</strong>。不要急着让孩子认字母、背单词。先大量听儿歌、看动画，培养语感。HappySprout 的 <a href="#course" data-page="course" data-params=\'{"courseId":"abc-fun"}\'>ABC 字母快乐学课程</a> 就是从儿歌和动画入手，符合语言习得的自然规律。</p><h3>用什么资源？</h3><p>推荐资源搭配：<br>① Super Simple Songs（儿歌启蒙）<br>② CoComelon（日常场景英语）<br>③ Numberblocks（数学+英语）<br>④ HappySprout <a href="#practice" data-page="practice">互动练习</a>（跟读纠正发音）<br>⑤ 访问 <a href="#subjectHub" data-page="subjectHub" data-params=\'{"subject":"english"}\'>儿童英语学习专区</a> 获取完整资源清单</p><h3>每天学多久？</h3><p>3-6岁每天15-20分钟即可。关键是<strong>坚持每天</strong>，而不是一次学很久。快乐的学习体验比知识量更重要。查看 <a href="#ageHub" data-page="ageHub" data-params=\'{"age":"3-5"}\'>3-5岁幼儿学习专区</a> 了解更多启蒙方法。</p>'
     },
     en: {
       title: 'Complete Guide to Early English Learning: When to Start & How to Teach',
       summary: 'Is 3 years old too early for English? Should you start with letters or listening? A systematic guide to early English education.',
-      content: '<p><strong>Ages 3-6 is the golden window for language learning — not too early, just right.</strong></p><h3>When to Start?</h3><p>Research shows age 3 is ideal for second language exposure. Children\'s brains at this age have peak phonetic discrimination ability, enabling native-like pronunciation naturally.</p><h3>Letters or Listening First?</h3><p>The correct sequence: <strong>Listen → Speak → Read → Write</strong>. Don\'t rush into letter recognition. Start with songs and animations. HappySprout\'s ABC Fun Learning follows this natural acquisition order.</p><h3>Resources</h3><p>Recommended mix: Super Simple Songs, CoComelon, Numberblocks, plus HappySprout interactive practice for pronunciation feedback.</p><h3>How Long?</h3><p>15-20 minutes daily for ages 3-6. Consistency matters far more than session length. A joyful learning experience outweighs knowledge quantity.</p>'
+      content: '<p><strong>Ages 3-6 is the golden window for language learning — not too early, just right.</strong></p><h3>When to Start?</h3><p>Research shows age 3 is ideal for second language exposure. Children\'s brains at this age have peak phonetic discrimination ability, enabling native-like pronunciation naturally.</p><h3>Letters or Listening First?</h3><p>The correct sequence: <strong>Listen → Speak → Read → Write</strong>. Don\'t rush into letter recognition. Start with songs and animations. HappySprout\'s <a href="#course" data-page="course" data-params=\'{"courseId":"abc-fun"}\'>ABC Fun Learning Course</a> follows this natural acquisition order.</p><h3>Resources</h3><p>Recommended mix: Super Simple Songs, CoComelon, Numberblocks, plus <a href="#practice" data-page="practice">HappySprout interactive practice</a> for pronunciation feedback. Visit our <a href="#subjectHub" data-page="subjectHub" data-params=\'{"subject":"english"}\'>Kids English Resources hub</a> for the full toolkit.</p><h3>How Long?</h3><p>15-20 minutes daily for ages 3-6. Consistency matters far more than session length. A joyful learning experience outweighs knowledge quantity. Explore the <a href="#ageHub" data-page="ageHub" data-params=\'{"age":"3-5"}\'>Ages 3-5 Learning Hub</a> for more tips.</p>'
     }
   },
   {
@@ -6086,12 +6360,12 @@ const BLOG_POSTS = [
     zh: {
       title: '儿童屏幕时间管理：如何让孩子健康使用学习App？',
       summary: '担心孩子看屏幕太多？本文分享科学的屏幕时间管理方法，以及如何将"屏幕时间"转化为"学习时间"。',
-      content: '<p>在电子产品无处不在的时代，彻底禁止屏幕既不现实也不科学。关键是<strong>高质量</strong>而非<strong>零数量</strong>。</p><h3>WHO 建议标准</h3><p>世界卫生组织建议：2-4岁每天屏幕时间不超过1小时；5岁以上应设定持续坐姿屏幕时间限制。所有屏幕时间都应该是被动和主动的结合。</p><h3>被动 vs 主动屏幕时间</h3><p>被动：看动画、刷短视频（大脑处于被动接收状态）<br>主动：互动学习、跟读练习、手指画（大脑积极参与）<br><strong>目标：最大化主动时间，最小化被动时间。</strong></p><h3>HappySprout 的时间管理工具</h3><p>HappySprout 内置了家长控制面板，你可以：<br>• 设置每日学习时段（如：下午4:00-5:00）<br>• 限制每天学习时长<br>• 查看孩子的学习进度报告<br>这些功能帮助你把屏幕时间变成有目的的学习时间。</p><h3>3个实用建议</h3><p>1. <strong>20-20-20法则：</strong>每学习20分钟，看远处20秒<br>2. <strong>先学习后娱乐：</strong>完成学习任务再给娱乐时间<br>3. <strong>家长陪伴：</strong>和孩子一起看视频、一起做练习，效果翻倍</p>'
+      content: '<p>在电子产品无处不在的时代，彻底禁止屏幕既不现实也不科学。关键是<strong>高质量</strong>而非<strong>零数量</strong>。</p><h3>WHO 建议标准</h3><p>世界卫生组织建议：2-4岁每天屏幕时间不超过1小时；5岁以上应设定持续坐姿屏幕时间限制。所有屏幕时间都应该是被动和主动的结合。</p><h3>被动 vs 主动屏幕时间</h3><p>被动：看动画、刷短视频（大脑处于被动接收状态）<br>主动：互动学习、跟读练习、手指画（大脑积极参与）<br><strong>目标：最大化主动时间，最小化被动时间。</strong></p><h3>HappySprout 的 <a href="#parent" data-page="parent">家长控制面板</a></h3><p>HappySprout 内置了家长控制面板，你可以：<br>• 设置每日学习时段（如：下午4:00-5:00）<br>• 限制每天学习时长<br>• 查看孩子的 <a href="#me" data-page="me">学习进度和成就报告</a><br>这些功能帮助你把屏幕时间变成有目的的学习时间。浏览 <a href="#courses" data-page="courses">全部儿童课程</a> 选择合适的主动学习内容。</p><h3>3个实用建议</h3><p>1. <strong>20-20-20法则：</strong>每学习20分钟，看远处20秒<br>2. <strong>先学习后娱乐：</strong>完成学习任务再给娱乐时间<br>3. <strong>家长陪伴：</strong>和孩子一起看视频、一起做练习，效果翻倍</p>'
     },
     en: {
       title: 'Healthy Screen Time for Kids: Managing Learning Apps Effectively',
       summary: 'Worried about too much screen time? Learn science-based screen management methods to turn screen time into quality learning time.',
-      content: '<p>Banning screens entirely is neither practical nor scientific. The key is <strong>quality over quantity</strong>.</p><h3>WHO Guidelines</h3><p>WHO recommends: under 1 hour/day for ages 2-4; set sedentary screen limits for ages 5+. All screen time should balance passive and active engagement.</p><h3>Passive vs Active</h3><p>Passive: passive video watching. Active: interactive learning, speaking practice. <strong>Goal: maximize active, minimize passive.</strong></p><h3>HappySprout Parent Controls</h3><p>Set daily learning windows, limit session duration, and track learning progress — turning screen time into purposeful learning time.</p><h3>3 Tips</h3><p>1. <strong>20-20-20 rule:</strong> Every 20 min, look 20 feet away for 20 seconds.<br>2. <strong>Learn first, play later.</strong><br>3. <strong>Learn together</strong> with your child for 2x results.</p>'
+      content: '<p>Banning screens entirely is neither practical nor scientific. The key is <strong>quality over quantity</strong>.</p><h3>WHO Guidelines</h3><p>WHO recommends: under 1 hour/day for ages 2-4; set sedentary screen limits for ages 5+. All screen time should balance passive and active engagement.</p><h3>Passive vs Active</h3><p>Passive: passive video watching. Active: interactive learning, speaking practice. <strong>Goal: maximize active, minimize passive.</strong></p><h3><a href="#parent" data-page="parent">HappySprout Parent Controls</a></h3><p>Set daily learning windows, limit session duration, and track <a href="#me" data-page="me">learning progress reports</a> — turning screen time into purposeful learning time. <a href="#courses" data-page="courses">Browse our courses</a> to find quality active-learning content.</p><h3>3 Tips</h3><p>1. <strong>20-20-20 rule:</strong> Every 20 min, look 20 feet away for 20 seconds.<br>2. <strong>Learn first, play later.</strong><br>3. <strong>Learn together</strong> with your child for 2x results.</p>'
     }
   },
   {
@@ -6102,12 +6376,12 @@ const BLOG_POSTS = [
     zh: {
       title: '创意学习：5个激发孩子学习兴趣的动手活动',
       summary: '想让孩子主动学习？试试把知识融入创意活动中！这5个简单动手项目让学习变得像游戏一样有趣。',
-      content: '<p>孩子天生充满好奇心和创造力。与其强迫他们坐在桌前学习，不如把知识融入创意活动中。以下5个活动涵盖语言、数学、科学和艺术四大领域。</p><h3>1. 字母橡皮泥（语言）</h3><p>用橡皮泥捏出字母形状，边玩边念。从孩子名字的首字母开始，逐步扩展到A-Z。配合 HappySprout 的字母视频，视听触觉三重输入效果最佳。</p><h3>2. 厨房数学（数学）</h3><p>做饼干时让孩子数面粉杯数、切披萨时讲分数概念。生活即教育，厨房是最好的数学教室。参考 HappySprout 数字王国课程中的实物数数练习。</p><h3>3. 植物观察日记（科学）</h3><p>种一颗绿豆，每天画下它的变化。这是最基础的科学思维训练——观察、记录、比较。配合 HappySprout 的科学探索视频了解更多自然知识。</p><h3>4. 音乐节奏游戏（艺术）</h3><p>用空瓶子和豆子做沙锤，跟着节奏打拍子。音乐训练能显著提升语言能力和数学思维。HappySprout 的音乐律动频道是绝佳的节奏启蒙资源。</p><h3>5. 故事剧场（语言+表演）</h3><p>读完绘本后，和孩子一起把故事演出来。这能加深理解、锻炼表达，也是最棒的亲子时光。HappySprout 的故事模式提供丰富的绘本视频素材。</p>'
+      content: '<p>孩子天生充满好奇心和创造力。与其强迫他们坐在桌前学习，不如把知识融入创意活动中。以下5个活动涵盖语言、数学、科学和艺术四大领域。</p><h3>1. 字母橡皮泥（语言）</h3><p>用橡皮泥捏出字母形状，边玩边念。从孩子名字的首字母开始，逐步扩展到A-Z。配合 HappySprout 的 <a href="#course" data-page="course" data-params=\'{"courseId":"abc-fun"}\'>ABC 字母快乐学课程</a>，视听触觉三重输入效果最佳。</p><h3>2. 厨房数学（数学）</h3><p>做饼干时让孩子数面粉杯数、切披萨时讲分数概念。生活即教育，厨房是最好的数学教室。参考 HappySprout <a href="#course" data-page="course" data-params=\'{"courseId":"numbers-1-10"}\'>数字王国大冒险课程</a> 中的实物数数练习。</p><h3>3. 植物观察日记（科学）</h3><p>种一颗绿豆，每天画下它的变化。这是最基础的科学思维训练——观察、记录、比较。配合 HappySprout 的 <a href="#subjectHub" data-page="subjectHub" data-params=\'{"subject":"science"}\'>科学探索专区</a> 了解更多自然知识。</p><h3>4. 音乐节奏游戏（艺术）</h3><p>用空瓶子和豆子做沙锤，跟着节奏打拍子。音乐训练能显著提升语言能力和数学思维。试试 <a href="#subjectHub" data-page="subjectHub" data-params=\'{"subject":"art"}\'>儿童艺术创意专区</a> 寻找更多音乐律动资源。</p><h3>5. 故事剧场（语言+表演）</h3><p>读完绘本后，和孩子一起把故事演出来。这能加深理解、锻炼表达，也是最棒的亲子时光。去 <a href="#courses" data-page="courses">课程中心</a> 寻找充满想象力的故事内容吧。</p>'
     },
     en: {
       title: 'Creative Learning: 5 Hands-On Activities to Spark Your Child\'s Curiosity',
       summary: 'Want your child to love learning? Blend knowledge into creative activities! These 5 hands-on projects make learning feel like play.',
-      content: '<p>Children are naturally curious and creative. Instead of forcing desk-based learning, embed knowledge into creative play. Here are 5 activities covering language, math, science, and art.</p><h3>1. Play-Doh Letters (Language)</h3><p>Shape letters with play-doh while saying them aloud. Start with your child\'s name initials, then A-Z. Combine with HappySprout alphabet videos for audio-visual-tactile learning.</p><h3>2. Kitchen Math</h3><p>Count flour cups when baking, discuss fractions when cutting pizza. Life IS education. Reference HappySprout\'s Number Kingdom course for object-counting exercises.</p><h3>3. Plant Observation Journal (Science)</h3><p>Plant a bean seed and draw its changes daily. This builds core scientific thinking: observe, record, compare. Pair with HappySprout science videos for more nature knowledge.</p><h3>4. Music Rhythm Games (Art)</h3><p>Make shakers from bottles and beans. Music training significantly improves both language and math skills. HappySprout\'s music channel is perfect rhythm inspiration.</p><h3>5. Story Theater (Language + Drama)</h3><p>After reading a picture book, act it out together. This deepens comprehension and builds expression skills — also the best bonding time. HappySprout story mode provides rich video resources.</p>'
+      content: '<p>Children are naturally curious and creative. Instead of forcing desk-based learning, embed knowledge into creative play. Here are 5 activities covering language, math, science, and art.</p><h3>1. Play-Doh Letters (Language)</h3><p>Shape letters with play-doh while saying them aloud. Start with your child\'s name initials, then A-Z. Combine with <a href="#course" data-page="course" data-params=\'{"courseId":"abc-fun"}\'>HappySprout ABC Fun Learning</a> for audio-visual-tactile learning.</p><h3>2. Kitchen Math</h3><p>Count flour cups when baking, discuss fractions when cutting pizza. Life IS education. Reference our <a href="#course" data-page="course" data-params=\'{"courseId":"numbers-1-10"}\'>Number Kingdom Adventure</a> for object-counting exercises.</p><h3>3. Plant Observation Journal (Science)</h3><p>Plant a bean seed and draw its changes daily. This builds core scientific thinking: observe, record, compare. Pair with <a href="#subjectHub" data-page="subjectHub" data-params=\'{"subject":"science"}\'>Kids Science Exploration</a> videos for more nature knowledge.</p><h3>4. Music Rhythm Games (Art)</h3><p>Make shakers from bottles and beans. Music training significantly improves both language and math skills. Visit <a href="#subjectHub" data-page="subjectHub" data-params=\'{"subject":"art"}\'>Kids Art & Creativity</a> for rhythm inspiration.</p><h3>5. Story Theater (Language + Drama)</h3><p>After reading a picture book, act it out together. This deepens comprehension and builds expression skills — also the best bonding time. Head to our <a href="#courses" data-page="courses">Course Library</a> for story content resources.</p>'
     }
   }
 ];
@@ -6252,7 +6526,14 @@ function renderAgeHub(container, ageRange) {
       '<h2 style="font-size:15px;margin-bottom:10px;color:#8B6914">💡 ' + tipText + '</h2>' +
       '<ul style="margin:0;padding-left:20px">' + d.tips.map(function(t) { return '<li style="padding:4px 0;font-size:13px;color:#555">' + t + '</li>'; }).join('') + '</ul>' +
     '</div>' +
-    '<button onclick="navigateTo(\'courses\')" style="padding:10px 24px;border:2px solid ' + hub.color + ';background:white;border-radius:50px;font-size:14px;font-weight:600;cursor:pointer;color:' + hub.color + ';margin-bottom:16px">' + toCourseText + '</button>' +
+    '<button onclick="navigateTo(\'courses\')" style="padding:10px 24px;border:2px solid ' + hub.color + ';background:white;border-radius:50px;font-size:14px;font-weight:600;cursor:pointer;color:' + hub.color + ';margin-bottom:12px">' + toCourseText + '</button>' +
+    '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">' +
+      '<span style="font-size:12px;color:#999">' + (lang==='zh'?'学科分类：':'Subjects:') + '</span>' +
+      '<a href="#subjectHub" data-page="subjectHub" data-params=\'{"subject":"math"}\' style="padding:4px 12px;background:#f0e8d8;color:#8B6914;border-radius:12px;font-size:12px;text-decoration:none;cursor:pointer;transition:all 0.2s" onmouseover="this.style.background=\'#e8d4a0\'" onmouseout="this.style.background=\'#f0e8d8\'">' + (lang==='zh'?'数学思维':'Math') + '</a>' +
+      '<a href="#subjectHub" data-page="subjectHub" data-params=\'{"subject":"english"}\' style="padding:4px 12px;background:#f0e8d8;color:#8B6914;border-radius:12px;font-size:12px;text-decoration:none;cursor:pointer;transition:all 0.2s" onmouseover="this.style.background=\'#e8d4a0\'" onmouseout="this.style.background=\'#f0e8d8\'">' + (lang==='zh'?'英语启蒙':'English') + '</a>' +
+      '<a href="#subjectHub" data-page="subjectHub" data-params=\'{"subject":"science"}\' style="padding:4px 12px;background:#f0e8d0;color:#8B6914;border-radius:12px;font-size:12px;text-decoration:none;cursor:pointer;transition:all 0.2s" onmouseover="this.style.background=\'#e8d4a0\'" onmouseout="this.style.background=\'#f0e8d8\'">' + (lang==='zh'?'科学探索':'Science') + '</a>' +
+      '<a href="#subjectHub" data-page="subjectHub" data-params=\'{"subject":"art"}\' style="padding:4px 12px;background:#f0e8d8;color:#8B6914;border-radius:12px;font-size:12px;text-decoration:none;cursor:pointer;transition:all 0.2s" onmouseover="this.style.background=\'#e8d4a0\'" onmouseout="this.style.background=\'#f0e8d8\'">' + (lang==='zh'?'艺术创意':'Art') + '</a>' +
+    '</div>' +
     '<h2 style="font-size:16px;margin-bottom:12px;color:#4A4A4A">' + (lang === 'zh' ? '推荐视频 (' + videos.length + '个)' : 'Recommended Videos (' + videos.length + ')') + '</h2>' +
     '<div class="video-grid">' + videoCards + '</div>' +
     (videos.length === 0 ? '<p style="text-align:center;color:#999;padding:30px">' + (lang === 'zh' ? '更多内容即将推出！' : 'More content coming soon!') + '</p>' : '') +
@@ -6296,7 +6577,13 @@ function renderSubjectHub(container, subject) {
     '<p style="font-size:14px;line-height:1.8;color:#555;margin-bottom:16px">' + intro + '</p>' +
     '<div style="margin-bottom:16px">' +
       '<span style="font-size:12px;color:#999;margin-right:8px">' + (isEn ? 'Topics:' : '热门标签：') + '</span>' +
-      tags.map(function(t) { return '<span style="display:inline-block;background:#f0e8d8;color:#8B6914;padding:3px 10px;border-radius:12px;font-size:11px;margin:2px">' + t + '</span>'; }).join(' ') +
+      tags.map(function(t) { return '<a href="#search" data-page="search" data-params=\'{"query":"' + t + '"}\' style="display:inline-block;background:#f0e8d8;color:#8B6914;padding:3px 10px;border-radius:12px;font-size:11px;margin:2px;text-decoration:none;cursor:pointer;transition:all 0.2s" onmouseover="this.style.background=\'#e8d4a0\'" onmouseout="this.style.background=\'#f0e8d8\'">' + t + '</a>'; }).join(' ') +
+    '</div>' +
+    '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">' +
+      '<span style="font-size:12px;color:#999">' + (isEn ? 'Age Groups:' : '按年龄段：') + '</span>' +
+      '<a href="#ageHub" data-page="ageHub" data-params=\'{"age":"3-5"}\' style="padding:4px 12px;background:#e8f5e9;color:#2E7D32;border-radius:12px;font-size:12px;text-decoration:none;cursor:pointer;transition:all 0.2s" onmouseover="this.style.background=\'#c8e6c9\'" onmouseout="this.style.background=\'#e8f5e9\'">🌱 3-5 ' + (isEn ? 'yrs' : '岁') + '</a>' +
+      '<a href="#ageHub" data-page="ageHub" data-params=\'{"age":"6-8"}\' style="padding:4px 12px;background:#fff3e0;color:#E65100;border-radius:12px;font-size:12px;text-decoration:none;cursor:pointer;transition:all 0.2s" onmouseover="this.style.background=\'#ffe0b2\'" onmouseout="this.style.background=\'#fff3e0\'">🌿 6-8 ' + (isEn ? 'yrs' : '岁') + '</a>' +
+      '<a href="#ageHub" data-page="ageHub" data-params=\'{"age":"9-12"}\' style="padding:4px 12px;background:#f3e5f5;color:#7B1FA2;border-radius:12px;font-size:12px;text-decoration:none;cursor:pointer;transition:all 0.2s" onmouseover="this.style.background=\'#e1bee7\'" onmouseout="this.style.background=\'#f3e5f5\'">🌳 9-12 ' + (isEn ? 'yrs' : '岁') + '</a>' +
     '</div>' +
     '<h2 style="font-size:16px;margin-bottom:12px;color:#4A4A4A">' + (isEn ? 'Videos (' + videos.length + ')' : '学习视频 (' + videos.length + '个)') + '</h2>' +
     '<div class="video-grid">' + videoCards + '</div>' +
