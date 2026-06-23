@@ -902,6 +902,104 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px s
 }
 
 /* ============================================
+   KIDS ILLUSTRATION ROW
+   ============================================ */
+.kids-illustration-row {
+  position: relative;
+  margin: 24px -16px 0;
+  padding: 28px 10px 40px;
+  background: linear-gradient(180deg, #FFF8EE 0%, #FFF0E5 40%, #E8F8F5 100%);
+  overflow: hidden;
+  border-radius: 20px 20px 0 0;
+}
+.kids-illu-inner {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 12px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+.kids-illu-item {
+  flex: 1;
+  max-width: 140px;
+  display: flex;
+  justify-content: center;
+}
+.kids-illu-svg {
+  width: 100%;
+  max-width: 130px;
+  height: auto;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.08));
+  transition: transform 0.3s ease;
+}
+.kids-illu-svg:hover {
+  transform: translateY(-6px);
+}
+.kids-illu-grass {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 24px;
+  background: linear-gradient(180deg, #A8E6CF 0%, #7BC8A4 100%);
+  border-radius: 0 0 20px 20px;
+}
+/* Floating decorative dots */
+.kids-illustration-row::before {
+  content: '';
+  position: absolute;
+  top: 12px;
+  left: 15%;
+  width: 8px; height: 8px;
+  background: #FFD700;
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: float-dot 3s ease-in-out infinite;
+}
+.kids-illustration-row::after {
+  content: '';
+  position: absolute;
+  top: 20px;
+  right: 20%;
+  width: 6px; height: 6px;
+  background: #FF6B9D;
+  border-radius: 50%;
+  opacity: 0.5;
+  animation: float-dot 3.5s ease-in-out 0.5s infinite;
+}
+@keyframes float-dot {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(-8px); opacity: 0.8; }
+}
+@media (max-width: 600px) {
+  .kids-illu-inner {
+    gap: 4px;
+  }
+  .kids-illu-item {
+    max-width: 100px;
+  }
+  .kids-illu-svg {
+    max-width: 90px;
+  }
+  .kids-illustration-row {
+    padding: 20px 4px 36px;
+  }
+}
+@media (max-width: 400px) {
+  .kids-illu-item:nth-child(3),
+  .kids-illu-item:nth-child(4) {
+    display: none;
+  }
+  .kids-illu-item {
+    max-width: 130px;
+  }
+  .kids-illu-svg {
+    max-width: 120px;
+  }
+}
+
+/* ============================================
    SITE FOOTER
    ============================================ */
 .site-footer {
@@ -3436,6 +3534,187 @@ function renderHome(container) {
         return catOrder.map(function(c) { return group(c, catMeta[c]); }).join('');
       })()}
       ${videos.length === 0 ? '<p style="text-align:center;color:#999;padding:40px">📭 ' + t('noVideoFound') + '</p>' : ''}
+
+      <!-- ─── KIDS LEARNING ILLUSTRATION ─── -->
+      <div class="kids-illustration-row">
+        <div class="kids-illu-inner">
+          <div class="kids-illu-item">
+            <svg viewBox="0 0 120 160" fill="none" class="kids-illu-svg" aria-label="Child reading a book">
+              <!-- Body -->
+              <rect x="35" y="80" width="50" height="54" rx="24" fill="#FFE0B2"/>
+              <!-- Head -->
+              <circle cx="60" cy="55" r="30" fill="#FFCC80"/>
+              <!-- Hair -->
+              <path d="M30 50 Q30 22 60 20 Q90 22 90 50 Q85 35 60 32 Q35 35 30 50Z" fill="#795548"/>
+              <!-- Hair bun -->
+              <circle cx="85" cy="28" r="10" fill="#795548"/>
+              <!-- Eyes -->
+              <circle cx="49" cy="54" r="4" fill="#333"/>
+              <circle cx="71" cy="54" r="4" fill="#333"/>
+              <circle cx="50" cy="53" r="1.5" fill="white"/>
+              <circle cx="72" cy="53" r="1.5" fill="white"/>
+              <!-- Smile -->
+              <path d="M54 64 Q60 71 66 64" stroke="#333" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <!-- Blush -->
+              <circle cx="44" cy="60" r="5" fill="#FFAB91" opacity="0.5"/>
+              <circle cx="76" cy="60" r="5" fill="#FFAB91" opacity="0.5"/>
+              <!-- Book -->
+              <rect x="38" y="88" width="44" height="30" rx="3" fill="#4ECDC4"/>
+              <line x1="60" y1="88" x2="60" y2="118" stroke="#e0f7f6" stroke-width="1.5"/>
+              <line x1="42" y1="96" x2="57" y2="96" stroke="#e0f7f6" stroke-width="1.5"/>
+              <line x1="42" y1="102" x2="57" y2="102" stroke="#e0f7f6" stroke-width="1.5"/>
+              <line x1="63" y1="96" x2="78" y2="96" stroke="#e0f7f6" stroke-width="1.5"/>
+              <!-- Arms holding book -->
+              <path d="M38 100 Q28 95 30 105 Q32 110 38 108" stroke="#FFCC80" stroke-width="6" fill="none" stroke-linecap="round"/>
+              <path d="M82 100 Q92 95 90 105 Q88 110 82 108" stroke="#FFCC80" stroke-width="6" fill="none" stroke-linecap="round"/>
+              <!-- Legs -->
+              <rect x="42" y="130" width="12" height="18" rx="5" fill="#FFB74D"/>
+              <rect x="66" y="130" width="12" height="18" rx="5" fill="#FFB74D"/>
+              <!-- Shoes -->
+              <ellipse cx="48" cy="150" rx="9" ry="5" fill="#FF8C42"/>
+              <ellipse cx="72" cy="150" rx="9" ry="5" fill="#FF8C42"/>
+            </svg>
+          </div>
+          <div class="kids-illu-item">
+            <svg viewBox="0 0 120 160" fill="none" class="kids-illu-svg" aria-label="Child painting at an easel">
+              <!-- Body -->
+              <rect x="35" y="80" width="50" height="54" rx="24" fill="#E1BEE7"/>
+              <!-- Head -->
+              <circle cx="60" cy="55" r="30" fill="#CE93D8"/>
+              <!-- Hair -->
+              <path d="M30 50 Q30 25 60 22 Q90 25 90 50 Q85 35 60 32 Q35 35 30 50Z" fill="#3E2723"/>
+              <!-- Cap -->
+              <path d="M28 48 Q35 30 60 28 Q85 30 92 48 Q88 36 60 34 Q32 36 28 48Z" fill="#FF6B9D"/>
+              <circle cx="60" cy="30" r="3" fill="#FF6B9D"/>
+              <!-- Eyes -->
+              <circle cx="49" cy="55" r="4" fill="#333"/>
+              <circle cx="71" cy="55" r="4" fill="#333"/>
+              <circle cx="50" cy="54" r="1.5" fill="white"/>
+              <circle cx="72" cy="54" r="1.5" fill="white"/>
+              <!-- Big smile -->
+              <path d="M52 64 Q60 73 68 64" stroke="#333" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <!-- Blush -->
+              <circle cx="44" cy="60" r="5" fill="#FFAB91" opacity="0.5"/>
+              <circle cx="76" cy="60" r="5" fill="#FFAB91" opacity="0.5"/>
+              <!-- Easel -->
+              <line x1="88" y1="80" x2="80" y2="130" stroke="#8D6E63" stroke-width="3" stroke-linecap="round"/>
+              <line x1="90" y1="80" x2="95" y2="125" stroke="#8D6E63" stroke-width="3" stroke-linecap="round"/>
+              <line x1="76" y1="80" x2="100" y2="80" stroke="#8D6E63" stroke-width="2.5" stroke-linecap="round"/>
+              <!-- Canvas -->
+              <rect x="70" y="82" width="28" height="42" rx="2" fill="white" stroke="#8D6E63" stroke-width="1.5"/>
+              <!-- Painting on canvas -->
+              <circle cx="82" cy="95" r="6" fill="#FFD700"/>
+              <circle cx="90" cy="100" r="5" fill="#FF6B9D"/>
+              <circle cx="78" cy="108" r="4" fill="#4ECDC4"/>
+              <circle cx="92" cy="112" r="4" fill="#C77DFF"/>
+              <!-- Paintbrush in hand -->
+              <line x1="65" y1="100" x2="72" y2="95" stroke="#8D6E63" stroke-width="2.5" stroke-linecap="round"/>
+              <circle cx="73" cy="94" r="2" fill="#FF6B9D"/>
+              <!-- Arms -->
+              <path d="M85 95 Q92 90 88 100" stroke="#CE93D8" stroke-width="6" fill="none" stroke-linecap="round"/>
+              <!-- Legs -->
+              <rect x="42" y="130" width="12" height="18" rx="5" fill="#BA68C8"/>
+              <rect x="66" y="130" width="12" height="18" rx="5" fill="#BA68C8"/>
+              <!-- Shoes -->
+              <ellipse cx="48" cy="150" rx="9" ry="5" fill="#C77DFF"/>
+              <ellipse cx="72" cy="150" rx="9" ry="5" fill="#C77DFF"/>
+              <!-- Paint palette -->
+              <ellipse cx="72" cy="118" rx="10" ry="7" fill="#8D6E63" transform="rotate(-15 72 118)"/>
+              <circle cx="68" cy="116" r="2" fill="#FFD700"/>
+              <circle cx="74" cy="114" r="2" fill="#4ECDC4"/>
+              <circle cx="72" cy="120" r="2" fill="#FF6B9D"/>
+            </svg>
+          </div>
+          <div class="kids-illu-item">
+            <svg viewBox="0 0 120 160" fill="none" class="kids-illu-svg" aria-label="Child learning numbers">
+              <!-- Body -->
+              <rect x="35" y="80" width="50" height="54" rx="24" fill="#B3E5FC"/>
+              <!-- Head -->
+              <circle cx="60" cy="55" r="30" fill="#81D4FA"/>
+              <!-- Hair -->
+              <path d="M30 52 Q30 24 60 22 Q90 24 90 52 Q88 38 60 36 Q32 38 30 52Z" fill="#F44336"/>
+              <!-- Side hair -->
+              <path d="M30 52 Q26 58 28 65" stroke="#F44336" stroke-width="5" fill="none" stroke-linecap="round"/>
+              <path d="M90 52 Q94 58 92 65" stroke="#F44336" stroke-width="5" fill="none" stroke-linecap="round"/>
+              <!-- Eyes -->
+              <circle cx="49" cy="54" r="4" fill="#333"/>
+              <circle cx="71" cy="54" r="4" fill="#333"/>
+              <circle cx="50" cy="53" r="1.5" fill="white"/>
+              <circle cx="72" cy="53" r="1.5" fill="white"/>
+              <!-- Smile -->
+              <path d="M54 63 Q60 69 66 63" stroke="#333" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <!-- Blush -->
+              <circle cx="44" cy="60" r="5" fill="#FFAB91" opacity="0.5"/>
+              <circle cx="76" cy="60" r="5" fill="#FFAB91" opacity="0.5"/>
+              <!-- Arms pointing at numbers -->
+              <path d="M35 100 Q25 95 22 85" stroke="#81D4FA" stroke-width="6" fill="none" stroke-linecap="round"/>
+              <path d="M85 95 Q98 90 105 70" stroke="#81D4FA" stroke-width="6" fill="none" stroke-linecap="round"/>
+              <!-- Floating numbers -->
+              <text x="12" y="78" font-size="14" font-weight="800" fill="#FF8C42" font-family="system-ui">1</text>
+              <text x="4" y="68" font-size="14" font-weight="800" fill="#4ECDC4" font-family="system-ui">2</text>
+              <text x="98" y="65" font-size="14" font-weight="800" fill="#C77DFF" font-family="system-ui">3</text>
+              <text x="90" y="55" font-size="12" font-weight="800" fill="#FF6B9D" font-family="system-ui">+</text>
+              <text x="106" y="50" font-size="12" font-weight="800" fill="#FFD700" font-family="system-ui">=</text>
+              <!-- Sparkles -->
+              <text x="25" y="45" font-size="10">✨</text>
+              <text x="82" y="38" font-size="10">✨</text>
+              <!-- Legs -->
+              <rect x="42" y="130" width="12" height="18" rx="5" fill="#4FC3F7"/>
+              <rect x="66" y="130" width="12" height="18" rx="5" fill="#4FC3F7"/>
+              <!-- Shoes -->
+              <ellipse cx="48" cy="150" rx="9" ry="5" fill="#45B7D1"/>
+              <ellipse cx="72" cy="150" rx="9" ry="5" fill="#45B7D1"/>
+            </svg>
+          </div>
+          <div class="kids-illu-item">
+            <svg viewBox="0 0 120 160" fill="none" class="kids-illu-svg" aria-label="Child learning on a tablet">
+              <!-- Body -->
+              <rect x="35" y="80" width="50" height="54" rx="24" fill="#C8E6C9"/>
+              <!-- Head -->
+              <circle cx="60" cy="55" r="30" fill="#A5D6A7"/>
+              <!-- Hair -->
+              <path d="M30 50 Q30 20 60 18 Q90 20 90 50 Q85 30 60 28 Q35 30 30 50Z" fill="#FFD54F"/>
+              <!-- Hair spikes -->
+              <path d="M40 32 Q42 22 48 24" stroke="#FFD54F" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <path d="M55 26 Q56 16 60 18" stroke="#FFD54F" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <path d="M70 28 Q72 18 78 22" stroke="#FFD54F" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <!-- Eyes -->
+              <circle cx="49" cy="54" r="4" fill="#333"/>
+              <circle cx="71" cy="54" r="4" fill="#333"/>
+              <circle cx="50" cy="53" r="1.5" fill="white"/>
+              <circle cx="72" cy="53" r="1.5" fill="white"/>
+              <!-- Tongue-out grin -->
+              <path d="M52 63 Q60 74 68 63" stroke="#333" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <circle cx="60" cy="69" r="5" fill="#FF8C42" opacity="0.7"/>
+              <!-- Blush -->
+              <circle cx="44" cy="60" r="5" fill="#FFAB91" opacity="0.5"/>
+              <circle cx="76" cy="60" r="5" fill="#FFAB91" opacity="0.5"/>
+              <!-- Tablet -->
+              <rect x="34" y="88" width="38" height="28" rx="5" fill="#333"/>
+              <rect x="38" y="91" width="30" height="22" rx="2" fill="#4ECDC4"/>
+              <!-- Screen content -->
+              <circle cx="50" cy="100" r="4" fill="#FFD700"/>
+              <text x="44" y="112" font-size="7" fill="white" font-family="system-ui">A B</text>
+              <text x="52" y="112" font-size="6" fill="white" font-family="system-ui">C</text>
+              <!-- Arms holding tablet -->
+              <path d="M32 100 Q25 98 26 105 Q28 110 32 106" stroke="#A5D6A7" stroke-width="6" fill="none" stroke-linecap="round"/>
+              <path d="M74 100 Q82 96 82 104 Q80 110 74 106" stroke="#A5D6A7" stroke-width="6" fill="none" stroke-linecap="round"/>
+              <!-- Headphones -->
+              <path d="M30 40 Q30 20 60 18 Q90 20 90 40" stroke="#FF8C42" stroke-width="4" fill="none"/>
+              <rect x="28" y="36" width="6" height="10" rx="3" fill="#FF8C42"/>
+              <rect x="86" y="36" width="6" height="10" rx="3" fill="#FF8C42"/>
+              <!-- Legs -->
+              <rect x="42" y="130" width="12" height="18" rx="5" fill="#66BB6A"/>
+              <rect x="66" y="130" width="12" height="18" rx="5" fill="#66BB6A"/>
+              <!-- Shoes -->
+              <ellipse cx="48" cy="150" rx="9" ry="5" fill="#4CAF50"/>
+              <ellipse cx="72" cy="150" rx="9" ry="5" fill="#4CAF50"/>
+            </svg>
+          </div>
+        </div>
+        <!-- Decorative ground / grass line -->
+        <div class="kids-illu-grass"></div>
+      </div>
 
       <!-- ─── SITE FOOTER ─── -->
       <footer class="site-footer">
