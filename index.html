@@ -167,6 +167,8 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px s
   border-radius: 20px; border: none; background: transparent;
   font-size: 14px; font-weight: 600; color: var(--text-light);
   cursor: pointer; transition: all 0.2s; white-space: nowrap;
+  text-decoration: none; display: inline-flex; align-items: center;
+  font-family: inherit;
 }
 .top-nav-item:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
 .top-nav-item.active { background: var(--orange); color: #fff; }
@@ -211,6 +213,7 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px s
   cursor: pointer; transition: all 0.2s;
   font-size: 12px; color: var(--text-light); font-weight: 600;
   background: none; border: none;
+  text-decoration: none; font-family: inherit;
 }
 .nav-item:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
 .nav-item .nav-icon { font-size: 26px; }
@@ -1252,17 +1255,17 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px s
 
 <!-- Top Navigation Bar -->
 <nav class="top-nav" id="top-nav" role="navigation" aria-label="Main navigation">
-  <button class="top-nav-item active" onclick="navigateTo('home')" aria-current="page">首页</button>
-  <button class="top-nav-item" onclick="navigateTo('courses')">课程</button>
-  <button class="top-nav-item" onclick="navigateTo('practice')">练习册</button>
-  <button class="top-nav-item" id="top-nav-age" onclick="navigateTo('ageHub')">按年龄</button>
-  <button class="top-nav-item" onclick="navigateTo('blog')">博客</button>
-  <button class="top-nav-item" onclick="navigateTo('about')">关于我们</button>
+  <a class="top-nav-item active" href="#home" data-page="home" aria-current="page">首页</a>
+  <a class="top-nav-item" href="#courses" data-page="courses">课程</a>
+  <a class="top-nav-item" href="#practice" data-page="practice">练习册</a>
+  <a class="top-nav-item" id="top-nav-age" href="#ageHub" data-page="ageHub">按年龄</a>
+  <a class="top-nav-item" href="#blog" data-page="blog">博客</a>
+  <a class="top-nav-item" href="#about" data-page="about">关于我们</a>
 </nav>
 
 <!-- Breadcrumb -->
 <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb">
-  <span class="breadcrumb-item"><a href="javascript:void(0)" onclick="navigateTo('home')">首页</a></span>
+  <span class="breadcrumb-item"><a href="#home" data-page="home">首页</a></span>
 </nav>
 
 <!-- ============================================================
@@ -1274,21 +1277,46 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px s
      BOTTOM NAVIGATION
      ============================================================ -->
 <nav class="bottom-nav" id="bottom-nav" role="navigation" aria-label="Bottom navigation">
-  <button class="nav-item active" data-page="home" onclick="navigateTo('home')" aria-label="首页 - Home">
+  <a class="nav-item active" href="#home" data-page="home" aria-label="首页 - Home">
     <span class="nav-icon">🏠</span> <span class="nav-label">首页</span>
-  </button>
-  <button class="nav-item" data-page="courses" onclick="navigateTo('courses')" aria-label="课程 - Courses">
+  </a>
+  <a class="nav-item" href="#courses" data-page="courses" aria-label="课程 - Courses">
     <span class="nav-icon">📖</span> <span class="nav-label">课程</span>
-  </button>
-  <button class="nav-item" data-page="practice" onclick="navigateTo('practice')" aria-label="练习 - Practice">
+  </a>
+  <a class="nav-item" href="#practice" data-page="practice" aria-label="练习 - Practice">
     <span class="nav-icon">🎮</span> <span class="nav-label">练习</span>
-  </button>
-  <button class="nav-item" data-page="me" onclick="navigateTo('me')" aria-label="成就 - Achievements">
+  </a>
+  <a class="nav-item" href="#me" data-page="me" aria-label="成就 - Achievements">
     <span class="nav-icon">⭐</span> <span class="nav-label">成就</span>
-  </button>
-  <button class="nav-item" data-page="parent" onclick="navigateTo('parent')" aria-label="设置 - Settings">
+  </a>
+  <a class="nav-item" href="#parent" data-page="parent" aria-label="设置 - Settings">
     <span class="nav-icon">🔒</span> <span class="nav-label">设置</span>
-  </button>
+  </a>
+</nav>
+
+<!-- Hidden sitemap for search engine crawlers -->
+<nav class="sr-sitemap" aria-label="Site map for search engines" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;">
+  <a href="#home">首页</a>
+  <a href="#courses">全部课程</a>
+  <a href="#course" data-params='{"courseId":"abc-fun"}'>ABC 字母</a>
+  <a href="#course" data-params='{"courseId":"numbers-1-10"}'>数字王国</a>
+  <a href="#course" data-params='{"courseId":"phonics-basics"}'>自然拼读</a>
+  <a href="#practice">练习册</a>
+  <a href="#ageHub">按年龄</a>
+  <a href="#ageHub" data-params='{"age":"3-5"}'>3-5 岁</a>
+  <a href="#ageHub" data-params='{"age":"6-8"}'>6-8 岁</a>
+  <a href="#ageHub" data-params='{"age":"9-12"}'>9-12 岁</a>
+  <a href="#subjectHub" data-params='{"subject":"英语启蒙"}'>英语启蒙</a>
+  <a href="#subjectHub" data-params='{"subject":"数学思维"}'>数学思维</a>
+  <a href="#subjectHub" data-params='{"subject":"科学探索"}'>科学探索</a>
+  <a href="#subjectHub" data-params='{"subject":"艺术手工"}'>艺术手工</a>
+  <a href="#subjectHub" data-params='{"subject":"音乐律动"}'>音乐律动</a>
+  <a href="#blog">博客</a>
+  <a href="#search">搜索</a>
+  <a href="#me">成就</a>
+  <a href="#parent">家长设置</a>
+  <a href="#about">关于我们</a>
+  <a href="#feedback">反馈</a>
 </nav>
 
 <!-- Parent panel quick lock button -->
@@ -3162,7 +3190,7 @@ function updateBreadcrumb(page, params) {
     parent:   isZh ? '家长设置' : 'Settings'
   };
 
-  var html = '<span class="breadcrumb-item"><a href="javascript:void(0)" onclick="navigateTo(\'home\')">' + labels.home + '</a></span>';
+  var html = '<span class="breadcrumb-item"><a href="#home" data-page="home">' + labels.home + '</a></span>';
 
   if (page !== 'home' && labels[page]) {
     html += '<span class="breadcrumb-item">' + labels[page] + '</span>';
@@ -3424,6 +3452,22 @@ function navigateTo(page, params = {}) {
 
   window.scrollTo(0, 0);
 }
+
+// ─── EVENT DELEGATION: Intercept hash-link clicks ──────────────
+// Converts <a href="#page" data-page="..."> clicks into SPA navigation
+document.addEventListener('click', function(e) {
+  var link = e.target.closest('a[href^="#"]');
+  if (!link || link.getAttribute('href') === '#') return;
+  var page = link.getAttribute('data-page');
+  if (!page) return;
+  e.preventDefault();
+  var params = {};
+  try {
+    var raw = link.getAttribute('data-params');
+    if (raw) params = JSON.parse(raw);
+  } catch(_) {}
+  navigateTo(page, params);
+});
 
 // ─── RENDER: HOME ─────────────────────────────────────────────
 function renderHome(container) {
@@ -4059,36 +4103,36 @@ function renderHome(container) {
               <span class="footer-emoji">🌱</span>
               <h4>${t('footerAbout')}</h4>
               <p>${t('footerAboutText')}</p>
-              <button class="footer-cta-btn" onclick="navigateTo('about')">${t('footerAboutPage')} →</button>
+              <a class="footer-cta-btn" href="#about" data-page="about">${t('footerAboutPage')} →</a>
             </div>
             <!-- Quick Links -->
             <div class="footer-col">
               <h4>${t('footerQuickLinks')}</h4>
-              <button class="footer-link" onclick="navigateTo('home')">🏠 ${t('footerHome')}</button>
-              <button class="footer-link" onclick="navigateTo('courses')">📚 ${t('footerCourses')}</button>
-              <button class="footer-link" onclick="navigateTo('practice')">🎮 ${t('footerPractice')}</button>
-              <button class="footer-link" onclick="navigateTo('ageHub')">👶 ${t('footerAgeGroups')}</button>
-              <button class="footer-link" onclick="navigateTo('blog')">✍️ ${t('footerBlog')}</button>
-              <button class="footer-link" onclick="navigateTo('search')">🔍 ${t('footerSearch')}</button>
+              <a class="footer-link" href="#home" data-page="home">🏠 ${t('footerHome')}</a>
+              <a class="footer-link" href="#courses" data-page="courses">📚 ${t('footerCourses')}</a>
+              <a class="footer-link" href="#practice" data-page="practice">🎮 ${t('footerPractice')}</a>
+              <a class="footer-link" href="#ageHub" data-page="ageHub">👶 ${t('footerAgeGroups')}</a>
+              <a class="footer-link" href="#blog" data-page="blog">✍️ ${t('footerBlog')}</a>
+              <a class="footer-link" href="#search" data-page="search">🔍 ${t('footerSearch')}</a>
             </div>
             <!-- Subjects + Support -->
             <div class="footer-col">
               <h4>${t('footerSubjects')}</h4>
-              <button class="footer-link" onclick="navigateTo('subjectHub',{subject:'英语启蒙'})">🔤 ${t('cat_abc')}</button>
-              <button class="footer-link" onclick="navigateTo('subjectHub',{subject:'数学思维'})">🔢 ${t('cat_math')}</button>
-              <button class="footer-link" onclick="navigateTo('subjectHub',{subject:'科学探索'})">🔬 ${t('cat_science')}</button>
-              <button class="footer-link" onclick="navigateTo('subjectHub',{subject:'艺术手工'})">🎨 ${t('cat_art')}</button>
-              <button class="footer-link" onclick="navigateTo('subjectHub',{subject:'音乐律动'})">🎵 ${t('cat_music')}</button>
+              <a class="footer-link" href="#subject/abc" data-page="subjectHub" data-params='{"subject":"英语启蒙"}'>🔤 ${t('cat_abc')}</a>
+              <a class="footer-link" href="#subject/math" data-page="subjectHub" data-params='{"subject":"数学思维"}'>🔢 ${t('cat_math')}</a>
+              <a class="footer-link" href="#subject/science" data-page="subjectHub" data-params='{"subject":"科学探索"}'>🔬 ${t('cat_science')}</a>
+              <a class="footer-link" href="#subject/art" data-page="subjectHub" data-params='{"subject":"艺术手工"}'>🎨 ${t('cat_art')}</a>
+              <a class="footer-link" href="#subject/music" data-page="subjectHub" data-params='{"subject":"音乐律动"}'>🎵 ${t('cat_music')}</a>
               <h4 style="margin-top:16px">${t('footerSupport')}</h4>
-              <button class="footer-link" onclick="navigateTo('feedback')">💬 ${t('footerFeedback')}</button>
-              <button class="footer-link" onclick="navigateTo('about')">ℹ️ ${t('aboutUs')}</button>
+              <a class="footer-link" href="#feedback" data-page="feedback">💬 ${t('footerFeedback')}</a>
+              <a class="footer-link" href="#about" data-page="about">ℹ️ ${t('aboutUs')}</a>
             </div>
           </div>
           <div class="footer-bottom">
             <span>© 2026 HappySprout. ${t('footerAllRights')}</span>
             <div class="footer-bottom-links">
-              <button onclick="navigateTo('about')">${t('footerPrivacy')}</button>
-              <button onclick="navigateTo('about')">${t('footerTerms')}</button>
+              <a href="#about" data-page="about">${t('footerPrivacy')}</a>
+              <a href="#about" data-page="about">${t('footerTerms')}</a>
               <span>🌐 ${APP.lang === 'zh' ? '中文' : 'English'}</span>
             </div>
           </div>
