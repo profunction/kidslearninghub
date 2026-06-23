@@ -5,6 +5,45 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="description" content="HappySprout 提供 100+ 免费儿童教育游戏、可打印练习册和创意学习活动，专为 3-12 岁孩子设计，让学习充满乐趣。立即开始探索！">
 <title>儿童学习乐园 | HappySprout - 免费幼儿教育游戏与练习册</title>
+
+<!-- Structured Data: Organization -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "HappySprout Kids Learning",
+  "alternateName": "HappySprout",
+  "url": "https://kidslearninghub.online/",
+  "logo": "https://kidslearninghub.online/logo.png",
+  "description": "HappySprout 提供 100+ 免费儿童教育游戏、可打印练习册和创意学习活动，专为 3-12 岁孩子设计。",
+  "email": "hello@kidslearninghub.online",
+  "sameAs": [
+    "https://kidslearninghub.online/"
+  ]
+}
+</script>
+
+<!-- Structured Data: WebSite with SearchAction -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "HappySprout Kids Learning",
+  "alternateName": "HappySprout 儿童学习乐园",
+  "url": "https://kidslearninghub.online/",
+  "description": "面向 3-12 岁孩子的免费在线学习平台，提供互动课程、教育视频、可打印练习册和创意学习活动。",
+  "inLanguage": ["zh-CN", "en"],
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://kidslearninghub.online/#search?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
 <style>
 /* ================================================================
    HappySprout Kids Learning – Fun Educational Activities for Children - CSS Design System
@@ -2530,6 +2569,289 @@ function updateSEO(page, params) {
   if (meta) meta.setAttribute('content', desc);
 }
 
+// ─── STRUCTURED DATA INJECTION ──────────────────────────────────
+function injectStructuredData(page, params) {
+  var lang = document.documentElement.lang === 'en' ? 'en' : 'zh';
+  // Remove previous dynamic LD+JSON scripts (keep static Organization/WebSite)
+  document.querySelectorAll('script[data-dynamic-schema]').forEach(function(el) { el.remove(); });
+  var schemas = [];
+
+  // BreadcrumbList (every page)
+  schemas.push(getBreadcrumb(page, lang));
+
+  // Page-specific schemas
+  switch(page) {
+    case 'home':
+      // Static Organization + WebSite already in <head>, no dynamic needed
+      break;
+    case 'course':
+      schemas.push(getCourseSchema(params.courseId, lang));
+      schemas.push(getEducationalAudience(params.courseId));
+      break;
+    case 'courses':
+      schemas.push(getItemListSchema('courses', lang));
+      break;
+    case 'blog':
+      schemas.push(getItemListSchema('blog', lang));
+      break;
+    case 'blogPost':
+      schemas.push(getBlogArticleSchema(params.postId, lang));
+      break;
+    case 'about':
+      schemas.push(getFAQSchema(lang));
+      break;
+    case 'ageHub':
+      schemas.push(getCollectionPageSchema('age', params.age, lang));
+      break;
+    case 'subjectHub':
+      schemas.push(getCollectionPageSchema('subject', params.subject, lang));
+      break;
+  }
+
+  // Inject all schemas
+  schemas.forEach(function(schema) {
+    var script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.setAttribute('data-dynamic-schema', 'true');
+    script.textContent = JSON.stringify(schema, null, 2);
+    document.head.appendChild(script);
+  });
+}
+
+// ─── BREADCRUMB LIST ───────────────────────────────────────────
+function getBreadcrumb(page, lang) {
+  var isZh = lang === 'zh';
+  var items = [
+    { "@type": "ListItem", "position": 1,
+      "name": isZh ? "首页" : "Home",
+      "item": "https://kidslearninghub.online/" }
+  ];
+
+  var pageLabels = {
+    home:     { zh: "首页", en: "Home" },
+    courses:  { zh: "主题课程", en: "Courses" },
+    course:   { zh: "课程详情", en: "Course" },
+    practice: { zh: "互动练习", en: "Practice" },
+    blog:     { zh: "家长博客", en: "Blog" },
+    blogPost: { zh: "博客文章", en: "Article" },
+    about:    { zh: "关于我们", en: "About Us" },
+    feedback: { zh: "意见反馈", en: "Feedback" },
+    search:   { zh: "搜索", en: "Search" },
+    me:       { zh: "个人中心", en: "Profile" },
+    ageHub:   { zh: "年龄段学习", en: "Age Group" },
+    subjectHub:{ zh: "学科学习", en: "Subject" }
+  };
+
+  if (pageLabels[page] && page !== 'home') {
+    items.push({
+      "@type": "ListItem", "position": 2,
+      "name": pageLabels[page][isZh ? 'zh' : 'en'],
+      "item": "https://kidslearninghub.online/#" + page
+    });
+  }
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": items
+  };
+}
+
+// ─── COURSE SCHEMA ─────────────────────────────────────────────
+function getCourseSchema(courseId, lang) {
+  var detail = COURSE_DETAIL[courseId];
+  if (!detail) return null;
+  var isZh = lang === 'zh';
+  var c = detail[isZh ? 'zh' : 'en'];
+
+  var courseNames = {
+    'abc-fun':       { zh: "ABC 字母快乐学", en: "ABC Fun Learning" },
+    'numbers-1-10':  { zh: "数字王国大冒险", en: "Number Kingdom Adventure" },
+    'phonics-basics':{ zh: "自然拼读入门", en: "Phonics Basics" }
+  };
+  var courseSlugs = {
+    'abc-fun': 'abc-fun', 'numbers-1-10': 'numbers-1-10', 'phonics-basics': 'phonics-basics'
+  };
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": courseNames[courseId][isZh ? 'zh' : 'en'],
+    "description": c.intro.substring(0, 200),
+    "url": "https://kidslearninghub.online/#course?courseId=" + courseSlugs[courseId],
+    "provider": {
+      "@type": "Organization",
+      "name": "HappySprout Kids Learning",
+      "sameAs": "https://kidslearninghub.online/"
+    },
+    "audience": {
+      "@type": "EducationalAudience",
+      "educationalRole": "student"
+    },
+    "educationalLevel": isZh ? "学前教育" : "Preschool",
+    "teaches": c.tags ? c.tags.split(/[,，]\s*/) : [],
+    "inLanguage": isZh ? ["zh-CN", "en"] : ["en"],
+    "timeRequired": "PT20M"
+  };
+}
+
+// ─── EDUCATIONAL AUDIENCE ──────────────────────────────────────
+function getEducationalAudience(courseId) {
+  var detail = COURSE_DETAIL[courseId];
+  if (!detail) return null;
+  return {
+    "@context": "https://schema.org",
+    "@type": "EducationalAudience",
+    "educationalRole": "student",
+    "audienceType": "children",
+    "ageRange": detail.age || "3-12",
+    "learningResourceType": "Online Course"
+  };
+}
+
+// ─── ITEM LIST (Courses / Blog index) ──────────────────────────
+function getItemListSchema(type, lang) {
+  var isZh = lang === 'zh';
+  if (type === 'courses') {
+    var ids = ['abc-fun', 'numbers-1-10', 'phonics-basics'];
+    var names = {
+      'abc-fun':       { zh: "ABC 字母快乐学", en: "ABC Fun Learning" },
+      'numbers-1-10':  { zh: "数字王国大冒险", en: "Number Kingdom Adventure" },
+      'phonics-basics':{ zh: "自然拼读入门", en: "Phonics Basics" }
+    };
+    var items = ids.map(function(id, i) {
+      return {
+        "@type": "ListItem", "position": i + 1,
+        "url": "https://kidslearninghub.online/#course?courseId=" + id,
+        "name": names[id][isZh ? 'zh' : 'en']
+      };
+    });
+    return {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": isZh ? "HappySprout 主题课程" : "HappySprout Themed Courses",
+      "itemListElement": items
+    };
+  }
+  if (type === 'blog') {
+    var blogItems = BLOG_POSTS.map(function(post, i) {
+      return {
+        "@type": "ListItem", "position": i + 1,
+        "url": "https://kidslearninghub.online/#blogPost?postId=" + post.id,
+        "name": post.title[isZh ? 'zh' : 'en']
+      };
+    });
+    return {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": isZh ? "HappySprout 家长博客" : "HappySprout Parent Blog",
+      "itemListElement": blogItems
+    };
+  }
+  return null;
+}
+
+// ─── BLOG ARTICLE SCHEMA ───────────────────────────────────────
+function getBlogArticleSchema(postId, lang) {
+  var post = BLOG_POSTS.find(function(p) { return p.id === postId; });
+  if (!post) return null;
+  var isZh = lang === 'zh';
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": post.title[isZh ? 'zh' : 'en'],
+    "description": post.summary[isZh ? 'zh' : 'en'],
+    "url": "https://kidslearninghub.online/#blogPost?postId=" + post.id,
+    "author": {
+      "@type": "Organization",
+      "name": "HappySprout Kids Learning"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "HappySprout Kids Learning",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://kidslearninghub.online/logo.png"
+      }
+    },
+    "datePublished": "2026-06-23",
+    "inLanguage": isZh ? "zh-CN" : "en"
+  };
+}
+
+// ─── FAQ SCHEMA ────────────────────────────────────────────────
+function getFAQSchema(lang) {
+  var isZh = lang === 'zh';
+  var faqs = isZh ? [
+    { q: "HappySprout 适合多大年龄的孩子？", a: "HappySprout 专为 3-12 岁儿童设计，课程按年龄段分为 3-5 岁、6-8 岁、9-12 岁，每个年龄段的课程内容和难度都经过精心调整，确保符合孩子的认知发展水平。" },
+    { q: "所有课程都是免费的吗？", a: "是的！HappySprout 的所有视频课程、互动练习和学习资源目前都完全免费。我们致力于为每个孩子提供平等的高质量教育机会。部分高级功能未来可能会有付费选项，但核心学习内容将始终保持免费。" },
+    { q: "如何设置孩子的学习时间限制？", a: "您可以在\u201c家长设置\u201d中配置每日学习时长限制和可用时间段。打开家长控制面板（点击右上角图标），使用图案密码进入，即可自定义防沉迷设置，帮助孩子养成健康的学习习惯。" },
+    { q: "孩子需要从哪个课程开始？", a: "对于 3-5 岁的孩子，建议从\u201cABC 字母快乐学\u201d开始英语启蒙，或从\u201c数字王国大冒险\u201d开始数学启蒙。6-8 岁的孩子可以尝试\u201c自然拼读入门\u201d课程。您也可以根据孩子的兴趣自由选择，没有严格的先后顺序。" },
+    { q: "支持手机和平板使用吗？", a: "完全支持！HappySprout 采用响应式设计，在手机、平板和电脑上都能获得良好的使用体验。我们推荐平板作为最佳学习设备——屏幕大小适合观看视频和进行互动练习。" },
+    { q: "家长如何追踪孩子的学习进度？", a: "在\u201c个人中心\u201d页面，您可以查看孩子的学习天数、观看记录、获得的星星数量和学习徽章。家长控制面板还提供详细的学习时长统计，帮助您了解孩子的学习习惯。" }
+  ] : [
+    { q: "What age is HappySprout suitable for?", a: "HappySprout is designed for children aged 3-12, with courses organized by age groups: 3-5, 6-8, and 9-12. Each age group features content and difficulty levels carefully calibrated to match children's cognitive development stages." },
+    { q: "Are all courses free?", a: "Yes! All of HappySprout's video courses, interactive exercises, and learning resources are currently completely free. We are committed to providing equal access to high-quality education for every child. Some advanced features may have paid options in the future, but core learning content will always remain free." },
+    { q: "How do I set screen time limits for my child?", a: "You can configure daily learning time limits and available time slots in Parent Settings. Open the parent control panel (tap the icon in the top-right corner), enter your pattern PIN, and customize anti-addiction settings to help your child develop healthy learning habits." },
+    { q: "Which course should my child start with?", a: "For children aged 3-5, we recommend starting with 'ABC Fun Learning' for English or 'Number Kingdom Adventure' for math. Children aged 6-8 can try 'Phonics Basics.' You can also choose freely based on your child's interests — there is no strict sequence." },
+    { q: "Does it work on phones and tablets?", a: "Absolutely! HappySprout features responsive design for a great experience on phones, tablets, and desktop computers. We recommend tablets as the ideal learning device for their screen size — perfect for watching videos and doing interactive exercises." },
+    { q: "How can parents track their child's learning progress?", a: "On the Profile page, you can view your child's learning days, watch history, earned stars, and badges. The parent control panel also provides detailed learning time statistics to help you understand your child's learning habits." }
+  ];
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(function(faq) {
+      return {
+        "@type": "Question",
+        "name": faq.q,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": faq.a
+        }
+      };
+    })
+  };
+}
+
+// ─── COLLECTION PAGE (Age/Subject Hubs) ────────────────────────
+function getCollectionPageSchema(type, value, lang) {
+  var isZh = lang === 'zh';
+  var names = {
+    age: {
+      '3-5':  { zh: "3-5岁儿童学习资源", en: "Learning Resources for Ages 3-5" },
+      '6-8':  { zh: "6-8岁儿童学习资源", en: "Learning Resources for Ages 6-8" },
+      '9-12': { zh: "9-12岁儿童学习资源", en: "Learning Resources for Ages 9-12" }
+    },
+    subject: {
+      math:    { zh: "儿童数学学习资源", en: "Math Learning Resources for Kids" },
+      english: { zh: "儿童英语学习资源", en: "English Learning Resources for Kids" },
+      science: { zh: "儿童科学探索资源", en: "Science Exploration Resources for Kids" },
+      art:     { zh: "儿童艺术创意资源", en: "Art & Creativity Resources for Kids" }
+    }
+  };
+  var n = names[type] && names[type][value] ? names[type][value][isZh ? 'zh' : 'en'] : value;
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": n,
+    "description": isZh
+      ? ("HappySprout 为 " + n + " 精心整理的免费在线学习内容，包含互动视频、练习册和趣味游戏。")
+      : ("Curated free online learning content from HappySprout — " + n + " — featuring interactive videos, worksheets, and fun games."),
+    "url": "https://kidslearninghub.online/#" + type + "Hub?" + type + "=" + value,
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "HappySprout Kids Learning",
+      "url": "https://kidslearninghub.online/"
+    },
+    "audience": {
+      "@type": "EducationalAudience",
+      "educationalRole": "student",
+      "audienceType": "children"
+    }
+  };
+}
+
 function navigateTo(page, params = {}) {
   APP.currentPage = page;
   APP.ageFilter = params.ageFilter !== undefined ? params.ageFilter : APP.ageFilter;
@@ -2537,6 +2859,9 @@ function navigateTo(page, params = {}) {
 
   // Update SEO title and meta description
   updateSEO(page, params);
+
+  // Inject structured data schemas
+  injectStructuredData(page, params);
 
   // Update bottom nav
   document.querySelectorAll('.nav-item').forEach(el => {
