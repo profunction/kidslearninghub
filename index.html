@@ -402,6 +402,9 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px s
   background: var(--orange); color: white;
   padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700;
 }
+.video-level {
+  margin-top: 4px; font-size: 13px; letter-spacing: 1px;
+}
 .video-info { padding: 14px; }
 .video-info h3 { font-size: 15px; font-weight: 700; line-height: 1.4; margin-bottom: 4px; }
 .video-info .channel { font-size: 12px; color: var(--text-light); }
@@ -1237,6 +1240,86 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px s
   60% { transform: translateX(-6px); }
   80% { transform: translateX(4px); }
 }
+
+/* ============================================
+   SPROUT MASCOT
+   ============================================ */
+.sprout-mascot {
+  position: fixed; bottom: 90px; right: 20px; z-index: 150;
+  width: 68px; height: 68px; cursor: pointer;
+  animation: sproutBounce 2s ease-in-out infinite;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.18));
+  transition: transform 0.2s;
+}
+.sprout-mascot:hover { transform: scale(1.1); animation: none; }
+.sprout-mascot:active { transform: scale(0.95); }
+@keyframes sproutBounce {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.sprout-body {
+  width: 68px; height: 68px; border-radius: 50%;
+  background: linear-gradient(135deg, #4CAF50 0%, #66BB6A 40%, #81C784 100%);
+  position: relative; overflow: visible;
+}
+.sprout-face {
+  position: absolute; inset: 8px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+}
+.sprout-eyes { display: flex; gap: 10px; margin-bottom: 2px; }
+.sprout-eye {
+  width: 9px; height: 11px; background: #1B5E20; border-radius: 50%;
+  animation: sproutBlink 4s ease-in-out infinite;
+}
+@keyframes sproutBlink {
+  0%,96%,100% { transform: scaleY(1); }
+  98% { transform: scaleY(0.1); }
+}
+.sprout-mouth {
+  width: 16px; height: 8px; border-bottom: 3px solid #1B5E20;
+  border-radius: 0 0 50% 50%; margin-top: 2px;
+}
+.sprout-leaf {
+  position: absolute; top: -18px; left: 50%; transform: translateX(-50%);
+  width: 0; height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 24px solid #4CAF50;
+  animation: sproutSway 3s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+@keyframes sproutSway {
+  0%,100% { transform: translateX(-50%) rotate(-5deg); }
+  50% { transform: translateX(-50%) rotate(5deg); }
+}
+.sprout-speech {
+  position: absolute; bottom: 78px; right: -4px;
+  background: white; border-radius: 18px; padding: 10px 16px;
+  max-width: 200px; font-size: 13px; font-weight: 600; color: #2D3436;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  opacity: 0; pointer-events: none; transform: translateY(8px);
+  transition: all 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  white-space: nowrap;
+}
+.sprout-speech::after {
+  content: ''; position: absolute; bottom: -8px; right: 24px;
+  width: 0; height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid white;
+}
+.sprout-speech.show {
+  opacity: 1; transform: translateY(0); pointer-events: auto;
+}
+.sprout-glow {
+  position: absolute; inset: -6px; border-radius: 50%;
+  border: 3px solid rgba(129,199,132,0.5);
+  animation: sproutGlow 2s ease-in-out infinite;
+}
+@keyframes sproutGlow {
+  0%,100% { border-color: rgba(129,199,132,0.3); }
+  50% { border-color: rgba(129,199,132,0.7); transform: scale(1.06); }
+}
 </style>
 <!-- Google AdSense -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8103912615651681"
@@ -1329,6 +1412,22 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px s
   <a href="#feedback">反馈</a>
 </nav>
 
+
+<!-- Sprout Mascot -->
+<div class="sprout-mascot" id="sprout-mascot" onclick="sproutClick()" title="知识小精灵 - Knowledge Sprite">
+  <div class="sprout-glow"></div>
+  <div class="sprout-leaf"></div>
+  <div class="sprout-body">
+    <div class="sprout-face">
+      <div class="sprout-eyes">
+        <div class="sprout-eye"></div>
+        <div class="sprout-eye"></div>
+      </div>
+      <div class="sprout-mouth"></div>
+    </div>
+  </div>
+  <div class="sprout-speech" id="sprout-speech">🌱 Hi!</div>
+</div>
 
 <!-- ============================================================
      JAVASCRIPT APPLICATION
@@ -2037,6 +2136,48 @@ const VIDEO_DB = [
   }
 ];
 
+// ─── CATEGORY-BASED QUIZZES (Phase 0) ────────────────────────
+const CATEGORY_QUIZZES = {
+  '英语启蒙': [
+    { q: 'What letter comes after A?', opts: ['B', 'C', 'D', 'Z'], ans: 0, tKey: 'quizEng1' },
+    { q: 'Which word starts with "B"?', opts: ['Apple', 'Banana', 'Orange', 'Grape'], ans: 1, tKey: 'quizEng2' },
+    { q: 'What sound does "S" make?', opts: ['嘶~', '波~', '嗒~', '咯~'], ans: 0, tKey: 'quizEng3' }
+  ],
+  '数学思维': [
+    { q: '1 + 2 = ?', opts: ['2', '3', '4', '5'], ans: 1, tKey: 'quizMath1' },
+    { q: 'What shape has 4 equal sides?', opts: ['Triangle', 'Square', 'Circle', 'Oval'], ans: 1, tKey: 'quizMath2' },
+    { q: 'What comes after 9?', opts: ['8', '9', '10', '11'], ans: 2, tKey: 'quizMath3' }
+  ],
+  '科学探索': [
+    { q: 'What do plants need to grow?', opts: ['Candy', 'Sunlight', 'Toys', 'TV'], ans: 1, tKey: 'quizSci1' },
+    { q: 'Which planet do we live on?', opts: ['Mars', 'Venus', 'Earth', 'Jupiter'], ans: 2, tKey: 'quizSci2' },
+    { q: 'What color is the sky on a clear day?', opts: ['Blue', 'Green', 'Red', 'Purple'], ans: 0, tKey: 'quizSci3' }
+  ],
+  '音乐律动': [
+    { q: 'Which instrument has black and white keys?', opts: ['Drum', 'Piano', 'Guitar', 'Flute'], ans: 1, tKey: 'quizMus1' },
+    { q: 'In "Baby Shark", who comes first?', opts: ['Mommy Shark', 'Daddy Shark', 'Baby Shark', 'Grandma Shark'], ans: 2, tKey: 'quizMus2' },
+    { q: 'What is a fast tempo called?', opts: ['Slow', 'Fast', 'Loud', 'Quiet'], ans: 1, tKey: 'quizMus3' }
+  ],
+  '艺术手工': [
+    { q: 'What colors make green?', opts: ['Red + Yellow', 'Blue + Yellow', 'Red + Blue', 'Black + White'], ans: 1, tKey: 'quizArt1' },
+    { q: 'Which is a primary color?', opts: ['Green', 'Purple', 'Red', 'Orange'], ans: 2, tKey: 'quizArt2' },
+    { q: 'What do you use to cut paper?', opts: ['Pencil', 'Scissors', 'Ruler', 'Eraser'], ans: 1, tKey: 'quizArt3' }
+  ],
+  '故事模式': [
+    { q: 'What happened at the beginning of the story?', opts: ['They ate lunch', 'The adventure started', 'They went to sleep', 'It rained'], ans: 1, tKey: 'quizStory1' },
+    { q: 'Who was the main character?', opts: ['A dog', 'A teacher', 'The hero of the story', 'A car'], ans: 2, tKey: 'quizStory2' },
+    { q: 'What did you learn from this story?', opts: ['Nothing', 'A good lesson', 'How to cook', 'Math'], ans: 1, tKey: 'quizStory3' }
+  ]
+};
+
+// ─── Video difficulty level (computed from age range) ─────────
+function getLevel(v) {
+  var maxAge = v.ages[1];
+  if (maxAge <= 5) return 1;
+  if (maxAge <= 8) return 2;
+  return 3;
+}
+
 // ─── COURSE DATABASE ──────────────────────────────────────────
 const COURSE_DB = [
   {
@@ -2321,6 +2462,18 @@ const I18N = {
     quizQ2_opts: ['唱歌跳舞', '学知识', '做手工', '讲故事'],
     quizQ3: '你学会了吗？',
     quizQ3_opts: ['学会了！', '还没呢'],
+    quizCompleteTitle: '恭喜完成！来个小测验吧~',
+    quizCorrect: '答对了！太棒了！',
+    quizWrong: '再想想哦~',
+    quizScore: '得分',
+    quizOf: '/',
+    level1: '入门',
+    level2: '基础',
+    level3: '进阶',
+    sproutHi: '嗨！我是小芽~',
+    sproutTip: '选个视频开始学习吧！',
+    sproutQuiz: '来挑战测验吧！',
+    sproutGreat: '你好棒！继续加油~',
     // Course
     themedCourses: '主题课程',
     coursesHeading: '🎓 互动学习课程',
@@ -2645,6 +2798,18 @@ const I18N = {
     quizQ2_opts: ['Sing & Dance', 'Learn Knowledge', 'Crafts', 'Storytelling'],
     quizQ3: 'Did you learn it?',
     quizQ3_opts: ['Yes, I did!', 'Not yet'],
+    quizCompleteTitle: 'Great job! Time for a quiz~',
+    quizCorrect: 'Correct! Amazing!',
+    quizWrong: 'Think again~',
+    quizScore: 'Score',
+    quizOf: '/',
+    level1: 'Easy',
+    level2: 'Medium',
+    level3: 'Hard',
+    sproutHi: 'Hi! I\'m Sprout~',
+    sproutTip: 'Pick a video and start learning!',
+    sproutQuiz: 'Let\'s take a quiz!',
+    sproutGreat: 'You\'re doing great! Keep it up~',
     // Course
     themedCourses: 'Themed Courses',
     coursesHeading: '🎓 Interactive Learning Courses',
@@ -3078,6 +3243,15 @@ function getVideosByCategory(cat) {
 }
 function getYouTubeThumb(id) {
   return `https://img.youtube.com/vi/${id}/mqdefault.jpg`;
+}
+
+// ─── Difficulty stars display ─────────────────────────────────
+function getStars(level) {
+  var s = '';
+  for (var i = 1; i <= 3; i++) {
+    s += i <= level ? '★' : '☆';
+  }
+  return s + ' ' + t('level' + level);
 }
 
 // ─── STORE OPERATIONS ─────────────────────────────────────────
@@ -4325,6 +4499,7 @@ function renderHome(container) {
           h += '<div class="video-duration">' + v.duration + '</div>';
           h += '</div>';
           h += '<div class="video-info"><h3>' + v.title + '</h3><div class="channel">' + v.channel + '</div>';
+          h += '<div class="video-level">' + getStars(getLevel(v)) + '</div>';
           if (isCompleted(v.id)) h += '<span style="color:#27ae60;font-size:12px;font-weight:700">✅ ' + t('completedLabel') + '</span>';
           h += '</div></div>';
           return h;
@@ -4864,6 +5039,113 @@ function handleComplete(videoId) {
   // Update streak
   updateStreak();
 }
+
+// ─── SPROUT MASCOT BEHAVIOR ───────────────────────────────────
+function sproutSay(msg, duration) {
+  var bubble = document.getElementById('sprout-speech');
+  if (!bubble) return;
+  bubble.textContent = msg;
+  bubble.classList.add('show');
+  if (duration) {
+    clearTimeout(bubble._timeout);
+    bubble._timeout = setTimeout(function() { bubble.classList.remove('show'); }, duration);
+  }
+}
+
+function sproutClick() {
+  var msg;
+  if (APP.currentPage === 'watch') {
+    msg = '🌱 ' + t('sproutQuiz');
+  } else if (APP.currentPage === 'home') {
+    msg = '🌱 ' + t('sproutTip');
+  } else if (APP.currentPage === 'me') {
+    msg = '🌟 ' + t('sproutGreat');
+  } else {
+    msg = '🌱 ' + t('sproutHi');
+  }
+  sproutSay(msg, 3000);
+}
+
+// Show mascot greeting on page change
+var _origNavigateTo = navigateTo;
+navigateTo = function(page, params) {
+  // Show context-aware message
+  var msg;
+  if (page === 'watch') msg = '🍿 Enjoy the video!';
+  else if (page === 'me') msg = '🌟 Check your progress!';
+  else if (page === 'courses') msg = '📚 Pick a course!';
+  else msg = '';
+  if (msg) sproutSay(msg, 2500);
+  _origNavigateTo(page, params);
+};
+
+// Initial mascot greeting
+setTimeout(function() {
+  sproutSay('🌱 ' + t('sproutHi'), 4000);
+}, 2000);
+
+// ─── COMPLETION QUIZ (category-based) ─────────────────────────
+var _origHandleComplete = handleComplete;
+handleComplete = function(videoId) {
+  _origHandleComplete(videoId);
+
+  // Show category quiz after short delay
+  setTimeout(function() {
+    var video = getVideo(videoId);
+    if (!video) return;
+    var quizzes = CATEGORY_QUIZZES[video.category];
+    if (!quizzes || quizzes.length === 0) return;
+
+    // Pick 2 random questions from the category
+    var shuffled = quizzes.slice().sort(function() { return Math.random() - 0.5; });
+    var selected = shuffled.slice(0, 2);
+
+    var overlay = document.createElement('div');
+    overlay.className = 'quiz-overlay';
+    var correctCount = 0;
+    var total = selected.length;
+
+    function showQuestion(idx) {
+      if (idx >= selected.length) {
+        overlay.innerHTML = '<div class="quiz-popup">' +
+          '<h2>🎉 ' + t('quizScore') + ': ' + correctCount + ' ' + t('quizOf') + ' ' + total + '</h2>' +
+          '<p style="font-size:40px;margin:12px 0">' + (correctCount >= total ? '🌟' : '💪') + '</p>' +
+          '<p style="color:#757575;margin-bottom:12px">' + (correctCount >= total ? t('quizCorrect') : t('quizWrong')) + '</p>' +
+          '<button class="quiz-option" style="border-color:var(--orange);background:#FFF3E8" onclick="this.closest(\'.quiz-overlay\').remove();sproutSay(\'🌱 \' + (\'' + (correctCount >= total ? 'Great' : 'Good') + '\'))">' + (APP.lang === 'zh' ? '继续学习' : 'Continue') + '</button>' +
+          '</div>';
+        if (correctCount >= total) { playSuccess(); addStar(1); playCelebration(); showConfetti(30); }
+        return;
+      }
+
+      var q = selected[idx];
+      overlay.innerHTML = '<div class="quiz-popup">' +
+        '<h2>🤔 ' + t('quizCompleteTitle') + '</h2>' +
+        '<p style="font-size:12px;color:#757575;margin-bottom:4px">' + (idx + 1) + '/' + total + '</p>' +
+        '<p style="margin-bottom:16px;font-weight:700;font-size:16px">' + q.q + '</p>' +
+        q.opts.map(function(o, i) {
+          return '<button class="quiz-option" onclick="(function() {' +
+            'var btns = document.querySelectorAll(\'.quiz-overlay .quiz-option\');' +
+            'for (var j=0;j<btns.length;j++) btns[j].disabled=true;' +
+            'var isRight = ' + i + '===' + q.ans + ';' +
+            'btns[' + i + '].classList.add(isRight?\'correct\':\'wrong\');' +
+            'if (!isRight && btns[' + q.ans + ']) btns[' + q.ans + '].classList.add(\'correct\');' +
+            'var _c=' + correctCount + ';' +
+            'setTimeout(function(){showCompletionQuizQ(' + idx + '+1,' + i + '===' + q.ans + '?' + (correctCount + 1) + ':' + correctCount + ',' + total + ',' + JSON.stringify(selected.map(function(x){return x.q;}).join('|')) + ')},600);' +
+            '})()">' + o + '</button>';
+        }).join('') +
+        '</div>';
+
+      window.showCompletionQuizQ = function(nextIdx, newCorrect, totalQ, allQ) {
+        correctCount = newCorrect;
+        showQuestion(nextIdx);
+      };
+    }
+
+    showQuestion(0);
+    document.body.appendChild(overlay);
+    sproutSay('🌱 ' + t('sproutQuiz'), 2000);
+  }, 1500);
+};
 
 // ─── YOUTUBE PLAYER MESSAGE LISTENER ──────────────────────────
 function setupYouTubeListener(videoId) {
@@ -5862,6 +6144,7 @@ function renderSearch(container) {
           <div class="video-info">
             <h3>${v.title}</h3>
             <div class="channel">${v.channel} · ${v.category}</div>
+            <div class="video-level">${getStars(getLevel(v))}</div>
           </div>
         </div>
         `).join('')}
