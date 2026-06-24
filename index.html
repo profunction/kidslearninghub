@@ -3911,6 +3911,8 @@ document.addEventListener('click', function(e) {
 document.addEventListener('keydown', function(e) {
   if (e.key !== 'Enter' && e.key !== ' ') return;
   var target = e.target;
+  // Never interfere with text input fields
+  if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) return;
   // Handle interactive divs with onclick
   if (target.hasAttribute('onclick') && !target.closest('input,textarea,select,button,a')) {
     e.preventDefault();
