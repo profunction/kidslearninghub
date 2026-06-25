@@ -1320,10 +1320,129 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px s
   0%,100% { border-color: rgba(129,199,132,0.3); }
   50% { border-color: rgba(129,199,132,0.7); transform: scale(1.06); }
 }
+
+/* ─── AUTH & ACCOUNT CSS ─── */
+.auth-area { display: flex; align-items: center; }
+.auth-login-btn {
+  padding: 8px 18px; border-radius: 50px; border: 2px solid var(--orange);
+  background: var(--orange); color: white; font-weight: 700; font-size: 13px;
+  cursor: pointer; transition: all 0.2s; white-space: nowrap;
+}
+.auth-login-btn:hover { transform: scale(1.05); }
+.auth-user-menu { position: relative; }
+.auth-user-btn {
+  display: flex; align-items: center; gap: 6px; padding: 6px 12px;
+  border-radius: 50px; border: 2px solid #E0E0E0; background: white;
+  cursor: pointer; font-size: 13px; font-weight: 600; transition: border-color 0.2s;
+}
+.auth-user-btn:hover { border-color: var(--blue); }
+.auth-user-avatar { font-size: 20px; }
+.auth-user-name { max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.auth-user-role { font-size: 14px; }
+.auth-dropdown {
+  position: absolute; top: 100%; right: 0; margin-top: 8px;
+  background: white; border-radius: var(--radius-md); box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  padding: 6px; min-width: 180px; z-index: 9999; animation: fadeInDown 0.2s;
+}
+@keyframes fadeInDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+.auth-dropdown-item {
+  display: flex; align-items: center; gap: 8px; width: 100%;
+  padding: 10px 14px; border: none; background: none; text-align: left;
+  font-size: 13px; font-weight: 500; cursor: pointer; border-radius: var(--radius-xs);
+  transition: background 0.15s;
+}
+.auth-dropdown-item:hover { background: #F5F0E8; }
+.auth-dropdown-logout { color: var(--coral); border-top: 1px solid #EEE; margin-top: 4px; padding-top: 10px; }
+
+/* Auth Modal */
+.auth-modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center; z-index: 10000;
+  animation: fadeIn 0.2s;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.auth-modal {
+  background: white; border-radius: var(--radius-lg); padding: 32px 28px;
+  max-width: 380px; width: 90%; position: relative;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2); animation: slideUp 0.3s;
+}
+@keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+.auth-close {
+  position: absolute; top: 12px; right: 12px; width: 32px; height: 32px;
+  border: none; background: #F5F0E8; border-radius: 50%; font-size: 16px;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+}
+.auth-close:hover { background: #E8E0D0; }
+.auth-logo { font-size: 48px; text-align: center; margin-bottom: 8px; }
+.auth-title { font-size: 22px; font-weight: 800; text-align: center; margin-bottom: 4px; }
+.auth-subtitle { font-size: 13px; color: var(--text-light); text-align: center; margin-bottom: 20px; }
+.auth-input {
+  width: 100%; padding: 12px 16px; border: 2px solid #E0E0E0; border-radius: var(--radius-sm);
+  font-size: 14px; margin-bottom: 10px; transition: border-color 0.2s; box-sizing: border-box;
+}
+.auth-input:focus { outline: none; border-color: var(--blue); }
+.auth-submit-btn {
+  width: 100%; padding: 12px; border: none; border-radius: var(--radius-sm);
+  background: var(--orange); color: white; font-size: 15px; font-weight: 700;
+  cursor: pointer; transition: all 0.2s; margin-top: 4px;
+}
+.auth-submit-btn:hover { background: #E67E22; }
+.auth-submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.auth-error-msg {
+  background: #FFF0F0; color: var(--coral); padding: 10px 14px; border-radius: var(--radius-xs);
+  font-size: 12px; margin-bottom: 10px; border: 1px solid #FFD0D0;
+}
+.auth-divider { text-align: center; margin: 16px 0; position: relative; }
+.auth-divider::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: #E0E0E0; }
+.auth-divider span { background: white; padding: 0 12px; position: relative; font-size: 12px; color: var(--text-light); }
+.auth-google-btn {
+  width: 100%; padding: 11px; border: 2px solid #E0E0E0; border-radius: var(--radius-sm);
+  background: white; font-size: 14px; font-weight: 600; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s;
+}
+.auth-google-btn:hover { border-color: #4285F4; background: #F8FAFF; }
+.auth-switch { text-align: center; margin-top: 16px; font-size: 13px; color: var(--blue); cursor: pointer; font-weight: 600; }
+.auth-switch:hover { text-decoration: underline; }
+.auth-hint { text-align: center; margin-top: 8px; font-size: 11px; color: #BBB; }
+
+/* Adventure Map */
+.adventure-map { padding: 16px 0; }
+.adventure-island {
+  background: white; border-radius: var(--radius-lg); padding: 20px; margin-bottom: 16px;
+  box-shadow: var(--shadow); position: relative; overflow: hidden;
+  transition: transform 0.2s;
+}
+.adventure-island:hover { transform: translateY(-2px); }
+.adventure-island-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.adventure-island-icon { font-size: 36px; }
+.adventure-island-name { font-size: 16px; font-weight: 700; }
+.adventure-island-progress { font-size: 12px; color: var(--text-light); }
+.adventure-progress-bar { height: 12px; background: #F0E8D8; border-radius: 6px; overflow: hidden; margin-top: 8px; }
+.adventure-progress-fill { height: 100%; border-radius: 6px; transition: width 0.5s; }
+.adventure-stars { display: flex; gap: 4px; margin-top: 6px; }
+.adventure-star { font-size: 18px; }
+.adventure-star.earned { animation: starPop 0.4s; }
+@keyframes starPop { 0% { transform: scale(0); } 60% { transform: scale(1.3); } 100% { transform: scale(1); } }
+.adventure-island-locked { opacity: 0.5; filter: grayscale(0.5); }
+
+/* Parent Dashboard Charts */
+.parent-chart-card { background: white; border-radius: var(--radius-lg); padding: 20px; box-shadow: var(--shadow); margin-bottom: 16px; }
+.parent-chart-bar { display: flex; align-items: flex-end; gap: 6px; height: 120px; padding-top: 10px; }
+.parent-chart-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.parent-chart-bar-fill { width: 100%; border-radius: 6px 6px 0 0; min-height: 4px; transition: height 0.5s; }
+.parent-chart-label { font-size: 10px; color: var(--text-light); font-weight: 600; }
+.parent-chart-value { font-size: 10px; color: var(--text); font-weight: 700; }
+.parent-cat-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.parent-cat-label { font-size: 13px; font-weight: 600; min-width: 80px; }
+.parent-cat-bar { flex: 1; height: 16px; background: #F0E8D8; border-radius: 8px; overflow: hidden; }
+.parent-cat-fill { height: 100%; border-radius: 8px; transition: width 0.5s; }
+.parent-cat-count { font-size: 12px; font-weight: 700; min-width: 30px; text-align: right; }
 </style>
 <!-- Google AdSense -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8103912615651681"
      crossorigin="anonymous"></script>
+<!-- Supabase JS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -1340,6 +1459,7 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px s
     <span class="logo-text-short">Kids Learning Hub</span>
   </div>
   <div class="top-bar-actions">
+    <div id="auth-area" class="auth-area"></div>
     <button class="top-btn" id="lang-toggle" onclick="toggleLang()" title="Switch Language" aria-label="Switch Language">🌐</button>
     <button class="top-btn" onclick="navigateTo('search')" title="搜索" aria-label="Search">🔍</button>
     <button class="top-btn" onclick="navigateTo('favorites')" title="收藏夹" aria-label="Favorites">❤️</button>
@@ -2382,7 +2502,8 @@ const BADGES = [
   { id: "star-15", name: "星光熠熠", icon: "🌟", desc: "获得15颗星星" },
   { id: "video-10", name: "小影迷", icon: "📺", desc: "观看10个视频" },
   { id: "course-abc", name: "字母达人", icon: "🔤", desc: "完成ABC字母课程" },
-  { id: "course-math", name: "数学新星", icon: "🔢", desc: "完成数字课程" }
+  { id: "course-math", name: "数学新星", icon: "🔢", desc: "完成数字课程" },
+  { id: "all-categories", name: "全科探索家", icon: "🗺️", desc: "在每个学科都完成至少1个视频" }
 ];
 
 // ─── APP STATE ─────────────────────────────────────────────────
@@ -2396,7 +2517,294 @@ const APP = {
   timerInterval: null,
   activeSearchQuery: '',
   lang: 'zh',               // 'zh' | 'en'
+  user: null,               // Supabase auth user
+  profile: null,            // Supabase profile row
+  supabase: null,           // Supabase client
 };
+
+// ─── SUPABASE CONFIG ──────────────────────────────────────────
+const SUPABASE_URL = 'https://odffjagzwzvgubvmleouduv.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_EAhPTLoz-aTzi7PDiY4pYg_WgoaM4FU';
+
+function initSupabase() {
+  if (typeof supabase === 'undefined') {
+    console.warn('Supabase SDK not loaded');
+    return null;
+  }
+  APP.supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  return APP.supabase;
+}
+
+// ─── AUTH FUNCTIONS ───────────────────────────────────────────
+async function authSignUp(email, password, displayName) {
+  const { data, error } = await APP.supabase.auth.signUp({
+    email: email,
+    password: password,
+    options: { data: { display_name: displayName || '' } }
+  });
+  return { data, error };
+}
+
+async function authSignIn(email, password) {
+  const { data, error } = await APP.supabase.auth.signInWithPassword({
+    email: email,
+    password: password
+  });
+  return { data, error };
+}
+
+async function authSignInWithGoogle() {
+  const { data, error } = await APP.supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo: window.location.origin }
+  });
+  return { data, error };
+}
+
+async function authSignOut() {
+  await APP.supabase.auth.signOut();
+  APP.user = null;
+  APP.profile = null;
+  updateAuthUI();
+  navigateTo('home');
+}
+
+async function authGetCurrentUser() {
+  const { data: { user } } = await APP.supabase.auth.getUser();
+  if (user) {
+    APP.user = user;
+    // Fetch profile
+    const { data: profile } = await APP.supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', user.id)
+      .single();
+    APP.profile = profile;
+  }
+  return user;
+}
+
+function onAuthChange(callback) {
+  APP.supabase.auth.onAuthStateChange((event, session) => {
+    callback(event, session);
+  });
+}
+
+// ─── CLOUD PROGRESS SYNC ──────────────────────────────────────
+async function cloudSyncProgress() {
+  if (!APP.user) return;
+  const s = getStore();
+
+  // Sync completed videos to progress table
+  for (const videoId of s.completed) {
+    await APP.supabase
+      .from('progress')
+      .upsert({
+        user_id: APP.user.id,
+        video_id: videoId,
+        quiz_score: s.progress[videoId]?.quizScore || 0,
+        quiz_total: s.progress[videoId]?.quizTotal || 0,
+        watch_time_seconds: s.progress[videoId]?.seconds || 0,
+      }, { onConflict: 'user_id,video_id' });
+  }
+
+  // Sync badges
+  for (const badgeSlug of s.badges) {
+    await APP.supabase
+      .from('badges')
+      .upsert({
+        user_id: APP.user.id,
+        badge_slug: badgeSlug,
+      }, { onConflict: 'user_id,badge_slug' });
+  }
+
+  // Sync daily activity
+  const today = new Date().toISOString().slice(0, 10);
+  await APP.supabase
+    .from('daily_activity')
+    .upsert({
+      user_id: APP.user.id,
+      activity_date: today,
+      watch_seconds: s.dailyWatchTime || 0,
+      videos_watched: s.watchCount || 0,
+      stars_earned: s.stars || 0,
+    }, { onConflict: 'user_id,activity_date' });
+}
+
+async function cloudLoadProgress() {
+  if (!APP.user) return;
+  const s = getStore();
+
+  // Load progress from cloud
+  const { data: progressRows } = await APP.supabase
+    .from('progress')
+    .select('*')
+    .eq('user_id', APP.user.id);
+
+  if (progressRows) {
+    for (const row of progressRows) {
+      if (!s.completed.includes(row.video_id)) {
+        s.completed.push(row.video_id);
+      }
+      if (!s.progress[row.video_id]) s.progress[row.video_id] = {};
+      s.progress[row.video_id].quizScore = row.quiz_score;
+      s.progress[row.video_id].quizTotal = row.quiz_total;
+      s.progress[row.video_id].seconds = row.watch_time_seconds;
+    }
+    s.watchCount = s.completed.length;
+  }
+
+  // Load badges from cloud
+  const { data: badgeRows } = await APP.supabase
+    .from('badges')
+    .select('*')
+    .eq('user_id', APP.user.id);
+
+  if (badgeRows) {
+    for (const row of badgeRows) {
+      if (!s.badges.includes(row.badge_slug)) {
+        s.badges.push(row.badge_slug);
+      }
+    }
+  }
+
+  saveStore(s);
+}
+
+// ─── AUTH UI ──────────────────────────────────────────────────
+function showAuthModal(mode) {
+  // Remove existing
+  const existing = document.getElementById('auth-modal');
+  if (existing) existing.remove();
+
+  const isLogin = mode === 'login';
+  const title = isLogin ? (APP.lang === 'zh' ? '登录' : 'Sign In') : (APP.lang === 'zh' ? '注册账号' : 'Sign Up');
+  const switchText = isLogin ? (APP.lang === 'zh' ? '没有账号？点击注册' : 'No account? Sign up') : (APP.lang === 'zh' ? '已有账号？点击登录' : 'Have an account? Sign in');
+
+  const modal = document.createElement('div');
+  modal.id = 'auth-modal';
+  modal.className = 'auth-modal-overlay';
+  modal.innerHTML = `
+    <div class="auth-modal">
+      <button class="auth-close" onclick="closeAuthModal()" aria-label="Close">✕</button>
+      <div class="auth-logo">🌱</div>
+      <h2 class="auth-title">${title}</h2>
+      <p class="auth-subtitle">${APP.lang === 'zh' ? '加入 HappySprout，保存学习进度' : 'Join HappySprout, save your progress'}</p>
+
+      <form id="auth-form" onsubmit="handleAuthSubmit(event, '${mode}')">
+        ${!isLogin ? `<input type="text" id="auth-name" class="auth-input" placeholder="${APP.lang === 'zh' ? '孩子昵称' : 'Child name'}" required autocomplete="name">` : ''}
+        <input type="email" id="auth-email" class="auth-input" placeholder="${APP.lang === 'zh' ? '邮箱' : 'Email'}" required autocomplete="email">
+        <input type="password" id="auth-password" class="auth-input" placeholder="${APP.lang === 'zh' ? '密码（至少6位）' : 'Password (min 6 chars)'}" required minlength="6" autocomplete="${isLogin ? 'current-password' : 'new-password'}">
+        <button type="submit" class="auth-submit-btn" id="auth-submit-btn">${title}</button>
+      </form>
+
+      <div class="auth-divider"><span>${APP.lang === 'zh' ? '或' : 'OR'}</span></div>
+
+      <button class="auth-google-btn" onclick="handleGoogleAuth()">
+        <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        ${APP.lang === 'zh' ? '使用 Google 登录' : 'Continue with Google'}
+      </button>
+
+      <p class="auth-switch" onclick="showAuthModal('${isLogin ? 'signup' : 'login'}')">${switchText}</p>
+      <p class="auth-hint">${APP.lang === 'zh' ? '注册即表示同意我们的隐私政策' : 'By signing up you agree to our Privacy Policy'}</p>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
+
+function closeAuthModal() {
+  const modal = document.getElementById('auth-modal');
+  if (modal) modal.remove();
+}
+
+async function handleAuthSubmit(e, mode) {
+  e.preventDefault();
+  const btn = document.getElementById('auth-submit-btn');
+  const email = document.getElementById('auth-email').value.trim();
+  const password = document.getElementById('auth-password').value;
+  const nameInput = document.getElementById('auth-name');
+  const displayName = nameInput ? nameInput.value.trim() : '';
+
+  btn.disabled = true;
+  btn.textContent = APP.lang === 'zh' ? '请稍候...' : 'Please wait...';
+
+  let result;
+  if (mode === 'signup') {
+    result = await authSignUp(email, password, displayName);
+  } else {
+    result = await authSignIn(email, password);
+  }
+
+  if (result.error) {
+    btn.disabled = false;
+    btn.textContent = mode === 'signup' ? (APP.lang === 'zh' ? '注册账号' : 'Sign Up') : (APP.lang === 'zh' ? '登录' : 'Sign In');
+    showAuthError(result.error.message);
+  } else {
+    closeAuthModal();
+    // Auth state change listener will handle UI update
+  }
+}
+
+async function handleGoogleAuth() {
+  await authSignInWithGoogle();
+  // OAuth redirect will handle the rest
+}
+
+function showAuthError(msg) {
+  const existing = document.getElementById('auth-error');
+  if (existing) existing.remove();
+  const form = document.getElementById('auth-form');
+  const errDiv = document.createElement('div');
+  errDiv.id = 'auth-error';
+  errDiv.className = 'auth-error-msg';
+  errDiv.textContent = msg;
+  form.insertBefore(errDiv, form.firstChild);
+}
+
+function updateAuthUI() {
+  const container = document.getElementById('auth-area');
+  if (!container) return;
+
+  if (APP.user) {
+    const displayName = APP.profile?.display_name || APP.user.email?.split('@')[0] || 'User';
+    const avatar = APP.profile?.avatar || '🐱';
+    const role = APP.profile?.role || 'parent';
+    const roleIcon = role === 'parent' ? '👨‍👩‍👧' : '👶';
+    container.innerHTML = `
+      <div class="auth-user-menu">
+        <button class="auth-user-btn" onclick="toggleUserMenu()">
+          <span class="auth-user-avatar">${avatar}</span>
+          <span class="auth-user-name">${displayName}</span>
+          <span class="auth-user-role">${roleIcon}</span>
+        </button>
+        <div class="auth-dropdown" id="auth-dropdown" style="display:none">
+          <button class="auth-dropdown-item" onclick="navigateTo('me'); toggleUserMenu();">⭐ ${APP.lang === 'zh' ? '我的成就' : 'Achievements'}</button>
+          <button class="auth-dropdown-item" onclick="navigateTo('adventure'); toggleUserMenu();">🗺️ ${APP.lang === 'zh' ? '探险地图' : 'Adventure Map'}</button>
+          ${role === 'parent' ? `<button class="auth-dropdown-item" onclick="navigateTo('parent'); toggleUserMenu();">📊 ${APP.lang === 'zh' ? '家长后台' : 'Parent Dashboard'}</button>` : ''}
+          <button class="auth-dropdown-item auth-dropdown-logout" onclick="authSignOut()">🚪 ${APP.lang === 'zh' ? '退出登录' : 'Sign Out'}</button>
+        </div>
+      </div>
+    `;
+  } else {
+    container.innerHTML = `
+      <button class="auth-login-btn" onclick="showAuthModal('login')">${APP.lang === 'zh' ? '登录' : 'Sign In'}</button>
+    `;
+  }
+}
+
+function toggleUserMenu() {
+  const dd = document.getElementById('auth-dropdown');
+  if (dd) dd.style.display = dd.style.display === 'none' ? 'block' : 'none';
+}
+
+// Close dropdown on outside click
+document.addEventListener('click', function(e) {
+  const dd = document.getElementById('auth-dropdown');
+  const btn = document.querySelector('.auth-user-btn');
+  if (dd && btn && !btn.contains(e.target) && !dd.contains(e.target)) {
+    dd.style.display = 'none';
+  }
+});
 
 // ─── I18N (Internationalization) ──────────────────────────────
 const I18N = {
@@ -2630,6 +3038,8 @@ const I18N = {
     badge_course_abc_desc: '完成ABC字母课程',
     badge_course_math: '数学新星',
     badge_course_math_desc: '完成数字课程',
+    badge_all_categories: '全科探索家',
+    badge_all_categories_desc: '在每个学科都完成至少1个视频',
     badge_unlocked: '解锁！',
     // Courses
     course_abc_fun_name: 'ABC 字母快乐学',
@@ -2966,6 +3376,8 @@ const I18N = {
     badge_course_abc_desc: 'Complete the ABC course',
     badge_course_math: 'Math Star',
     badge_course_math_desc: 'Complete the Numbers course',
+    badge_all_categories: 'All-Subject Explorer',
+    badge_all_categories_desc: 'Complete at least 1 video in every subject',
     badge_unlocked: 'Unlocked!',
     // Courses
     course_abc_fun_name: 'ABC Fun Learning',
@@ -3276,8 +3688,16 @@ function markCompleted(videoId) {
 
     // Check course completion
     checkCourseCompletion(videoId, s);
+
+    // Check all-category badge
+    checkAllCategoryBadge(s);
   }
   saveStore(s);
+
+  // Sync to cloud if logged in
+  if (APP.user && APP.supabase) {
+    cloudSyncProgress();
+  }
 }
 
 function checkCourseCompletion(videoId, s) {
@@ -3293,10 +3713,22 @@ function checkCourseCompletion(videoId, s) {
   }
 }
 
+// Check if user has completed at least 1 video in each category
+function checkAllCategoryBadge(s) {
+  const categories = ['英语启蒙', '数学思维', '科学探索', '艺术手工', '音乐律动', '故事模式'];
+  const allCovered = categories.every(cat => {
+    return VIDEO_DB.some(v => v.category === cat && s.completed.includes(v.id));
+  });
+  if (allCovered && !s.badges.includes('all-categories')) {
+    s.badges.push('all-categories');
+    showBadgeEarned('all-categories');
+  }
+}
+
 function showBadgeEarned(badgeId) {
   const badge = BADGES.find(b => b.id === badgeId);
   if (!badge) return;
-  const badgeNameKey = {'first-watch':'badge_first_watch','streak-3':'badge_streak3','streak-7':'badge_streak7','star-5':'badge_star5','star-15':'badge_star15','video-10':'badge_video10','course-abc':'badge_course_abc','course-math':'badge_course_math'}[badgeId];
+  const badgeNameKey = {'first-watch':'badge_first_watch','streak-3':'badge_streak3','streak-7':'badge_streak7','star-5':'badge_star5','star-15':'badge_star15','video-10':'badge_video10','course-abc':'badge_course_abc','course-math':'badge_course_math','all-categories':'badge_all_categories'}[badgeId];
   setTimeout(() => {
     showStarPopup(`🏅 ${t(badgeNameKey)} ${t('badge_unlocked')}`);
     playCelebration(); showConfetti(40);
@@ -4015,6 +4447,7 @@ function navigateTo(page, params = {}) {
     case 'favorites': renderFavorites(main); break;
     case 'search': if (params.query) APP.activeSearchQuery = params.query; renderSearch(main); break;
     case 'parent': renderParent(main); break;
+    case 'adventure': renderAdventureMap(main); break;
     case 'courses': renderCoursesList(main); break;
     case 'channel': renderChannel(main, params.channelName); break;
     case 'about': renderAbout(main); break;
@@ -5757,6 +6190,97 @@ function finishExercise(container, score, total) {
   if (list) list.style.display = 'grid';
 }
 
+// ─── RENDER: ADVENTURE MAP ────────────────────────────────────
+function renderAdventureMap(container) {
+  const s = getStore();
+  const categories = [
+    { key: '英语启蒙', icon: '🔤', color: '#FF6B6B', nameZh: '英语启蒙岛', nameEn: 'English Island' },
+    { key: '数学思维', icon: '🔢', color: '#4ECDC4', nameZh: '数学思维岛', nameEn: 'Math Island' },
+    { key: '科学探索', icon: '🔬', color: '#45B7D1', nameZh: '科学探索岛', nameEn: 'Science Island' },
+    { key: '艺术手工', icon: '🎨', color: '#C77DFF', nameZh: '艺术手工岛', nameEn: 'Art Island' },
+    { key: '音乐律动', icon: '🎵', color: '#FFD93D', nameZh: '音乐律动岛', nameEn: 'Music Island' },
+    { key: '故事模式', icon: '📖', color: '#FF8C42', nameZh: '故事模式岛', nameEn: 'Story Island' },
+  ];
+
+  const islands = categories.map(cat => {
+    const videos = VIDEO_DB.filter(v => v.category === cat.key);
+    const completed = videos.filter(v => s.completed.includes(v.id));
+    const pct = videos.length > 0 ? Math.round((completed.length / videos.length) * 100) : 0;
+    const stars = completed.length; // 1 star per completed video in category
+    return { ...cat, total: videos.length, completed: completed.length, pct, stars };
+  });
+
+  const totalCompleted = s.completed.length;
+  const totalVideos = VIDEO_DB.length;
+  const overallPct = Math.round((totalCompleted / totalVideos) * 100);
+
+  container.innerHTML = `
+    <div class="page active">
+      <button style="padding:8px 16px;border:none;background:#f0e8d8;border-radius:20px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:12px" onclick="navigateTo('home')">← ${t('back')}</button>
+
+      <div style="text-align:center;margin-bottom:20px">
+        <h1 style="font-size:24px;margin-bottom:6px">🗺️ ${APP.lang === 'zh' ? '学习探险地图' : 'Learning Adventure Map'}</h1>
+        <p style="color:var(--text-light);font-size:14px">${APP.lang === 'zh' ? '探索每个学科岛屿，收集星星，成为全科探索家！' : 'Explore each subject island, collect stars, become an All-Subject Explorer!'}</p>
+      </div>
+
+      <!-- Overall progress -->
+      <div style="background:linear-gradient(135deg,#FFF5E6,#E8F5E9);border-radius:var(--radius-lg);padding:20px;margin-bottom:20px;text-align:center">
+        <div style="font-size:14px;font-weight:700;margin-bottom:8px">${APP.lang === 'zh' ? '总进度' : 'Overall Progress'}</div>
+        <div style="font-size:32px;font-weight:900;color:var(--orange)">${overallPct}%</div>
+        <div style="font-size:13px;color:var(--text-light);margin-top:4px">${totalCompleted} / ${totalVideos} ${APP.lang === 'zh' ? '个视频' : 'videos'}</div>
+        <div style="height:16px;background:#F0E8D8;border-radius:8px;overflow:hidden;margin-top:12px">
+          <div style="height:100%;width:${overallPct}%;background:linear-gradient(90deg,var(--orange),var(--coral));border-radius:8px;transition:width 0.5s"></div>
+        </div>
+      </div>
+
+      <!-- Islands -->
+      <div class="adventure-map">
+        ${islands.map((isl, idx) => {
+          const prevCompleted = idx === 0 || islands[idx-1].completed > 0;
+          const locked = !prevCompleted;
+          const starsDisplay = Array.from({length: Math.min(isl.completed, 5)}, (_, i) => '<span class="adventure-star earned">⭐</span>').join('') +
+                            Array.from({length: Math.max(0, 5 - isl.completed)}, () => '<span class="adventure-star">☆</span>').join('');
+          return `
+          <div class="adventure-island ${locked ? 'adventure-island-locked' : ''}" onclick="${locked ? '' : `navigateTo('subjectHub',{subject:'${isl.key}'})`}" style="cursor:${locked ? 'default' : 'pointer'}">
+            <div class="adventure-island-header">
+              <div class="adventure-island-icon">${locked ? '🔒' : isl.icon}</div>
+              <div style="flex:1">
+                <div class="adventure-island-name">${APP.lang === 'zh' ? isl.nameZh : isl.nameEn}</div>
+                <div class="adventure-island-progress">${isl.completed} / ${isl.total} ${APP.lang === 'zh' ? '已完成' : 'completed'} · ${isl.pct}%</div>
+                <div class="adventure-stars">${starsDisplay}</div>
+              </div>
+              <div style="font-size:24px;font-weight:900;color:${isl.color}">${isl.pct}%</div>
+            </div>
+            <div class="adventure-progress-bar">
+              <div class="adventure-progress-fill" style="width:${isl.pct}%;background:${isl.color}"></div>
+            </div>
+            ${locked ? `<p style="font-size:11px;color:var(--text-light);margin-top:8px">${APP.lang === 'zh' ? '完成前一个岛屿解锁' : 'Complete previous island to unlock'}</p>` : ''}
+          </div>`;
+        }).join('')}
+      </div>
+
+      <!-- Badge showcase -->
+      <div class="section-title" style="margin-top:20px"><span class="icon">🏅</span> ${APP.lang === 'zh' ? '探险勋章' : 'Adventure Badges'}</div>
+      <div class="badge-wall">
+        ${BADGES.map(b => {
+          const earned = s.badges.includes(b.id);
+          return `
+          <div style="text-align:center">
+            <div class="badge-item ${earned ? 'earned' : ''}">${earned ? b.icon : '❓'}</div>
+            <small style="font-size:10px;display:block;margin-top:4px;color:${earned ? 'var(--text)' : '#ccc'}">${earned ? (APP.lang === 'zh' ? b.name : b.id) : '???'}</small>
+          </div>`;
+        }).join('')}
+      </div>
+
+      ${!APP.user ? `
+      <div style="text-align:center;margin-top:20px;padding:16px;background:#FFF5E6;border-radius:var(--radius-lg)">
+        <p style="font-size:13px;color:var(--text-light);margin-bottom:10px">${APP.lang === 'zh' ? '登录后进度将永久保存到云端' : 'Sign in to save your progress to the cloud'}</p>
+        <button style="padding:10px 28px;border-radius:50px;border:none;background:var(--orange);color:white;font-weight:700;cursor:pointer;font-size:14px" onclick="showAuthModal('signup')">${APP.lang === 'zh' ? '注册/登录' : 'Sign Up / Sign In'}</button>
+      </div>` : ''}
+    </div>
+  `;
+}
+
 // ─── RENDER: ME (Profile) ─────────────────────────────────────
 function renderMe(container) {
   const s = getStore();
@@ -5827,7 +6351,7 @@ function renderMe(container) {
       <div class="badge-wall">
         ${BADGES.map(b => {
           const earned = s.badges.includes(b.id);
-          const badgeNameKey = {'first-watch':'badge_first_watch','streak-3':'badge_streak3','streak-7':'badge_streak7','star-5':'badge_star5','star-15':'badge_star15','video-10':'badge_video10','course-abc':'badge_course_abc','course-math':'badge_course_math'}[b.id];
+          const badgeNameKey = {'first-watch':'badge_first_watch','streak-3':'badge_streak3','streak-7':'badge_streak7','star-5':'badge_star5','star-15':'badge_star15','video-10':'badge_video10','course-abc':'badge_course_abc','course-math':'badge_course_math','all-categories':'badge_all_categories'}[b.id];
           const badgeDescKey = badgeNameKey + '_desc';
           return `
           <div style="text-align:center">
@@ -6274,6 +6798,29 @@ function renderParent(container) {
             <p style="margin:8px 0"><strong>${t('videosFavorited')}：</strong>${s.favorites.length}</p>
           </div>
 
+          <!-- 7-day activity bar chart -->
+          <div class="parent-chart-card">
+            <h3 style="margin-bottom:8px">📅 ${APP.lang === 'zh' ? '近7天学习时长' : '7-Day Study Time'}</h3>
+            ${renderWeeklyChart(s)}
+          </div>
+
+          <!-- Category distribution -->
+          <div class="parent-chart-card">
+            <h3 style="margin-bottom:12px">📈 ${APP.lang === 'zh' ? '学科分布' : 'Subject Distribution'}</h3>
+            ${renderCategoryChart(s)}
+          </div>
+
+          <!-- Cloud sync status -->
+          ${APP.user ? `
+          <div class="parent-chart-card" style="background:#F0FFF4;border:1px solid #90EE90">
+            <p style="font-size:13px;color:#2E7D32">☁️ ${APP.lang === 'zh' ? '已登录：学习数据已同步到云端' : 'Signed in: Progress synced to cloud'}</p>
+            <p style="font-size:11px;color:var(--text-light);margin-top:4px">${APP.user.email}</p>
+          </div>` : `
+          <div class="parent-chart-card" style="background:#FFF8E1;border:1px solid #FFE082">
+            <p style="font-size:13px;color:#F57C00">⚠️ ${APP.lang === 'zh' ? '未登录：数据仅保存在本地设备' : 'Not signed in: Data stored locally only'}</p>
+            <button style="margin-top:8px;padding:8px 20px;border-radius:50px;border:none;background:var(--orange);color:white;font-weight:700;cursor:pointer;font-size:13px" onclick="showAuthModal('signup')">${APP.lang === 'zh' ? '注册账号保存进度' : 'Sign up to save progress'}</button>
+          </div>`}
+
           <div style="background:white;border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow);margin-top:12px">
             <h3 style="margin-bottom:8px">📋 ${t('completedVideosList')}</h3>
             ${s.completed.length === 0 ? '<p style="color:var(--text-light)">' + t('noCompletedVideos') + '</p>' :
@@ -6306,6 +6853,66 @@ function switchParentTab(tab, btn) {
     const el = document.getElementById('tab-' + t);
     if (el) el.style.display = t === tab ? 'block' : 'none';
   });
+}
+
+// ─── PARENT DASHBOARD CHARTS ──────────────────────────────────
+function renderWeeklyChart(s) {
+  const today = new Date();
+  const days = [];
+  const dayLabelsZh = ['日','一','二','三','四','五','六'];
+  const dayLabelsEn = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(today); d.setDate(d.getDate() - i);
+    const dateStr = d.toISOString().slice(0, 10);
+    const isActive = (s.streakDates || []).includes(dateStr);
+    const minutes = isActive ? Math.floor((s.totalWatchTime || 0) / Math.max(s.watchCount, 1)) : 0;
+    days.push({
+      label: APP.lang === 'zh' ? dayLabelsZh[d.getDay()] : dayLabelsEn[d.getDay()],
+      minutes: isActive ? Math.max(minutes, 5) : 0,
+      isActive
+    });
+  }
+  const maxMin = Math.max(...days.map(d => d.minutes), 30);
+  const colors = ['#FF6B6B','#FF8C42','#FFD93D','#96CEB4','#4ECDC4','#45B7D1','#C77DFF'];
+
+  return `
+    <div class="parent-chart-bar">
+      ${days.map((d, i) => `
+        <div class="parent-chart-col">
+          <span class="parent-chart-value">${d.minutes > 0 ? d.minutes + 'm' : ''}</span>
+          <div class="parent-chart-bar-fill" style="height:${(d.minutes / maxMin) * 100}%;background:${d.isActive ? colors[i] : '#E0E0E0'}"></div>
+          <span class="parent-chart-label">${d.label}</span>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function renderCategoryChart(s) {
+  const categories = [
+    { key: '英语启蒙', color: '#FF6B6B', icon: '🔤' },
+    { key: '数学思维', color: '#4ECDC4', icon: '🔢' },
+    { key: '科学探索', color: '#45B7D1', icon: '🔬' },
+    { key: '艺术手工', color: '#C77DFF', icon: '🎨' },
+    { key: '音乐律动', color: '#FFD93D', icon: '🎵' },
+    { key: '故事模式', color: '#FF8C42', icon: '📖' },
+  ];
+  const maxCount = Math.max(...categories.map(c => VIDEO_DB.filter(v => v.category === c.key && s.completed.includes(v.id)).length), 1);
+
+  return categories.map(cat => {
+    const count = VIDEO_DB.filter(v => v.category === cat.key && s.completed.includes(v.id)).length;
+    const total = VIDEO_DB.filter(v => v.category === cat.key).length;
+    const pct = total > 0 ? Math.round((count / total) * 100) : 0;
+    return `
+      <div class="parent-cat-row">
+        <span class="parent-cat-label">${cat.icon} ${cat.key}</span>
+        <div class="parent-cat-bar">
+          <div class="parent-cat-fill" style="width:${(count / maxCount) * 100}%;background:${cat.color}"></div>
+        </div>
+        <span class="parent-cat-count">${count}/${total}</span>
+      </div>
+    `;
+  }).join('');
 }
 
 function toggleBlockTimeInputs() {
@@ -6845,6 +7452,38 @@ function init() {
     if (!s.progress) s.progress = {};
     saveStore(s);
 
+    // ─── Initialize Supabase & Auth ───
+    initSupabase();
+    if (APP.supabase) {
+      // Check existing session
+      authGetCurrentUser().then(() => {
+        updateAuthUI();
+        if (APP.user) {
+          // Load cloud progress and merge
+          cloudLoadProgress().then(() => {
+            // Re-render current page to show updated progress
+            navigateTo(APP.currentPage);
+          });
+        }
+      });
+
+      // Listen for auth changes
+      onAuthChange(async (event, session) => {
+        if (event === 'SIGNED_IN' && session) {
+          APP.user = session.user;
+          await authGetCurrentUser();
+          updateAuthUI();
+          await cloudLoadProgress();
+          navigateTo(APP.currentPage);
+        } else if (event === 'SIGNED_OUT') {
+          APP.user = null;
+          APP.profile = null;
+          updateAuthUI();
+          navigateTo('home');
+        }
+      });
+    }
+
     // Handle initial hash-based navigation (restore page on reload)
     var hash = window.location.hash.replace('#', '');
     var initialPage = 'home';
@@ -6862,6 +7501,7 @@ function init() {
 
     // Initial render
     updateNavLabels();
+    updateAuthUI();
     navigateTo(initialPage, initialParams);
   } catch(e) {
     console.error('HappySprout init error:', e);
