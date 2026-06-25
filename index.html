@@ -1443,6 +1443,8 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px s
      crossorigin="anonymous"></script>
 <!-- Supabase JS SDK -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- jsPDF for printable worksheets -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
 
@@ -2301,28 +2303,46 @@ function getLevel(v) {
 // ─── COURSE DATABASE ──────────────────────────────────────────
 const COURSE_DB = [
   {
-    id: "abc-fun",
-    name: "ABC 字母快乐学",
-    icon: "🔤",
-    color: "#FF8C42",
+    id: "abc-fun",          nameKey: "course_abc_fun_name", descKey: "course_abc_fun_desc",
+    name: "ABC 字母快乐学",  icon: "🔤", color: "#FF8C42", category: "英语启蒙",
     description: "从零开始学字母，唱歌跳舞记ABC！",
     videoIds: ["yCjJyiqpAuU", "hq3yfQnllfQ", "Ye8mB6VsUHw", "5XEN4vtH4Ic", "71h8MZshGSs", "Uj9w-uBuLgw"]
   },
   {
-    id: "numbers-1-10",
-    name: "数字王国大冒险",
-    icon: "🔢",
-    color: "#C77DFF",
+    id: "numbers-1-10",     nameKey: "course_numbers_name", descKey: "course_numbers_desc",
+    name: "数字王国大冒险",   icon: "🔢", color: "#C77DFF", category: "数学思维",
     description: "数一数、加一加，我是数字小天才！",
-    videoIds: ["DR-cfDsHCGA", "jft6MQeq9sY", "g92uG8hUFpI"]
+    videoIds: ["DR-cfDsHCGA", "g92uG8hUFpI", "D0Ajq682yrA", "jft6MQeq9sY", "ch7KzI3n2Zk", "0TgLtF3PMOc"]
   },
   {
-    id: "phonics-basics",
-    name: "自然拼读入门",
-    icon: "🔤",
-    color: "#FF6B9D",
+    id: "phonics-basics",   nameKey: "course_phonics_name", descKey: "course_phonics_desc",
+    name: "自然拼读入门",     icon: "🔤", color: "#FF6B9D", category: "英语启蒙",
     description: "从A到Z，自然拼读打基础！",
-    videoIds: ["hq3yfQnllfQ"]
+    videoIds: ["hq3yfQnllfQ", "1dNI74FZ6Vc", "l-sEZaHet8c", "n8PyUO2PL4A"]
+  },
+  {
+    id: "science-kids",     nameKey: "course_science_name", descKey: "course_science_desc",
+    name: "小小科学家",       icon: "🔬", color: "#4ECDC4", category: "科学探索",
+    description: "探索天气、人体、宇宙和海洋的奥秘！",
+    videoIds: ["rD6FRDd9Hew", "XtSq1wcFSEI", "b25g4nZTHvM", "Vb2ZXRh74WU", "yzwdJjo4vGw"]
+  },
+  {
+    id: "creative-art",     nameKey: "course_art_name", descKey: "course_art_desc",
+    name: "创意手工坊",       icon: "🎨", color: "#FF6B9D", category: "艺术手工",
+    description: "拿起画笔，一步步画出可爱小动物和角色！",
+    videoIds: ["EvWSWpHsPSI", "XpBNNPxlVtE", "K2M8g6UGwxk", "FWsyKw2-en4", "RQ-Yhzv2FRM"]
+  },
+  {
+    id: "music-fun",        nameKey: "course_music_name", descKey: "course_music_desc",
+    name: "音乐律动营",       icon: "🎵", color: "#45B7D1", category: "音乐律动",
+    description: "跟着节奏摇摆，唱歌跳舞快乐学！",
+    videoIds: ["XqZsoesa55w", "l4WNrvVjiTw", "tbbKjDjMDok", "yDImFv1Z5wE"]
+  },
+  {
+    id: "story-time",       nameKey: "course_story_name", descKey: "course_story_desc",
+    name: "故事小天地",       icon: "📖", color: "#FFB347", category: "故事模式",
+    description: "经典绘本故事，培养阅读兴趣和想象力！",
+    videoIds: ["c8RBVbvwMd4", "nG2a4cBEkMM", "-GSnmRZlgc4", "f13aaTam3Lg", "BgKVBhO6GkU"]
   }
 ];
 
@@ -2378,7 +2398,7 @@ const COURSE_DETAIL = {
     age: '3-6岁',
     difficulty: '入门级 (Beginner)',
     zh: {
-      intro: '数字王国大冒险是 HappySprout 专为 3-6 岁幼儿打造的数学启蒙课程。通过 3 节精心编排的视频课和配套互动练习，让孩子在游戏化的情境中认识数字 1-10，掌握数数、数量对应和简单加法。课程选用 Numberblocks 等国际获奖数学启蒙节目的精彩内容，配合 HappySprout 独家设计的互动练习，让孩子像玩游戏一样爱上数学。',
+      intro: '数字王国大冒险是 HappySprout 专为 3-6 岁幼儿打造的数学启蒙课程。通过 6 节精心编排的视频课和配套互动练习，让孩子在游戏化的情境中认识数字 1-10，掌握数数、数量对应和简单加法。课程选用 Numberblocks 等国际获奖数学启蒙节目的精彩内容，配合 HappySprout 独家设计的互动练习，让孩子像玩游戏一样爱上数学。',
       objectives: [
         '认识和书写数字 1 到 10',
         '理解数与量的对应关系',
@@ -2396,7 +2416,7 @@ const COURSE_DETAIL = {
       ]
     },
     en: {
-      intro: 'Number Kingdom Adventure is HappySprout\'s math beginner course designed for children aged 3-6. Through 3 carefully curated video lessons and companion interactive exercises, children discover numbers 1-10, develop counting skills, understand quantity relationships, and explore simple addition — all in a game-like environment. Featuring award-winning content from Numberblocks and HappySprout-exclusive interactive practice.',
+      intro: 'Number Kingdom Adventure is HappySprout\'s math beginner course designed for children aged 3-6. Through 6 carefully curated video lessons and companion interactive exercises, children discover numbers 1-10, develop counting skills, understand quantity relationships, and explore simple addition — all in a game-like environment. Featuring award-winning content from Numberblocks and HappySprout-exclusive interactive practice.',
       objectives: [
         'Recognize and write numbers 1 through 10',
         'Understand the relationship between numbers and quantities',
@@ -2447,6 +2467,128 @@ const COURSE_DETAIL = {
       tags: 'phonics, letter sounds, CVC words, early reading, English literacy, blending, segmenting, decoding',
       lessons: [
         { title: 'Phonics Basics: A-Z Letter Sounds Song', desc: 'This is the cornerstone of phonics learning. Unlike the ABC song (which teaches letter names), this lesson teaches each letter\'s "sound" — the core of decoding. For example, the letter A is taught as /æ/ (as in "apple") rather than "ay." Through a rhythmic Phonics Song, children learn all 26 letter sounds. The lesson follows Jolly Phonics\'s grouping method: Group 1 covers s, a, t, p, i, n — the letters that form the most simple words. After this lesson, children can attempt to blend simple CVC words like "sat," "pin," and "tap."', keywords: 'Phonics, letter sounds, A-Z sounds, blending, Jolly Phonics, CVC words' }
+      ]
+    }
+  },
+  'science-kids': {
+    age: '4-10岁', difficulty: '初级-中级 (Beginner-Intermediate)',
+    zh: {
+      intro: '小小科学家是 HappySprout 为 4-10 岁儿童打造的科学探索课程。通过 5 节精彩视频课，带孩子走进天气、人体感官、季节变化、太阳系和海洋世界——五大科学主题循序渐进，用生动的动画和有趣的实验激发孩子对科学的好奇心。课程精选 SciShow Kids、Peekaboo Kidz 和 Netflix Jr. 等国际顶级科普频道的优质内容，让孩子在观看和思考中建立科学思维。',
+      objectives: ['了解天气现象及其成因', '认识人体五大感官系统', '理解四季更替的科学原理', '探索太阳系行星的奥秘', '发现海洋生物的多样性', '培养观察、提问和探索的科学精神'],
+      howTo: '每周学习 1-2 节科学课（每节约 20 分钟）。观看视频后，鼓励孩子用自己的话复述学到的知识。家长可以配合日常生活中的现象进行延伸讨论——下雨时聊聊水循环，看星星时聊聊太阳系。每节课后可用 HappySprout 的互动测验检验学习效果。',
+      value: '儿童天生就是小科学家——他们对世界充满好奇，不断观察、提问、实验。HappySprout 的科学课程顺应这一天性，通过高质量的视觉内容和系统的知识结构，将孩子的好奇心引导为有序的科学思维。课程遵循"观察→提问→探究→理解"的学习路径，培养受益终身的科学素养。',
+      tags: '儿童科学, 科学启蒙, 天气, 人体, 太阳系, 海洋, 科普教育, 幼儿科学, SciShow Kids',
+      lessons: [
+        { title: '第1课：天气大揭秘', desc: '为什么天会下雨？彩虹是怎么形成的？跟着 Super Simple Songs 的天气歌，孩子们认识晴天、雨天、雪天和风天四种基本天气类型。用肢体动作模仿天气——挥动双手当风，慢慢落下来当雪花，让身体成为学习工具！', keywords: '天气, 雨, 雪, 彩虹, 风, 晴天' },
+        { title: '第2课：身体小侦探', desc: '我们为什么能看、能听、能闻？SciShow Kids 带孩子们探索人体的五大感官——视觉、听觉、嗅觉、味觉和触觉。通过有趣的感官实验，孩子亲身体验每种感觉的神奇：蒙眼猜物品、听声音辨方向、闻气味识东西，科学就在身边！', keywords: '感官, 视觉, 听觉, 嗅觉, 味觉, 触觉, 人体' },
+        { title: '第3课：四季的魔法', desc: '为什么夏天热、冬天冷？为什么树叶秋天会变色？SciShow Kids 用精美的动画解释地球绕太阳公转导致四季变化的原理。孩子们将制作"四季转盘"手工，直观理解春夏秋冬的循环，同时学习季节与穿衣、饮食的关系。', keywords: '四季, 春夏秋冬, 公转, 季节变化, 地球科学' },
+        { title: '第4课：太阳系大冒险', desc: '登上一艘想象飞船，和 Netflix Jr. 的 StoryBots 一起探索太阳系！从离太阳最近的水星，到遥远的蓝色海王星，孩子们认识八大行星的名字、位置和特点。课程教唱"行星顺序歌"，用顺口溜轻松记住行星排列。', keywords: '太阳系, 八大行星, 太阳, 地球, StoryBots, 太空' },
+        { title: '第5课：海洋总动员', desc: '潜入深海，和 SciShow Kids 一起发现海洋的神奇世界！从色彩斑斓的珊瑚礁到深海的发光生物，孩子们了解海洋生态系统和海洋生物多样性。课程强调海洋保护意识，培养孩子的环保责任感——"我们都是蓝色星球的小小守护者！"', keywords: '海洋, 珊瑚礁, 海洋生物, 生态系统, 环保, 深海' }
+      ]
+    },
+    en: {
+      intro: 'Little Scientists is HappySprout\'s science exploration course for children aged 4-10. Through 5 engaging video lessons, kids dive into weather, human senses, seasonal changes, the solar system, and ocean life — five science themes that build curiosity step by step. Featuring top content from SciShow Kids, Peekaboo Kidz, and Netflix Jr., children develop scientific thinking through watching and wondering.',
+      objectives: ['Understand weather phenomena and causes', 'Explore the five human senses', 'Grasp why seasons change', 'Discover the planets of our solar system', 'Learn about ocean biodiversity', 'Cultivate observation, questioning, and exploration habits'],
+      howTo: 'Explore 1-2 science lessons per week (about 20 minutes each). After watching, encourage children to explain what they learned in their own words. Extend learning with everyday phenomena — discuss the water cycle when it rains, talk about the solar system when stargazing. Use HappySprout\'s interactive quizzes after each lesson.',
+      value: 'Children are natural scientists — curious, observant, and always experimenting. HappySprout\'s science course channels this innate curiosity into structured scientific thinking through high-quality visual content and systematic knowledge building. The course follows an "Observe → Question → Explore → Understand" learning path, cultivating scientific literacy for life.',
+      tags: "children's science, science for kids, weather, human body, solar system, ocean, STEM, SciShow Kids",
+      lessons: [
+        { title: 'Lesson 1: Weather Wonders', desc: 'Why does it rain? How do rainbows form? Join Super Simple Songs\' weather song to learn about sunny, rainy, snowy, and windy days. Use body movements to imitate weather — wave arms like wind, float down like snowflakes — turning learning into physical play!', keywords: 'weather, rain, snow, rainbow, wind, sunny' },
+        { title: 'Lesson 2: Sense Detectives', desc: 'How do we see, hear, and smell? SciShow Kids guides children through the five senses — sight, hearing, smell, taste, and touch. Try fun sensory experiments: guess objects blindfolded, identify sounds, smell different scents — science is everywhere!', keywords: 'senses, sight, hearing, smell, taste, touch, human body' },
+        { title: 'Lesson 3: Seasons Magic', desc: 'Why is summer hot and winter cold? Why do leaves change color in autumn? SciShow Kids explains Earth\'s orbit and seasonal changes with beautiful animations. Children create a "seasons wheel" craft to visualize the cycle while connecting seasons to clothing and food.', keywords: 'seasons, spring, summer, autumn, winter, orbit, earth science' },
+        { title: 'Lesson 4: Solar System Adventure', desc: 'Board an imaginary spaceship with Netflix Jr.\'s StoryBots to explore the solar system! From Mercury closest to the Sun to distant blue Neptune, children learn the names, positions, and features of all eight planets. Sing the "planet order song" to memorize the sequence.', keywords: 'solar system, planets, sun, earth, StoryBots, space' },
+        { title: 'Lesson 5: Ocean Explorers', desc: 'Dive deep with SciShow Kids to discover the magical ocean world! From colorful coral reefs to glowing deep-sea creatures, children learn about marine ecosystems and biodiversity. The lesson emphasizes ocean conservation — "We\'re all tiny guardians of the blue planet!"', keywords: 'ocean, coral reef, marine life, ecosystem, conservation, deep sea' }
+      ]
+    }
+  },
+  'creative-art': {
+    age: '4-10岁', difficulty: '初级 (Beginner)',
+    zh: {
+      intro: '创意手工坊是 HappySprout 为 4-10 岁儿童打造的艺术启蒙课程。通过 Art for Kids Hub 的 5 节趣味画画课，孩子从简单线条开始，一步步画出可爱的小动物和创意角色。不需要绘画基础——只要会拿笔，就能跟着画！每节课都配有可打印的练习纸，让孩子反复练习直到掌握。',
+      objectives: ['掌握基本线条和形状的绘画技巧', '学习 "先画轮廓、再添加细节" 的绘画思路', '培养手眼协调和精细动作能力', '激发创造力和艺术表达欲望', '建立 "我能画" 的成就感和自信心'],
+      howTo: '准备纸和彩色笔，播放视频跟着画。视频可以随时暂停——不用着急，慢慢画。每画完一个角色，鼓励孩子给它起名字、编故事，让绘画变成讲故事的游戏。完成后可以将作品贴在墙上，打造孩子的"个人画廊"。建议每周画 1-2 个角色。',
+      value: '绘画不只是艺术——它是儿童表达想法、锻炼精细动作、培养专注力的重要方式。HappySprout 的创意手工坊借鉴 Art for Kids Hub 的"分步教学法"，将复杂的画作分解为简单的几何形状和线条，让每个孩子都能享受"我会画"的成功体验。同时，"给角色起名字、编故事"的延伸活动又锻炼了语言表达和想象力，实现跨学科的综合发展。',
+      tags: '儿童绘画, 学画画, 简笔画, 创意美术, 手工课, 艺术启蒙, Art for Kids Hub, 精细动作',
+      lessons: [
+        { title: '第1课：可爱的甜甜圈女孩', desc: '从画一个可爱的小动物开始！这节入门课教孩子画一个圆滚滚的甜甜圈角色——先用一个大圆画脸，再用小圆画眼睛和腮红，最后加上微笑和装饰。非常简单，零基础也能轻松完成。教会孩子"万事都可以从简单的形状开始"。', keywords: '简笔画, 圆形, 表情, 入门, 初学者' },
+        { title: '第2课：泰迪熊小护士', desc: '画一只温暖的泰迪熊护士！学习用椭圆画身体，圆形画头，三角形画帽子上的红十字。本课重点：比例关系——头和身体怎么搭配才好看？通过反复练习，孩子自然掌握"先大后小、先粗后细"的绘画原则。', keywords: '泰迪熊, 比例, 椭圆, 三角形, 角色设计' },
+        { title: '第3课：爱音乐的小树懒', desc: '画一只酷酷的戴耳机的小树懒！学习画树懒特有的长手臂、弯弯的爪子和悠闲的表情。本课锻炼观察力——先认真看参考图，找出树懒和别的动物有什么不同，再下笔画。同时学会画耳机、音符等小道具，让角色更有个性。', keywords: '树懒, 观察力, 道具, 耳机, 个性表达' },
+        { title: '第4课：夏日清凉柠檬水', desc: '夏天到啦，画一杯冰爽的柠檬水！学习画杯子（圆柱体）、柠檬片（圆形加放射线）、冰块（小方块）和吸管。本课引入"遮挡关系"：柠檬片在杯子前面，冰块在水里面——哪些在前、哪些在后？学会用遮挡表现空间关系。', keywords: '柠檬水, 圆柱体, 遮挡, 空间关系, 夏日' },
+        { title: '第5课：蜂后女王驾到', desc: '挑战画一只华丽的蜂后！学习画蜜蜂的条纹身体、透明翅膀和头顶的小皇冠。本课是学习"细节装饰"的升华课——如何给角色添加花纹、王冠和光芒，让画面从"还不错"变成"太棒了"。完成后举办"小小画展"，展示全部 5 幅作品！', keywords: '蜜蜂, 条纹, 翅膀, 装饰, 画展, 综合' }
+      ]
+    },
+    en: {
+      intro: 'Creative Art Workshop is HappySprout\'s art starter course for children aged 4-10. Through 5 fun drawing lessons from Art for Kids Hub, children start with simple lines and build up to adorable animals and creative characters. No drawing experience needed — if you can hold a pencil, you can draw along! Each lesson comes with a printable practice sheet for repeated practice.',
+      objectives: ['Master basic line and shape drawing techniques', 'Learn the "outline first, details later" drawing approach', 'Develop hand-eye coordination and fine motor skills', 'Spark creativity and artistic expression', 'Build "I can draw!" confidence'],
+      howTo: 'Grab paper and colored pencils, play the video, and draw along. Pause anytime — no rush! After completing each character, encourage children to name it and make up a story, turning drawing into storytelling play. Display finished artwork on the wall to create a "personal gallery." Aim for 1-2 characters per week.',
+      value: 'Drawing is more than art — it\'s how children express ideas, develop fine motor skills, and build focus. HappySprout\'s Creative Art Workshop follows Art for Kids Hub\'s step-by-step methodology, breaking complex drawings into simple geometric shapes and lines so every child can experience the joy of "I can draw!" The story-naming extension activity also exercises language and imagination for cross-disciplinary growth.',
+      tags: "kids drawing, learn to draw, step by step drawing, creative art, fine motor skills, Art for Kids Hub, children's art",
+      lessons: [
+        { title: 'Lesson 1: Cute Donut Character', desc: 'Start with an adorable round character! This beginner lesson teaches drawing a chubby donut character — start with a big circle for the face, smaller circles for eyes and blush, then add a smile and decorations. Super easy, zero experience required. Teaches that "everything starts with simple shapes."', keywords: 'simple drawing, circle, expression, beginner, easy' },
+        { title: 'Lesson 2: Teddy Bear Nurse', desc: 'Draw a warm teddy bear nurse! Learn to use ovals for the body, circles for the head, and a triangle for the Red Cross on the hat. Focus: proportions — how does head size relate to body size? Through practice, children naturally grasp "big first, small later" drawing principles.', keywords: 'teddy bear, proportion, oval, triangle, character design' },
+        { title: 'Lesson 3: Music-Loving Sloth', desc: 'Draw a cool sloth wearing headphones! Practice the sloth\'s signature long arms, curved claws, and relaxed expression. This lesson builds observation skills — study the reference carefully to see what makes a sloth different from other animals before drawing. Add props like headphones for personality.', keywords: 'sloth, observation, props, headphones, personality' },
+        { title: 'Lesson 4: Summer Lemonade', desc: 'Summer is here — draw a refreshing glass of lemonade! Learn to draw a cup (cylinder), lemon slice (circle with radial lines), ice cubes, and a straw. Introduces "overlap" — the lemon is in front of the cup, ice is inside the water — which objects are in front? Master spatial relationships through overlap.', keywords: 'lemonade, cylinder, overlap, spatial, summer' },
+        { title: 'Lesson 5: Queen Bee', desc: 'Challenge: draw a magnificent queen bee! Learn the striped body, translucent wings, and the tiny crown on top. This is the capstone lesson on "detail decoration" — how to add patterns, a crown, and sparkles to elevate art from "nice" to "wow!" Host a mini art show to display all 5 creations!', keywords: 'bee, stripes, wings, decoration, art show, comprehensive' }
+      ]
+    }
+  },
+  'music-fun': {
+    age: '3-6岁', difficulty: '入门级 (Beginner)',
+    zh: {
+      intro: '音乐律动营是 HappySprout 为 3-6 岁幼儿打造的音乐启蒙课程。精选 Pinkfong（碰碰狐）和 Super Simple Songs 的全网最受欢迎儿歌，通过 4 节欢乐的音乐课，让孩子跟着节奏舞动身体，在唱歌跳舞中自然发展乐感、节奏感和身体协调能力。每首歌都设计了简单的律动动作，蹦蹦跳跳中就能学！',
+      objectives: ['感受音乐的节拍和节奏', '通过模仿动作发展身体协调能力', '学唱经典英文儿歌', '体验音乐带来的快乐和情感表达', '建立良好的音乐启蒙基础'],
+      howTo: '每节课 10-15 分钟，最适合作为运动"课间操"。和孩子一起站起来跟着跳——家长的参与是孩子最好的动力！不必强求动作标准，重要的是跟随节奏开心地动起来。可以把喜欢的歌设为"家庭主题曲"，在日常生活中随时哼唱。',
+      value: '音乐律动对幼儿发展的价值远超"娱乐"——它能锻炼大肌肉群、培养节奏感和协调性，同时歌曲中重复的语言结构也是最自然的语言输入。HappySprout 的音乐律动营将国际最受欢迎的幼儿歌曲（Baby Shark 等）与趣味律动相结合，让学习在笑声中自然发生。',
+      tags: '儿歌, 音乐启蒙, 律动, 幼儿舞蹈, 亲子互动, 节奏感, Baby Shark, 身体协调',
+      lessons: [
+        { title: '第1课：Baby Shark 鲨鱼舞', desc: '全球播放量最高的儿歌来啦！跟着 Pinkfong 的 Baby Shark 一起做鲨鱼手部动作——双手合拢做"鲨鱼嘴"，张开做"鲨鱼爸爸"，弯曲做"鲨鱼宝宝"。从慢速到快速，节奏越来越快，挑战孩子的反应力和身体控制力。全家一起跳更欢乐！', keywords: 'Baby Shark, 鲨鱼舞, 手部动作, 快慢节奏, 亲子律动' },
+        { title: '第2课：幸福拍手歌', desc: '如果你开心你就拍拍手！这首经典儿歌有多个版本的动作指令——拍手、跺脚、喊"好棒"、转圈圈。每段歌词都有不同的情绪和动作，孩子在唱歌中学习"开心/生气/害怕"等情感词汇，同时锻炼听从指令和身体反应的能力。', keywords: '拍手歌, 情感表达, 指令跟随, 跺脚, 转圈' },
+        { title: '第3课：小雪花飘呀飘', desc: '一首温柔优美的冬日儿歌。孩子学习用轻柔的动作表现雪花飘落——慢慢举手、缓缓放下、轻轻旋转。和前面快节奏的歌形成对比，让孩子体验音乐中的"快与慢""强与弱"。可以在睡前播放，营造安静温馨的氛围。', keywords: '雪花, 慢动作, 强弱对比, 安静, 冬日' },
+        { title: '第4课：鲨鱼家族大合唱', desc: '60 分钟 Baby Shark 精选合集！汇集 Baby Shark 各种变奏版——鲨鱼爸爸、鲨鱼妈妈、鲨鱼爷爷、鲨鱼奶奶全部登场。适合作为"音乐派对"的背景音乐，孩子在持续的音乐律动中自由舞动，释放天性、尽情表达。', keywords: 'Baby Shark 合集, 自由律动, 鲨鱼家族, 音乐派对, 长时间' }
+      ]
+    },
+    en: {
+      intro: 'Music & Movement Camp is HappySprout\'s music starter course for children aged 3-6. Featuring the most beloved children\'s songs from Pinkfong and Super Simple Songs, these 4 joyful music lessons get kids moving to the beat, naturally developing musicality, rhythm, and body coordination through singing and dancing.',
+      objectives: ['Feel musical rhythm and beat', 'Develop body coordination through movement imitation', 'Learn to sing classic English nursery rhymes', 'Experience joy and emotional expression through music', 'Build a strong music foundation'],
+      howTo: 'Each lesson is 10-15 minutes — perfect as a "movement break." Stand up and dance together — your participation is the best motivation! Don\'t stress about perfect moves; what matters is moving joyfully to the rhythm. Turn favorite songs into "family theme songs" and hum them throughout the day.',
+      value: 'Music and movement go far beyond entertainment for early childhood development — they build gross motor skills, rhythm sense, and coordination, while the repetitive language structures in songs provide the most natural language input. HappySprout\'s Music & Movement Camp pairs internationally beloved children\'s songs with fun movements, making learning happen naturally through laughter.',
+      tags: 'nursery rhymes, music for kids, movement, children\'s dance, parent-child, rhythm, Baby Shark, coordination',
+      lessons: [
+        { title: 'Lesson 1: Baby Shark Dance', desc: "The world's most-watched children's song is here! Join Pinkfong\'s Baby Shark with shark hand motions — hands together for the shark mouth, open wide for daddy shark, curled up for baby shark. From slow to fast tempo, the rhythm speeds up, challenging reaction skills and body control. The whole family dancing together is even more fun!", keywords: 'Baby Shark, shark dance, hand motions, tempo, family fun' },
+        { title: 'Lesson 2: If You\'re Happy Clap Your Hands', desc: 'If you\'re happy and you know it, clap your hands! This classic song has multiple action verses — clap, stomp, shout "hooray," spin around. Each verse introduces different emotions and actions, helping children learn feeling words (happy/angry/scared) while practicing listening and physical response.', keywords: 'clap hands, emotions, following instructions, stomp, spin' },
+        { title: 'Lesson 3: Little Snowflake', desc: 'A gentle, beautiful winter song. Children learn soft movements to represent falling snowflakes — slowly raising hands, gently lowering, lightly spinning. In contrast with the upbeat songs, this helps children experience "fast vs. slow" and "loud vs. soft" in music. Great for bedtime wind-down too!', keywords: 'snowflake, slow movement, dynamics, quiet, winter' },
+        { title: 'Lesson 4: Shark Family Sing-Along', desc: 'A 60-minute Baby Shark compilation! Featuring all the Baby Shark variations — daddy shark, mommy shark, grandpa shark, grandma shark all join in. Perfect as "music party" background, letting children dance freely, release energy, and express themselves through movement.', keywords: 'Baby Shark compilation, free dance, shark family, music party, extended play' }
+      ]
+    }
+  },
+  'story-time': {
+    age: '3-8岁', difficulty: '入门-初级 (Beginner-Elementary)',
+    zh: {
+      intro: '故事小天地是 HappySprout 为 3-8 岁儿童打造的绘本阅读课程。精选 5 本世界经典绘本的动画朗读版——《好饿的毛毛虫》《棕色的熊》《我愛白鞋的皮特猫》《Chicka Chicka Boom Boom》和《爱心树》——由专业配音演员声情并茂地朗读，配合生动的翻页动画，让孩子爱上阅读。每本书都配套互动问题和阅读指导，帮助家长引导孩子深入理解故事。',
+      objectives: ['培养对绘本和阅读的浓厚兴趣', '通过故事理解基本的情感和价值观', '扩大中文和英文词汇量', '学习看图说话和故事复述能力', '建立每日阅读的良好习惯'],
+      howTo: '每 1-2 天和��子一起读一本绘本（约 10-15 分钟）。先完整看一遍动画朗读，享受故事。然后回看，在关键处暂停提问——"你觉得接下来会发生什么？""毛毛虫吃了什么？"引导孩子思考和预测。最后让孩子尝试用自己的话复述故事。睡前是亲子共读的最佳时间。',
+      value: '绘本阅读是儿童早期教育的核心——它不仅是语言学习的捷径，更是情商培养、想象力发展和亲子情感连接的桥梁。HappySprout 的故事小天地精选国际绘本大师的经典作品，通过专业演绎让每本书"活"起来，帮助孩子从"听故事"过渡到"爱阅读"。',
+      tags: '绘本, 故事, 儿童阅读, 亲子共读, 经典绘本, 好饿的毛毛虫, 睡前故事, 阅读启蒙',
+      lessons: [
+        { title: '第1本：好饿的毛毛虫', desc: '艾瑞·卡尔爷爷的经典之作！一只刚出生的小毛毛虫好饿好饿，星期一吃了一个苹果，星期二吃了两个梨……直到星期六吃了太多东西肚子疼！故事教会孩子星期、数字和食物名称，更蕴含着"成长需要耐心"的深意。读完和孩子一起用彩纸做一条毛毛虫吧！', keywords: '毛毛虫, 星期, 数字, 食物, 成长, 艾瑞卡尔' },
+        { title: '第2本：Chicka Chicka Boom Boom', desc: '字母们比赛爬椰子树！a、b、c 一个接一个往上爬……直到椰子树承受不住，"Chicka Chicka Boom Boom！"全部掉下来了！这本经典的字母韵律书用朗朗上口的节奏让孩子在欢笑中记住 26 个字母。读完一起唱字母歌，看谁先爬上去！', keywords: '字母, 椰子树, 韵律, 节奏, 大写字母, 小写字母' },
+        { title: '第3本：皮特猫我爱我的白鞋子', desc: '皮特猫穿着崭新的白鞋子出门，结果踩到了草莓堆（鞋子变红了！）、蓝莓堆（鞋子变蓝了！）、泥巴坑（鞋子变棕色了！）但皮特猫从不哭泣——"因为哭也没用啊！"这个故事教孩子乐观面对意外，无论发生什么都要保持好心情。', keywords: '皮特猫, 颜色, 乐观, 情绪管理, 抗挫折, 白鞋子' },
+        { title: '第4本：棕色的熊，你看到了什么？', desc: '"棕色的熊、棕色的熊，你看到了什么？我看到一只红色的鸟在看我……"一问一答的句式贯穿全书，介绍了各种颜色的动物。是学习颜色词和动物名称的绝佳绘本，也是初学者练习英语句型"What do you see? I see a..."的完美素材。', keywords: '颜色, 动物, 问答句式, 棕色熊, 艾瑞卡尔, 预测' },
+        { title: '第5本：爱心树', desc: '一棵树爱上了一个小男孩。男孩小时候来爬树、吃苹果、荡秋千，树很快乐。男孩长大了，需要钱、需要房子、需要船……树把苹果、树枝、树干全都给了他，只剩一个树桩。这是一个关于给予与爱的感人故事，适合亲子讨论"什么是真正的爱"。', keywords: '爱心树, 给予, 爱, 感恩, 亲情, 情感教育, 哲理' }
+      ]
+    },
+    en: {
+      intro: 'Story Corner is HappySprout\'s picture book reading course for children aged 3-8. Featuring 5 world-class picture books brought to life through animated read-alouds — "The Very Hungry Caterpillar," "Brown Bear," "Pete the Cat: I Love My White Shoes," "Chicka Chicka Boom Boom," and "The Giving Tree" — professionally narrated with engaging page-turn animations that make children fall in love with reading. Each book includes discussion questions and reading guidance.',
+      objectives: ['Develop a strong interest in picture books and reading', 'Understand basic emotions and values through stories', 'Expand vocabulary in both Chinese and English', 'Learn picture reading and story retelling skills', 'Build a daily reading habit'],
+      howTo: 'Read one picture book with your child every 1-2 days (about 10-15 minutes). First, watch the read-aloud all the way through to enjoy the story. Then replay, pausing at key moments to ask — "What do you think happens next?" "What did the caterpillar eat?" Guide your child to think and predict. Finally, let them retell the story in their own words. Bedtime is the perfect moment for parent-child reading.',
+      value: "Picture book reading is at the core of early childhood education — it's not only a fast track to language development but a bridge to emotional intelligence, imagination, and parent-child bonding. HappySprout's Story Corner features masterpieces from world-renowned picture book creators, professionally performed to bring each book alive, helping children transition from listening to stories to loving reading.",
+      tags: 'picture books, storytime, children\'s reading, read aloud, classic picture books, bedtime stories, early literacy',
+      lessons: [
+        { title: 'Book 1: The Very Hungry Caterpillar', desc: "Eric Carle's timeless classic! A tiny caterpillar hatches and is VERY hungry — one apple on Monday, two pears on Tuesday... until Saturday when he eats too much and gets a stomachache! The story teaches days of the week, numbers, and food names, with the deeper message that growth takes patience. After reading, make a paper caterpillar together!", keywords: 'caterpillar, days of week, numbers, food, growth, Eric Carle' },
+        { title: 'Book 2: Chicka Chicka Boom Boom', desc: "The letters race up the coconut tree! A, B, C climb one by one... until the tree can't hold them all — \"Chicka Chicka Boom Boom!\" — they all fall down! This classic alphabet rhyme book uses irresistible rhythm to help children remember all 26 letters through laughter. Sing the alphabet song together afterward!", keywords: 'alphabet, coconut tree, rhyme, rhythm, uppercase, lowercase' },
+        { title: 'Book 3: Pete the Cat: I Love My White Shoes', desc: "Pete the Cat steps out in brand-new white shoes — but then steps in strawberries (red!), blueberries (blue!), and mud (brown!). Does Pete cry? Goodness, no! \"It's all good!\" This story teaches children optimism in the face of surprises — no matter what happens, keep moving and grooving!", keywords: 'Pete the Cat, colors, optimism, emotional resilience, white shoes' },
+        { title: 'Book 4: Brown Bear, Brown Bear, What Do You See?', desc: "\"Brown bear, brown bear, what do you see? I see a red bird looking at me...\" The call-and-response pattern introduces colorful animals one by one. The perfect book for learning color words and animal names, and an ideal resource for practicing the English sentence pattern \"What do you see? I see a...\"", keywords: 'colors, animals, Q&A pattern, brown bear, Eric Carle, prediction' },
+        { title: 'Book 5: The Giving Tree', desc: "A tree loves a little boy. The boy climbs, eats apples, swings from branches — and the tree is happy. As the boy grows, he needs money, a house, a boat... The tree gives apples, branches, and trunk, until only a stump remains. A moving story about giving and love, perfect for parent-child discussion about what love truly means.", keywords: 'giving tree, generosity, love, gratitude, family, emotional education' }
       ]
     }
   }
@@ -2503,6 +2645,10 @@ const BADGES = [
   { id: "video-10", name: "小影迷", icon: "📺", desc: "观看10个视频" },
   { id: "course-abc", name: "字母达人", icon: "🔤", desc: "完成ABC字母课程" },
   { id: "course-math", name: "数学新星", icon: "🔢", desc: "完成数字课程" },
+  { id: "course-science", name: "科学小博士", icon: "🔬", desc: "完成科学探索课程" },
+  { id: "course-art", name: "小小艺术家", icon: "🎨", desc: "完成创意手工坊课程" },
+  { id: "course-music", name: "音乐小达人", icon: "🎵", desc: "完成音乐律动营课程" },
+  { id: "course-story", name: "故事大王", icon: "📖", desc: "完成故事小天地课程" },
   { id: "all-categories", name: "全科探索家", icon: "🗺️", desc: "在每个学科都完成至少1个视频" }
 ];
 
@@ -2856,6 +3002,8 @@ const I18N = {
     clear: '清除',
     viewCourse: '查看课程',
     goPractice: '去练习',
+    subtitles: '字幕',
+    ccToggle: '切换字幕语言',
     restTime: '现在是休息时间哦！',
     restTimeMsg: '家长设置了 {blockStart} 到 {blockEnd} 不能观看。',
     takeBreak: '休息一下！',
@@ -3038,6 +3186,14 @@ const I18N = {
     badge_course_abc_desc: '完成ABC字母课程',
     badge_course_math: '数学新星',
     badge_course_math_desc: '完成数字课程',
+    badge_course_science: '科学小博士',
+    badge_course_science_desc: '完成科学探索课程',
+    badge_course_art: '小小艺术家',
+    badge_course_art_desc: '完成创意手工坊课程',
+    badge_course_music: '音乐小达人',
+    badge_course_music_desc: '完成音乐律动营课程',
+    badge_course_story: '故事大王',
+    badge_course_story_desc: '完成故事小天地课程',
     badge_all_categories: '全科探索家',
     badge_all_categories_desc: '在每个学科都完成至少1个视频',
     badge_unlocked: '解锁！',
@@ -3048,6 +3204,14 @@ const I18N = {
     course_numbers_desc: '数一数、加一加，我是数字小天才！',
     course_phonics_name: '自然拼读入门',
     course_phonics_desc: '从A到Z，自然拼读打基础！',
+    course_science_name: '小小科学家',
+    course_science_desc: '探索天气、人体、宇宙和海洋的奥秘！',
+    course_art_name: '创意手工坊',
+    course_art_desc: '拿起画笔，一步步画出可爱小动物和角色！',
+    course_music_name: '音乐律动营',
+    course_music_desc: '跟着节奏摇摆，唱歌跳舞快乐学！',
+    course_story_name: '故事小天地',
+    course_story_desc: '经典绘本故事，培养阅读兴趣和想象力！',
     // Age tags
     age_years: '{a}-{b}岁',
     // Other
@@ -3194,6 +3358,8 @@ const I18N = {
     clear: 'Clear',
     viewCourse: 'View Course',
     goPractice: 'Practice',
+    subtitles: 'Subtitles',
+    ccToggle: 'Toggle subtitle language',
     restTime: 'Rest time!',
     restTimeMsg: 'Parent settings: no watching from {blockStart} to {blockEnd}.',
     takeBreak: 'Take a break!',
@@ -3376,6 +3542,14 @@ const I18N = {
     badge_course_abc_desc: 'Complete the ABC course',
     badge_course_math: 'Math Star',
     badge_course_math_desc: 'Complete the Numbers course',
+    badge_course_science: 'Science Whiz',
+    badge_course_science_desc: 'Complete the Science course',
+    badge_course_art: 'Little Artist',
+    badge_course_art_desc: 'Complete the Art Workshop course',
+    badge_course_music: 'Music Star',
+    badge_course_music_desc: 'Complete the Music & Movement course',
+    badge_course_story: 'Story Champion',
+    badge_course_story_desc: 'Complete the Story Corner course',
     badge_all_categories: 'All-Subject Explorer',
     badge_all_categories_desc: 'Complete at least 1 video in every subject',
     badge_unlocked: 'Unlocked!',
@@ -3386,6 +3560,14 @@ const I18N = {
     course_numbers_desc: 'Count and add — I\'m a number genius!',
     course_phonics_name: 'Phonics Basics',
     course_phonics_desc: 'From A to Z, build phonics foundations!',
+    course_science_name: 'Little Scientists',
+    course_science_desc: 'Explore weather, the human body, space, and the ocean!',
+    course_art_name: 'Creative Art Workshop',
+    course_art_desc: 'Grab a pencil and draw cute animals step by step!',
+    course_music_name: 'Music & Movement Camp',
+    course_music_desc: 'Groove to the beat — sing and dance while learning!',
+    course_story_name: 'Story Corner',
+    course_story_desc: 'Classic picture books that spark a love of reading!',
     // Age tags
     age_years: 'Age {a}-{b}',
     // Other
@@ -3701,16 +3883,15 @@ function markCompleted(videoId) {
 }
 
 function checkCourseCompletion(videoId, s) {
-  // Check abc-fun course
-  const abcCourse = COURSE_DB.find(c => c.id === 'abc-fun');
-  if (abcCourse && abcCourse.videoIds.every(vid => s.completed.includes(vid)) && !s.badges.includes('course-abc')) {
-    s.badges.push('course-abc'); showBadgeEarned('course-abc');
-  }
-  // Check numbers course
-  const numCourse = COURSE_DB.find(c => c.id === 'numbers-1-10');
-  if (numCourse && numCourse.videoIds.every(vid => s.completed.includes(vid)) && !s.badges.includes('course-math')) {
-    s.badges.push('course-math'); showBadgeEarned('course-math');
-  }
+  // Check all courses that have this video
+  COURSE_DB.forEach(function(c) {
+    var badgeId = {'abc-fun':'course-abc','numbers-1-10':'course-math','science-kids':'course-science','creative-art':'course-art','music-fun':'course-music','story-time':'course-story','phonics-basics':null}[c.id];
+    if (!badgeId) return;
+    if (s.badges.includes(badgeId)) return;
+    if (c.videoIds.every(function(vid) { return s.completed.includes(vid); })) {
+      s.badges.push(badgeId); showBadgeEarned(badgeId);
+    }
+  });
 }
 
 // Check if user has completed at least 1 video in each category
@@ -3728,7 +3909,7 @@ function checkAllCategoryBadge(s) {
 function showBadgeEarned(badgeId) {
   const badge = BADGES.find(b => b.id === badgeId);
   if (!badge) return;
-  const badgeNameKey = {'first-watch':'badge_first_watch','streak-3':'badge_streak3','streak-7':'badge_streak7','star-5':'badge_star5','star-15':'badge_star15','video-10':'badge_video10','course-abc':'badge_course_abc','course-math':'badge_course_math','all-categories':'badge_all_categories'}[badgeId];
+  const badgeNameKey = {'first-watch':'badge_first_watch','streak-3':'badge_streak3','streak-7':'badge_streak7','star-5':'badge_star5','star-15':'badge_star15','video-10':'badge_video10','course-abc':'badge_course_abc','course-math':'badge_course_math','course-science':'badge_course_science','course-art':'badge_course_art','course-music':'badge_course_music','course-story':'badge_course_story','all-categories':'badge_all_categories'}[badgeId];
   setTimeout(() => {
     showStarPopup(`🏅 ${t(badgeNameKey)} ${t('badge_unlocked')}`);
     playCelebration(); showConfetti(40);
@@ -4459,6 +4640,9 @@ function navigateTo(page, params = {}) {
     case 'resources': renderResources(main); break;
     case 'ageHub': renderAgeHub(main, params.age); break;
     case 'subjectHub': renderSubjectHub(main, params.subject); break;
+    case 'worksheet': renderWorksheet(main, params.courseId); break;
+    case 'activities': renderActivities(main); break;
+    case 'activity': renderActivityDetail(main, params.activityId); break;
     default: renderHome(main);
   }
 
@@ -5298,6 +5482,7 @@ function renderWatch(container, videoId) {
         <button class="action-btn" onclick="toggleDrawing()">🎨 ${t('drawingBoard')}</button>
         ${video.courseId ? `<button class="action-btn" onclick="navigateTo('course',{courseId:'${video.courseId}'})">📖 ${t('viewCourse')}</button>` : ''}
         <button class="action-btn" onclick="navigateTo('practice',{videoId:'${videoId}'})">🎮 ${t('goPractice')}</button>
+        <button class="action-btn" onclick="toggleSubtitles()" id="cc-toggle-btn" title="${t('ccToggle')}">💬 ${t('subtitles')}</button>
       </div>
 
       <!-- Video info -->
@@ -5630,6 +5815,48 @@ function handleQuizAnswer(chosen, correct, overlay) {
 }
 
 // ─── DRAWING OVERLAY ──────────────────────────────────────────
+// ─── SUBTITLE / CC TOGGLE ─────────────────────────────────────
+var _ccLang = 'off'; // 'off', 'zh', 'en'
+
+function toggleSubtitles() {
+  var menu = document.getElementById('cc-lang-menu');
+  if (menu) { menu.remove(); return; }
+  var t_off = APP.lang === 'zh' ? '关闭字幕' : 'Captions Off';
+  var t_en = APP.lang === 'zh' ? '英文字幕' : 'English CC';
+  var t_zh = APP.lang === 'zh' ? '中文字幕' : 'Chinese CC';
+  var btn = document.getElementById('cc-toggle-btn');
+  var rect = btn.getBoundingClientRect();
+  menu = document.createElement('div');
+  menu.id = 'cc-lang-menu';
+  menu.style.cssText = 'position:fixed;background:white;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.15);z-index:9999;padding:6px 0;min-width:160px;top:' + (rect.bottom + 4) + 'px;left:' + Math.min(rect.left, window.innerWidth - 180) + 'px;';
+  menu.innerHTML =
+    '<div onclick="setCcLang(\'off\')" style="padding:10px 16px;cursor:pointer;font-size:14px;' + (_ccLang === 'off' ? 'font-weight:700;background:#f0f0f0;' : '') + '">🔇 ' + t_off + '</div>' +
+    '<div onclick="setCcLang(\'en\')" style="padding:10px 16px;cursor:pointer;font-size:14px;' + (_ccLang === 'en' ? 'font-weight:700;background:#f0f0f0;' : '') + '">🇬🇧 ' + t_en + '</div>' +
+    '<div onclick="setCcLang(\'zh\')" style="padding:10px 16px;cursor:pointer;font-size:14px;' + (_ccLang === 'zh' ? 'font-weight:700;background:#f0f0f0;' : '') + '">🇨🇳 ' + t_zh + '</div>';
+  document.body.appendChild(menu);
+  setTimeout(function() {
+    document.addEventListener('click', function closeMenu(e) {
+      if (!menu.contains(e.target) && e.target !== btn) { menu.remove(); document.removeEventListener('click', closeMenu); }
+    });
+  }, 0);
+}
+
+function setCcLang(lang) {
+  _ccLang = lang;
+  var menu = document.getElementById('cc-lang-menu');
+  if (menu) menu.remove();
+  var iframe = document.getElementById('yt-player');
+  if (iframe) {
+    var src = iframe.src;
+    src = src.replace(/&cc_load_policy=[01]/, '').replace(/&hl=[^&]+/, '').replace(/&cc_lang_pref=[^&]+/, '');
+    if (lang !== 'off') {
+      src += '&cc_load_policy=1&hl=' + lang + '&cc_lang_pref=' + lang;
+    }
+    iframe.src = src;
+  }
+}
+
+// ─── DRAWING OVERLAY ──────────────────────────────────────────
 function toggleDrawing() {
   const overlay = document.getElementById('drawing-overlay');
   if (!overlay) return;
@@ -5674,8 +5901,8 @@ function renderCoursesList(container) {
       ${COURSE_DB.map(c => {
         const completedCount = c.videoIds.filter(vid => s.completed.includes(vid)).length;
         const pct = Math.round(completedCount / c.videoIds.length * 100);
-        const courseNameKey = {'abc-fun':'course_abc_fun_name','numbers-1-10':'course_numbers_name','phonics-basics':'course_phonics_name'}[c.id];
-        const courseDescKey = {'abc-fun':'course_abc_fun_desc','numbers-1-10':'course_numbers_desc','phonics-basics':'course_phonics_desc'}[c.id];
+        const courseNameKey = c.nameKey;
+        const courseDescKey = c.descKey;
         return `
         <div style="background:white;border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow);margin-bottom:14px;cursor:pointer" onclick="navigateTo('course',{courseId:'${c.id}'})">
           <div style="display:flex;align-items:center;gap:14px">
@@ -5772,7 +5999,7 @@ function renderCourse(container, courseId) {
   const s = getStore();
   const completedCount = course.videoIds.filter(vid => s.completed.includes(vid)).length;
   const pct = Math.round(completedCount / course.videoIds.length * 100);
-  const courseNameKey = {'abc-fun':'course_abc_fun_name','numbers-1-10':'course_numbers_name','phonics-basics':'course_phonics_name'}[courseId];
+  const courseNameKey = course.nameKey;
 
   // Find the first uncompleted lesson (current)
   let currentIdx = course.videoIds.findIndex(vid => !s.completed.includes(vid));
@@ -5885,6 +6112,7 @@ function buildCourseDetail(courseId) {
         return '<a href="#search" data-page="search" data-params=\'{"query":"' + tag + '"}\' class="clickable-tag" style="display:inline-block;background:#f0e8d8;color:#7B5B0D;padding:3px 10px;border-radius:12px;font-size:11px;margin:2px;text-decoration:none;cursor:pointer;transition:all 0.2s" onmouseover="this.style.background=\'#e8d4a0\'" onmouseout="this.style.background=\'#f0e8d8\'">' + tag + '</a>';
       }).join(' ') +
     '</div>' +
+    '<button onclick="navigateTo(\'worksheet\',{courseId:\'' + courseId + '\'})" style="width:100%;padding:12px;border:2px solid ' + (course ? course.color : '#FF8C42') + ';background:white;color:' + (course ? course.color : '#FF8C42') + ';border-radius:50px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:8px">📝 ' + (lang === 'zh' ? '生成可打印练习册' : 'Generate Printable Worksheet') + '</button>' +
     '<button onclick="navigateTo(\'practice\')" style="width:100%;padding:14px;border:none;background:linear-gradient(135deg,' + (course ? course.color : '#FF8C42') + ',' + (course ? course.color : '#FF8C42') + 'dd);color:white;border-radius:50px;font-size:15px;font-weight:700;cursor:pointer">🎮 ' + tryPracticeText + '</button>' +
   '</div>';
 }
@@ -6190,6 +6418,147 @@ function finishExercise(container, score, total) {
   if (list) list.style.display = 'grid';
 }
 
+// ─── ACTIVITIES DATABASE ──────────────────────────────────────
+const ACTIVITY_DB = [
+  { id: "rainbow-milk", category: "科学探索", age: [3,8], time: "15min", difficulty: "简单",
+    title_zh: "牛奶彩虹实验", title_en: "Rainbow Milk Experiment",
+    desc_zh: "用牛奶、食用色素和洗洁精创造一个会跳舞的彩虹！这是一个让孩子惊呼'哇！'的神奇科学实验，只需要厨房里的简单材料。",
+    desc_en: "Create a dancing rainbow with milk, food coloring, and dish soap! A magical science experiment that makes kids say 'Wow!' — using simple kitchen ingredients.",
+    materials_zh: ["全脂牛奶 1 杯", "食用色素（红黄蓝绿）4 滴/每种", "洗洁精 几滴", "浅盘子 1 个", "棉签 1 根"],
+    materials_en: ["1 cup whole milk", "Food coloring (red, yellow, blue, green) 4 drops each", "Dish soap, a few drops", "1 shallow plate", "1 cotton swab"],
+    steps_zh: ["把牛奶倒入浅盘子，刚好盖住盘底", "在牛奶中滴入不同颜色的食用色素，分散放置", "用棉签蘸一点洗洁精", "轻轻将棉签触碰牛奶表面——彩虹开始跳舞！", "观察颜色如何混合、扩散和流动", "科学原理：洗洁精破坏了牛奶表面的油脂张力，使颜色向外扩散"],
+    steps_en: ["Pour milk into a shallow plate, just covering the bottom", "Drop different food coloring colors into the milk, spread apart", "Dip a cotton swab in dish soap", "Gently touch the milk surface with the swab — the rainbow dances!", "Watch how colors mix, spread, and flow", "Science: dish soap breaks milk's surface tension, pushing colors outward"],
+    icon: "🌈", color: "#FF8C42"
+  },
+  { id: "paper-plane", category: "艺术手工", age: [4,10], time: "20min", difficulty: "简单",
+    title_zh: "世界纪录纸飞机", title_en: "World Record Paper Plane",
+    desc_zh: "折一只飞得最远最久的纸飞机！学习三种经典纸飞机折法，和家人一起比赛看谁的飞机飞得更远。锻炼精细动作和空间想象力。",
+    desc_en: "Fold a paper plane that flies the farthest and longest! Learn 3 classic folding techniques, then race with family to see whose plane goes furthest. Builds fine motor and spatial skills.",
+    materials_zh: ["A4 白纸 3 张", "彩色笔（装饰用）", "尺子（测量飞行距离）", "开阔的飞行场地"],
+    materials_en: ["3 sheets of A4 paper", "Colored markers (for decorating)", "Ruler (to measure flight distance)", "Open space for flying"],
+    steps_zh: ["取一张 A4 纸，横向对折再展开，留下中线折痕", "将顶部两个角向中线折叠，形成三角形", "将三角形的顶角向下折叠至底部", "再次将顶部两个角向中线折叠", "将底部的小三角向上折叠以锁住结构", "沿中线对折，将翅膀折下——完成！", "装饰你的飞机，然后找一片空地试飞"],
+    steps_en: ["Take an A4 paper, fold in half horizontally then unfold", "Fold top two corners to the center crease, forming a triangle", "Fold the triangle's top corner down to the bottom edge", "Fold top two corners to center again", "Fold small triangle up to lock the structure", "Fold in half along center, fold wings down — done!", "Decorate your plane, then find open space for test flights"],
+    icon: "✈️", color: "#4ECDC4"
+  },
+  { id: "sink-float", category: "科学探索", age: [3,6], time: "10min", difficulty: "简单",
+    title_zh: "沉浮大探秘", title_en: "Sink or Float?",
+    desc_zh: "收集家里的各种小物品，猜一猜哪些会沉、哪些会浮在水面上？一个经典的幼儿科学活动，培养观察力和预测能力，认识'密度'的初步概念。",
+    desc_en: "Collect small items around the house — predict which ones sink and which float! A classic early science activity that builds observation, prediction skills, and introduces the concept of density.",
+    materials_zh: ["大碗或盆 装满水", "各种小物品：硬币、橡皮、积木、瓶盖、羽毛、苹果等", "纸和笔（记录预测和结果）"],
+    materials_en: ["Large bowl filled with water", "Various small items: coin, eraser, block, bottle cap, feather, apple, etc.", "Paper and pen (to record predictions and results)"],
+    steps_zh: ["把所有物品摆放在桌上，和孩子一起观察每件物品", "在一张纸上画出表格，写上物品名称和'预测'一栏", "逐一预测每件物品会浮（✓）还是沉（✗），写下来", "将物品轻轻放入水中，观察结果", "对比预测和实际结果，讨论为什么有些东西会沉、有些会浮", "延伸：用橡皮泥捏一个小球和一个船形，看看哪个浮着？"],
+    steps_en: ["Lay out all items on the table and observe each one with your child", "Draw a table on paper with item names and a 'Prediction' column", "Predict for each item: float (✓) or sink (✗), write it down", "Gently place items in water and observe results", "Compare predictions with results, discuss why some sink and others float", "Extension: make a playdough ball vs. boat shape — which floats?"],
+    icon: "💧", color: "#45B7D1"
+  },
+  { id: "nature-scavenger", category: "故事模式", age: [3,8], time: "30min", difficulty: "简单",
+    title_zh: "大自然寻宝游戏", title_en: "Nature Scavenger Hunt",
+    desc_zh: "带上寻宝清单去公园或花园探险！找一片有洞的树叶、一根弯弯的树枝、一朵黄色的花……在大自然中学习观察、分类和描述，锻炼语言表达和自然认知。",
+    desc_en: "Grab a scavenger hunt checklist and explore a park or garden! Find a leaf with a hole, a curved twig, a yellow flower... Learn observation, classification, and description in nature.",
+    materials_zh: ["寻宝清单（打印或手写）", "小篮子或环保袋（装宝贝）", "放大镜（可选）", "蜡笔（做树叶拓印）"],
+    materials_en: ["Scavenger hunt checklist (printed or handwritten)", "Small basket or bag (for treasures)", "Magnifying glass (optional)", "Crayons (for leaf rubbings)"],
+    steps_zh: ["制作寻宝清单：有洞的叶子、光滑的石头、黄色的花、弯曲的树枝、鸟叫声（听到了就行）、蚂蚁、蒲公英、有香味的叶子", "出发前讲清规则：只捡地上的东西，不摘花草，不伤害小动物", "带上放大镜仔细观察每件宝贝的纹理和细节", "找一件用蜡笔做拓印——把纸压在树叶上，用蜡笔侧面涂抹", "回家后展示收集的宝贝，让宝宝描述每件物品", "把宝贝贴在纸上做成'大自然宝箱'画报"],
+    steps_en: ["Make a checklist: leaf with holes, smooth stone, yellow flower, curved twig, bird song (hear only), ant, dandelion, fragrant leaf", "Set rules: collect only fallen items, don't pick flowers, don't harm animals", "Use magnifying glass to examine textures and details up close", "Do a crayon rubbing: place paper over a leaf, rub crayon sideways", "Display treasures at home and have child describe each item", "Glue treasures on paper to make a 'Nature Collection' poster"],
+    icon: "🍃", color: "#27AE60"
+  },
+  { id: "salt-dough", category: "艺术手工", age: [3,8], time: "45min", difficulty: "中等",
+    title_zh: "盐面团手工", title_en: "Salt Dough Creations",
+    desc_zh: "用面粉、盐和水制作可以塑形的面团，捏出小动物、星星或迷你恐龙！晾干后还可以上色，变成永久的艺术品。锻炼手部肌肉和创造力。",
+    desc_en: "Make moldable dough with flour, salt, and water — create animals, stars, or mini dinosaurs! Air-dry and paint for permanent art. Builds hand muscles and creativity.",
+    materials_zh: ["面粉 2 杯", "盐 1 杯", "温水 1 杯", "大碗 1 个", "擀面杖、饼干模具或塑形工具", "颜料和画笔（晾干后用）", "亮光漆或透明指甲油（可选，保护成品）"],
+    materials_en: ["2 cups flour", "1 cup salt", "1 cup warm water", "1 large bowl", "Rolling pin, cookie cutters or sculpting tools", "Paint and brushes (after drying)", "Clear varnish or nail polish (optional, for sealing)"],
+    steps_zh: ["在大碗中混合面粉和盐，慢慢加入温水搅拌", "用手揉面直到面团光滑，不粘手", "用擀面杖把面团擀平，用模具压出形状——或者自由创作！", "还可以用面团捏立体的小动物、小汽车", "把作品放在烤盘上（不预热），80°C 低温烘干 2-3 小时", "冷却后用颜料涂色，晾干后再涂一层亮光漆保护", "写上日期和名字，这是一份可以珍藏很多年的手工作品！"],
+    steps_en: ["Mix flour and salt in bowl, slowly add warm water while stirring", "Knead with hands until dough is smooth and not sticky", "Roll flat with rolling pin, use cutters — or sculpt freely!", "Create 3D animals, cars, or anything from imagination", "Place on baking sheet and dry at 80°C / 175°F for 2-3 hours", "Cool completely, then paint and let dry", "Sign and date — a handmade treasure that lasts for years!"],
+    icon: "🧂", color: "#FF6B9D"
+  },
+  { id: "story-roleplay", category: "故事模式", age: [3,7], time: "20min", difficulty: "简单",
+    title_zh: "绘本角色扮演", title_en: "Storybook Roleplay",
+    desc_zh: "选一本最爱的绘本，全家一起扮演故事里的角色！自己做简单的头饰和道具，用声音和动作把故事'演'出来。这是发展语言能力、社交技能和自信心的最佳方式。",
+    desc_en: "Pick a favorite picture book and act out the story as a family! Make simple masks and props, then bring the story to life with voices and actions. The best way to build language, social skills, and confidence.",
+    materials_zh: ["最爱的绘本 1 本", "硬卡纸（做头饰/面具）", "彩色笔、剪刀、胶水", "家里的物件当道具（围巾当披风、纸筒当望远镜）"],
+    materials_en: ["1 favorite picture book", "Cardstock (for masks/headbands)", "Markers, scissors, glue", "Household items as props (scarf = cape, paper tube = telescope)"],
+    steps_zh: ["和孩子一起选一本书，读两遍熟悉故事情节和角色", "决定谁来演哪个角色（一个角色可以多人演）", "用卡纸做简单的头饰或面具——画上角色的脸，系上绳子", "收集道具：围巾可以是披风，扫把可以是魔法棒", "\"灯光、摄像机、开始！\"——按绘本情节表演，鼓励孩子自由发挥台词", "换角色再演一遍！可以用手机录像，一起回看欢笑"],
+    steps_en: ["Choose a book together, read twice to know the story and characters", "Decide who plays which role (a character can have multiple actors)", "Make simple masks from cardstock — draw the character's face, attach string", "Collect props: a scarf becomes a cape, a broom becomes a magic wand", "'Lights, camera, action!' — act out the story, encourage improvised dialogue", "Switch roles and do it again! Film with phone and watch together — so much laughter!"],
+    icon: "🎭", color: "#FFB347"
+  }
+];
+
+// ─── RENDER: ACTIVITIES LIST ───────────────────────────────────
+function renderActivities(container) {
+  var lang = APP.lang;
+  var t_title = lang === 'zh' ? '亲子活动方案' : 'Parent-Child Activities';
+  var t_subtitle = lang === 'zh' ? '放下屏幕，一起动手做！每项活动都用家中常见材料，锻炼动手能力和探索精神。' : 'Put down the screen and do something together! Each activity uses common household materials to build hands-on skills and curiosity.';
+  var t_diff = lang === 'zh' ? '难度' : 'Difficulty';
+  var t_time = lang === 'zh' ? '时长' : 'Time';
+  var t_age = lang === 'zh' ? '适合年龄' : 'Age';
+  var t_view = lang === 'zh' ? '查看详情 →' : 'View Details →';
+  var t_back = lang === 'zh' ? '← 返回首页' : '← Back to Home';
+
+  container.innerHTML = '<div class="page active">' +
+    '<button class="top-btn" onclick="navigateTo(\'home\')" style="margin-bottom:16px">' + t_back + '</button>' +
+    '<h1 style="font-size:22px;font-weight:800;color:var(--orange);margin-bottom:4px">🎨 ' + t_title + '</h1>' +
+    '<p style="color:var(--text-light);margin-bottom:16px">' + t_subtitle + '</p>' +
+    '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px">' +
+    ACTIVITY_DB.map(function(a) {
+      var title = lang === 'zh' ? a.title_zh : a.title_en;
+      var desc = lang === 'zh' ? a.desc_zh : a.desc_en;
+      return '<div onclick="navigateTo(\'activity\',{activityId:\'' + a.id + '\'})" style="background:white;border-radius:var(--radius-lg);padding:16px;box-shadow:var(--shadow);cursor:pointer;border-top:4px solid ' + a.color + ';transition:transform 0.2s" onmouseover="this.style.transform=\'translateY(-2px)\'" onmouseout="this.style.transform=\'translateY(0)\'">' +
+        '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">' +
+          '<span style="font-size:32px">' + a.icon + '</span>' +
+          '<div><div style="font-weight:700;font-size:15px">' + title + '</div>' +
+          '<div style="font-size:11px;color:var(--text-light);display:flex;gap:10px;margin-top:2px">' +
+            '<span>' + t_diff + ': ' + a.difficulty + '</span>' +
+            '<span>⏱ ' + a.time + '</span>' +
+            '<span>👶 ' + a.age[0] + '-' + a.age[1] + lang + '</span>' +
+          '</div></div>' +
+        '</div>' +
+        '<p style="font-size:12px;color:var(--text-light);line-height:1.6;margin-bottom:8px">' + desc + '</p>' +
+        '<span style="color:' + a.color + ';font-size:12px;font-weight:600">' + t_view + '</span>' +
+      '</div>';
+    }).join('') +
+    '</div></div>';
+}
+
+// ─── RENDER: ACTIVITY DETAIL ───────────────────────────────────
+function renderActivityDetail(container, activityId) {
+  var a = ACTIVITY_DB.find(function(x) { return x.id === activityId; });
+  if (!a) { container.innerHTML = '<p style="padding:40px;text-align:center">Activity not found</p>'; return; }
+  var lang = APP.lang;
+  var title = lang === 'zh' ? a.title_zh : a.title_en;
+  var desc = lang === 'zh' ? a.desc_zh : a.desc_en;
+  var materials = lang === 'zh' ? a.materials_zh : a.materials_en;
+  var steps = lang === 'zh' ? a.steps_zh : a.steps_en;
+  var t_back = lang === 'zh' ? '← 返回列表' : '← Back to Activities';
+  var t_materials = lang === 'zh' ? '材料清单' : 'Materials Needed';
+  var t_steps = lang === 'zh' ? '动手步骤' : 'Step-by-Step Instructions';
+  var t_print = lang === 'zh' ? '🖨️ 打印方案' : '🖨️ Print Activity';
+  var t_tip = lang === 'zh' ? '💡 家长小贴士：活动过程中多问开放性问题——"你觉得接下来会发生什么？""为什么颜色会动？"鼓励孩子自己观察和思考，而不是直接给答案。' : '💡 Parent Tip: Ask open-ended questions — "What do you think will happen next?" "Why do the colors move?" Encourage self-observation and thinking rather than giving direct answers.';
+
+  container.innerHTML = '<div class="page active">' +
+    '<button class="top-btn" onclick="navigateTo(\'activities\')" style="margin-bottom:16px">' + t_back + '</button>' +
+    '<div style="background:white;border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow);border-top:4px solid ' + a.color + '">' +
+      '<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">' +
+        '<span style="font-size:40px">' + a.icon + '</span>' +
+        '<div><h1 style="font-size:20px;font-weight:800">' + title + '</h1>' +
+        '<div style="font-size:12px;color:var(--text-light);display:flex;gap:10px">' +
+          '<span>⏱ ' + a.time + '</span><span>👶 ' + a.age[0] + '-' + a.age[1] + lang + '</span><span>' + (lang === 'zh' ? '难度' : 'Difficulty') + ': ' + a.difficulty + '</span>' +
+        '</div></div>' +
+      '</div>' +
+      '<p style="font-size:14px;line-height:1.8;color:#555;margin-bottom:16px">' + desc + '</p>' +
+      '<div style="background:#fff8e1;border-radius:12px;padding:16px;margin-bottom:16px">' +
+        '<h2 style="font-size:15px;color:#4A4A4A;margin-bottom:10px">📋 ' + t_materials + '</h2>' +
+        '<ul style="list-style:none;padding:0;margin:0">' +
+          materials.map(function(m, i) { return '<li style="padding:6px 0;font-size:14px;color:#555;display:flex;align-items:center;gap:8px"><span style="width:22px;height:22px;background:' + a.color + ';color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0">' + (i+1) + '</span>' + m + '</li>'; }).join('') +
+        '</ul>' +
+      '</div>' +
+      '<div style="margin-bottom:16px">' +
+        '<h2 style="font-size:15px;color:#4A4A4A;margin-bottom:10px">🔧 ' + t_steps + '</h2>' +
+        steps.map(function(s, i) { return '<div style="display:flex;gap:10px;margin-bottom:12px;padding:10px;background:#f8f9fa;border-radius:8px"><span style="width:26px;height:26px;background:' + a.color + ';color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;margin-top:2px">' + (i+1) + '</span><span style="font-size:14px;line-height:1.7;color:#333">' + s + '</span></div>'; }).join('') +
+      '</div>' +
+      '<div style="background:#f0fdf4;border-radius:12px;padding:14px;font-size:13px;line-height:1.7;color:#555">' + t_tip + '</div>' +
+      '<button onclick="window.print()" style="width:100%;margin-top:16px;padding:12px;border:2px solid ' + a.color + ';background:white;color:' + a.color + ';border-radius:50px;font-size:14px;font-weight:600;cursor:pointer">' + t_print + '</button>' +
+    '</div></div>';
+}
+
 // ─── RENDER: ADVENTURE MAP ────────────────────────────────────
 function renderAdventureMap(container) {
   const s = getStore();
@@ -6279,6 +6648,272 @@ function renderAdventureMap(container) {
       </div>` : ''}
     </div>
   `;
+}
+
+// ─── WORKSHEET GENERATOR ──────────────────────────────────────
+function renderWorksheet(container, courseId) {
+  var course = COURSE_DB.find(function(c) { return c.id === courseId; });
+  if (!course) { container.innerHTML = '<p style="padding:40px;text-align:center">Course not found</p>'; return; }
+  var lang = APP.lang;
+  var t_ws = lang === 'zh' ? '可打印练习册' : 'Printable Worksheet';
+  var t_type = lang === 'zh' ? '选择练习类型：' : 'Choose worksheet type:';
+  var t_letters = lang === 'zh' ? '🔤 字母描红' : '🔤 Letter Tracing';
+  var t_letters_desc = lang === 'zh' ? '大写和小写字母书写练习' : 'Uppercase & lowercase letter practice';
+  var t_numbers = lang === 'zh' ? '🔢 数字练习' : '🔢 Number Practice';
+  var t_numbers_desc = lang === 'zh' ? '数字描红和数数练习' : 'Number tracing and counting';
+  var t_math = lang === 'zh' ? '➕ 数学运算' : '➕ Simple Math';
+  var t_math_desc = lang === 'zh' ? '10以内的加减法练习' : 'Addition & subtraction within 10';
+  var t_gen = lang === 'zh' ? '📥 生成并下载 PDF' : '📥 Generate & Download PDF';
+  var t_back = lang === 'zh' ? '← 返回课程' : '← Back to Course';
+  var t_preview = lang === 'zh' ? '📄 练习册预览' : '📄 Worksheet Preview';
+  var courseNameKey = course.nameKey;
+  var courseName = I18N[lang][courseNameKey] || course.name;
+
+  container.innerHTML = '<div class="page active">' +
+    '<button class="top-btn" onclick="navigateTo(\'course\',{courseId:\'' + courseId + '\'})" style="margin-bottom:16px">' + t_back + '</button>' +
+    '<h1 style="font-size:22px;font-weight:800;color:var(--orange);margin-bottom:4px">📝 ' + t_ws + '</h1>' +
+    '<p style="color:var(--text-light);margin-bottom:16px">' + courseName + '</p>' +
+    '<p style="font-weight:600;margin-bottom:10px">' + t_type + '</p>' +
+    '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:20px" id="ws-options">' +
+      '<div class="ws-option selected" data-type="letters" onclick="selectWsOption(this)" style="background:white;border:3px solid ' + course.color + ';border-radius:var(--radius-lg);padding:14px;text-align:center;cursor:pointer">' +
+        '<div style="font-size:32px">🔤</div><div style="font-weight:700;font-size:13px;margin-top:4px">' + t_letters + '</div>' +
+        '<div style="font-size:11px;color:var(--text-light)">' + t_letters_desc + '</div></div>' +
+      '<div class="ws-option" data-type="numbers" onclick="selectWsOption(this)" style="background:white;border:3px solid #e0e0e0;border-radius:var(--radius-lg);padding:14px;text-align:center;cursor:pointer">' +
+        '<div style="font-size:32px">🔢</div><div style="font-weight:700;font-size:13px;margin-top:4px">' + t_numbers + '</div>' +
+        '<div style="font-size:11px;color:var(--text-light)">' + t_numbers_desc + '</div></div>' +
+      '<div class="ws-option" data-type="math" onclick="selectWsOption(this)" style="background:white;border:3px solid #e0e0e0;border-radius:var(--radius-lg);padding:14px;text-align:center;cursor:pointer">' +
+        '<div style="font-size:32px">➕</div><div style="font-weight:700;font-size:13px;margin-top:4px">' + t_math + '</div>' +
+        '<div style="font-size:11px;color:var(--text-light)">' + t_math_desc + '</div></div>' +
+    '</div>' +
+    '<button onclick="generateWorksheetPDF(\'' + courseId + '\')" style="width:100%;padding:14px;border:none;background:' + course.color + ';color:white;border-radius:50px;font-size:16px;font-weight:700;cursor:pointer;margin-bottom:16px">' + t_gen + '</button>' +
+    '<div id="ws-preview" style="background:white;border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow);min-height:200px">' +
+      '<h3 style="margin-bottom:10px;color:#4A4A4A">' + t_preview + '</h3>' +
+      '<div id="ws-preview-content" style="padding:20px;background:#fffef7;border:1px dashed #ddd;border-radius:8px;font-family:monospace;min-height:100px;line-height:1.8;font-size:13px"></div>' +
+    '</div>' +
+  '</div>';
+
+  // Initial preview
+  updateWorksheetPreview('letters', courseId);
+}
+
+function selectWsOption(el) {
+  document.querySelectorAll('.ws-option').forEach(function(o) {
+    o.style.borderColor = '#e0e0e0';
+    o.classList.remove('selected');
+  });
+  el.classList.add('selected');
+  var courseId = (window.location.hash.match(/courseId=([^&]+)/) || [])[1] || '';
+  var type = el.getAttribute('data-type');
+  if (courseId) {
+    var course = COURSE_DB.find(function(c) { return c.id === courseId; });
+    if (course) el.style.borderColor = course.color;
+  }
+  updateWorksheetPreview(type, courseId);
+}
+
+function updateWorksheetPreview(type, courseId) {
+  var preview = document.getElementById('ws-preview-content');
+  if (!preview) return;
+  var lang = APP.lang;
+  if (type === 'letters') {
+    var letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+    var content = '<table style="width:100%;border-collapse:collapse">';
+    for (var i = 0; i < letters.length; i += 3) {
+      content += '<tr>';
+      for (var j = 0; j < 3 && i + j < letters.length; j++) {
+        var l = letters[i + j];
+        content += '<td style="padding:10px;border:1px solid #e0e0e0;text-align:center;vertical-align:top">' +
+          '<div style="font-size:28px;color:#ddd;font-weight:700;margin-bottom:8px">' + l + '</div>' +
+          '<div style="font-size:28px;color:#bbb;font-weight:400;margin-bottom:8px">' + l.toLowerCase() + '</div>' +
+          '<div style="border-top:1px dashed #ccc;height:60px;line-height:60px;color:#ccc;font-size:18px">' + l + ' ' + l.toLowerCase() + '</div>' +
+          '</td>';
+      }
+      content += '</tr>';
+    }
+    content += '</table>';
+    preview.innerHTML = content;
+  } else if (type === 'numbers') {
+    var content = '<table style="width:100%;border-collapse:collapse">';
+    for (var i = 1; i <= 12; i++) {
+      content += '<tr>';
+      for (var j = 0; j < 3 && i + j <= 12; j++) {
+        var n = i + j;
+        content += '<td style="padding:10px;border:1px solid #e0e0e0;text-align:center;vertical-align:top">' +
+          '<div style="font-size:36px;color:#ddd;font-weight:700;margin-bottom:8px">' + n + '</div>' +
+          '<div style="border-top:1px dashed #ccc;height:60px;line-height:60px;color:#ccc;font-size:18px">' + n + '</div>' +
+          '</td>';
+      }
+      content += '</tr>';
+    }
+    content += '</table>';
+    preview.innerHTML = content;
+  } else if (type === 'math') {
+    var problems = [];
+    for (var i = 0; i < 12; i++) {
+      var a = Math.floor(Math.random() * 9) + 1;
+      var b = Math.floor(Math.random() * 9) + 1;
+      var op = i % 3 === 0 ? '+' : (i % 3 === 1 ? '+' : '-');
+      if (op === '-' && a < b) { var tmp = a; a = b; b = tmp; }
+      problems.push({a: a, b: b, op: op});
+    }
+    var content = '<table style="width:100%;border-collapse:collapse">';
+    for (var i = 0; i < problems.length; i += 2) {
+      content += '<tr>';
+      for (var j = 0; j < 2 && i + j < problems.length; j++) {
+        var p = problems[i + j];
+        content += '<td style="padding:12px 20px;border:1px solid #e0e0e0;text-align:center">' +
+          '<span style="font-size:24px;font-weight:700">' + p.a + ' ' + p.op + ' ' + p.b + ' = ___</span>' +
+          '</td>';
+      }
+      content += '</tr>';
+    }
+    content += '</table>';
+    preview.innerHTML = content;
+  }
+  // Store type globally for generate button
+  window._wsType = type;
+}
+
+// Generate and download PDF worksheet
+function generateWorksheetPDF(courseId) {
+  var type = window._wsType || 'letters';
+  var course = COURSE_DB.find(function(c) { return c.id === courseId; });
+  var lang = APP.lang;
+  var doc;
+
+  // Use jsPDF (loaded from CDN)
+  try {
+    var { jsPDF } = window.jspdf;
+    doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+  } catch(e) {
+    alert('PDF library not loaded. Please refresh the page.');
+    return;
+  }
+
+  var pageW = 210, pageH = 297;
+  var margin = 15;
+  var y = margin + 5;
+
+  // Header
+  doc.setFontSize(20);
+  doc.setTextColor(255, 140, 66);
+  var title = lang === 'zh' ? 'HappySprout 练习册' : 'HappySprout Worksheet';
+  doc.text(title, pageW / 2, y, { align: 'center' });
+  y += 10;
+  doc.setFontSize(12);
+  doc.setTextColor(100, 100, 100);
+  var courseName = course ? (lang === 'zh' ? course.name : course.name) : '';
+  doc.text(courseName, pageW / 2, y, { align: 'center' });
+  y += 5;
+  doc.setFontSize(8);
+  doc.setTextColor(150, 150, 150);
+  doc.text(lang === 'zh' ? 'www.kidslearninghub.online' : 'kidslearninghub.online', pageW / 2, y, { align: 'center' });
+  y += 10;
+  doc.setDrawColor(255, 140, 66);
+  doc.line(margin, y, pageW - margin, y);
+  y += 8;
+
+  if (type === 'letters') {
+    doc.setFontSize(10);
+    doc.setTextColor(80, 80, 80);
+    doc.text(lang === 'zh' ? '字母描红练习 · 跟着虚线写一写' : 'Letter Tracing · Follow the dotted lines', margin, y);
+    y += 10;
+
+    var letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+    var boxW = (pageW - margin * 2 - 4) / 3;
+    var boxH = 28;
+
+    for (var i = 0; i < letters.length; i++) {
+      if (y + boxH > pageH - margin) { doc.addPage(); y = margin + 5; }
+      var col = i % 3;
+      var x = margin + col * (boxW + 2);
+
+      doc.setDrawColor(220, 220, 220);
+      doc.rect(x, y, boxW, boxH);
+
+      doc.setFontSize(20);
+      doc.setTextColor(200, 200, 200);
+      doc.text(letters[i], x + 4, y + 10);
+      doc.text(letters[i].toLowerCase(), x + 16, y + 10);
+
+      doc.setFontSize(18);
+      doc.setTextColor(180, 180, 180);
+      doc.text(letters[i] + ' ' + letters[i].toLowerCase(), x + 4, y + 22);
+
+      if (col === 2) y += boxH + 2;
+    }
+  } else if (type === 'numbers') {
+    doc.setFontSize(10);
+    doc.setTextColor(80, 80, 80);
+    doc.text(lang === 'zh' ? '数字描红练习 · 写一写，数一数' : 'Number Tracing · Write and count', margin, y);
+    y += 10;
+    var boxW = (pageW - margin * 2 - 4) / 3;
+    var boxH = 28;
+    for (var i = 1; i <= 12; i++) {
+      if (y + boxH > pageH - margin) { doc.addPage(); y = margin + 5; }
+      var col = (i - 1) % 3;
+      var x = margin + col * (boxW + 2);
+      doc.setDrawColor(220, 220, 220);
+      doc.rect(x, y, boxW, boxH);
+      doc.setFontSize(28);
+      doc.setTextColor(200, 200, 200);
+      doc.text(String(i), x + boxW / 2, y + 12, { align: 'center' });
+      doc.setFontSize(18);
+      doc.setTextColor(180, 180, 180);
+      doc.text(String(i), x + boxW / 2, y + 24, { align: 'center' });
+      if (col === 2) y += boxH + 2;
+    }
+    // Counting exercise
+    y += 10;
+    if (y > pageH - 50) { doc.addPage(); y = margin + 5; }
+    doc.setFontSize(10);
+    doc.setTextColor(80, 80, 80);
+    doc.text(lang === 'zh' ? '数一数练习：画出正确的数量' : 'Counting Practice: Draw the correct number', margin, y);
+    y += 8;
+    doc.setFontSize(12);
+    doc.setTextColor(60, 60, 60);
+    for (var i = 1; i <= 6; i++) {
+      if (i % 3 === 1) { doc.text('', margin, y); }
+      doc.text(i + ' = ___________    ', margin + ((i - 1) % 3) * 60, y + Math.floor((i - 1) / 3) * 20);
+    }
+  } else if (type === 'math') {
+    doc.setFontSize(10);
+    doc.setTextColor(80, 80, 80);
+    doc.text(lang === 'zh' ? '数学运算练习 · 在横线上写出答案' : 'Math Practice · Write your answer on the line', margin, y);
+    y += 10;
+    var problems = [];
+    for (var i = 0; i < 20; i++) {
+      var a = Math.floor(Math.random() * 9) + 1;
+      var b = Math.floor(Math.random() * 9) + 1;
+      var op = i < 10 ? '+' : '-';
+      if (op === '-' && a < b) { var tmp = a; a = b; b = tmp; }
+      problems.push({a: a, b: b, op: op});
+    }
+    doc.setFontSize(16);
+    doc.setTextColor(60, 60, 60);
+    for (var i = 0; i < problems.length; i++) {
+      if (y + 12 > pageH - margin) { doc.addPage(); y = margin + 5; }
+      var p = problems[i];
+      var col = i % 2;
+      var row = Math.floor(i / 2);
+      var x = margin + col * 90;
+      doc.text(p.a + ' ' + p.op + ' ' + p.b + ' = _________', x + 5, y + row * 12);
+      if (col === 1 && row % 12 === 11) y += row * 12;
+    }
+  }
+
+  // Footer
+  doc.setFontSize(7);
+  doc.setTextColor(150, 150, 150);
+  var totalPages = doc.internal.getNumberOfPages();
+  for (var p = 1; p <= totalPages; p++) {
+    doc.setPage(p);
+    doc.text(lang === 'zh' ? 'HappySprout 练习册 · 第 ' + p + ' 页' : 'HappySprout Worksheet · Page ' + p, pageW / 2, pageH - 8, { align: 'center' });
+  }
+
+  // Download
+  var filename = 'worksheet-' + (courseId || 'practice') + '-' + type + '.pdf';
+  doc.save(filename);
 }
 
 // ─── RENDER: ME (Profile) ─────────────────────────────────────
