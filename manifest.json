@@ -1,0 +1,35 @@
+{
+  "name": "HappySprout Kids Learning - 儿童学习乐园",
+  "short_name": "HappySprout",
+  "description": "面向3-12岁孩子的免费在线学习平台，提供互动课程、教育视频和可打印练习册",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#FF8C42",
+  "background_color": "#FFF8F0",
+  "categories": ["education", "kids", "entertainment"],
+  "lang": "zh-CN",
+  "dir": "ltr",
+  "scope": "/",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "label": "HappySprout home screen"
+    }
+  ]
+}

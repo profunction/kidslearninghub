@@ -6,6 +6,15 @@
 <meta name="description" content="HappySprout 提供100+免费儿童教育视频、互动练习册和创意学习活动，专为3-12岁孩子设计，涵盖英语启蒙、数学思维、科学探索，让学习充满乐趣。">
 <title>儿童学习乐园 | HappySprout - 免费幼儿教育视频与互动练习册</title>
 
+<!-- PWA Manifest & Theme -->
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#FF8C42">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="HappySprout">
+<link rel="apple-touch-icon" href="/logo.png">
+
 <!-- Security headers for AI agent trust -->
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
 <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
@@ -1437,6 +1446,118 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px s
 .parent-cat-bar { flex: 1; height: 16px; background: #F0E8D8; border-radius: 8px; overflow: hidden; }
 .parent-cat-fill { height: 100%; border-radius: 8px; transition: width 0.5s; }
 .parent-cat-count { font-size: 12px; font-weight: 700; min-width: 30px; text-align: right; }
+
+/* ============================================================
+   Phase 3 Styles — PWA Install, Share, Daily Reminder, Retention
+   ============================================================ */
+/* PWA Install Banner */
+.pwa-install-banner {
+  position: fixed; bottom: 80px; left: 12px; right: 12px; z-index: 999;
+  background: linear-gradient(135deg, #FF8C42 0%, #FF6B6B 100%);
+  color: #fff; border-radius: 16px; padding: 14px 16px;
+  display: flex; align-items: center; gap: 12px;
+  box-shadow: 0 8px 32px rgba(255,140,66,0.4);
+  animation: slideUp 0.4s ease;
+}
+.pwa-install-icon { font-size: 32px; flex-shrink: 0; }
+.pwa-install-text { flex:1; min-width: 0; }
+.pwa-install-text strong { display: block; font-size: 14px; margin-bottom: 2px; }
+.pwa-install-text span { font-size: 11px; opacity: 0.85; }
+.pwa-install-btn {
+  padding: 8px 18px; border: none; border-radius: 20px;
+  background: #fff; color: #FF6B6B; font-weight: 700; font-size: 13px;
+  cursor: pointer; flex-shrink: 0;
+}
+.pwa-install-close {
+  position: absolute; top: 6px; right: 10px;
+  background: none; border: none; color: rgba(255,255,255,0.7);
+  font-size: 18px; cursor: pointer; line-height: 1;
+}
+
+/* Share Modal */
+.share-modal { position: fixed; inset: 0; z-index: 1001; display: flex; align-items: center; justify-content: center; }
+.share-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.5); }
+.share-card {
+  position: relative; background: #fff; border-radius: 20px; padding: 24px;
+  max-width: 380px; width: 90%; box-shadow: 0 16px 48px rgba(0,0,0,0.2);
+  animation: zoomIn 0.3s ease;
+}
+.share-close { position: absolute; top: 10px; right: 14px; background: none; border: none; font-size: 22px; cursor: pointer; color: #999; }
+.share-card h3 { text-align: center; margin: 0 0 12px; font-size: 18px; }
+.share-preview {
+  background: linear-gradient(135deg, #FFF8F0 0%, #FFE8D6 100%);
+  border-radius: 16px; padding: 20px; text-align: center; margin-bottom: 16px;
+  border: 3px dashed #FFD93D;
+}
+.share-preview-avatar { font-size: 48px; display: block; margin-bottom: 8px; }
+.share-preview-stats { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.share-stat { text-align: center; min-width: 50px; }
+.share-stat-num { font-size: 22px; font-weight: 800; color: #FF8C42; }
+.share-stat-label { font-size: 10px; color: #888; }
+.share-watermark { font-size: 11px; color: #FF8C42; margin-top: 10px; font-weight: 600; }
+.share-buttons { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.share-btn {
+  padding: 8px 14px; border-radius: 20px; border: 2px solid #E0E0E0;
+  background: #fff; font-size: 12px; font-weight: 600; cursor: pointer;
+  transition: all 0.2s;
+}
+.share-btn:hover { background: #f5f5f5; transform: translateY(-1px); }
+
+/* Daily Reminder */
+.daily-reminder {
+  position: fixed; bottom: 150px; left: 50%; transform: translateX(-50%); z-index: 998;
+  background: #fff; border-radius: 20px; padding: 12px 20px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+  display: flex; align-items: center; gap: 10px; font-size: 13px;
+  animation: slideUp 0.4s ease; white-space: nowrap;
+}
+.daily-reminder-icon { font-size: 22px; }
+.daily-reminder button {
+  padding: 6px 14px; border: none; border-radius: 14px;
+  background: #FF8C42; color: #fff; font-weight: 600; font-size: 12px; cursor: pointer;
+}
+
+/* Retention: Streak fire animation */
+@keyframes streakFire {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+}
+.streak-fire { display: inline-block; animation: streakFire 0.6s ease infinite; }
+
+/* Today's Pick section */
+.today-pick {
+  background: linear-gradient(135deg, #E8F5E9 0%, #FFF8E1 100%);
+  border-radius: 16px; padding: 16px; margin-bottom: 16px;
+  border: 2px solid #A5D6A7;
+}
+.today-pick-badge {
+  display: inline-block; padding: 4px 10px; border-radius: 10px;
+  background: #4CAF50; color: #fff; font-size: 11px; font-weight: 700; margin-bottom: 8px;
+}
+.today-pick-video {
+  display: flex; gap: 10px; cursor: pointer; align-items: center;
+}
+.today-pick-thumb {
+  width: 100px; height: 56px; border-radius: 10px; object-fit: cover; flex-shrink: 0;
+}
+.today-pick-info { flex: 1; min-width: 0; }
+.today-pick-info h4 { margin: 0 0 2px; font-size: 13px; }
+.today-pick-info p { margin: 0; font-size: 11px; color: #888; }
+
+/* Animations */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes zoomIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@media (min-width: 768px) {
+  .pwa-install-banner { left: auto; right: 24px; width: 360px; bottom: 24px; }
+  .daily-reminder { bottom: 24px; }
+}
 </style>
 <!-- Google AdSense -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8103912615651681"
@@ -1554,6 +1675,40 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px s
 <!-- ============================================================
      JAVASCRIPT APPLICATION
      ============================================================ -->
+<!-- Phase 3: PWA Install Banner -->
+<div class="pwa-install-banner" id="pwa-install-banner" style="display:none">
+  <div class="pwa-install-icon">📱</div>
+  <div class="pwa-install-text">
+    <strong>安装 HappySprout 到桌面</strong>
+    <span>像 App 一样使用，无需打开浏览器</span>
+  </div>
+  <button class="pwa-install-btn" id="pwa-install-btn">安装</button>
+  <button class="pwa-install-close" id="pwa-install-close">×</button>
+</div>
+
+<!-- Phase 3: Social Share Modal -->
+<div class="share-modal" id="share-modal" style="display:none">
+  <div class="share-backdrop" onclick="closeShareModal()"></div>
+  <div class="share-card" id="share-card">
+    <button class="share-close" onclick="closeShareModal()">×</button>
+    <h3 id="share-title">🎉 我的学习成就</h3>
+    <div id="share-card-body"></div>
+    <div class="share-buttons">
+      <button class="share-btn" data-platform="clipboard" onclick="shareAchievement('clipboard')">📋 复制分享图</button>
+      <button class="share-btn" data-platform="twitter" onclick="shareAchievement('twitter')">🐦 分享到 X</button>
+      <button class="share-btn" data-platform="whatsapp" onclick="shareAchievement('whatsapp')">💬 WhatsApp</button>
+      <button class="share-btn" data-platform="facebook" onclick="shareAchievement('facebook')">📘 Facebook</button>
+    </div>
+  </div>
+</div>
+
+<!-- Phase 3: Daily Reminder Toast -->
+<div class="daily-reminder" id="daily-reminder" style="display:none">
+  <span class="daily-reminder-icon">🌱</span>
+  <span id="daily-reminder-text">今天的课程还没完成哦</span>
+  <button onclick="dismissReminder()">知道了</button>
+</div>
+
 <script>
 /* ================================================================
    HappySprout Kids Learning – Fun Educational Activities for Children - Application Core
@@ -2666,6 +2821,9 @@ const APP = {
   user: null,               // Supabase auth user
   profile: null,            // Supabase profile row
   supabase: null,           // Supabase client
+  deferredPrompt: null,     // PWA install prompt
+  todayPickVideoId: null,   // Daily pick video
+  blogPosts: [],            // Blog post list
 };
 
 // ─── SUPABASE CONFIG ──────────────────────────────────────────
@@ -7019,6 +7177,9 @@ function renderMe(container) {
         <button style="padding:10px 20px;border-radius:50px;border:2px solid #E0E0E0;background:white;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px" onclick="navigateTo('blog')">
           ✍️ ${APP.lang === 'en' ? 'Parent Blog' : '家长博客'}
         </button>
+        <button style="padding:10px 20px;border-radius:50px;border:2px solid #FFD93D;background:linear-gradient(135deg,#FFD93D,#FF8C42);color:#fff;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px" onclick="openShareModal()">
+          🚀 ${APP.lang === 'en' ? 'Share' : '分享成就'}
+        </button>
       </div>
     </div>
   `;
@@ -7678,19 +7839,67 @@ const BLOG_POSTS = [
     }
   },
   {
-    id: 'creative-learning',
-    icon: '🎨',
-    color: '#6ECB63',
-    date: '2026-06-08',
+    id: 'phonics-explained',
+    icon: '🔤',
+    color: '#4ECDC4',
+    date: '2026-06-10',
     zh: {
-      title: '创意学习：5个激发孩子学习兴趣的动手活动',
-      summary: '想让孩子主动学习？试试把知识融入创意活动中！这5个简单动手项目让学习变得像游戏一样有趣。',
-      content: '<p>孩子天生充满好奇心和创造力。与其强迫他们坐在桌前学习，不如把知识融入创意活动中。以下5个活动涵盖语言、数学、科学和艺术四大领域。</p><h3>1. 字母橡皮泥（语言）</h3><p>用橡皮泥捏出字母形状，边玩边念。从孩子名字的首字母开始，逐步扩展到A-Z。配合 HappySprout 的 <a href="#course" data-page="course" data-params=\'{"courseId":"abc-fun"}\'>ABC 字母快乐学课程</a>，视听触觉三重输入效果最佳。</p><h3>2. 厨房数学（数学）</h3><p>做饼干时让孩子数面粉杯数、切披萨时讲分数概念。生活即教育，厨房是最好的数学教室。参考 HappySprout <a href="#course" data-page="course" data-params=\'{"courseId":"numbers-1-10"}\'>数字王国大冒险课程</a> 中的实物数数练习。</p><h3>3. 植物观察日记（科学）</h3><p>种一颗绿豆，每天画下它的变化。这是最基础的科学思维训练——观察、记录、比较。配合 HappySprout 的 <a href="#subjectHub" data-page="subjectHub" data-params=\'{"subject":"science"}\'>科学探索专区</a> 了解更多自然知识。</p><h3>4. 音乐节奏游戏（艺术）</h3><p>用空瓶子和豆子做沙锤，跟着节奏打拍子。音乐训练能显著提升语言能力和数学思维。试试 <a href="#subjectHub" data-page="subjectHub" data-params=\'{"subject":"art"}\'>儿童艺术创意专区</a> 寻找更多音乐律动资源。</p><h3>5. 故事剧场（语言+表演）</h3><p>读完绘本后，和孩子一起把故事演出来。这能加深理解、锻炼表达，也是最棒的亲子时光。去 <a href="#courses" data-page="courses">课程中心</a> 寻找充满想象力的故事内容吧。</p>'
+      title: '自然拼读法完全指南：让孩子见词能读的魔法',
+      summary: '自然拼读（Phonics）是英美孩子学习阅读的基础方法。掌握 Phonics 后，孩子能读出80%以上的常见英语单词。本文系统介绍 Phonics 的学习路径。',
+      content: '<p>自然拼读的核心是建立字母（Letter）和发音（Sound）之间的对应关系。不同于死记硬背单词拼写，Phonics 让孩子掌握"解码"能力。</p><h3>Phonics 学习路径</h3><p><strong>阶段一：字母音</strong> — 学会26个字母对应的基本发音，比如 A says /æ/, B says /b/。<br><strong>阶段二：短元音 CVC 词</strong> — 辅音-元音-辅音结构，如 cat, dog, sun。<br><strong>阶段三：长元音和双字母组合</strong> — sh, ch, th, ee, oo 等常见组合。<br><strong>阶段四：复杂拼读规则</strong> — 不发音的 e (silent e)、双元音等。</p><h3>HappySprout 的 Phonics 课程</h3><p>我们的 Phonics Basics 课程精选了4个循序渐进的视频，每节课配套听力练习和配对游戏，让孩子在玩中学、学中玩。立即开始 <a href="#course" data-page="course" data-params=\'{"courseId":"phonics-basics"}\'>自然拼读基础课程</a>。</p><h3>家长陪练技巧</h3><p>1. 用字母磁贴拼读简单单词；2. 读绘本时指读，让孩子注意字母和发音的关系；3. 玩"I Spy"游戏——"I spy something that starts with /b/"。</p>'
     },
     en: {
-      title: 'Creative Learning: 5 Hands-On Activities to Spark Your Child\'s Curiosity',
-      summary: 'Want your child to love learning? Blend knowledge into creative activities! These 5 hands-on projects make learning feel like play.',
-      content: '<p>Children are naturally curious and creative. Instead of forcing desk-based learning, embed knowledge into creative play. Here are 5 activities covering language, math, science, and art.</p><h3>1. Play-Doh Letters (Language)</h3><p>Shape letters with play-doh while saying them aloud. Start with your child\'s name initials, then A-Z. Combine with <a href="#course" data-page="course" data-params=\'{"courseId":"abc-fun"}\'>HappySprout ABC Fun Learning</a> for audio-visual-tactile learning.</p><h3>2. Kitchen Math</h3><p>Count flour cups when baking, discuss fractions when cutting pizza. Life IS education. Reference our <a href="#course" data-page="course" data-params=\'{"courseId":"numbers-1-10"}\'>Number Kingdom Adventure</a> for object-counting exercises.</p><h3>3. Plant Observation Journal (Science)</h3><p>Plant a bean seed and draw its changes daily. This builds core scientific thinking: observe, record, compare. Pair with <a href="#subjectHub" data-page="subjectHub" data-params=\'{"subject":"science"}\'>Kids Science Exploration</a> videos for more nature knowledge.</p><h3>4. Music Rhythm Games (Art)</h3><p>Make shakers from bottles and beans. Music training significantly improves both language and math skills. Visit <a href="#subjectHub" data-page="subjectHub" data-params=\'{"subject":"art"}\'>Kids Art & Creativity</a> for rhythm inspiration.</p><h3>5. Story Theater (Language + Drama)</h3><p>After reading a picture book, act it out together. This deepens comprehension and builds expression skills — also the best bonding time. Head to our <a href="#courses" data-page="courses">Course Library</a> for story content resources.</p>'
+      title: 'Phonics Explained: The Magic of Seeing Words and Reading',
+      summary: 'Phonics is the foundation of reading for English-speaking children. With phonics, kids can decode 80%+ of common English words. A systematic guide.',
+      content: '<p>Phonics builds the bridge between letters and sounds. Instead of memorizing spelling, children learn to decode words systematically.</p><h3>The Phonics Journey</h3><p><strong>Stage 1: Letter Sounds</strong> — Learn the 26 letter sounds.<br><strong>Stage 2: CVC Words</strong> — Consonant-Vowel-Consonant patterns like cat, dog, sun.<br><strong>Stage 3: Digraphs</strong> — sh, ch, th, ee, oo combinations.<br><strong>Stage 4: Advanced Rules</strong> — Silent e, diphthongs, and more.</p><h3>HappySprout\'s Phonics Course</h3><p>Our <a href="#course" data-page="course" data-params=\'{"courseId":"phonics-basics"}\'>Phonics Basics Course</a> features 4 progressive videos with listening exercises and matching games.</p><h3>Practice Tips</h3><p>1. Use letter magnets to build words; 2. Point to words while reading aloud; 3. Play "I Spy" — "I spy something that starts with /b/".</p>'
+    }
+  },
+  {
+    id: 'math-early-number-sense',
+    icon: '🧮',
+    color: '#FFD93D',
+    date: '2026-06-05',
+    zh: {
+      title: '幼儿数学启蒙不只有数数：培养数感的5个核心概念',
+      summary: '真正重要的是"数感"——对数量和数学关系的直觉理解。本文介绍数感的5个核心维度及日常练习方法。',
+      content: '<p>数感（Number Sense）是幼儿数学能力的基石，它比机械数数更重要。</p><h3>数感的5个维度</h3><p><strong>1. 基数原则：</strong>理解"3"代表3个物品，不只是数到3。<br><strong>2. 数量比较：</strong>能判断哪堆更多。<br><strong>3. 一一对应：</strong>"一个物品对应一个数字"。<br><strong>4. 数量守恒：</strong>物品排列方式改变不影响数量。<br><strong>5. 估计能力：</strong>大致判断一组物品的数量。</p><h3>HappySprout 的数学课程</h3><p><a href="#course" data-page="course" data-params=\'{"courseId":"numbers-1-10"}\'>Number Kingdom Adventure</a> 课程从实物计数到简单加减，每个视频都配有可打印练习册。</p><h3>日常练习</h3><p>1. 吃饭时数筷子；2. 上楼梯时数台阶；3. 分零食时练"多""少"；4. 玩积木时比较高矮。</p>'
+    },
+    en: {
+      title: 'Early Math Beyond Counting: 5 Core Concepts for Number Sense',
+      summary: 'Number sense is the intuitive understanding of quantity — far more important than rote counting. Learn the 5 core dimensions.',
+      content: '<p>Number sense is the foundation of mathematical ability. A child with strong number sense can estimate quantities without a calculator.</p><h3>5 Dimensions</h3><p><strong>1. Cardinality:</strong> "3" means 3 objects.<br><strong>2. Magnitude Comparison.</strong><br><strong>3. One-to-One Correspondence.</strong><br><strong>4. Conservation.</strong><br><strong>5. Estimation.</strong></p><h3>HappySprout\'s Math Course</h3><p><a href="#course" data-page="course" data-params=\'{"courseId":"numbers-1-10"}\'>Number Kingdom Adventure</a> progresses from counting to operations with printable worksheets.</p><h3>Daily Practice</h3><p>1. Count utensils at meals; 2. Count stairs; 3. Discuss "more/less" at snack time; 4. Compare block towers.</p>'
+    }
+  },
+  {
+    id: 'bilingual-benefits',
+    icon: '🌐',
+    color: '#7EC8E3',
+    date: '2026-06-02',
+    zh: {
+      title: '双语启蒙真的有效吗？科学研究告诉你真相',
+      summary: '孩子应该在几岁开始学第二语言？双语混用会不会导致语言混乱？从语言习得理论出发，解答家长最关心的双语启蒙问题。',
+      content: '<p>很多家长担心过早学英语会影响母语发展。科学研究告诉我们：这个担心是多余的。</p><h3>关键窗口期：0-7岁</h3><p>语言学家 Eric Lenneberg 的"关键期假说"认为，0-7岁是语言习得的黄金时期。这个阶段的大脑对语音的辨别能力最强。</p><h3>双语不会导致混乱</h3><p>大量研究表明，双语儿童不会混淆两套语言系统。相反，他们发展出更强的"元语言意识"——能更早理解"语言是可以切换的工具"。</p><h3>HappySprout 如何支持双语学习</h3><p>我们的课程采用中英双语设计，视频来自英美顶级儿童频道。通过"看英语视频 → 做中文练习 → 听英文发音"的闭环完成自然习得。浏览 <a href="#courses" data-page="courses">全部双语课程</a>。</p><h3>给家长的建议</h3><p>1. 每天固定15-20分钟英语时间；2. 从歌曲和韵律开始；3. 不强迫翻译，让语言自然内化；4. 表扬每一次尝试。</p>'
+    },
+    en: {
+      title: 'Does Bilingual Learning Really Work? What the Science Says',
+      summary: 'At what age should children start a second language? Does early bilingual exposure cause confusion? Science-based answers to parents\' top questions.',
+      content: '<p>Many parents worry about early English exposure harming native language development. Science says otherwise.</p><h3>The Critical Period: 0-7 Years</h3><p>Lenneberg\'s Critical Period Hypothesis identifies ages 0-7 as the golden window for language acquisition.</p><h3>Bilingualism ≠ Confusion</h3><p>Research consistently shows bilingual children develop stronger metalinguistic awareness.</p><h3>How HappySprout Supports Bilingual Learning</h3><p>Our courses feature English videos from top children\'s channels with Chinese support. <a href="#courses" data-page="courses">Browse all bilingual courses</a>.</p><h3>Tips for Parents</h3><p>1. Dedicate 15-20 min daily; 2. Start with songs and rhymes; 3. Don\'t force translation; 4. Praise every attempt.</p>'
+    }
+  },
+  {
+    id: 'summer-learning-plan',
+    icon: '☀️',
+    color: '#FF6B6B',
+    date: '2026-05-28',
+    zh: {
+      title: '暑假学习计划：每天30分钟，让孩子快乐进步',
+      summary: '暑假是孩子进步的关键期。本文提供一个简单易行的30分钟每日学习计划，涵盖英语、数学、科学和艺术，让孩子在假期中保持学习节奏。',
+      content: '<p>暑假两个月，如果完全放下学习，开学后可能需要3-4周才能跟上节奏。但如果每天只用30分钟，孩子不仅能保持状态，还能实现"反超"。</p><h3>30分钟每日计划表</h3><p><strong>10分钟 — 英语：</strong>看一节 HappySprout <a href="#course" data-page="course" data-params=\'{"courseId":"phonics-basics"}\'>自然拼读</a> 或 <a href="#course" data-page="course" data-params=\'{"courseId":"abc-fun"}\'>ABC字母</a> 课程视频，跟着唱。<br><strong>10分钟 — 数学：</strong>做几道 HappySprout <a href="#worksheet" data-page="worksheet">可打印练习册</a> 的题目。<br><strong>10分钟 — 兴趣探索：</strong>看一节科学或艺术视频，或做一个 <a href="#activities" data-page="activities">亲子活动</a>。</p><h3>执行技巧</h3><p>1. 固定时间：建议上午9点或下午3点。<br>2. 全家参与：爸爸妈妈一起学效果翻倍。<br>3. 奖励机制：完成一周计划奖励一次特别活动。<br>浏览 <a href="#ageHub" data-page="ageHub">按年龄浏览</a> 找到最适合孩子的暑假学习内容。</p>'
+    },
+    en: {
+      title: 'Summer Learning Plan: 30 Minutes a Day for Happy Progress',
+      summary: 'Summer is a key window for growth. Here\'s a simple 30-minute daily plan covering English, math, science, and art to keep kids learning through the holidays.',
+      content: '<p>After two months off, kids often need 3-4 weeks to catch up. But just 30 minutes daily can maintain — or even advance — their skills.</p><h3>30-Minute Daily Plan</h3><p><strong>10 min — English:</strong> Watch a <a href="#course" data-page="course" data-params=\'{"courseId":"phonics-basics"}\'>Phonics</a> or <a href="#course" data-page="course" data-params=\'{"courseId":"abc-fun"}\'>ABC</a> lesson.<br><strong>10 min — Math:</strong> Complete exercises from <a href="#worksheet" data-page="worksheet">printable worksheets</a>.<br><strong>10 min — Exploration:</strong> Watch a science/art video or try a <a href="#activities" data-page="activities">hands-on activity</a>.</p><h3>Execution Tips</h3><p>1. Fixed time: 9 AM or 3 PM.<br>2. Family participation: Learn together for 2x results.<br>3. Reward system: A special activity for completing a full week.<br><a href="#ageHub" data-page="ageHub">Browse by age</a> to find the perfect summer content.</p>'
     }
   }
 ];
@@ -7736,14 +7945,36 @@ function renderBlogPost(container, postId) {
   if (!post) { navigateTo('blog'); return; }
 
   var d = post[lang];
+
+  // Inject Article structured data for SEO
+  var articleJson = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    'headline': d.title,
+    'datePublished': post.date,
+    'author': { '@type': 'Organization', 'name': 'HappySprout Kids Learning' },
+    'publisher': { '@type': 'Organization', 'name': 'HappySprout', 'logo': { '@type': 'ImageObject', 'url': 'https://kidslearninghub.online/logo.png' } },
+    'description': d.summary,
+    'mainEntityOfPage': { '@type': 'WebPage', '@id': 'https://kidslearninghub.online/#blog&id=' + postId }
+  };
+  var scriptEl = document.getElementById('article-structured-data');
+  if (!scriptEl) {
+    scriptEl = document.createElement('script');
+    scriptEl.type = 'application/ld+json';
+    scriptEl.id = 'article-structured-data';
+    document.head.appendChild(scriptEl);
+  }
+  scriptEl.textContent = JSON.stringify(articleJson);
+
   container.innerHTML = '<div class="page active">' +
     '<button style="padding:8px 16px;border:none;background:#f0e8d8;border-radius:20px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:12px" onclick="navigateTo(\'blog\')">← ' + (lang === 'zh' ? '返回博客列表' : 'Back to Blog') + '</button>' +
-    '<article style="max-width:680px;margin:0 auto">' +
+    '<article style="max-width:680px;margin:0 auto" itemscope itemtype="https://schema.org/Article">' +
+      '<meta itemprop="datePublished" content="' + post.date + '">' +
       '<div style="background:linear-gradient(135deg,' + post.color + ',' + post.color + 'dd);border-radius:16px;padding:24px;margin-bottom:20px;color:white">' +
-        '<h1 style="font-size:20px;line-height:1.4">' + d.title + '</h1>' +
+        '<h1 style="font-size:20px;line-height:1.4" itemprop="headline">' + d.title + '</h1>' +
         '<div style="font-size:12px;opacity:0.8;margin-top:8px">' + post.icon + ' ' + post.date + '</div>' +
       '</div>' +
-      '<div style="font-size:15px;line-height:2;color:#444">' + d.content + '</div>' +
+      '<div style="font-size:15px;line-height:2;color:#444" itemprop="articleBody">' + d.content + '</div>' +
       '<div style="margin-top:32px;padding:20px;background:#fef9f0;border-radius:16px;text-align:center">' +
         '<p style="font-size:14px;color:#7B5B0D;margin-bottom:12px">' + (lang === 'zh' ? '开始使用 HappySprout 免费学习吧！' : 'Start learning with HappySprout for free!') + '</p>' +
         '<button onclick="navigateTo(\'home\')" style="padding:12px 32px;border:none;background:linear-gradient(135deg,' + post.color + ',' + post.color + 'dd);color:white;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer">' + (lang === 'zh' ? '🎮 开始学习' : '🎮 Start Learning') + '</button>' +
@@ -8073,6 +8304,222 @@ function renderSubjectHub(container, subject) {
     '<div class="video-grid">' + videoCards + '</div>' +
   '</div>';
 }
+// ================================================================
+// Phase 3 — PWA / Social Sharing / Retention / SEO Blog
+// ================================================================
+
+// ─── PWA: Service Worker Registration ──────────────────────────
+function registerSW() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js')
+      .then(function(reg) {
+        console.log('SW registered:', reg.scope);
+      })
+      .catch(function(err) {
+        console.log('SW registration failed:', err);
+      });
+  }
+}
+
+// ─── PWA: Install Prompt ───────────────────────────────────────
+function initPWAInstall() {
+  window.addEventListener('beforeinstallprompt', function(e) {
+    e.preventDefault();
+    APP.deferredPrompt = e;
+    // Show banner after 3 seconds
+    setTimeout(function() {
+      var banner = document.getElementById('pwa-install-banner');
+      if (banner && !sessionStorage.getItem('pwa_banner_dismissed')) {
+        banner.style.display = 'flex';
+      }
+    }, 3000);
+  });
+
+  // Install button
+  var installBtn = document.getElementById('pwa-install-btn');
+  var closeBtn = document.getElementById('pwa-install-close');
+  var banner = document.getElementById('pwa-install-banner');
+
+  if (installBtn) {
+    installBtn.addEventListener('click', function() {
+      if (APP.deferredPrompt) {
+        APP.deferredPrompt.prompt();
+        APP.deferredPrompt.userChoice.then(function(result) {
+          console.log('PWA install:', result.outcome);
+          APP.deferredPrompt = null;
+        });
+      }
+      if (banner) banner.style.display = 'none';
+      sessionStorage.setItem('pwa_banner_dismissed', '1');
+    });
+  }
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function() {
+      if (banner) banner.style.display = 'none';
+      sessionStorage.setItem('pwa_banner_dismissed', '1');
+    });
+  }
+
+  // Hide if already in standalone mode
+  if (window.matchMedia('(display-mode: standalone)').matches) {
+    sessionStorage.setItem('pwa_banner_dismissed', '1');
+  }
+}
+
+// ─── Social Sharing: Achievement Card ──────────────────────────
+function openShareModal() {
+  var s = getStore();
+  var modal = document.getElementById('share-modal');
+  var body = document.getElementById('share-card-body');
+  if (!modal || !body) return;
+
+  body.innerHTML = ''
+    + '<div class="share-preview">'
+    + '<span class="share-preview-avatar">' + s.avatar + '</span>'
+    + '<div class="share-preview-stats">'
+    + '<div class="share-stat"><div class="share-stat-num">' + s.stars + '</div><div class="share-stat-label">⭐ Stars</div></div>'
+    + '<div class="share-stat"><div class="share-stat-num">' + s.streak + '</div><div class="share-stat-label">🔥 Streak</div></div>'
+    + '<div class="share-stat"><div class="share-stat-num">' + s.watchCount + '</div><div class="share-stat-label">📺 Videos</div></div>'
+    + '<div class="share-stat"><div class="share-stat-num">' + (s.badges ? s.badges.length : 0) + '</div><div class="share-stat-label">🏅 Badges</div></div>'
+    + '</div>'
+    + '<div class="share-watermark">🌱 kidslearninghub.online</div>'
+    + '</div>';
+
+  modal.style.display = 'flex';
+}
+
+function closeShareModal() {
+  var modal = document.getElementById('share-modal');
+  if (modal) modal.style.display = 'none';
+}
+
+function shareAchievement(platform) {
+  var s = getStore();
+  var text = '🌟 Look at my learning journey on HappySprout!\n'
+    + '⭐ ' + s.stars + ' Stars | 📺 ' + s.watchCount + ' Videos | '
+    + '🔥 ' + s.streak + ' Day Streak | 🏅 ' + (s.badges ? s.badges.length : 0) + ' Badges\n'
+    + 'Join me: https://kidslearninghub.online';
+
+  switch(platform) {
+    case 'twitter':
+      window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(text), '_blank');
+      break;
+    case 'whatsapp':
+      window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
+      break;
+    case 'facebook':
+      window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent('https://kidslearninghub.online') + '&quote=' + encodeURIComponent(text), '_blank');
+      break;
+    case 'clipboard':
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(function() {
+          alert('Copied! Share with your friends.');
+        });
+      }
+      break;
+  }
+  closeShareModal();
+}
+
+// ─── Daily Pick: Rotating recommendation ──────────────────────
+function getDailyPick() {
+  var videos = getVideosByAge(APP.ageFilter);
+  if (!videos.length) return null;
+  // Seed based on date for consistent daily pick
+  var today = new Date().toISOString().slice(0, 10);
+  var seed = 0;
+  for (var i = 0; i < today.length; i++) { seed = ((seed << 5) - seed) + today.charCodeAt(i); seed |= 0; }
+  return videos[Math.abs(seed) % videos.length];
+}
+
+function renderDailyPick() {
+  var pick = getDailyPick();
+  if (!pick) return '';
+  var thumb = 'https://img.youtube.com/vi/' + pick.id + '/mqdefault.jpg';
+  return ''
+    + '<div class="today-pick">'
+    + '<div class="today-pick-badge">🌟 ' + (APP.lang === 'zh' ? '今日推荐' : 'Today\'s Pick') + '</div>'
+    + '<div class="today-pick-video" onclick="navigateTo(\'watch\',{v:\'' + pick.id + '\'})">'
+    + '<img class="today-pick-thumb" src="' + thumb + '" alt="' + pick.title + '" loading="lazy">'
+    + '<div class="today-pick-info">'
+    + '<h4>' + pick.title + '</h4>'
+    + '<p>' + pick.channel + ' · ' + pick.duration + '</p>'
+    + '</div></div></div>';
+}
+
+// ─── Daily Reminder ────────────────────────────────────────────
+function checkDailyReminder() {
+  var s = getStore();
+  var today = new Date().toISOString().slice(0, 10);
+  if (s.lastActiveDate === today) return; // Already active today
+  if (sessionStorage.getItem('reminder_dismissed') === today) return;
+
+  var reminder = document.getElementById('daily-reminder');
+  var text = document.getElementById('daily-reminder-text');
+  if (!reminder || !text) return;
+
+  var messages = {
+    zh: [
+      '嘿！今天还没开始学习呢 🌱',
+      'Sprout 想你了！来学习吧 📚',
+      '每天进步一点点，快来打卡 ⭐',
+      '你的学习伙伴在等你呢 💪'
+    ],
+    en: [
+      'Hey! Haven\'t started learning today 🌱',
+      'Sprout misses you! Come learn 📚',
+      'A little progress each day ⭐',
+      'Your learning buddy is waiting 💪'
+    ]
+  };
+  var msgs = messages[APP.lang] || messages.zh;
+  var msg = msgs[Math.floor(Math.random() * msgs.length)];
+  text.textContent = msg;
+  reminder.style.display = 'flex';
+}
+
+function dismissReminder() {
+  var reminder = document.getElementById('daily-reminder');
+  if (reminder) reminder.style.display = 'none';
+  sessionStorage.setItem('reminder_dismissed', new Date().toISOString().slice(0, 10));
+}
+
+// ─── Enhanced Streak Tracking ──────────────────────────────────
+function updateStreakWithFire() {
+  var s = getStore();
+  var streakEl = document.querySelector('.streak-fire');
+  if (!streakEl && s.streak >= 3) {
+    // Add fire emoji to any active streak display
+    var headers = document.querySelectorAll('.profile-header p');
+    headers.forEach(function(el) {
+      if (el.textContent.indexOf('🔥') >= 0 && s.streak >= 7) {
+        el.innerHTML = el.innerHTML.replace('🔥', '<span class="streak-fire">🔥</span>');
+      }
+    });
+  }
+}
+
+// Phase 3 — Alias for code that references APP.blogPosts
+APP.blogPosts = BLOG_POSTS;
+
+// ─── Enhanced renderHome with Daily Pick ───────────────────────
+// Patch renderHome to include daily pick section
+var _originalRenderHome = renderHome;
+renderHome = function(container) {
+  _originalRenderHome(container);
+  // Insert daily pick after the home heading area
+  var dailyPick = renderDailyPick();
+  if (dailyPick) {
+    var heading = container.querySelector('h1, h2');
+    if (heading && heading.nextElementSibling) {
+      heading.nextElementSibling.insertAdjacentHTML('afterend', dailyPick);
+    } else if (heading) {
+      heading.insertAdjacentHTML('afterend', dailyPick);
+    }
+  }
+};
+
 function init() {
   try {
     // Ensure store has all default fields
@@ -8138,6 +8585,11 @@ function init() {
     updateNavLabels();
     updateAuthUI();
     navigateTo(initialPage, initialParams);
+
+    // ─── Phase 3 Init: PWA, Daily Reminder ───
+    registerSW();
+    initPWAInstall();
+    setTimeout(function() { checkDailyReminder(); }, 5000);
   } catch(e) {
     console.error('HappySprout init error:', e);
     var main = document.getElementById('main-content');
