@@ -349,7 +349,7 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px s
   .video-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 400px) {
-  .video-grid { grid-template-columns: 1fr; }
+  .video-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
 }
 .show-more-btn {
   display: block; width: 100%; margin: 20px 0; padding: 14px;
@@ -940,7 +940,7 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px s
 }
 
 @media (max-width: 400px) {
-  .video-grid { grid-template-columns: 1fr; }
+  .video-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
   .top-nav-item { padding: 6px 12px; font-size: 13px; }
   .age-pill { padding: 10px 18px; font-size: 14px; }
   .section-title { font-size: 17px; }
@@ -2413,6 +2413,391 @@ const VIDEO_DB = [
     channel: "StorylineOnline",
     duration: "7:00",
     ages: [3, 7],
+    category: "故事模式",
+    courseId: null
+  },
+  // ═══ Phase 3 Expansion — 42 new videos across all categories ═══
+  // ─── 英语启蒙 (7 new) ───
+  {
+    id: "UMIG8KmM8qo",
+    title: "The Alphabet Is So Much Fun | Kids Songs",
+    channel: "Super Simple Songs",
+    duration: "2:01",
+    ages: [3, 5],
+    category: "英语启蒙",
+    courseId: null
+  },
+  {
+    id: "tbbKjDjMDok",
+    title: "Open Shut Them | Opposites Song for Kids",
+    channel: "Super Simple Songs",
+    duration: "2:20",
+    ages: [3, 5],
+    category: "英语启蒙",
+    courseId: null
+  },
+  {
+    id: "QfXIMUFzINY",
+    title: "Hello! | Kids Greeting Song",
+    channel: "Super Simple Songs",
+    duration: "2:11",
+    ages: [3, 5],
+    category: "英语启蒙",
+    courseId: null
+  },
+  {
+    id: "N1JpCsG9xPQ",
+    title: "Do You Like Broccoli Ice Cream? | Food Song",
+    channel: "Super Simple Songs",
+    duration: "2:42",
+    ages: [3, 6],
+    category: "英语启蒙",
+    courseId: null
+  },
+  {
+    id: "TgD5GXANZBI",
+    title: "Ten In The Bed | Counting Song for Kids",
+    channel: "Super Simple Songs",
+    duration: "2:52",
+    ages: [3, 5],
+    category: "英语启蒙",
+    courseId: null
+  },
+  {
+    id: "PZh2JgYD2NU",
+    title: "Days of the Week Song | Learn English Days",
+    channel: "The Singing Walrus",
+    duration: "2:14",
+    ages: [4, 7],
+    category: "英语启蒙",
+    courseId: null
+  },
+  {
+    id: "gBKaPhkUOp4",
+    title: "Weather Song | How's the Weather?",
+    channel: "Super Simple Songs",
+    duration: "2:04",
+    ages: [3, 6],
+    category: "英语启蒙",
+    courseId: null
+  },
+  // ─── 数学思维 (7 new) ───
+  {
+    id: "mWe2MjULI3o",
+    title: "Learn to Count 1-20 | Numberblocks",
+    channel: "Numberblocks",
+    duration: "5:02",
+    ages: [3, 6],
+    category: "数学思维",
+    courseId: null
+  },
+  {
+    id: "8Rct6UZZJUQ",
+    title: "What Number Is Missing? | Numberblocks",
+    channel: "Numberblocks",
+    duration: "4:44",
+    ages: [4, 7],
+    category: "数学思维",
+    courseId: null
+  },
+  {
+    id: "JFpqlnEqYHQ",
+    title: "Patterns! | Learn about Patterns for Kids",
+    channel: "Scratch Garden",
+    duration: "2:30",
+    ages: [4, 7],
+    category: "数学思维",
+    courseId: null
+  },
+  {
+    id: "YkIeD7kF8-g",
+    title: "Comparing Numbers | Greater Than Less Than",
+    channel: "Scratch Garden",
+    duration: "2:53",
+    ages: [5, 8],
+    category: "数学思维",
+    courseId: null
+  },
+  {
+    id: "R69C6kjT5jk",
+    title: "Subitize Up to 5 | Math Brain Break",
+    channel: "Jack Hartmann",
+    duration: "3:47",
+    ages: [3, 5],
+    category: "数学思维",
+    courseId: null
+  },
+  {
+    id: "NnGpoq7VgQo",
+    title: "Even and Odd Numbers Song for Kids",
+    channel: "Numberock",
+    duration: "3:28",
+    ages: [5, 8],
+    category: "数学思维",
+    courseId: null
+  },
+  {
+    id: "YOvYNhqgNJM",
+    title: "Count to 100 by 10's | Exercise and Count",
+    channel: "Jack Hartmann",
+    duration: "3:01",
+    ages: [4, 7],
+    category: "数学思维",
+    courseId: null
+  },
+  // ─── 科学探索 (7 new) ───
+  {
+    id: "ae_Tj0qR_aA",
+    title: "Why Is the Sky Blue? | Questions Kids Ask",
+    channel: "SciShow Kids",
+    duration: "3:32",
+    ages: [5, 10],
+    category: "科学探索",
+    courseId: null
+  },
+  {
+    id: "jRdxj6Gnpig",
+    title: "How Do Bees Make Honey? | Science for Kids",
+    channel: "SciShow Kids",
+    duration: "4:14",
+    ages: [5, 10],
+    category: "科学探索",
+    courseId: null
+  },
+  {
+    id: "DGSZTdXjV9U",
+    title: "Volcano | The Dr. Binocs Show",
+    channel: "Peekaboo Kidz",
+    duration: "5:20",
+    ages: [6, 12],
+    category: "科学探索",
+    courseId: null
+  },
+  {
+    id: "LxvJ_9mpGQk",
+    title: "What Is A Food Chain? | The Dr. Binocs Show",
+    channel: "Peekaboo Kidz",
+    duration: "4:58",
+    ages: [6, 12],
+    category: "科学探索",
+    courseId: null
+  },
+  {
+    id: "X6BE4V3jYYs",
+    title: "The Five Senses | Science for Kids",
+    channel: "SciShow Kids",
+    duration: "3:42",
+    ages: [4, 8],
+    category: "科学探索",
+    courseId: null
+  },
+  {
+    id: "VfN3Av0kpnM",
+    title: "What Causes Earthquakes? | Dr. Binocs",
+    channel: "Peekaboo Kidz",
+    duration: "4:48",
+    ages: [6, 12],
+    category: "科学探索",
+    courseId: null
+  },
+  {
+    id: "e8dK3xY4TkI",
+    title: "All About the Sun for Kids | Space Science",
+    channel: "SciShow Kids",
+    duration: "3:30",
+    ages: [5, 10],
+    category: "科学探索",
+    courseId: null
+  },
+  // ─── 艺术手工 (7 new) ───
+  {
+    id: "m4fX1OMGYaQ",
+    title: "How To Draw A Cute Ice Cream Cone",
+    channel: "Art for Kids Hub",
+    duration: "5:32",
+    ages: [4, 10],
+    category: "艺术手工",
+    courseId: null
+  },
+  {
+    id: "9YxvPA9fbuQ",
+    title: "How To Draw A Unicorn | Easy Step by Step",
+    channel: "Art for Kids Hub",
+    duration: "6:11",
+    ages: [5, 10],
+    category: "艺术手工",
+    courseId: null
+  },
+  {
+    id: "4F1D5xx5HTA",
+    title: "How To Make A Paper Flower | Easy Craft",
+    channel: "Easy Kids Craft",
+    duration: "4:15",
+    ages: [5, 10],
+    category: "艺术手工",
+    courseId: null
+  },
+  {
+    id: "bHJx0C5L3YI",
+    title: "Finger Painting Fun | Creative Art for Kids",
+    channel: "Art for Kids Hub",
+    duration: "4:45",
+    ages: [3, 6],
+    category: "艺术手工",
+    courseId: null
+  },
+  {
+    id: "i5iuI96_EDA",
+    title: "DIY Slime | Easy Science Art Craft for Kids",
+    channel: "Easy Kids Craft",
+    duration: "5:20",
+    ages: [6, 12],
+    category: "艺术手工",
+    courseId: null
+  },
+  {
+    id: "Y2PEXcYk0aQ",
+    title: "How To Draw A Butterfly | Step by Step",
+    channel: "Art for Kids Hub",
+    duration: "5:04",
+    ages: [5, 10],
+    category: "艺术手工",
+    courseId: null
+  },
+  {
+    id: "hqaNwWXN7hQ",
+    title: "Origami Paper Boat | Easy Origami for Kids",
+    channel: "Easy Kids Craft",
+    duration: "3:28",
+    ages: [5, 10],
+    category: "艺术手工",
+    courseId: null
+  },
+  // ─── 音乐律动 (7 new) ───
+  {
+    id: "ZhODBFQ2-bQ",
+    title: "Baby Shark | Pinkfong Original Dance",
+    channel: "Pinkfong",
+    duration: "2:16",
+    ages: [3, 5],
+    category: "音乐律动",
+    courseId: null
+  },
+  {
+    id: "fN1Cyr0ZK9M",
+    title: "Shake Your Sillies Out | Brain Breaks Song",
+    channel: "The Learning Station",
+    duration: "2:57",
+    ages: [3, 7],
+    category: "音乐律动",
+    courseId: null
+  },
+  {
+    id: "C4HLl5HEp3Y",
+    title: "Walking Walking | Action Song for Kids",
+    channel: "Super Simple Songs",
+    duration: "2:18",
+    ages: [3, 5],
+    category: "音乐律动",
+    courseId: null
+  },
+  {
+    id: "dUXk8Nc5qQ8",
+    title: "The Hokey Pokey Shake | Dance Song",
+    channel: "The Kiboomers",
+    duration: "2:42",
+    ages: [3, 6],
+    category: "音乐律动",
+    courseId: null
+  },
+  {
+    id: "JBwTLxv77Jc",
+    title: "Going on a Bear Hunt | Action Song",
+    channel: "The Kiboomers",
+    duration: "3:22",
+    ages: [3, 7],
+    category: "音乐律动",
+    courseId: null
+  },
+  {
+    id: "WqJjygDxhq0",
+    title: "Boom Chicka Boom | Fun Dance Song",
+    channel: "The Learning Station",
+    duration: "3:19",
+    ages: [3, 7],
+    category: "音乐律动",
+    courseId: null
+  },
+  {
+    id: "JoF_d5sgGgc",
+    title: "We Are the Dinosaurs | Marching Song",
+    channel: "Laurie Berkner",
+    duration: "2:26",
+    ages: [3, 6],
+    category: "音乐律动",
+    courseId: null
+  },
+  // ─── 故事模式 (7 new) ───
+  {
+    id: "KHGPzUBMRDY",
+    title: "Pete the Cat: I Love My White Shoes | Read Aloud",
+    channel: "Storytime with Ryan & Craig",
+    duration: "5:26",
+    ages: [3, 7],
+    category: "故事模式",
+    courseId: null
+  },
+  {
+    id: "J3a_NiZEDJM",
+    title: "The Rainbow Fish | Read Aloud for Kids",
+    channel: "Vooks",
+    duration: "6:44",
+    ages: [3, 7],
+    category: "故事模式",
+    courseId: null
+  },
+  {
+    id: "hHBozYlGZtg",
+    title: "Brown Bear, Brown Bear, What Do You See?",
+    channel: "Vooks",
+    duration: "3:48",
+    ages: [3, 5],
+    category: "故事模式",
+    courseId: null
+  },
+  {
+    id: "q27hhxM1pTw",
+    title: "The Day the Crayons Quit | Read Aloud",
+    channel: "StorylineOnline",
+    duration: "7:14",
+    ages: [4, 8],
+    category: "故事模式",
+    courseId: null
+  },
+  {
+    id: "FZE3JjLMg_A",
+    title: "If You Give a Mouse a Cookie | Read Aloud",
+    channel: "StorylineOnline",
+    duration: "6:02",
+    ages: [3, 7],
+    category: "故事模式",
+    courseId: null
+  },
+  {
+    id: "6RUFHk_YUn0",
+    title: "Chicka Chicka Boom Boom | Animated Story",
+    channel: "Vooks",
+    duration: "4:22",
+    ages: [3, 6],
+    category: "故事模式",
+    courseId: null
+  },
+  {
+    id: "NRGoJWLIdR4",
+    title: "Dragons Love Tacos | Read Aloud for Kids",
+    channel: "StorylineOnline",
+    duration: "6:15",
+    ages: [4, 8],
     category: "故事模式",
     courseId: null
   }
