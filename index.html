@@ -575,7 +575,28 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px s
   position: relative; width: 100%; aspect-ratio: 16/9;
   background: #000; border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 12px;
 }
-.player-wrap iframe { width: 100%; height: 100%; border: none; }
+.player-wrap .player-poster {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  object-fit: cover; z-index: 2; cursor: pointer;
+}
+.player-wrap .player-play-btn {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  z-index: 3; width: 68px; height: 48px; background: rgba(255,0,0,0.85);
+  border-radius: 14px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: transform 0.15s, background 0.2s;
+  border: none;
+}
+.player-wrap .player-play-btn:hover { background: #FF0000; transform: translate(-50%, -50%) scale(1.08); }
+.player-wrap .player-play-btn::after {
+  content: ''; display: block; width: 0; height: 0;
+  border-style: solid; border-width: 10px 0 10px 18px;
+  border-color: transparent transparent transparent white; margin-left: 3px;
+}
+.player-wrap .yt-iframe {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%; border: none;
+  z-index: 1;
+}
 .video-actions {
   display: flex; gap: 10px; flex-wrap: wrap; margin: 12px 0;
 }
@@ -1415,6 +1436,8 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px s
   display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s;
 }
 .auth-google-btn:hover { border-color: #4285F4; background: #F8FAFF; }
+.auth-google-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+@keyframes spin { to { transform: rotate(360deg); } }
 .auth-switch { text-align: center; margin-top: 16px; font-size: 13px; color: var(--blue); cursor: pointer; font-weight: 600; }
 .auth-switch:hover { text-decoration: underline; }
 .auth-hint { text-align: center; margin-top: 8px; font-size: 11px; color: #BBB; }
@@ -1529,25 +1552,49 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px s
 }
 .streak-fire { display: inline-block; animation: streakFire 0.6s ease infinite; }
 
-/* Today's Pick section */
+/* Today's Pick section — Category Daily Wheel */
 .today-pick {
   background: linear-gradient(135deg, #E8F5E9 0%, #FFF8E1 100%);
   border-radius: 16px; padding: 16px; margin-bottom: 16px;
   border: 2px solid #A5D6A7;
 }
+.today-pick-header {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;
+}
 .today-pick-badge {
   display: inline-block; padding: 4px 10px; border-radius: 10px;
-  background: #4CAF50; color: #fff; font-size: 11px; font-weight: 700; margin-bottom: 8px;
+  background: #4CAF50; color: #fff; font-size: 11px; font-weight: 700;
+}
+.today-pick-cat {
+  font-size: 15px; font-weight: 700; color: #333; display: flex; align-items: center; gap: 6px;
+}
+.today-pick-cat-icon { font-size: 24px; }
+.today-pick-videos {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
 }
 .today-pick-video {
-  display: flex; gap: 10px; cursor: pointer; align-items: center;
+  display: flex; gap: 8px; cursor: pointer; align-items: center;
+  background: #fff; border-radius: 12px; padding: 8px; transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
 }
+.today-pick-video:hover { transform: translateY(-2px); box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
+.today-pick-video:active { transform: scale(0.97); }
 .today-pick-thumb {
-  width: 100px; height: 56px; border-radius: 10px; object-fit: cover; flex-shrink: 0;
+  width: 80px; height: 45px; border-radius: 8px; object-fit: cover; flex-shrink: 0;
+  background: #E8F5E9;
 }
 .today-pick-info { flex: 1; min-width: 0; }
-.today-pick-info h4 { margin: 0 0 2px; font-size: 13px; }
-.today-pick-info p { margin: 0; font-size: 11px; color: #888; }
+.today-pick-info h4 { margin: 0 0 1px; font-size: 12px; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.today-pick-info p { margin: 0; font-size: 10px; color: #888; }
+.today-pick-more {
+  display: block; text-align: center; margin-top: 10px; font-size: 12px;
+  color: #FF8C42; font-weight: 600; text-decoration: none;
+}
+.today-pick-more:hover { text-decoration: underline; }
+
+@media (min-width: 768px) {
+  .today-pick-videos { grid-template-columns: repeat(2, 1fr); }
+}
 
 /* Animations */
 @keyframes slideUp {
@@ -1562,6 +1609,125 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px s
 @media (min-width: 768px) {
   .pwa-install-banner { left: auto; right: 24px; width: 360px; bottom: 24px; }
   .daily-reminder { bottom: 24px; }
+}
+
+/* ============================================
+   TIER 1: Games, Coloring, XP System
+   ============================================ */
+
+/* ─── Games ─── */
+.game-tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+.game-tab {
+  padding: 10px 20px; border-radius: 50px; border: 2px solid #f0e8d8;
+  background: white; font-size: 14px; font-weight: 600; cursor: pointer;
+  transition: all 0.2s; font-family: inherit; color: var(--text-light);
+}
+.game-tab.active { background: var(--orange); color: #fff; border-color: var(--orange); }
+.game-area {
+  background: white; border-radius: var(--radius-lg); padding: 24px;
+  box-shadow: var(--shadow); min-height: 320px; text-align: center;
+}
+.game-question { font-size: 20px; font-weight: 700; margin-bottom: 16px; color: var(--text); }
+.game-emoji-display { font-size: 64px; margin: 16px 0; line-height: 1.2; }
+.game-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; max-width: 320px; margin: 0 auto; }
+.game-option {
+  padding: 16px; border-radius: var(--radius-md); border: 3px solid #f0e8d8;
+  background: white; font-size: 18px; font-weight: 700; cursor: pointer;
+  transition: all 0.15s; font-family: inherit;
+}
+.game-option:hover { border-color: var(--orange); }
+.game-option.correct { background: #E8F5E9; border-color: #4CAF50; animation: zoomIn 0.3s; }
+.game-option.wrong { background: #FFEBEE; border-color: #EF5350; animation: shake 0.4s; }
+.game-score { font-size: 16px; font-weight: 700; margin-bottom: 12px; color: var(--orange); }
+.game-progress { display: flex; gap: 4px; justify-content: center; margin-bottom: 16px; }
+.game-dot { width: 12px; height: 12px; border-radius: 50%; background: #e0e0e0; }
+.game-dot.done { background: var(--green); }
+.game-dot.wrong { background: var(--coral); }
+.game-restart {
+  padding: 12px 28px; border-radius: 50px; border: none;
+  background: var(--orange); color: #fff; font-size: 15px; font-weight: 700;
+  cursor: pointer; margin-top: 12px; font-family: inherit;
+}
+.game-result { font-size: 28px; margin: 16px 0; }
+
+/* Memory card grid */
+.memory-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; max-width: 360px; margin: 0 auto; }
+.memory-card {
+  aspect-ratio: 1; border-radius: var(--radius-sm); border: 3px solid #f0e8d8;
+  background: var(--orange); cursor: pointer; display: flex; align-items: center;
+  justify-content: center; font-size: 32px; transition: all 0.2s; user-select: none;
+}
+.memory-card.flipped { background: white; border-color: var(--green); }
+.memory-card.matched { background: #E8F5E9; border-color: #4CAF50; opacity: 0.6; pointer-events: none; }
+.memory-card.mismatch { background: #FFEBEE; border-color: #EF5350; }
+.memory-info { display: flex; justify-content: space-between; align-items: center; max-width: 360px; margin: 0 auto 12px; font-weight: 600; }
+
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  20%,60% { transform: translateX(-6px); }
+  40%,80% { transform: translateX(6px); }
+}
+
+/* ─── Coloring Pages ─── */
+.coloring-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.coloring-card {
+  background: white; border-radius: var(--radius-md); overflow: hidden;
+  box-shadow: var(--shadow); cursor: pointer; transition: transform 0.2s;
+  border: 3px solid transparent;
+}
+.coloring-card:hover { transform: translateY(-3px); border-color: var(--orange); }
+.coloring-card svg { width: 100%; height: 120px; display: block; background: #FFFEF9; }
+.coloring-card .coloring-label {
+  padding: 8px; font-size: 13px; font-weight: 600; text-align: center; color: var(--text);
+}
+.coloring-viewer {
+  background: white; border-radius: var(--radius-lg); padding: 20px;
+  box-shadow: var(--shadow); text-align: center;
+}
+.coloring-viewer svg { width: 100%; max-width: 500px; height: auto; margin: 0 auto; display: block; }
+.coloring-actions { display: flex; gap: 10px; justify-content: center; margin-top: 16px; flex-wrap: wrap; }
+.coloring-btn {
+  padding: 12px 24px; border-radius: 50px; border: none; font-size: 15px;
+  font-weight: 700; cursor: pointer; font-family: inherit; transition: all 0.2s;
+}
+.coloring-btn.print { background: var(--orange); color: #fff; }
+.coloring-btn.back { background: #f0e8d8; color: var(--text); }
+.coloring-btn.download { background: var(--green); color: #fff; }
+
+/* ─── XP & Level ─── */
+.xp-bar-wrap { background: #f0f0f0; border-radius: 20px; height: 16px; overflow: hidden; margin: 8px 0; }
+.xp-bar-fill {
+  height: 100%; border-radius: 20px; background: linear-gradient(90deg, #FFD700, #FF8C00);
+  transition: width 0.6s ease;
+}
+.level-badge {
+  display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px;
+  border-radius: 20px; font-weight: 700; font-size: 14px;
+}
+.level-badge.lv { background: #FFF3E0; color: #E65100; }
+.home-game-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 16px 0; }
+.home-game-card {
+  background: white; border-radius: var(--radius-lg); padding: 18px;
+  box-shadow: var(--shadow); cursor: pointer; text-align: center;
+  border: 3px solid transparent; transition: all 0.2s;
+}
+.home-game-card:hover { border-color: var(--orange); transform: translateY(-3px); }
+.home-game-card .hgc-icon { font-size: 40px; margin-bottom: 8px; display: block; }
+.home-game-card .hgc-title { font-size: 15px; font-weight: 700; color: var(--text); }
+.home-game-card .hgc-sub { font-size: 12px; color: var(--text-light); margin-top: 2px; }
+
+/* Toast notification */
+.toast {
+  position: fixed; bottom: 120px; left: 50%; transform: translateX(-50%);
+  background: #333; color: #fff; padding: 12px 24px; border-radius: 50px;
+  font-size: 14px; font-weight: 600; z-index: 999; animation: slideUp 0.3s, fadeOut 0.3s 2s forwards;
+  white-space: nowrap; max-width: 90vw;
+}
+@keyframes fadeOut { to { opacity: 0; transform: translateX(-50%) translateY(10px); } }
+
+@media (min-width: 768px) {
+  .coloring-grid { grid-template-columns: repeat(4, 1fr); }
+  .game-options { grid-template-columns: repeat(4, 1fr); max-width: 480px; }
 }
 </style>
 <!-- Google AdSense -->
@@ -1601,6 +1767,8 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px s
   <a class="top-nav-item" href="#practice" data-page="practice">练习册</a>
   <a class="top-nav-item" id="top-nav-age" href="#ageHub" data-page="ageHub">按年龄</a>
   <a class="top-nav-item" href="#blog" data-page="blog">博客</a>
+  <a class="top-nav-item" href="#games" data-page="games">🎮 游戏</a>
+  <a class="top-nav-item" href="#coloring" data-page="coloring">🎨 涂色</a>
   <a class="top-nav-item" href="#about" data-page="about">关于我们</a>
 </nav>
 
@@ -2800,7 +2968,53 @@ const VIDEO_DB = [
     ages: [3, 5],
     category: "故事模式",
     courseId: null
-  }
+  },
+
+  // ─── Batch 4: New verified videos (added Jun 2026) ───
+  { id: "SN0-lzvKQr4", title: "Let Go Shopping! Learn Food Names in English", channel: "Fun Kids English", duration: "3:14", ages: [3, 10], category: "英语启蒙", courseId: null },
+  { id: "Seuc2rAHOT0", title: "Fruit Is Yummy! Learn Fruit Names", channel: "Fun Kids English", duration: "2:34", ages: [3, 8], category: "英语启蒙", courseId: null },
+  { id: "WqzPrp9jdhQ", title: "This Is My Body! Parts of the Body Song", channel: "Fun Kids English", duration: "2:48", ages: [3, 8], category: "英语启蒙", courseId: null },
+  { id: "72aFV73aaMI", title: "The Floor Is Lava! Action Song for Kids", channel: "English Tree", duration: "3:02", ages: [3, 8], category: "音乐律动", courseId: null },
+  { id: "nCnbaY_8cxU", title: "Numbers Songs! Counting 1 to 20", channel: "English Tree", duration: "9:25", ages: [3, 8], category: "数学思维", courseId: null },
+  { id: "_hvVA5fg8Wo", title: "Color Fuzzies Singing Show! Learn Colors", channel: "English Tree", duration: "25:22", ages: [3, 8], category: "英语启蒙", courseId: null },
+  { id: "o1WqsGugYC0", title: "ABC Lego Letters! Alphabet Learning Song", channel: "English Tree", duration: "21:25", ages: [3, 8], category: "英语启蒙", courseId: null },
+  { id: "d6VAJ_GAiuU", title: "Phonics Crane Game! Letter Sounds A-Z", channel: "English Tree", duration: "24:26", ages: [4, 10], category: "英语启蒙", courseId: null },
+  { id: "pdnFaiiC5rU", title: "Beach Day! Alphabet Playhouse Fun", channel: "English Tree", duration: "2:24", ages: [3, 8], category: "英语启蒙", courseId: null },
+  { id: "apkWcgucKl4", title: "Learn Letters A B C D! Alphabet Song", channel: "English Tree", duration: "2:24", ages: [3, 6], category: "英语启蒙", courseId: null },
+  { id: "btOCXTR7yLc", title: "Learn Letters E F G H! Alphabet Song", channel: "English Tree", duration: "3:53", ages: [3, 6], category: "英语启蒙", courseId: null },
+  { id: "20PlxmdUU6E", title: "Dino Collection! Dinosaurs for Kids", channel: "English Tree", duration: "2:00", ages: [3, 8], category: "科学探索", courseId: null },
+  { id: "EpO7FwkdXms", title: "Hide and Seek Magic Kite Adventure Story", channel: "Wow English Steve & Maggie", duration: "17:52", ages: [3, 10], category: "故事模式", courseId: null },
+  { id: "fNkle_8mYh8", title: "Magic Camping Adventure with Animals", channel: "Wow English Steve & Maggie", duration: "5:53", ages: [3, 8], category: "故事模式", courseId: null },
+  { id: "fEcIJn6NlrM", title: "Dean and Lily Sport Adventure Vocabulary", channel: "Wow English Steve & Maggie", duration: "5:06", ages: [4, 10], category: "英语启蒙", courseId: null },
+  { id: "RF5p4dbz8Mk", title: "Dean and Lily Pet Adventure Animals", channel: "Wow English Steve & Maggie", duration: "5:36", ages: [4, 10], category: "英语启蒙", courseId: null },
+  { id: "Wa-pipMEyKg", title: "Wheels On The Bus + More Nursery Rhymes", channel: "CoComelon", duration: "1:00:57", ages: [2, 6], category: "音乐律动", courseId: null },
+  { id: "IRWp-q4em_0", title: "Johny Johny Yes Papa Sign Language ASL", channel: "CoComelon", duration: "1:06:12", ages: [2, 6], category: "音乐律动", courseId: null },
+  { id: "0wshcYGKhRY", title: "Sick Song + More Nursery Rhymes for Kids", channel: "CoComelon", duration: "29:48", ages: [2, 6], category: "音乐律动", courseId: null },
+  { id: "3Ow2-H3KnRc", title: "Diana and Roma Candy Town Fun Song", channel: "Diana and Roma", duration: "2:19", ages: [3, 8], category: "故事模式", courseId: null },
+  { id: "HuLiRfeOowI", title: "Diana Tastes Different Ice Cream Flavors", channel: "Diana and Roma", duration: "4:51", ages: [3, 8], category: "故事模式", courseId: null },
+  { id: "YEl5EHFUlgM", title: "Diana and Stories About Sweets and Candies", channel: "Diana and Roma", duration: "12:48", ages: [3, 8], category: "故事模式", courseId: null },
+  { id: "fC_Ix-LeG3A", title: "Diana Tastes Different Ice Cream Yummy", channel: "Diana and Roma", duration: "4:01", ages: [3, 8], category: "故事模式", courseId: null },
+  { id: "ncU_tC1LpT4", title: "Dinosaurs! Kids Vocabulary Learn English", channel: "Kids Education", duration: "7:19", ages: [4, 10], category: "科学探索", courseId: null },
+  { id: "p1KcY_hCeFY", title: "Olivers Best Compilation Fun Videos for Kids", channel: "Oliver Tag", duration: "1:01:57", ages: [3, 8], category: "故事模式", courseId: null },
+  { id: "6hyhbNVrRrw", title: "In The Kitchen! Cooking Vocabulary for Kids", channel: "Kids Education", duration: "4:26", ages: [4, 10], category: "科学探索", courseId: null },
+  { id: "LHg59p-VC54", title: "In The Bedroom! Room Vocabulary Learning", channel: "Kids Education", duration: "3:50", ages: [4, 10], category: "英语启蒙", courseId: null },
+  { id: "U1e12tu9muw", title: "In The Bathroom! Vocabulary for Children", channel: "Kids Education", duration: "4:24", ages: [4, 10], category: "英语启蒙", courseId: null },
+  { id: "v3UzwQypPls", title: "In The Living Room! House Vocabulary", channel: "Kids Education", duration: "4:36", ages: [4, 10], category: "英语启蒙", courseId: null },
+  { id: "gIG2e2LAaQo", title: "Family Members! English Conversation", channel: "Kids Education", duration: "17:17", ages: [4, 12], category: "英语启蒙", courseId: null },
+  { id: "yWayIhJzJ3Y", title: "English Conversation for Beginners Daily Life", channel: "Kids Education", duration: "14:19", ages: [5, 12], category: "英语启蒙", courseId: null },
+  { id: "BuFljYTDAb0", title: "English in Social Situations Practice", channel: "Kids Education", duration: "16:04", ages: [5, 12], category: "英语启蒙", courseId: null },
+  { id: "sr5exp-NGgY", title: "Sickness and Health English Vocabulary Chant", channel: "Fun Kids English", duration: "3:20", ages: [4, 10], category: "英语启蒙", courseId: null },
+  { id: "qBfmCtccqJo", title: "Guess Whats Inside! Surprise Box Game", channel: "Kids Game Show", duration: "2:02", ages: [3, 8], category: "故事模式", courseId: null },
+  { id: "A4fE0xcy0MU", title: "Toy Song! Educational Children Song Animation", channel: "Global Voca Kids", duration: "4:10", ages: [3, 8], category: "英语启蒙", courseId: null },
+  { id: "AyxZVHBJPBA", title: "What a Big Tree! Subject Learning Song", channel: "Global Voca Kids", duration: "5:47", ages: [4, 10], category: "英语启蒙", courseId: null },
+  { id: "kQiPsY1DsU4", title: "What Do You Do? Jobs Occupations Song", channel: "Global Voca Kids", duration: "4:49", ages: [4, 10], category: "英语启蒙", courseId: null },
+  { id: "OgA1-ME0aHI", title: "What Is He Doing? Present Tense Verbs", channel: "Global Voca Kids", duration: "3:33", ages: [5, 12], category: "英语启蒙", courseId: null },
+  { id: "9kD4Deuf7h0", title: "What Are You Doing? Present Continuous", channel: "Global Voca Kids", duration: "6:13", ages: [5, 12], category: "英语启蒙", courseId: null },
+  { id: "AFd6Di_HqsA", title: "Letter to the Future! English Action Verbs", channel: "Global Voca Kids", duration: "10:51", ages: [5, 12], category: "英语启蒙", courseId: null },
+  { id: "GDHx5Ds87uA", title: "English in the Countryside! Grammar Learning", channel: "Global Voca Kids", duration: "9:42", ages: [5, 12], category: "英语启蒙", courseId: null },
+  { id: "6GIRXhm1lr8", title: "I Am a Scientist! Listen and Learn Science", channel: "Kids Science", duration: "4:47", ages: [5, 10], category: "科学探索", courseId: null },
+  { id: "BEJKDoHlJmE", title: "Real English Conversations for Daily Situations", channel: "Kids Education", duration: "14:56", ages: [6, 12], category: "英语启蒙", courseId: null },
+  { id: "sUZJJGlnAEM", title: "Can I Speak to Chloe? Phone Conversations", channel: "Global Voca Kids", duration: "5:22", ages: [6, 12], category: "英语启蒙", courseId: null }
 ];
 
 
@@ -3249,10 +3463,20 @@ async function authSignIn(email, password) {
 }
 
 async function authSignInWithGoogle() {
+  // Preserve the current hash route so user returns to same page after OAuth
+  var returnPath = window.location.origin + window.location.pathname + window.location.hash;
+  console.log('[Auth] Starting Google OAuth, redirectTo:', returnPath);
   const { data, error } = await APP.supabase.auth.signInWithOAuth({
     provider: 'google',
-    options: { redirectTo: window.location.origin }
+    options: {
+      redirectTo: returnPath,
+      queryParams: { access_type: 'offline', prompt: 'consent' }
+    }
   });
+  if (error) {
+    console.error('[Auth] Google OAuth error:', error.message);
+    return { data, error };
+  }
   return { data, error };
 }
 
@@ -3441,8 +3665,49 @@ async function handleAuthSubmit(e, mode) {
 }
 
 async function handleGoogleAuth() {
-  await authSignInWithGoogle();
-  // OAuth redirect will handle the rest
+  // Check Supabase is ready
+  if (!APP.supabase) {
+    initSupabase();
+    if (!APP.supabase) {
+      showAuthError(APP.lang === 'zh'
+        ? '服务未连接，请刷新页面后重试'
+        : 'Service not connected. Please refresh and try again.');
+      return;
+    }
+  }
+
+  const btn = document.querySelector('.auth-google-btn');
+  if (!btn) return;
+  const originalHTML = btn.innerHTML;
+  btn.innerHTML = '<span style="display:inline-block;width:18px;height:18px;border:2px solid #ccc;border-top-color:#4285F4;border-radius:50%;animation:spin 0.6s linear infinite;vertical-align:middle;margin-right:6px"></span>' + (APP.lang === 'zh' ? '跳转中...' : 'Redirecting...');
+  btn.disabled = true;
+
+  // 3-second safety timeout: if OAuth redirect hasn't happened, show error
+  var redirectTimeout = setTimeout(function() {
+    if (btn.disabled) {
+      btn.innerHTML = originalHTML;
+      btn.disabled = false;
+      showAuthError(APP.lang === 'zh'
+        ? 'Google 登录未能跳转。请确保：\n1) 浏览器未拦截弹窗\n2) Supabase 后台已启用 Google 登录'
+        : 'Google sign-in failed. Check:\n1) Pop-ups not blocked\n2) Google provider enabled in Supabase');
+    }
+  }, 5000);
+
+  try {
+    var result = await authSignInWithGoogle();
+    if (result.error) {
+      clearTimeout(redirectTimeout);
+      btn.innerHTML = originalHTML;
+      btn.disabled = false;
+      showAuthError(result.error.message || 'Google sign-in failed');
+    }
+    // If no error, browser will redirect to Google consent page
+  } catch (e) {
+    clearTimeout(redirectTimeout);
+    btn.innerHTML = originalHTML;
+    btn.disabled = false;
+    showAuthError(e.message || 'Google sign-in failed');
+  }
 }
 
 function showAuthError(msg) {
@@ -4248,8 +4513,8 @@ function updateTopNavLabels() {
   var isZh = APP.lang === 'zh';
   var items = document.querySelectorAll('.top-nav-item');
   var labels = isZh
-    ? ['首页','课程','练习册','按年龄','博客','关于我们']
-    : ['Home','Courses','Worksheets','By Age','Blog','About'];
+    ? ['首页','课程','练习册','按年龄','博客','🎮 游戏','🎨 涂色','关于我们']
+    : ['Home','Courses','Worksheets','By Age','Blog','🎮 Games','🎨 Coloring','About'];
   items.forEach(function(item, i) {
     if (labels[i]) item.textContent = labels[i];
   });
@@ -4488,7 +4753,16 @@ function updateStreak() {
   // Check streak badges
   if (s.streak >= 3 && !s.badges.includes('streak-3')) { s.badges.push('streak-3'); showBadgeEarned('streak-3'); }
   if (s.streak >= 7 && !s.badges.includes('streak-7')) { s.badges.push('streak-7'); showBadgeEarned('streak-7'); }
+  // Daily XP reward
+  s.xp = (s.xp || 0) + 3;
+  var oldLevel = getLevel(s.xp - 3);
+  var newLevel = getLevel(s.xp);
   saveStore(s);
+  if (newLevel > oldLevel) {
+    setTimeout(function() { showToast('🎉 Level Up! Lv.' + newLevel + ' (' + (APP.lang === 'zh' ? '每日签到' : 'Daily Check-in') + ')'); showConfetti(20); }, 600);
+  }
+  // Check all badges (including new ones)
+  setTimeout(function() { checkAndAwardBadges(); }, 1000);
 }
 
 // ─── ROUTING ──────────────────────────────────────────────────
@@ -4645,7 +4919,7 @@ function updateTopNav(page) {
   var topNavItems = document.querySelectorAll('.top-nav-item');
   var pageMap = {
     'home': 0, 'courses': 1, 'course': 1, 'practice': 2,
-    'ageHub': 3, 'blog': 4, 'blogPost': 4, 'about': 5
+    'ageHub': 3, 'blog': 4, 'blogPost': 4, 'games': 5, 'coloring': 6, 'about': 7
   };
   var activeIdx = pageMap[page];
   topNavItems.forEach(function(item, i) {
@@ -5192,6 +5466,8 @@ function navigateTo(page, params = {}) {
     case 'worksheet': renderWorksheet(main, params.courseId); break;
     case 'activities': renderActivities(main); break;
     case 'activity': renderActivityDetail(main, params.activityId); break;
+    case 'games': renderGames(main); break;
+    case 'coloring': renderColoring(main); break;
     default: renderHome(main);
   }
 
@@ -5986,6 +6262,11 @@ function goToBannerSlide(idx) {
 
 // ─── RENDER: WATCH (Video Player) ─────────────────────────────
 function renderWatch(container, videoId) {
+  // Safety: ensure videoId is a clean string
+  if (!videoId || typeof videoId !== 'string') { container.innerHTML = '<p style="padding:40px;text-align:center">' + t('videoNotFound') + '</p>'; return; }
+  // Strip any whitespace or quotes that might have leaked through
+  videoId = videoId.trim().replace(/['"]/g, '');
+  
   const video = getVideo(videoId);
   if (!video) { container.innerHTML = '<p style="padding:40px;text-align:center">' + t('videoNotFound') + '</p>'; return; }
 
@@ -6001,11 +6282,12 @@ function renderWatch(container, videoId) {
 
       <!-- Video player -->
       <div class="player-wrap" id="player-container">
-        <iframe id="youtube-player"
-          src="https://www.youtube-nocookie.com/embed/${video.id}?rel=0&modestbranding=1&cc_load_policy=1&enablejsapi=1${window.location.protocol === 'https:' || window.location.protocol === 'http:' ? '&origin=' + encodeURIComponent(window.location.origin) : ''}"
-          allow="autoplay; encrypted-media; picture-in-picture"
-          allowfullscreen>
-        </iframe>
+        <img class="player-poster" id="player-poster"
+          src="https://img.youtube.com/vi/${video.id}/mqdefault.jpg"
+          alt="${video.title}"
+          onclick="playVideo()"
+          loading="eager">
+        <div class="player-play-btn" id="player-play-btn" onclick="playVideo()"></div>
         <!-- Drawing overlay -->
         <div class="drawing-overlay" id="drawing-overlay">
           <canvas id="drawing-canvas"></canvas>
@@ -6047,6 +6329,36 @@ function renderWatch(container, videoId) {
   startSessionTimer(videoId);
   // Setup YouTube message listener
   setupYouTubeListener(videoId);
+  // Store current video ID for playVideo
+  APP._currentVideoId = videoId;
+}
+
+// ─── Play video on poster click (creates YouTube embed) ─────────
+function playVideo() {
+  var videoId = APP._currentVideoId;
+  if (!videoId) return;
+  var poster = document.getElementById('player-poster');
+  var playBtn = document.getElementById('player-play-btn');
+
+  // Hide poster and play button
+  if (poster) { poster.style.opacity = '0'; poster.style.transition = 'opacity 0.3s'; setTimeout(function(){ poster.style.display='none'; }, 300); }
+  if (playBtn) { playBtn.style.opacity = '0'; playBtn.style.transition = 'opacity 0.2s'; setTimeout(function(){ playBtn.style.display='none'; }, 200); }
+
+  // Check if iframe already exists (prevent double-creation)
+  var container = document.getElementById('player-container');
+  if (container.querySelector('.yt-iframe')) return;
+
+  // Create and inject YouTube iframe
+  var iframe = document.createElement('iframe');
+  iframe.className = 'yt-iframe';
+  iframe.id = 'youtube-player';
+  iframe.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture');
+  iframe.setAttribute('allowfullscreen', '');
+  iframe.title = videoId;
+  iframe.src = 'https://www.youtube.com/embed/' + videoId
+    + '?rel=0&modestbranding=1&cc_load_policy=1&autoplay=1&enablejsapi=1'
+    + '&origin=' + encodeURIComponent(window.location.origin);
+  container.insertBefore(iframe, container.firstChild);
 }
 
 let sessionSeconds = 0;
@@ -6394,7 +6706,7 @@ function setCcLang(lang) {
   _ccLang = lang;
   var menu = document.getElementById('cc-lang-menu');
   if (menu) menu.remove();
-  var iframe = document.getElementById('yt-player');
+  var iframe = document.getElementById('youtube-player') || document.querySelector('.yt-iframe');
   if (iframe) {
     var src = iframe.src;
     src = src.replace(/&cc_load_policy=[01]/, '').replace(/&hl=[^&]+/, '').replace(/&cc_lang_pref=[^&]+/, '');
@@ -7469,6 +7781,8 @@ function generateWorksheetPDF(courseId) {
 function renderMe(container) {
   const s = getStore();
   const avatars = ['🐱','🐶','🐰','🐼','🦊','🐸','🐵','🦄','🐲','🐧'];
+  const xp = s.xp || 0;
+  const lv = getLevel(xp);
 
   // Generate streak calendar for last 4 weeks
   const today = new Date();
@@ -7485,7 +7799,14 @@ function renderMe(container) {
       <div class="profile-header">
         <div class="avatar-display">${s.avatar}</div>
         <h2 style="font-size:20px">${t('littleExplorer')} #${s.avatar}</h2>
-        <p style="color:var(--text-light);font-size:13px">${t('streakDays', {n: s.streak})} 🔥</p>
+        <div style="margin-top:8px"><span class="level-badge lv">⭐ Lv.${lv}</span></div>
+        <div style="max-width:240px;margin:8px auto 0">
+          <div class="xp-bar-wrap" style="height:14px;background:#f0e8d8">
+            <div class="xp-bar-fill" style="width:${xpProgress(xp)}%"></div>
+          </div>
+          <div style="font-size:11px;color:var(--text-light);margin-top:4px">${xp} XP ${lv >= 10 ? (APP.lang === 'zh' ? '(最高等级!)' : '(Max Level!)') : '→ Lv.' + (lv + 1) + ' (' + xpForNextLevel(xp) + ' XP ' + (APP.lang === 'zh' ? '剩余' : 'left') + ')'}</div>
+        </div>
+        <p style="color:var(--text-light);font-size:13px;margin-top:4px">${t('streakDays', {n: s.streak})} 🔥</p>
       </div>
 
       <!-- Avatar selector -->
@@ -7533,14 +7854,14 @@ function renderMe(container) {
       <!-- Badge wall -->
       <div class="section-title"><span class="icon">🏅</span> ${t('badgeWall')}</div>
       <div class="badge-wall">
-        ${BADGES.map(b => {
+        ${BADGES.concat(GAME_BADGES).map(b => {
           const earned = s.badges.includes(b.id);
-          const badgeNameKey = {'first-watch':'badge_first_watch','streak-3':'badge_streak3','streak-7':'badge_streak7','star-5':'badge_star5','star-15':'badge_star15','video-10':'badge_video10','course-abc':'badge_course_abc','course-math':'badge_course_math','all-categories':'badge_all_categories'}[b.id];
-          const badgeDescKey = badgeNameKey + '_desc';
+          var badgeName = b.nameZh || b.name;
+          var badgeDesc = b.descZh || b.desc;
           return `
           <div style="text-align:center">
-            <div class="badge-item ${earned ? 'earned' : ''}" title="${earned ? t(badgeNameKey) + '：' + t(badgeDescKey) : '??? ' + t('notEarned')}">${earned ? b.icon : '❓'}</div>
-            <small style="font-size:10px;display:block;margin-top:4px;color:${earned ? 'var(--text)' : '#ccc'}">${earned ? t(badgeNameKey) : '???'}</small>
+            <div class="badge-item ${earned ? 'earned' : ''}" title="${earned ? badgeName + '：' + badgeDesc : '??? ' + t('notEarned')}">${earned ? b.icon : '❓'}</div>
+            <small style="font-size:10px;display:block;margin-top:4px;color:${earned ? 'var(--text)' : '#ccc'}">${earned ? badgeName : '???'}</small>
           </div>`;
         }).join('')}
       </div>
@@ -8813,30 +9134,98 @@ function shareAchievement(platform) {
   closeShareModal();
 }
 
-// ─── Daily Pick: Rotating recommendation ──────────────────────
+// ─── Daily Pick: Category Wheel — picks a random category each day ──
+var CATEGORY_ICONS = {
+  '英语启蒙': '🔤', '音乐律动': '🎵', '数学思维': '🔢',
+  '科学探索': '🔬', '艺术手工': '🎨', '故事模式': '📖'
+};
+var CATEGORY_COLORS = {
+  '英语启蒙': '#FF8C42', '音乐律动': '#45B7D1', '数学思维': '#C77DFF',
+  '科学探索': '#4ECDC4', '艺术手工': '#FF6B9D', '故事模式': '#FFB347'
+};
+
 function getDailyPick() {
-  var videos = getVideosByAge(APP.ageFilter);
-  if (!videos.length) return null;
-  // Seed based on date for consistent daily pick
+  var allVideos = getVideosByAge(APP.ageFilter);
+  if (!allVideos.length) return null;
+
+  // Filter out hidden videos
+  var s = getStore();
+  var hiddenVids = s.parentSettings.hiddenVideos || [];
+  allVideos = allVideos.filter(function(v) { return !hiddenVids.includes(v.id); });
+  if (!allVideos.length) return null;
+
+  // Collect available categories
+  var cats = [];
+  var seen = {};
+  for (var i = 0; i < allVideos.length; i++) {
+    var c = allVideos[i].category;
+    if (!seen[c]) { seen[c] = true; cats.push(c); }
+  }
+  if (!cats.length) return null;
+
+  // Deterministic category pick based on today's date
   var today = new Date().toISOString().slice(0, 10);
   var seed = 0;
-  for (var i = 0; i < today.length; i++) { seed = ((seed << 5) - seed) + today.charCodeAt(i); seed |= 0; }
-  return videos[Math.abs(seed) % videos.length];
+  for (var j = 0; j < today.length; j++) { seed = ((seed << 5) - seed) + today.charCodeAt(j); seed |= 0; }
+  var cat = cats[Math.abs(seed) % cats.length];
+
+  // Get up to 4 videos from that category
+  var catVideos = allVideos.filter(function(v) { return v.category === cat; });
+  // Shuffle deterministically by date so the same 4 show all day, but rotate
+  function shuffleDate(arr, d) {
+    var a = arr.slice();
+    var s = 0;
+    for (var k = 0; k < d.length; k++) { s = ((s << 5) - s) + d.charCodeAt(k); s |= 0; }
+    for (var l = a.length - 1; l > 0; l--) {
+      var m = Math.abs(((s << 5) - s + l)) % (l + 1);
+      var tmp = a[l]; a[l] = a[m]; a[m] = tmp;
+      s = ((s << 5) - s) + l;
+    }
+    return a;
+  }
+  var shuffled = shuffleDate(catVideos, today);
+  var picks = shuffled.slice(0, 4);
+
+  return {
+    category: cat,
+    icon: CATEGORY_ICONS[cat] || '🎬',
+    color: CATEGORY_COLORS[cat] || '#FF8C42',
+    videos: picks
+  };
 }
 
 function renderDailyPick() {
   var pick = getDailyPick();
-  if (!pick) return '';
-  var thumb = 'https://img.youtube.com/vi/' + pick.id + '/mqdefault.jpg';
-  return ''
+  if (!pick || !pick.videos.length) return '';
+
+  var badgeText = APP.lang === 'zh' ? '今日推荐' : "Today's Pick";
+  var html = ''
     + '<div class="today-pick">'
-    + '<div class="today-pick-badge">🌟 ' + (APP.lang === 'zh' ? '今日推荐' : 'Today\'s Pick') + '</div>'
-    + '<div class="today-pick-video" onclick="navigateTo(\'watch\',{v:\'' + pick.id + '\'})">'
-    + '<img class="today-pick-thumb" src="' + thumb + '" alt="' + pick.title + '" loading="lazy">'
-    + '<div class="today-pick-info">'
-    + '<h4>' + pick.title + '</h4>'
-    + '<p>' + pick.channel + ' · ' + pick.duration + '</p>'
-    + '</div></div></div>';
+    + '<div class="today-pick-header">'
+    + '<span class="today-pick-badge">🌟 ' + badgeText + '</span>'
+    + '<span class="today-pick-cat"><span class="today-pick-cat-icon">' + pick.icon + '</span>' + pick.category + '</span>'
+    + '</div>'
+    + '<div class="today-pick-videos">';
+
+  for (var i = 0; i < pick.videos.length; i++) {
+    var v = pick.videos[i];
+    var thumb = 'https://img.youtube.com/vi/' + v.id + '/mqdefault.jpg';
+    html += ''
+      + '<div class="today-pick-video" onclick="if(typeof navigateTo===\'function\'){navigateTo(\'watch\',{videoId:\'' + v.id + '\'});}else{window.location.hash=\'watch?videoId=\' + encodeURIComponent(\'' + v.id + '\');}">'
+      + '<img class="today-pick-thumb" src="' + thumb + '" alt="' + v.title + '" loading="lazy" onerror="this.style.display=\'none\'">'
+      + '<div class="today-pick-info">'
+      + '<h4>' + v.title + '</h4>'
+      + '<p>' + v.channel + ' · ' + v.duration + '</p>'
+      + '</div></div>';
+  }
+
+  html += '</div>'
+    + '<a class="today-pick-more" href="#" onclick="event.preventDefault();navigateTo(\'home\',{categoryFilter:\'' + pick.category + '\'});return false;">'
+    + (APP.lang === 'zh' ? '查看更多 ' + pick.category + ' 视频 →' : 'More ' + pick.category + ' videos →')
+    + '</a>'
+    + '</div>';
+
+  return html;
 }
 
 // ─── Daily Reminder ────────────────────────────────────────────
@@ -8894,7 +9283,405 @@ function updateStreakWithFire() {
 // Phase 3 — Alias for code that references APP.blogPosts
 APP.blogPosts = BLOG_POSTS;
 
-// ─── Enhanced renderHome with Daily Pick ───────────────────────
+// ─── TIER 1: Achievements XP System ───────────────────────────
+function getLevel(xp) {
+  return Math.min(10, Math.floor(xp / 100) + 1);
+}
+function xpForNextLevel(xp) {
+  var lv = getLevel(xp);
+  if (lv >= 10) return 0;
+  return lv * 100 - (xp % 100);
+}
+function xpProgress(xp) {
+  var lv = getLevel(xp);
+  if (lv >= 10) return 100;
+  return ((xp % 100) / (lv * 100)) * 100;
+}
+
+function awardXP(amount, reason) {
+  var s = getStore();
+  s.xp = (s.xp || 0) + amount;
+  var oldLevel = getLevel(s.xp - amount);
+  var newLevel = getLevel(s.xp);
+  saveStore(s);
+  if (newLevel > oldLevel) {
+    setTimeout(function() { showToast('🎉 Level Up! Lv.' + newLevel + ' (' + reason + ')'); playSuccess(); showConfetti(30); }, 500);
+  } else {
+    setTimeout(function() { showToast('+' + amount + ' XP (' + reason + ')'); }, 300);
+  }
+  checkAndAwardBadges();
+}
+
+function showToast(msg) {
+  var existing = document.querySelector('.toast');
+  if (existing) existing.remove();
+  var t = document.createElement('div');
+  t.className = 'toast';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(function() { t.remove(); }, 2500);
+}
+
+// Enhanced badge checker including new Tier 1 badges
+var GAME_BADGES = [
+  { id: 'game-counting-5', icon: '🔢', name: 'Counting Pro', nameZh: '数数达人', desc: 'Score 5+ in Counting Game', descZh: '数数游戏得5分以上', check: function(s) { return (s.gameScores && s.gameScores.counting >= 5); } },
+  { id: 'game-counting-10', icon: '🧮', name: 'Math Wizard', nameZh: '数学奇才', desc: 'Score 10 in Counting Game', descZh: '数数游戏满分', check: function(s) { return (s.gameScores && s.gameScores.counting >= 10); } },
+  { id: 'game-shape-5', icon: '🔷', name: 'Shape Spotter', nameZh: '图形达人', desc: 'Score 5+ in Shape Match', descZh: '图形匹配得5分以上', check: function(s) { return (s.gameScores && s.gameScores.shapes >= 5); } },
+  { id: 'game-memory-4', icon: '🧠', name: 'Memory Master', nameZh: '记忆大师', desc: 'Match 4+ pairs in Memory', descZh: '记忆游戏配4对以上', check: function(s) { return (s.gameScores && s.gameScores.memory >= 4); } },
+  { id: 'game-all-three', icon: '🏅', name: 'Game Champion', nameZh: '游戏冠军', desc: 'Play all 3 mini games', descZh: '玩过全部3个游戏', check: function(s) { return (s.gamesPlayed && s.gamesPlayed.length >= 3); } },
+  { id: 'xp-lv3', icon: '⭐', name: 'Rising Star', nameZh: '明日之星', desc: 'Reach Level 3', descZh: '达到等级3', check: function(s) { return getLevel(s.xp || 0) >= 3; } },
+  { id: 'xp-lv5', icon: '🌟', name: 'Super Learner', nameZh: '超级学霸', desc: 'Reach Level 5', descZh: '达到等级5', check: function(s) { return getLevel(s.xp || 0) >= 5; } },
+  { id: 'xp-lv10', icon: '👑', name: 'Grand Master', nameZh: '至尊大师', desc: 'Reach Level 10', descZh: '达到等级10', check: function(s) { return getLevel(s.xp || 0) >= 10; } },
+  { id: 'coloring-print', icon: '🖨️', name: 'Color Artist', nameZh: '涂色小画家', desc: 'Print a coloring page', descZh: '打印一张涂色页', check: function(s) { return (s.coloringPrinted || 0) >= 1; } },
+  { id: 'coloring-5', icon: '🎨', name: 'Coloring Pro', nameZh: '涂色大师', desc: 'Print 5 coloring pages', descZh: '打印5张涂色页', check: function(s) { return (s.coloringPrinted || 0) >= 5; } },
+];
+
+function checkAndAwardBadges() {
+  var s = getStore();
+  var changed = false;
+  var allDb = BADGES.concat(GAME_BADGES);
+  allDb.forEach(function(b) {
+    if (!s.badges.includes(b.id) && b.check && b.check(s)) {
+      s.badges.push(b.id);
+      changed = true;
+      setTimeout(function() {
+        showToast('🏅 ' + (b.nameZh || b.name) + ' unlocked!');
+        showConfetti(20);
+      }, 800);
+    }
+  });
+  if (changed) saveStore(s);
+}
+
+function recordGamePlayed(gameId) {
+  var s = getStore();
+  if (!s.gamesPlayed) s.gamesPlayed = [];
+  if (s.gamesPlayed.indexOf(gameId) === -1) { s.gamesPlayed.push(gameId); saveStore(s); }
+  checkAndAwardBadges();
+}
+
+function recordGameScore(gameId, score) {
+  var s = getStore();
+  if (!s.gameScores) s.gameScores = {};
+  if (!s.gameScores[gameId] || score > s.gameScores[gameId]) {
+    s.gameScores[gameId] = score;
+    saveStore(s);
+  }
+}
+
+// ─── TIER 1: Mini Games ───────────────────────────────────────
+var GAME_STATE = { currentGame: 'counting', round: 0, totalRounds: 0, score: 0, answer: null, memoryCards: [], memoryFlipped: [], memoryMatched: [], memoryLocked: false };
+
+var GAME_TABS_ZH = [
+  { id: 'counting', icon: '🔢', label: '数数游戏' },
+  { id: 'shapes', icon: '🔷', label: '图形匹配' },
+  { id: 'memory', icon: '🧠', label: '记忆翻牌' }
+];
+
+function renderGames(container) {
+  container.innerHTML = '<div class="page active"><div style="padding:20px 0">'
+    + '<h1 style="font-size:22px;margin-bottom:16px">🎮 ' + (APP.lang === 'zh' ? '迷你游戏乐园' : 'Mini Games') + '</h1>'
+    + '<div class="game-tabs">'
+    + GAME_TABS_ZH.map(function(t) {
+        return '<button class="game-tab ' + (GAME_STATE.currentGame === t.id ? 'active' : '') + '" onclick="switchGame(\'' + t.id + '\')">' + t.icon + ' ' + t.label + '</button>';
+      }).join('')
+    + '</div>'
+    + '<div class="game-area" id="game-area"></div>'
+    + '</div></div>';
+  startGame(GAME_STATE.currentGame);
+}
+
+function switchGame(gameId) {
+  GAME_STATE.currentGame = gameId;
+  GAME_STATE.round = 0;
+  GAME_STATE.score = 0;
+  GAME_STATE.totalRounds = 0;
+  document.querySelectorAll('.game-tab').forEach(function(t) { t.classList.toggle('active', t.textContent.indexOf(GAME_TABS_ZH.find(function(g) { return g.id === gameId; }).label) !== -1); });
+  startGame(gameId);
+}
+
+function startGame(gameId) {
+  var area = document.getElementById('game-area');
+  if (!area) return;
+  GAME_STATE.round = 0;
+  GAME_STATE.score = 0;
+  if (gameId === 'counting') { GAME_STATE.totalRounds = 10; startCountingRound(area); }
+  else if (gameId === 'shapes') { GAME_STATE.totalRounds = 8; startShapeRound(area); }
+  else if (gameId === 'memory') startMemoryGame(area);
+}
+
+// ─── Counting Game ───
+function startCountingRound(area) {
+  if (GAME_STATE.round >= GAME_STATE.totalRounds) {
+    return endGame(area, 'counting');
+  }
+  var count = Math.floor(Math.random() * 10) + 1;
+  GAME_STATE.answer = count;
+  var emojis = ['🐱','🐶','🐰','🐼','🦊','🐸','🐵','🌸','⭐','🍎'];
+  var emoji = emojis[Math.floor(Math.random() * emojis.length)];
+  var display = '';
+  for (var i = 0; i < count; i++) { display += emoji + ' '; }
+
+  var options = [count];
+  while (options.length < 4) {
+    var wrong = Math.floor(Math.random() * 10) + 1;
+    if (options.indexOf(wrong) === -1) options.push(wrong);
+  }
+  options.sort(function(a,b) { return Math.random() - 0.5; });
+
+  area.innerHTML = ''
+    + '<div class="game-score">⭐ ' + GAME_STATE.score + ' / ' + GAME_STATE.round + '</div>'
+    + '<div class="game-question">' + (APP.lang === 'zh' ? '有多少个？' : 'How many?') + '</div>'
+    + '<div class="game-emoji-display">' + display + '</div>'
+    + '<div class="game-options">'
+    + options.map(function(n) { return '<button class="game-option" onclick="checkCounting(' + n + ', this)">' + n + '</button>'; }).join('')
+    + '</div>'
+    + '<div class="game-progress">'
+    + Array.from({length: GAME_STATE.totalRounds}, function(_, i) { return '<div class="game-dot' + (i < GAME_STATE.round ? ' ' + (GAME_STATE.score === GAME_STATE.round && i < GAME_STATE.score ? 'done' : 'wrong') : '') + '"></div>'; }).join('')
+    + '</div>';
+}
+
+function checkCounting(n, btn) {
+  if (btn.classList.contains('correct') || btn.classList.contains('wrong')) return;
+  GAME_STATE.round++;
+  if (n === GAME_STATE.answer) {
+    GAME_STATE.score++;
+    btn.classList.add('correct');
+    playSuccess();
+  } else {
+    btn.classList.add('wrong');
+    var opts = btn.parentElement.querySelectorAll('.game-option');
+    for (var i = 0; i < opts.length; i++) {
+      if (parseInt(opts[i].textContent) === GAME_STATE.answer) opts[i].classList.add('correct');
+    }
+    playError();
+  }
+  setTimeout(function() { startCountingRound(document.getElementById('game-area')); }, 800);
+}
+
+// ─── Shape Match Game ───
+var SHAPES = [
+  { name: 'Circle', nameZh: '圆形', shape: '<circle cx="50" cy="50" r="40" fill="#FF6B6B"/>' },
+  { name: 'Square', nameZh: '正方形', shape: '<rect x="10" y="10" width="80" height="80" fill="#4ECDC4"/>' },
+  { name: 'Triangle', nameZh: '三角形', shape: '<polygon points="50,5 95,90 5,90" fill="#FFD93D"/>' },
+  { name: 'Star', nameZh: '五角星', shape: '<polygon points="50,2 61,37 98,37 68,58 79,93 50,72 21,93 32,58 2,37 39,37" fill="#C77DFF"/>' },
+  { name: 'Heart', nameZh: '爱心', shape: '<path d="M50,90 C20,60 0,40 0,20 C0,5 15,-5 25,5 C35,15 50,30 50,30 C50,30 65,15 75,5 C85,-5 100,5 100,20 C100,40 80,60 50,90Z" fill="#FF8C42"/>' },
+  { name: 'Diamond', nameZh: '菱形', shape: '<polygon points="50,5 95,50 50,95 5,50" fill="#45B7D1"/>' }
+];
+
+function startShapeRound(area) {
+  if (GAME_STATE.round >= GAME_STATE.totalRounds) {
+    return endGame(area, 'shapes');
+  }
+  var correct = SHAPES[Math.floor(Math.random() * SHAPES.length)];
+  GAME_STATE.answer = correct.name;
+  var options = [correct];
+  while (options.length < 4) {
+    var s = SHAPES[Math.floor(Math.random() * SHAPES.length)];
+    if (options.indexOf(s) === -1) options.push(s);
+  }
+  options.sort(function() { return Math.random() - 0.5; });
+
+  area.innerHTML = ''
+    + '<div class="game-score">⭐ ' + GAME_STATE.score + ' / ' + GAME_STATE.round + '</div>'
+    + '<div class="game-question">' + (APP.lang === 'zh' ? '找到 ' + correct.nameZh + '：' : 'Find the ' + correct.name + ':') + '</div>'
+    + '<div class="game-options" style="grid-template-columns:repeat(4,1fr)">'
+    + options.map(function(s) {
+        return '<div class="game-option" style="padding:8px" onclick="checkShape(\'' + s.name + '\', this)"><svg viewBox="0 0 100 100" width="60" height="60">' + s.shape + '</svg><div style="font-size:12px;margin-top:4px">' + (APP.lang === 'zh' ? s.nameZh : s.name) + '</div></div>';
+      }).join('')
+    + '</div>'
+    + '<div class="game-progress">'
+    + Array.from({length: GAME_STATE.totalRounds}, function(_, i) { return '<div class="game-dot' + (i < GAME_STATE.round ? ' ' + (i < GAME_STATE.score ? 'done' : 'wrong') : '') + '"></div>'; }).join('')
+    + '</div>';
+}
+
+function checkShape(name, el) {
+  if (el.classList.contains('correct') || el.classList.contains('wrong')) return;
+  GAME_STATE.round++;
+  if (name === GAME_STATE.answer) {
+    GAME_STATE.score++;
+    el.classList.add('correct');
+    playSuccess();
+  } else {
+    el.classList.add('wrong');
+    playError();
+  }
+  setTimeout(function() { startShapeRound(document.getElementById('game-area')); }, 700);
+}
+
+// ─── Memory Game ───
+var MEMORY_EMOJIS = ['🐱','🐶','🐰','🐼','🦊','🐸','⭐','🌸','🍎','🌈','🚀','🎵'];
+
+function startMemoryGame(area) {
+  var pairs = 6;
+  var emojis = MEMORY_EMOJIS.slice(0, pairs);
+  var cards = [];
+  emojis.forEach(function(e, i) { cards.push({ id: i, emoji: e }); cards.push({ id: i, emoji: e }); });
+  cards.sort(function() { return Math.random() - 0.5; });
+  GAME_STATE.memoryCards = cards;
+  GAME_STATE.memoryFlipped = [];
+  GAME_STATE.memoryMatched = [];
+  GAME_STATE.memoryLocked = false;
+  GAME_STATE.score = 0;
+  GAME_STATE.round = 0;
+
+  area.innerHTML = ''
+    + '<div class="game-question">' + (APP.lang === 'zh' ? '记忆翻牌 - 找出相同的一对！' : 'Memory Match - Find the pairs!') + '</div>'
+    + '<div class="memory-info"><span>⭐ ' + GAME_STATE.score + ' ' + (APP.lang === 'zh' ? '对' : 'pairs') + '</span><span>' + (APP.lang === 'zh' ? '尝试' : 'Moves') + ': ' + GAME_STATE.round + '</span></div>'
+    + '<div class="memory-grid">'
+    + cards.map(function(c, i) {
+        var matched = GAME_STATE.memoryMatched.indexOf(i) !== -1;
+        var flipped = GAME_STATE.memoryFlipped.indexOf(i) !== -1;
+        return '<div class="memory-card ' + (matched ? 'matched' : (flipped ? 'flipped' : '')) + '" onclick="flipMemoryCard(' + i + ', this)">' + (flipped || matched ? c.emoji : '?') + '</div>';
+      }).join('')
+    + '</div>';
+}
+
+function flipMemoryCard(idx, el) {
+  if (GAME_STATE.memoryLocked) return;
+  if (GAME_STATE.memoryFlipped.indexOf(idx) !== -1 || GAME_STATE.memoryMatched.indexOf(idx) !== -1) return;
+  GAME_STATE.memoryFlipped.push(idx);
+  el.classList.add('flipped');
+  el.textContent = GAME_STATE.memoryCards[idx].emoji;
+
+  if (GAME_STATE.memoryFlipped.length === 2) {
+    GAME_STATE.memoryLocked = true;
+    GAME_STATE.round++;
+    var a = GAME_STATE.memoryFlipped[0];
+    var b = GAME_STATE.memoryFlipped[1];
+    if (GAME_STATE.memoryCards[a].id === GAME_STATE.memoryCards[b].id) {
+      GAME_STATE.score++;
+      GAME_STATE.memoryMatched.push(a, b);
+      GAME_STATE.memoryFlipped = [];
+      GAME_STATE.memoryLocked = false;
+      playSuccess();
+      updateMemoryUI();
+      if (GAME_STATE.memoryMatched.length === GAME_STATE.memoryCards.length) {
+        endGame(document.getElementById('game-area'), 'memory');
+      }
+    } else {
+      playError();
+      var aEl = el.parentElement.children[a];
+      var bEl = el.parentElement.children[b];
+      aEl.classList.add('mismatch');
+      bEl.classList.add('mismatch');
+      setTimeout(function() {
+        GAME_STATE.memoryFlipped = [];
+        GAME_STATE.memoryLocked = false;
+        updateMemoryUI();
+      }, 800);
+    }
+  }
+}
+
+function updateMemoryUI() {
+  var grid = document.querySelector('.memory-grid');
+  if (!grid) return;
+  var infoEl = document.querySelector('.memory-info');
+  if (infoEl) infoEl.innerHTML = '<span>⭐ ' + GAME_STATE.score + ' ' + (APP.lang === 'zh' ? '对' : 'pairs') + '</span><span>' + (APP.lang === 'zh' ? '尝试' : 'Moves') + ': ' + GAME_STATE.round + '</span>';
+  var children = grid.children;
+  for (var i = 0; i < children.length; i++) {
+    var matched = GAME_STATE.memoryMatched.indexOf(i) !== -1;
+    var flipped = GAME_STATE.memoryFlipped.indexOf(i) !== -1;
+    children[i].className = 'memory-card' + (matched ? ' matched' : '') + ((!matched && flipped) ? ' flipped' : '');
+    children[i].textContent = (flipped || matched) ? GAME_STATE.memoryCards[i].emoji : '?';
+  }
+}
+
+// ─── End Game ───
+function endGame(area, gameId) {
+  var isMemory = gameId === 'memory';
+  var score = GAME_STATE.score;
+  var total = isMemory ? 6 : GAME_STATE.totalRounds;
+  var xpEarned = Math.round(score / total * 15);
+  area.innerHTML = ''
+    + '<div class="game-result">' + (score === total ? '🎉 ' + (APP.lang === 'zh' ? '满分！太棒了！' : 'Perfect Score!') : '👏 ' + (APP.lang === 'zh' ? '做得好！' : 'Well Done!')) + '</div>'
+    + '<div style="font-size:18px;margin-bottom:8px">⭐ ' + score + ' / ' + total + '</div>'
+    + '<div style="font-size:14px;color:var(--text-light);margin-bottom:16px">+' + xpEarned + ' XP</div>'
+    + '<button class="game-restart" onclick="startGame(\'' + gameId + '\')">🔄 ' + (APP.lang === 'zh' ? '再来一次' : 'Play Again') + '</button>';
+  recordGamePlayed(gameId);
+  recordGameScore(gameId, score);
+  awardXP(xpEarned, APP.lang === 'zh' ? '游戏得分' : 'Game Score');
+}
+
+// ─── TIER 1: Coloring Pages ───────────────────────────────────
+var COLORING_PAGES = [
+  { id: 'cat', titleEn: 'Cute Cat', titleZh: '可爱猫咪', theme: 'animals', svg: '<circle cx="50" cy="30" r="20" fill="none" stroke="#888" stroke-width="2"/><ellipse cx="50" cy="55" rx="25" ry="18" fill="none" stroke="#888" stroke-width="2"/><circle cx="55" cy="25" r="3" fill="none" stroke="#888" stroke-width="1"/><path d="M60,22 L68,14 L62,22Z" fill="none" stroke="#888" stroke-width="1"/><path d="M40,22 L32,14 L38,22Z" fill="none" stroke="#888" stroke-width="1"/><path d="M46,60 Q50,63 54,60" fill="none" stroke="#888" stroke-width="1"/><line x1="35" y1="50" x2="28" y2="48" stroke="#888" stroke-width="1"/><line x1="32" y1="46" x2="26" y2="42" stroke="#888" stroke-width="1"/><line x1="30" y1="44" x2="25" y2="39" stroke="#888" stroke-width="1"/><line x1="65" y1="50" x2="72" y2="48" stroke="#888" stroke-width="1"/><line x1="68" y1="46" x2="74" y2="42" stroke="#888" stroke-width="1"/><line x1="70" y1="44" x2="75" y2="39" stroke="#888" stroke-width="1"/><line x1="48" y1="70" x2="42" y2="85" stroke="#888" stroke-width="1"/><line x1="52" y1="70" x2="58" y2="85" stroke="#888" stroke-width="1"/><path d="M20,40 Q22,20 35,55" fill="none" stroke="#888" stroke-width="1"/><line x1="65" y1="55" x2="84" y2="42" stroke="#888" stroke-width="1"/><line x1="83" y1="42" x2="87" y2="37" stroke="#888" stroke-width="1"/>' },
+  { id: 'rocket', titleEn: 'Rocket Ship', titleZh: '火箭飞船', theme: 'space', svg: '<polygon points="50,5 30,55 50,50 70,55" fill="none" stroke="#888" stroke-width="2"/><rect x="40" y="55" width="20" height="20" rx="2" fill="none" stroke="#888" stroke-width="2"/><polygon points="45,75 35,95 45,85" fill="none" stroke="#888" stroke-width="2"/><polygon points="55,75 65,95 55,85" fill="none" stroke="#888" stroke-width="2"/><circle cx="50" cy="40" r="6" fill="none" stroke="#888" stroke-width="2"/><path d="M40,20 Q10,5 15,30" fill="none" stroke="#888" stroke-width="1"/><path d="M60,20 Q90,5 85,30" fill="none" stroke="#888" stroke-width="1"/><circle cx="28" cy="10" r="2" fill="none" stroke="#888" stroke-width="1"/><circle cx="15" cy="22" r="2" fill="none" stroke="#888" stroke-width="1"/><circle cx="72" cy="10" r="2" fill="none" stroke="#888" stroke-width="1"/><circle cx="85" cy="22" r="2" fill="none" stroke="#888" stroke-width="1"/>' },
+  { id: 'butterfly', titleEn: 'Butterfly', titleZh: '蝴蝶', theme: 'nature', svg: '<ellipse cx="50" cy="50" rx="3" ry="14" fill="none" stroke="#888" stroke-width="2"/><ellipse cx="32" cy="32" rx="18" ry="10" fill="none" stroke="#888" stroke-width="2" transform="rotate(-20,32,32)"/><ellipse cx="68" cy="32" rx="18" ry="10" fill="none" stroke="#888" stroke-width="2" transform="rotate(20,68,32)"/><ellipse cx="30" cy="62" rx="12" ry="8" fill="none" stroke="#888" stroke-width="2" transform="rotate(-10,30,62)"/><ellipse cx="70" cy="62" rx="12" ry="8" fill="none" stroke="#888" stroke-width="2" transform="rotate(10,70,62)"/><circle cx="38" cy="25" r="4" fill="none" stroke="#888" stroke-width="1"/><circle cx="62" cy="25" r="4" fill="none" stroke="#888" stroke-width="1"/><circle cx="35" cy="58" r="3" fill="none" stroke="#888" stroke-width="1"/><circle cx="65" cy="58" r="3" fill="none" stroke="#888" stroke-width="1"/><line x1="45" y1="30" x2="42" y2="10" stroke="#888" stroke-width="1"/><line x1="55" y1="30" x2="58" y2="10" stroke="#888" stroke-width="1"/><circle cx="42" cy="9" r="2" fill="none" stroke="#888" stroke-width="1"/><circle cx="58" cy="9" r="2" fill="none" stroke="#888" stroke-width="1"/>' },
+  { id: 'tree', titleEn: 'Apple Tree', titleZh: '苹果树', theme: 'nature', svg: '<rect x="44" y="70" width="12" height="25" fill="none" stroke="#888" stroke-width="2"/><circle cx="50" cy="40" r="35" fill="none" stroke="#888" stroke-width="2"/><circle cx="35" cy="45" r="6" fill="none" stroke="#888" stroke-width="2"/><circle cx="60" cy="35" r="6" fill="none" stroke="#888" stroke-width="2"/><circle cx="50" cy="55" r="6" fill="none" stroke="#888" stroke-width="2"/><circle cx="40" cy="28" r="6" fill="none" stroke="#888" stroke-width="2"/><circle cx="65" cy="50" r="6" fill="none" stroke="#888" stroke-width="2"/><line x1="50" y1="25" x2="52" y2="20" stroke="#888" stroke-width="1"/><line x1="45" y1="18" x2="46" y2="14" stroke="#888" stroke-width="1"/><line x1="55" y1="20" x2="58" y2="16" stroke="#888" stroke-width="1"/><ellipse cx="70" cy="75" rx="18" ry="6" fill="none" stroke="#888" stroke-width="1"/><ellipse cx="25" cy="80" rx="15" ry="5" fill="none" stroke="#888" stroke-width="1"/>' },
+  { id: 'house', titleEn: 'Cozy House', titleZh: '温馨小屋', theme: 'objects', svg: '<rect x="20" y="45" width="60" height="48" fill="none" stroke="#888" stroke-width="2"/><polygon points="50,12 5,45 95,45" fill="none" stroke="#888" stroke-width="2"/><rect x="38" y="65" width="14" height="28" fill="none" stroke="#888" stroke-width="2"/><circle cx="49" cy="79" r="2" fill="none" stroke="#888" stroke-width="1"/><rect x="25" y="55" width="12" height="14" fill="none" stroke="#888" stroke-width="2"/><rect x="63" y="55" width="12" height="14" fill="none" stroke="#888" stroke-width="2"/><rect x="42" y="30" width="16" height="12" rx="4" fill="none" stroke="#888" stroke-width="2"/><line x1="8" y1="93" x2="92" y2="93" stroke="#888" stroke-width="1"/><path d="M60,93 Q70,93 70,85" fill="none" stroke="#888" stroke-width="1"/><circle cx="80" cy="20" r="8" fill="none" stroke="#888" stroke-width="1"/>' },
+  { id: 'dinosaur', titleEn: 'Friendly Dino', titleZh: '可爱恐龙', theme: 'animals', svg: '<ellipse cx="50" cy="55" rx="22" ry="18" fill="none" stroke="#888" stroke-width="2"/><path d="M72,55 Q82,40 88,30 Q82,42 72,50Z" fill="none" stroke="#888" stroke-width="2"/><path d="M72,50 Q80,45 85,38 Q79,47 72,48Z" fill="none" stroke="#888" stroke-width="1"/><circle cx="48" cy="48" r="4" fill="none" stroke="#888" stroke-width="1"/><path d="M44,58 Q48,63 52,58" fill="none" stroke="#888" stroke-width="1"/><line x1="64" y1="45" x2="70" y2="42" stroke="#888" stroke-width="1"/><line x1="64" y1="42" x2="69" y2="38" stroke="#888" stroke-width="1"/><rect x="40" y="73" width="6" height="14" rx="2" fill="none" stroke="#888" stroke-width="2"/><rect x="54" y="73" width="6" height="14" rx="2" fill="none" stroke="#888" stroke-width="2"/><path d="M28,45 Q20,38 18,45 Q20,52 28,50" fill="none" stroke="#888" stroke-width="1"/><path d="M30,40 Q22,34 24,28" fill="none" stroke="#888" stroke-width="1"/><path d="M64,60 Q70,70 68,78" fill="none" stroke="#888" stroke-width="1"/>' },
+  { id: 'fish', titleEn: 'Tropical Fish', titleZh: '热带鱼', theme: 'animals', svg: '<ellipse cx="50" cy="48" rx="32" ry="18" fill="none" stroke="#888" stroke-width="2"/><polygon points="82,48 95,32 88,48 95,64" fill="none" stroke="#888" stroke-width="2"/><circle cx="36" cy="42" r="4" fill="none" stroke="#888" stroke-width="1"/><path d="M28,52 Q32,56 36,52" fill="none" stroke="#888" stroke-width="1"/><path d="M50,30 Q55,20 60,28" fill="none" stroke="#888" stroke-width="2"/><path d="M45,34 Q52,24 58,30" fill="none" stroke="#888" stroke-width="1"/><ellipse cx="60" cy="58" rx="6" ry="4" fill="none" stroke="#888" stroke-width="1" transform="rotate(-10,60,58)"/><circle cx="18" cy="42" r="3" fill="none" stroke="#888" stroke-width="1"/><circle cx="16" cy="53" r="3" fill="none" stroke="#888" stroke-width="1"/><circle cx="19" cy="63" r="2" fill="none" stroke="#888" stroke-width="1"/>' },
+  { id: 'sunflower', titleEn: 'Sunflower', titleZh: '向日葵', theme: 'nature', svg: '<line x1="50" y1="50" x2="50" y2="95" stroke="#888" stroke-width="2"/><ellipse cx="50" cy="55" rx="4" ry="8" fill="none" stroke="#888" stroke-width="1"/><ellipse cx="44" cy="30" rx="8" ry="4" fill="none" stroke="#888" stroke-width="2"/><ellipse cx="56" cy="30" rx="8" ry="4" fill="none" stroke="#888" stroke-width="2"/><ellipse cx="50" cy="24" rx="4" ry="8" fill="none" stroke="#888" stroke-width="2"/><ellipse cx="38" cy="32" rx="4" ry="8" fill="none" stroke="#888" stroke-width="2"/><ellipse cx="62" cy="32" rx="4" ry="8" fill="none" stroke="#888" stroke-width="2"/><ellipse cx="36" cy="44" rx="5" ry="3" fill="none" stroke="#888" stroke-width="2"/><ellipse cx="64" cy="44" rx="5" ry="3" fill="none" stroke="#888" stroke-width="2"/><ellipse cx="44" cy="48" rx="3" ry="5" fill="none" stroke="#888" stroke-width="2"/><ellipse cx="56" cy="48" rx="3" ry="5" fill="none" stroke="#888" stroke-width="2"/><circle cx="50" cy="38" r="6" fill="none" stroke="#888" stroke-width="2"/><circle cx="47" cy="36" r="1" fill="none" stroke="#888" stroke-width="1"/><circle cx="53" cy="36" r="1" fill="none" stroke="#888" stroke-width="1"/>' },
+  { id: 'car', titleEn: 'Race Car', titleZh: '赛车', theme: 'vehicles', svg: '<rect x="15" y="38" width="60" height="24" rx="6" fill="none" stroke="#888" stroke-width="2"/><rect x="30" y="22" width="30" height="18" rx="4" fill="none" stroke="#888" stroke-width="2"/><rect x="35" y="28" width="10" height="8" rx="2" fill="none" stroke="#888" stroke-width="1"/><rect x="48" y="28" width="10" height="8" rx="2" fill="none" stroke="#888" stroke-width="1"/><circle cx="32" cy="66" r="8" fill="none" stroke="#888" stroke-width="2"/><circle cx="58" cy="66" r="8" fill="none" stroke="#888" stroke-width="2"/><circle cx="32" cy="66" r="3" fill="none" stroke="#888" stroke-width="1"/><circle cx="58" cy="66" r="3" fill="none" stroke="#888" stroke-width="1"/><rect x="72" y="40" width="8" height="6" rx="2" fill="none" stroke="#888" stroke-width="1"/><circle cx="84" cy="45" r="4" fill="none" stroke="#888" stroke-width="1"/><path d="M18,50 L8,46" stroke="#888" stroke-width="1"/><path d="M18,54 L8,56" stroke="#888" stroke-width="1"/>' },
+  { id: 'rainbow', titleEn: 'Rainbow', titleZh: '彩虹', theme: 'nature', svg: '<path d="M10,80 Q30,20 50,50 Q70,20 90,80" fill="none" stroke="#888" stroke-width="8"/><path d="M14,80 Q32,22 50,52 Q68,22 86,80" fill="none" stroke="#888" stroke-width="6"/><path d="M18,80 Q34,24 50,54 Q66,24 82,80" fill="none" stroke="#888" stroke-width="4"/><path d="M22,80 Q36,26 50,56 Q64,26 78,80" fill="none" stroke="#888" stroke-width="2"/><circle cx="85" cy="72" r="10" fill="none" stroke="#888" stroke-width="1"/><circle cx="82" cy="69" r="2" fill="none" stroke="#888" stroke-width="1"/><circle cx="88" cy="69" r="2" fill="none" stroke="#888" stroke-width="1"/><path d="M83,75 Q85,78 88,75" fill="none" stroke="#888" stroke-width="1"/><ellipse cx="40" cy="75" rx="12" ry="4" fill="none" stroke="#888" stroke-width="1"/><circle cx="20" cy="78" r="5" fill="none" stroke="#888" stroke-width="1"/>' },
+  { id: 'flower2', titleEn: 'Garden Flower', titleZh: '花园小花', theme: 'nature', svg: '<line x1="50" y1="50" x2="50" y2="95" stroke="#888" stroke-width="2"/><path d="M45,55 Q35,45 40,35" fill="none" stroke="#888" stroke-width="1"/><ellipse cx="40" cy="35" rx="4" ry="6" fill="none" stroke="#888" stroke-width="1"/><circle cx="50" cy="30" r="7" fill="none" stroke="#888" stroke-width="2"/><circle cx="50" cy="30" r="3" fill="none" stroke="#888" stroke-width="1"/><circle cx="40" cy="20" r="5" fill="none" stroke="#888" stroke-width="2"/><circle cx="60" cy="20" r="5" fill="none" stroke="#888" stroke-width="2"/><circle cx="35" cy="33" r="5" fill="none" stroke="#888" stroke-width="2"/><circle cx="65" cy="33" r="5" fill="none" stroke="#888" stroke-width="2"/><circle cx="40" cy="42" r="5" fill="none" stroke="#888" stroke-width="2"/><circle cx="60" cy="42" r="5" fill="none" stroke="#888" stroke-width="2"/><path d="M50,45 Q30,55 25,65" fill="none" stroke="#888" stroke-width="1"/><path d="M25,65 Q22,70 28,73" fill="none" stroke="#888" stroke-width="1"/><ellipse cx="30" cy="30" rx="3" ry="5" fill="none" stroke="#888" stroke-width="1" transform="rotate(30,30,30)"/><ellipse cx="70" cy="28" rx="3" ry="5" fill="none" stroke="#888" stroke-width="1" transform="rotate(-30,70,28)"/>' },
+  { id: 'robot', titleEn: 'Cute Robot', titleZh: '可爱机器人', theme: 'objects', svg: '<rect x="30" y="15" width="40" height="30" rx="4" fill="none" stroke="#888" stroke-width="2"/><circle cx="42" cy="28" r="4" fill="none" stroke="#888" stroke-width="2"/><circle cx="58" cy="28" r="4" fill="none" stroke="#888" stroke-width="2"/><circle cx="42" cy="28" r="1.5" fill="none" stroke="#888" stroke-width="1"/><circle cx="58" cy="28" r="1.5" fill="none" stroke="#888" stroke-width="1"/><rect x="42" y="34" width="16" height="4" rx="2" fill="none" stroke="#888" stroke-width="1"/><rect x="35" y="45" width="8" height="14" rx="3" fill="none" stroke="#888" stroke-width="2"/><rect x="57" y="45" width="8" height="14" rx="3" fill="none" stroke="#888" stroke-width="2"/><rect x="22" y="52" width="6" height="8" rx="2" fill="none" stroke="#888" stroke-width="1"/><rect x="72" y="52" width="6" height="8" rx="2" fill="none" stroke="#888" stroke-width="1"/><rect x="38" y="59" width="24" height="18" rx="4" fill="none" stroke="#888" stroke-width="2"/><rect x="42" y="62" width="6" height="6" rx="1" fill="none" stroke="#888" stroke-width="1"/><rect x="52" y="62" width="6" height="6" rx="1" fill="none" stroke="#888" stroke-width="1"/><line x1="30" y1="15" x2="25" y2="8" stroke="#888" stroke-width="1"/><circle cx="25" cy="7" r="3" fill="none" stroke="#888" stroke-width="1"/><line x1="70" y1="15" x2="75" y2="8" stroke="#888" stroke-width="1"/><circle cx="75" cy="7" r="3" fill="none" stroke="#888" stroke-width="1"/>' },
+];
+
+function renderColoring(container) {
+  container.innerHTML = '<div class="page active"><div style="padding:20px 0">'
+    + '<h1 style="font-size:22px;margin-bottom:8px">🎨 ' + (APP.lang === 'zh' ? '可打印涂色页' : 'Printable Coloring Pages') + '</h1>'
+    + '<p style="color:var(--text-light);font-size:13px;margin-bottom:16px">' + (APP.lang === 'zh' ? '点击图片查看大图，然后打印出来涂色！' : 'Tap to view, then print and color!') + '</p>'
+    + '<div class="coloring-grid" id="coloring-grid"></div>'
+    + '</div></div>';
+  renderColoringGrid();
+}
+
+function renderColoringGrid() {
+  var grid = document.getElementById('coloring-grid');
+  if (!grid) return;
+  grid.innerHTML = COLORING_PAGES.map(function(p) {
+    return '<div class="coloring-card" onclick="viewColoringPage(\'' + p.id + '\')">'
+      + '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">' + p.svg + '</svg>'
+      + '<div class="coloring-label">' + (APP.lang === 'zh' ? p.titleZh : p.titleEn) + '</div></div>';
+  }).join('');
+}
+
+function viewColoringPage(pageId) {
+  var page = COLORING_PAGES.find(function(p) { return p.id === pageId; });
+  if (!page) return;
+  var container = document.getElementById('main-content');
+  if (!container) return;
+  container.innerHTML = '<div class="page active"><div style="padding:20px 0">'
+    + '<button style="padding:8px 16px;border:none;background:#f0e8d8;border-radius:20px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:12px" onclick="navigateTo(\'coloring\')">← ' + (APP.lang === 'zh' ? '返回涂色列表' : 'Back to Coloring') + '</button>'
+    + '<div class="coloring-viewer" id="coloring-viewer">'
+    + '<h2 style="font-size:18px;margin-bottom:12px">' + (APP.lang === 'zh' ? page.titleZh : page.titleEn) + '</h2>'
+    + '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="max-width:450px;margin:0 auto;display:block;background:#fff;border:1px dashed #ccc;border-radius:12px">' + page.svg + '</svg>'
+    + '<p style="font-size:12px;color:#999;margin-top:8px">🌱 kidslearninghub.online</p>'
+    + '</div>'
+    + '<div class="coloring-actions">'
+    + '<button class="coloring-btn print" onclick="printColoringPage()">🖨 ' + (APP.lang === 'zh' ? '打印涂色' : 'Print & Color') + '</button>'
+    + '<button class="coloring-btn download" onclick="downloadColoringPage(\'' + page.id + '\')">📥 ' + (APP.lang === 'zh' ? '下载图片' : 'Download') + '</button>'
+    + '</div>'
+    + '</div></div>';
+  window.scrollTo(0, 0);
+}
+
+function printColoringPage() {
+  var s = getStore();
+  s.coloringPrinted = (s.coloringPrinted || 0) + 1;
+  saveStore(s);
+  awardXP(5, APP.lang === 'zh' ? '打印涂色' : 'Coloring Print');
+  window.print();
+}
+
+function downloadColoringPage(pageId) {
+  var page = COLORING_PAGES.find(function(p) { return p.id === pageId; });
+  if (!page) return;
+  var svgData = '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="500" height="500">'
+    + '<rect width="100" height="100" fill="white"/>' + page.svg + '</svg>';
+  var blob = new Blob([svgData], {type: 'image/svg+xml'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'happysprout-coloring-' + pageId + '.svg';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ─── Enhanced renderHome with Daily Pick + Game/Coloring Cards ──
 // Patch renderHome to include daily pick section
 var _originalRenderHome = renderHome;
 renderHome = function(container) {
@@ -8902,11 +9689,34 @@ renderHome = function(container) {
   // Insert daily pick after the home heading area
   var dailyPick = renderDailyPick();
   if (dailyPick) {
-    var heading = container.querySelector('h1, h2');
-    if (heading && heading.nextElementSibling) {
-      heading.nextElementSibling.insertAdjacentHTML('afterend', dailyPick);
-    } else if (heading) {
+    var heading = container.querySelector('.home-heading, h1, h2');
+    if (heading) {
       heading.insertAdjacentHTML('afterend', dailyPick);
+    } else {
+      // Fallback: insert at the top of container
+      container.insertAdjacentHTML('afterbegin', dailyPick);
+    }
+  }
+  // Insert game & coloring cards after daily pick
+  var cardsHtml = '<div class="home-game-cards">'
+    + '<div class="home-game-card" onclick="navigateTo(\'games\')">'
+    + '<span class="hgc-icon">🎮</span>'
+    + '<div class="hgc-title">' + (APP.lang === 'zh' ? '迷你游戏' : 'Mini Games') + '</div>'
+    + '<div class="hgc-sub">' + (APP.lang === 'zh' ? '数数·图形·记忆' : 'Count·Shapes·Memory') + '</div>'
+    + '</div>'
+    + '<div class="home-game-card" onclick="navigateTo(\'coloring\')">'
+    + '<span class="hgc-icon">🎨</span>'
+    + '<div class="hgc-title">' + (APP.lang === 'zh' ? '可打印涂色' : 'Coloring Pages') + '</div>'
+    + '<div class="hgc-sub">' + (APP.lang === 'zh' ? '12张免费涂色页' : '12 free pages') + '</div>'
+    + '</div>'
+    + '</div>';
+  var pickEl = container.querySelector('.today-pick');
+  if (pickEl) {
+    pickEl.insertAdjacentHTML('afterend', cardsHtml);
+  } else {
+    var firstHeading = container.querySelector('h1, h2');
+    if (firstHeading && firstHeading.nextElementSibling) {
+      firstHeading.nextElementSibling.insertAdjacentHTML('afterend', cardsHtml);
     }
   }
 };
@@ -8941,13 +9751,15 @@ function init() {
       });
 
       // Listen for auth changes
+      var _oauthInProgress = isOAuthCallback;
       onAuthChange(async (event, session) => {
         if (event === 'SIGNED_IN' && session) {
           APP.user = session.user;
           await authGetCurrentUser();
           updateAuthUI();
           await cloudLoadProgress();
-          navigateTo(APP.currentPage);
+          // During OAuth flow, always land on home; otherwise restore last page
+          navigateTo(_oauthInProgress ? 'home' : APP.currentPage);
         } else if (event === 'SIGNED_OUT') {
           APP.user = null;
           APP.profile = null;
@@ -8957,19 +9769,47 @@ function init() {
       });
     }
 
+    // ─── Capture OAuth state BEFORE Supabase SDK processes the hash ──
+    var rawHash = window.location.hash || '';
+    var isOAuthCallback = rawHash && (
+      rawHash.indexOf('access_token=') !== -1 ||
+      rawHash.indexOf('error_code=') !== -1 ||
+      rawHash.indexOf('type=recovery') !== -1 ||
+      rawHash.indexOf('provider_token=') !== -1
+    );
+
+    // If this is an OAuth callback, immediately clean the URL so routing never sees it
+    if (isOAuthCallback) {
+      try { window.history.replaceState(null, '', window.location.pathname + '#home'); } catch(e) {}
+    }
+
     // Handle initial hash-based navigation (restore page on reload)
     var hash = window.location.hash.replace('#', '');
     var initialPage = 'home';
     var initialParams = {};
-    if (hash) {
+    if (!isOAuthCallback && hash) {
       var parts = hash.split('?');
-      initialPage = parts[0];
+      initialPage = parts[0] || 'home';
+      // Guard against weird Supabase fragments leaking through
+      if (initialPage.indexOf('=') !== -1 || initialPage.indexOf('&') !== -1) {
+        initialPage = 'home';
+      } else if (initialPage.length > 30 || !/^[a-zA-Z0-9_-]+$/.test(initialPage)) {
+        initialPage = 'home';
+      }
       if (parts[1]) {
         parts[1].split('&').forEach(function(pair) {
           var kv = pair.split('=');
           if (kv.length === 2) initialParams[kv[0]] = decodeURIComponent(kv[1]);
         });
       }
+    }
+
+    // If OAuth callback, force navigate to home after auth settles
+    if (isOAuthCallback) {
+      setTimeout(function() {
+        updateAuthUI();
+        navigateTo('home');
+      }, 500);
     }
 
     // Initial render
