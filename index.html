@@ -8154,128 +8154,90 @@ function removeFavorite(videoId) {
 }
 
 // ─── RENDER: SEARCH ────────────────────────────────────────────
-// --- PATCH: rewrite renderSearch + helpers for mobile input stability ---
-// The core problem: on iOS Safari, any DOM mutation (innerHTML, form submit, etc.)
-// near a focused input dismisses the keyboard. This version removes the <form>,
-// avoids oninput attributes, and uses addEventListener bound after DOM creation.
-
+// --- SEARCH v3: Inline oninput + onkeyup ---
 function renderSearch(container) {
-  const s = getStore();
-  const hiddenVids = s.parentSettings.hiddenVideos || [];
-  const query = APP.activeSearchQuery || '';
+  var s = getStore();
+  var hiddenVids = (s && s.parentSettings && s.parentSettings.hiddenVideos) ? s.parentSettings.hiddenVideos : [];
+  var query = APP.activeSearchQuery || '';
 
   container.innerHTML =
     '<div class="page active">' +
       '<button style="padding:8px 16px;border:none;background:#f0e8d8;border-radius:20px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:12px" onclick="navigateTo(\'home\')">\u2190 ' + t('back') + '</button>' +
       '<h1 class="section-title" style="font-size:22px;margin-bottom:12px"><span class="icon">\uD83D\uDD0D</span> ' + t('searchVideos') + '</h1>' +
-
-      // NOT a <form> — forms cause mobile keyboard dismiss on DOM changes
-      '<div class="search-bar" role="search" aria-label="' + t('search') + '">' +
-        '<label for="search-input" class="sr-only">' + t('searchPlaceholder') + '</label>' +
-        '<input class="search-input" id="search-input" name="q" type="search" placeholder="' + t('searchPlaceholder') + '" value="' + escH(query) + '" autocomplete="off" aria-label="' + t('searchPlaceholder') + '">' +
-        '<button class="voice-btn" id="voice-search-btn" type="button" onclick="startVoiceSearch()" title="' + t('voiceSearch') + '" aria-label="' + t('voiceSearch') + '">\uD83C\uDFA4</button>' +
+      '<div class="search-bar">' +
+        '<input class="search-input" id="search-input" type="text" placeholder="' + t('searchPlaceholder') + '" value="' + escH(query) + '" autocomplete="off" oninput="liveSearchUpdate(this.value)" onkeyup="liveSearchUpdate(this.value)">' +
+        '<button class="voice-btn" id="voice-search-btn" type="button" onclick="startVoiceSearch()" title="' + t('voiceSearch') + '">\uD83C\uDFA4</button>' +
       '</div>' +
-
       '<div id="search-results-area">' + buildSearchResults(query, hiddenVids) + '</div>' +
     '</div>';
-
-  // Attach input handler AFTER DOM is ready — critical for mobile
-  var inp = document.getElementById('search-input');
-  if (inp) {
-    inp.removeEventListener('input', _onSearchInput);
-    inp.addEventListener('input', _onSearchInput);
-  }
 }
 
-// Simple HTML escape
 function escH(s) { return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-// Build initial or static result HTML (called from renderSearch and updateSearchResults)
-function buildSearchResults(query, hiddenVids) {
-  var results;
-  if (query) {
-    var q = query.toLowerCase();
-    results = VIDEO_DB.filter(function(v) {
-      return (v.title.toLowerCase().indexOf(q) !== -1 || v.channel.toLowerCase().indexOf(q) !== -1 || v.category.indexOf(q) !== -1) && (hiddenVids || []).indexOf(v.id) === -1;
-    });
-  } else {
-    results = [];
-  }
+var _lsTimer = null;
+function liveSearchUpdate(val) {
+  APP.activeSearchQuery = val || '';
+  clearTimeout(_lsTimer);
+  _lsTimer = setTimeout(function() {
+    var area = document.getElementById('search-results-area');
+    if (!area) return;
+    var s = getStore();
+    var h = (s && s.parentSettings && s.parentSettings.hiddenVideos) ? s.parentSettings.hiddenVideos : [];
+    area.innerHTML = buildSearchResults(APP.activeSearchQuery, h);
+  }, 200);
+}
+window.liveSearchUpdate = liveSearchUpdate;
 
+function buildSearchResults(query, hiddenVids) {
   if (!query) {
     return '<p style="text-align:center;color:#757575;padding:40px">\uD83D\uDD0D ' + t('searchHint') + '</p>';
   }
+
+  var q = query.toLowerCase();
+  var results = VIDEO_DB.filter(function(v) {
+    return v.title.toLowerCase().indexOf(q) !== -1 || v.channel.toLowerCase().indexOf(q) !== -1 || v.category.indexOf(q) !== -1;
+  });
+
+  if (hiddenVids && hiddenVids.length) {
+    results = results.filter(function(v) { return hiddenVids.indexOf(v.id) === -1; });
+  }
+
   if (results.length === 0) {
     return '<p style="text-align:center;color:#757575;padding:40px">\uD83D\uDD0D ' + t('noResults') + '</p>';
   }
-  return '<p style="color:var(--text-light);margin:8px 0">' + t('foundResults', {n: results.length}) + '</p>' +
-    '<div class="video-grid">' + results.map(renderVideoCard).join('') + '</div>';
+
+  var html = '<p style="color:var(--text-light);margin:8px 0">' + t('foundResults', {n: results.length}) + '</p><div class="video-grid">';
+  for (var i = 0; i < results.length; i++) {
+    var v = results[i];
+    html += '<div class="video-card" onclick="navigateTo(\'watch\',{videoId:\'' + v.id + '\'})">' +
+      '<div class="video-thumb">' +
+        '<img src="' + getYouTubeThumb(v.id) + '" alt="" loading="lazy" onerror="this.style.display=\'none\'">' +
+        '<div class="play-btn">\u25B6</div>' +
+        '<div class="video-age-tag">' + v.ages[0] + '-' + v.ages[1] + (APP.lang === 'zh' ? '\u5C81' : 'y') + '</div>' +
+        '<div class="video-duration">' + v.duration + '</div>' +
+      '</div>' +
+      '<div class="video-info">' +
+        '<h3>' + escH(v.title) + '</h3>' +
+        '<div class="channel">' + escH(v.channel) + ' \u00B7 ' + escH(v.category) + '</div>' +
+        '<div class="video-level">' + getStars(getLevel(v)) + '</div>' +
+      '</div>' +
+    '</div>';
+  }
+  html += '</div>';
+  return html;
 }
 
-function renderVideoCard(v) {
-  return '<div class="video-card" onclick="navigateTo(\'watch\',{videoId:\'' + v.id + '\'})">' +
-    '<div class="video-thumb">' +
-      '<img src="' + getYouTubeThumb(v.id) + '" alt="" loading="lazy" onerror="this.style.display=\'none\'">' +
-      '<div class="play-btn">\u25B6</div>' +
-      '<div class="video-age-tag">' + v.ages[0] + '-' + v.ages[1] + (APP.lang === 'zh' ? '\u5C81' : 'y') + '</div>' +
-      '<div class="video-duration">' + v.duration + '</div>' +
-    '</div>' +
-    '<div class="video-info">' +
-      '<h3>' + escH(v.title) + '</h3>' +
-      '<div class="channel">' + escH(v.channel) + ' \u00B7 ' + escH(v.category) + '</div>' +
-      '<div class="video-level">' + getStars(getLevel(v)) + '</div>' +
-    '</div>' +
-  '</div>';
-}
-
-// Input handler — called on every keystroke, updates results area only
-var _searchDebounce = null;
-function _onSearchInput() {
-  var inp = document.getElementById('search-input');
-  if (!inp) return;
-  var val = inp.value;
-  APP.activeSearchQuery = val;
-
-  // Debounce to 200ms to avoid excessive DOM updates
-  clearTimeout(_searchDebounce);
-  _searchDebounce = setTimeout(function() { updateSearchResults(val); }, 200);
-}
-
-// Replace only the results area — NEVER touches the input
-function updateSearchResults(query) {
-  var area = document.getElementById('search-results-area');
-  if (!area) return;
-
-  const s = getStore();
-  const hiddenVids = s.parentSettings.hiddenVideos || [];
-
-  area.innerHTML = buildSearchResults(query, hiddenVids);
-}
-
-// Called by voice search and programmatic search
 function doLiveSearch() {
   var input = document.getElementById('search-input');
-  if (!input) return;
-  updateSearchResults(input.value);
+  if (input) liveSearchUpdate(input.value);
 }
 
 function performSearch(val) {
-  APP.activeSearchQuery = val;
-  var area = document.getElementById('search-results-area');
-  if (!area) {
-    navigateTo('search');
-  } else {
-    updateSearchResults(val);
-  }
+  APP.activeSearchQuery = val || '';
+  if (!document.getElementById('search-results-area')) { navigateTo('search'); }
+  else { liveSearchUpdate(val); }
 }
-
-// Debounced search kept for backwards compat
-var _searchTimer = null;
-function debouncedSearch(val) {
-  clearTimeout(_searchTimer);
-  _searchTimer = setTimeout(function() { updateSearchResults(val); }, 200);
-}
-// --- END PATCH ---
+// --- END SEARCH v3 ---
 
 function startVoiceSearch() {
   const btn = document.getElementById('voice-search-btn');
