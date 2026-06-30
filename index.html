@@ -8170,40 +8170,94 @@ function renderSearch(container) {
       <button style="padding:8px 16px;border:none;background:#f0e8d8;border-radius:20px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:12px" onclick="navigateTo('home')">← ${t('back')}</button>
       <h1 class="section-title" style="font-size:22px;margin-bottom:12px"><span class="icon">🔍</span> ${t('searchVideos')}</h1>
 
-      <form class="search-bar" role="search" aria-label="${t('search')}" onsubmit="event.preventDefault();performSearch(document.getElementById('search-input').value)" autocomplete="off" toolname="search_videos" tooldescription="Search the HappySprout video library by keyword">
+      <form class="search-bar" role="search" aria-label="${t('search')}" onsubmit="event.preventDefault();doLiveSearch()" autocomplete="off">
         <label for="search-input" class="sr-only">${t('searchPlaceholder')}</label>
-        <input class="search-input" id="search-input" name="q" type="search" placeholder="${t('searchPlaceholder')}" value="${query}" oninput="performSearch(this.value)" autocomplete="off" aria-label="${t('searchPlaceholder')}" toolparamtitle="Search Query" toolparamdescription="Keyword to search videos by title, channel, or category">
+        <input class="search-input" id="search-input" name="q" type="search" placeholder="${t('searchPlaceholder')}" value="${query}" oninput="debouncedSearch(this.value)" autocomplete="off" aria-label="${t('searchPlaceholder')}">
         <button class="voice-btn" id="voice-search-btn" type="button" onclick="startVoiceSearch()" title="${t('voiceSearch')}" aria-label="${t('voiceSearch')}">🎤</button>
       </form>
 
-      ${query ? '<p style="color:var(--text-light);margin:8px 0">' + t('foundResults', {n: results.length}) + '</p>' : ''}
-
-      <div class="video-grid">
-        ${results.map(v => `
-        <div class="video-card" onclick="navigateTo('watch',{videoId:'${v.id}'})">
-          <div class="video-thumb">
-            <img src="${getYouTubeThumb(v.id)}" alt="${v.title}" onerror="this.style.display='none'">
-            <div class="play-btn">▶</div>
-            <div class="video-age-tag">${v.ages[0]}-${v.ages[1]}${APP.lang === 'zh' ? '岁' : 'y'}</div>
-            <div class="video-duration">${v.duration}</div>
+      <div id="search-results-area">
+        ${query ? '<p style="color:var(--text-light);margin:8px 0">' + t('foundResults', {n: results.length}) + '</p>' : ''}
+        <div class="video-grid">
+          ${results.map(v => `
+          <div class="video-card" onclick="navigateTo('watch',{videoId:'${v.id}'})">
+            <div class="video-thumb">
+              <img src="${getYouTubeThumb(v.id)}" alt="${v.title}" onerror="this.style.display='none'">
+              <div class="play-btn">▶</div>
+              <div class="video-age-tag">${v.ages[0]}-${v.ages[1]}${APP.lang === 'zh' ? '岁' : 'y'}</div>
+              <div class="video-duration">${v.duration}</div>
+            </div>
+            <div class="video-info">
+              <h3>${v.title}</h3>
+              <div class="channel">${v.channel} · ${v.category}</div>
+              <div class="video-level">${getStars(getLevel(v))}</div>
+            </div>
           </div>
-          <div class="video-info">
-            <h3>${v.title}</h3>
-            <div class="channel">${v.channel} · ${v.category}</div>
-            <div class="video-level">${getStars(getLevel(v))}</div>
-          </div>
+          `).join('')}
         </div>
-        `).join('')}
+        ${query && results.length === 0 ? '<p style="text-align:center;color:#757575;padding:40px">🔍 ' + t('noResults') + '</p>' : ''}
+        ${!query ? '<p style="text-align:center;color:#757575;padding:40px">🔍 ' + t('searchHint') + '</p>' : ''}
       </div>
-      ${query && results.length === 0 ? '<p style="text-align:center;color:#757575;padding:40px">🔍 ' + t('noResults') + '</p>' : ''}
-      ${!query ? '<p style="text-align:center;color:#757575;padding:40px">🔍 ' + t('searchHint') + '</p>' : ''}
     </div>
   `;
 }
 
+// Debounced live search — updates ONLY results area, never re-renders input
+var _searchTimer = null;
+function debouncedSearch(val) {
+  clearTimeout(_searchTimer);
+  _searchTimer = setTimeout(function() { doLiveSearch(); }, 300);
+}
+
+function doLiveSearch() {
+  var input = document.getElementById('search-input');
+  if (!input) return;
+  var query = input.value;
+  APP.activeSearchQuery = query;
+  var area = document.getElementById('search-results-area');
+  if (!area) return;
+
+  const s = getStore();
+  const hiddenVids = s.parentSettings.hiddenVideos || [];
+  const results = query
+    ? VIDEO_DB.filter(function(v) {
+        var q = query.toLowerCase();
+        return (v.title.toLowerCase().indexOf(q) !== -1 || v.channel.toLowerCase().indexOf(q) !== -1 || v.category.indexOf(q) !== -1) && !hiddenVids.includes(v.id);
+      })
+    : [];
+
+  area.innerHTML =
+    (query ? '<p style="color:var(--text-light);margin:8px 0">' + t('foundResults', {n: results.length}) + '</p>' : '') +
+    '<div class="video-grid">' +
+    results.map(function(v) {
+      return '<div class="video-card" onclick="navigateTo(\'watch\',{videoId:\''+v.id+\'})">' +
+        '<div class="video-thumb">' +
+          '<img src="' + getYouTubeThumb(v.id) + '" alt="" onerror="this.style.display=\'none\'">' +
+          '<div class="play-btn">▶</div>' +
+          '<div class="video-age-tag">' + v.ages[0] + '-' + v.ages[1] + (APP.lang === 'zh' ? '岁' : 'y') + '</div>' +
+          '<div class="video-duration">' + v.duration + '</div>' +
+        '</div>' +
+        '<div class="video-info">' +
+          '<h3>' + v.title + '</h3>' +
+          '<div class="channel">' + v.channel + ' · ' + v.category + '</div>' +
+          '<div class="video-level">' + getStars(getLevel(v)) + '</div>' +
+        '</div>' +
+      '</div>';
+    }).join('') +
+    '</div>' +
+    (query && results.length === 0 ? '<p style="text-align:center;color:#757575;padding:40px">🔍 ' + t('noResults') + '</p>' : '') +
+    (!query ? '<p style="text-align:center;color:#757575;padding:40px">🔍 ' + t('searchHint') + '</p>' : '');
+}
+
 function performSearch(val) {
   APP.activeSearchQuery = val;
-  navigateTo('search');
+  // Only navigate if we're not already on search page with results
+  var area = document.getElementById('search-results-area');
+  if (!area) {
+    navigateTo('search');
+  } else {
+    doLiveSearch();
+  }
 }
 
 function startVoiceSearch() {
@@ -8224,7 +8278,7 @@ function startVoiceSearch() {
   recognition.onresult = (event) => {
     const transcript = event.results[0][0].transcript;
     const input = document.getElementById('search-input');
-    if (input) { input.value = transcript; performSearch(transcript); }
+    if (input) { input.value = transcript; APP.activeSearchQuery = transcript; doLiveSearch(); }
   };
 
   recognition.onerror = () => { btn.classList.remove('listening'); };
