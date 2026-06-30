@@ -6583,6 +6583,7 @@ handleComplete = function(videoId) {
 
     var overlay = document.createElement('div');
     overlay.className = 'quiz-overlay';
+    document.body.appendChild(overlay);
     var correctCount = 0;
     var total = selected.length;
 
@@ -6592,8 +6593,10 @@ handleComplete = function(videoId) {
           '<h2>🎉 ' + t('quizScore') + ': ' + correctCount + ' ' + t('quizOf') + ' ' + total + '</h2>' +
           '<p style="font-size:40px;margin:12px 0">' + (correctCount >= total ? '🌟' : '💪') + '</p>' +
           '<p style="color:#757575;margin-bottom:12px">' + (correctCount >= total ? t('quizCorrect') : t('quizWrong')) + '</p>' +
-          '<button class="quiz-option" style="border-color:var(--orange);background:#FFF3E8" onclick="this.closest(\'.quiz-overlay\').remove();sproutSay(\'🌱 \' + (\'' + (correctCount >= total ? 'Great' : 'Good') + '\'))">' + (APP.lang === 'zh' ? '继续学习' : 'Continue') + '</button>' +
+          '<button class="quiz-option" id="quiz-done-btn" style="border-color:var(--orange);background:#FFF3E8">' + (APP.lang === 'zh' ? '继续学习' : 'Continue') + '</button>' +
           '</div>';
+        var doneBtn = overlay.querySelector('#quiz-done-btn');
+        if (doneBtn) doneBtn.onclick = function() { overlay.remove(); sproutSay('\uD83C\uDF31 ' + (correctCount >= total ? 'Great' : 'Good')); };
         if (correctCount >= total) { playSuccess(); addStar(1); playCelebration(); showConfetti(30); }
         return;
       }
@@ -6604,26 +6607,27 @@ handleComplete = function(videoId) {
         '<p style="font-size:12px;color:#757575;margin-bottom:4px">' + (idx + 1) + '/' + total + '</p>' +
         '<p style="margin-bottom:16px;font-weight:700;font-size:16px">' + q.q + '</p>' +
         q.opts.map(function(o, i) {
-          return '<button class="quiz-option" onclick="(function() {' +
-            'var btns = document.querySelectorAll(\'.quiz-overlay .quiz-option\');' +
-            'for (var j=0;j<btns.length;j++) btns[j].disabled=true;' +
-            'var isRight = ' + i + '===' + q.ans + ';' +
-            'btns[' + i + '].classList.add(isRight?\'correct\':\'wrong\');' +
-            'if (!isRight && btns[' + q.ans + ']) btns[' + q.ans + '].classList.add(\'correct\');' +
-            'var _c=' + correctCount + ';' +
-            'setTimeout(function(){showCompletionQuizQ(' + idx + '+1,' + i + '===' + q.ans + '?' + (correctCount + 1) + ':' + correctCount + ',' + total + ',' + JSON.stringify(selected.map(function(x){return x.q;}).join('|')) + ')},600);' +
-            '})()">' + o + '</button>';
+          return '<button class="quiz-option quiz-opt-btn" data-i="' + i + '">' + o + '</button>';
         }).join('') +
         '</div>';
 
-      window.showCompletionQuizQ = function(nextIdx, newCorrect, totalQ, allQ) {
-        correctCount = newCorrect;
-        showQuestion(nextIdx);
-      };
+      // Attach click handlers via event delegation (reliable)
+      var btns = overlay.querySelectorAll('.quiz-opt-btn');
+      btns.forEach(function(btn, i) {
+        btn.addEventListener('click', function() {
+          // Disable all buttons
+          btns.forEach(function(b) { b.disabled = true; b.style.pointerEvents = 'none'; });
+          var isRight = i === q.ans;
+          btn.classList.add(isRight ? 'correct' : 'wrong');
+          if (!isRight && btns[q.ans]) btns[q.ans].classList.add('correct');
+          if (isRight) correctCount++;
+          // Show next question after short delay
+          setTimeout(function() { showQuestion(idx + 1); }, 600);
+        });
+      });
     }
 
     showQuestion(0);
-    document.body.appendChild(overlay);
     sproutSay('🌱 ' + t('sproutQuiz'), 2000);
   }, 1500);
 };
@@ -6657,14 +6661,22 @@ function showPauseQuiz(videoId) {
 
     const overlay = document.createElement('div');
     overlay.className = 'quiz-overlay';
-    overlay.innerHTML = `
-      <div class="quiz-popup">
-        <h2>🤔 ${t('quizTitle')}</h2>
-        <p style="margin-bottom:12px;font-weight:700">${q.q}</p>
-        ${q.opts.map((o,i) => `<button class="quiz-option" onclick="handleQuizAnswer(${i},${q.ans},this.closest('.quiz-overlay'))">${o}</button>`).join('')}
-      </div>
-    `;
+    overlay.innerHTML =
+      '<div class="quiz-popup">' +
+      '<h2>🤔 ' + t('quizTitle') + '</h2>' +
+      '<p style="margin-bottom:12px;font-weight:700">' + q.q + '</p>' +
+      q.opts.map((o, i) => '<button class="quiz-option pause-opt-btn" data-i="' + i + '">' + o + '</button>').join('') +
+      '</div>';
     document.body.appendChild(overlay);
+
+    // Attach click listeners
+    const btns = overlay.querySelectorAll('.pause-opt-btn');
+    btns.forEach(function(btn, i) {
+      btn.addEventListener('click', function() {
+        if (i === q.ans) { playSuccess(); showConfetti(15); } else { playError(); }
+        setTimeout(() => overlay?.remove(), 800);
+      });
+    });
   }, 1500);
 }
 
