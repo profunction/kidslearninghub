@@ -6372,6 +6372,7 @@ function formatTime(secs) {
 }
 
 function startSessionTimer(videoId) {
+  window._completionQuizShown = false; // Reset per-video guard
   const s = getStore();
   sessionSeconds = 0;
   dailySeconds = s.dailyWatchTime || 0;
@@ -6410,8 +6411,9 @@ function startSessionTimer(videoId) {
         lastWatched: Date.now()
       };
 
-      // 85% auto-complete
-      if (sessionSeconds >= totalSec * 0.85 && !s.completed.includes(videoId)) {
+      // 85% auto-complete (guard against repeated firing)
+      if (sessionSeconds >= totalSec * 0.85 && !s.completed.includes(videoId) && !window._completionQuizShown) {
+        window._completionQuizShown = true;
         handleComplete(videoId);
       }
     }
